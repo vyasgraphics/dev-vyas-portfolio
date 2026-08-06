@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTheme } from "next-themes";
 import { BodyBackground } from "./BodyBackground";
 import { SettingColorMenu } from "./SettingColorMenu";
 import { MobileMenu } from "./MobileMenu";
@@ -26,8 +27,10 @@ import { useUrlHashSync } from "@/hooks/useUrlHashSync";
 
 export function HomeShell() {
     const bodyClass = "counter-scroll";
+    const { resolvedTheme } = useTheme();
+    const isDark = resolvedTheme !== "light";
 
-    useBodyThemeClass();
+    useBodyThemeClass({ defaultMode: "dark" });
 
     useEffect(() => {
         const body = document.body;
@@ -44,7 +47,7 @@ export function HomeShell() {
 
     return (
         <>
-            <Preloader bgDark={true} />
+            <Preloader bgDark={isDark} />
             <BodyBackground showCloudItem={false} showVideo={false} />
             <SettingColorMenu />
             <MobileMenu />
