@@ -57,6 +57,19 @@ export function Work() {
                                     alt={w.title}
                                     priority={i === 0}
                                 />
+                                {w.link && w.link !== "#" && (
+                                    <Link
+                                        href={w.link}
+                                        scroll={false}
+                                        className="work-arrow-link"
+                                        aria-label={`View ${w.title}`}
+                                        onClick={() => {
+                                            sessionStorage.setItem("lastWorkItemSlug", w.slug);
+                                        }}
+                                    >
+                                        <i className="icon icon-arrow-right-top" />
+                                    </Link>
+                                )}
                             </div>
                             <div className="wrap">
                                 <div className="work-content">

@@ -7890,3 +7890,53 @@ textarea:focus-visible,
 html, body {
   overscroll-behavior-y: none;
 }
+
+/* ── Work section: guarantee each sticky card is tall enough to fill the
+   viewport so only one card is ever visible at a time. Without a minimum
+   height the "image coming soon" placeholder collapses to near-zero, 
+   causing multiple cards to overlap simultaneously and card 01 to be 
+   skipped entirely when navigating to #work. ── */
+@media (min-width: 992px) {
+  .wg-work .work-image {
+    min-height: calc(100vh - 200px);
+    aspect-ratio: 16 / 9;
+  }
+  .element-sticky .sticky-item {
+    min-height: 100vh;
+  }
+}
+
+/* ── Work card: arrow link in the bottom-right corner of the right-side
+   image panel, so visitors can jump to the project without needing to
+   find the "View project" button in the left sidebar. ── */
+.wg-work .work-image {
+  position: relative;
+}
+.wg-work .work-image .work-arrow-link {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 200, 83, 0.15);
+  border: 1px solid rgba(0, 200, 83, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00C853;
+  font-size: 18px;
+  text-decoration: none;
+  z-index: 10;
+  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.wg-work .work-image .work-arrow-link:hover {
+  background: rgba(0, 200, 83, 0.3);
+  border-color: rgba(0, 200, 83, 0.7);
+  transform: scale(1.08);
+}
+.wg-work .work-image .work-arrow-link:active {
+  transform: scale(0.96);
+}
