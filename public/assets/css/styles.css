@@ -5580,6 +5580,12 @@ button.animate-btn::after,
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Ensures the image container never collapses even when the src is a
+     placeholder with no intrinsic dimensions (the "image coming soon"
+     grid). Without this, sticky cards collapse to near-zero height and
+     multiple cards overlap simultaneously on desktop. */
+  aspect-ratio: 700 / 427;
+  display: block;
 }
 .wg-work .work-content {
   position: relative;
@@ -7891,20 +7897,7 @@ html, body {
   overscroll-behavior-y: none;
 }
 
-/* ── Work section: guarantee each sticky card is tall enough to fill the
-   viewport so only one card is ever visible at a time. Without a minimum
-   height the "image coming soon" placeholder collapses to near-zero, 
-   causing multiple cards to overlap simultaneously and card 01 to be 
-   skipped entirely when navigating to #work. ── */
-@media (min-width: 992px) {
-  .wg-work .work-image {
-    min-height: calc(100vh - 200px);
-    aspect-ratio: 16 / 9;
-  }
-  .element-sticky .sticky-item {
-    min-height: 100vh;
-  }
-}
+
 
 /* ── Work card: arrow link in the bottom-right corner of the right-side
    image panel, so visitors can jump to the project without needing to
