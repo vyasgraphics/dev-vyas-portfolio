@@ -13,16 +13,12 @@ export function About() {
         one user at a time
       </h4>
       <p className="s-desc text-black-56 scrolling-effect effectTop">
-        I&apos;m a product designer with four years of commercial experience and an MSc in
-        Human-Centred Interactive Technologies at the University of York. My work sits at the
-        intersection of rigorous UX research and considered visual design - the kind of combination
-        that means the things I make are not only good to look at, but genuinely easier to use.
-        <br /><br />
-        I also fold AI into the way I work - using it to speed up early ideation, stress-test
-        research questions, and prototype faster, while keeping every final decision grounded in
-        real user evidence rather than a model&apos;s best guess. Whether that&apos;s running
-        think-aloud studies, designing lo-fi prototypes, building brand identities from scratch, or
-        producing motion graphics for a live sports campaign - I care about getting the details right.
+        Product designer with four years of commercial experience and an MSc in
+        Human-Centred Interactive Technologies at the University of York. I work at the
+        intersection of rigorous UX research and considered visual design — from
+        think-aloud studies and Figma prototypes to brand identities and motion graphics.
+        AI runs through everything I do: faster ideation, sharper synthesis, every
+        decision still grounded in real user evidence.
       </p>
       <ul className="award-list">
         {awards.map((a, i) => (

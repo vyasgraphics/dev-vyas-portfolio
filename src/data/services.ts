@@ -38,7 +38,7 @@ export const services: Service[] = [
     title: "Graphic Design & Brand Identity",
     description: "Logos, visual systems, social media campaigns, and print collateral - built to be consistent and recognisable. I've developed 20+ brand identities from scratch and know how to translate a client's personality into something that actually sticks.",
     tags: ["Logo Design", "Brand Guidelines", "Social Media Campaigns", "Print & Editorial"],
-    images: ["/assets/images/section/service-1.jpg", "/assets/images/section/service-2.jpg"],
+    images: ["/assets/images/section/service-7.jpg", "/assets/images/section/service-8.jpg"],
     expanded: false,
   },
 ];
