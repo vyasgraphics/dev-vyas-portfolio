@@ -1,0 +1,24 @@
+@use "../../abstracts/index" as *;
+
+
+.testimonial-v01 {
+    .tes-icon {
+        font-size: 32px;
+        margin-bottom: 16px;
+        color: var(--primary);
+    }
+
+    .tes-text {
+        margin-bottom: 32px;
+    }
+
+    .author_name {
+        margin-bottom: 4px;
+    }
+
+    @include res(md) {
+        .tes-text {
+            margin-bottom: 24px;
+        }
+    }
+}

@@ -1,0 +1,73 @@
+@use "../../abstracts/index" as *;
+
+
+.tf-footer {
+    .quote-text {
+        margin-bottom: 8px;
+    }
+
+    .br-line {
+        margin-top: 64px;
+        margin-bottom: 64px;
+        background-color: var(--black-6);
+    }
+
+    .foot-inner {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        gap: 12px;
+
+        .isak {
+            max-width: 354px;
+            width: 100%;
+        }
+    }
+
+    .foot-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 12px;
+
+        .isak {
+            max-width: 428px;
+            width: 100%;
+        }
+    }
+
+    .f-logo {
+        background-color: var(--white);
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        @include flex(center, center);
+        box-shadow: var(--shadow);
+        flex-shrink: 0;
+    }
+
+    .text-nocopy {
+        white-space: nowrap
+    }
+
+    .isak {
+        width: auto;
+    }
+
+    @include res(md) {
+        .f-logo {
+            width: 40px;
+            height: 40px;
+
+            .logo {
+                width: 20px;
+                padding-bottom: 4px;
+            }
+        }
+
+        .br-line {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    }
+}

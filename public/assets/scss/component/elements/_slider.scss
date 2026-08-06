@@ -1,0 +1,245 @@
+@use "../../abstracts/index" as *;
+
+
+
+.sw-dot-default {
+    margin-top: 24px;
+    display: inline-flex;
+    justify-content: center;
+    gap: 12px;
+
+    .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background-color: var(--black);
+        @include transition3;
+        opacity: 0.32;
+        margin-left: 4px;
+        margin-right: 4px;
+        margin: 0 !important;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% + 12px);
+            height: calc(100% + 12px);
+        }
+
+        &.swiper-pagination-bullet-active {
+            opacity: 1;
+        }
+    }
+
+    &.style-white {
+        .swiper-pagination-bullet {
+            &.swiper-pagination-bullet-active {
+                border: 1px solid var(--white);
+
+                &::before {
+                    background-color: var(--white);
+                }
+            }
+
+            &::before {
+                background-color: #FFFFFF99;
+            }
+        }
+    }
+
+    @include res(xl, min) {
+        margin-top: 40px;
+    }
+}
+
+
+.group-btn-slider {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+
+    .sw-dot-default {
+        width: auto;
+        margin: 0;
+    }
+
+    .nav-prev-swiper,
+    .nav-next-swiper {
+        &.swiper-button-disabled {
+            opacity: 0.32;
+        }
+    }
+
+
+    @include res(xl) {
+        margin-top: 24px;
+        gap: 24px;
+    }
+}
+
+.btn-thumbs {
+    cursor: pointer;
+}
+
+.btn-nav-swiper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.swiper-feature {}
+
+
+.hover-wrap {
+    position: absolute;
+    top: 0;
+    bottom: 40px;
+    z-index: 2;
+    overflow: hidden;
+
+    .action {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        opacity: 0;
+
+        &.hover {
+            opacity: 1;
+        }
+        &:not(.hover) {
+            opacity: 0;
+        }
+    }
+
+    &.left {
+        right: 50%;
+        left: 0;
+    }
+
+    &.right {
+        right: 0;
+        left: 50%;
+    }
+
+    @include res(xl) {
+        display: none;
+    }
+}
+
+
+.slider_effect_fade {
+    .swiper-slide {
+
+        &.swiper-slide-active {
+
+            .fade-item {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .scale-item {
+                transform: scale(1);
+            }
+
+            .width-item {
+                width: 100%;
+            }
+        }
+    }
+
+    .fade-item {
+        transform: translateY(100px);
+        opacity: 0;
+        visibility: hidden;
+        @include transition3;
+
+        &.fade-box {
+            transition-delay: 0.4s;
+            transform: translateY(0px);
+        }
+
+        &.fade-item-1 {
+            transition-delay: 0.5s;
+        }
+
+        &.fade-item-2 {
+            transition-delay: 0.6s;
+        }
+
+        &.fade-item-3 {
+            transition-delay: 0.7s;
+        }
+
+        &.fade-item-4 {
+            transition-delay: 0.8s;
+        }
+    }
+
+    .scale-item {
+        transform: scale(1.2);
+        transition: all 0.5s linear;
+
+        &.scale-item-1 {
+            transition-delay: 0.3s;
+        }
+    }
+
+    .width-item {
+        width: 1%;
+        @include transition3;
+
+        &.width-item-3 {
+            transition-delay: 0.7s;
+        }
+    }
+}
+
+
+
+.swiper-testimonial {}
+
+.number-pagination {
+    color: var(--black-56);
+    display: flex;
+    align-items: center;
+
+    .swiper-pagination-current {
+        color: var(--black-72);
+    }
+}
+
+.sw-nav {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    @include flex(center, center);
+    color: var(--black-40);
+
+    &.swiper-button-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+    }
+}
+
+.swiper-award {
+    .image-small {
+        width: 100%;
+        border-radius: 3px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
