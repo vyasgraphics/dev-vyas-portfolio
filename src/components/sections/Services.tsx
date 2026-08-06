@@ -42,7 +42,7 @@ export function Services() {
                 {services.map((s, idx) => {
                     const isOpen = idx === 0;
                     return (
-                        <div key={s.id} className="service-accordion_item scrolling-effect effectBottom">
+                        <div key={s.id} className="service-accordion_item">
                             <a
                                 href={`#${s.id}`}
                                 className={`accordion-action${isOpen ? "" : " collapsed"}`}
