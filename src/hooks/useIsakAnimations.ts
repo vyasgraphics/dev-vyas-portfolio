@@ -335,41 +335,25 @@ export function useIsakAnimations() {
             cleanups.push(() => window.removeEventListener("resize", onResize));
         }
 
-        /* ---------------- Draw SVG scribble (replays on re-entry to #home) ------- */
+        /* ---------------- Draw SVG scribble ---------------- */
+        // Match the original exactly: observe the SVG itself (not the whole #home section),
+        // disconnect after first fire, and measure getTotalLength() inside the observer
+        // callback - this guarantees the SVG is laid out before we measure it, which
+        // matters on mobile Safari where SVG layout can lag JS execution on mount.
         if (document.querySelector(".scribble-wrap")) {
             const path = document.getElementById("scribblePath") as unknown as SVGPathElement | null;
-            const svg = document.querySelector<HTMLElement>(".scribble");
+            const svg = document.querySelector(".scribble");
             if (path && svg) {
-                const len = path.getTotalLength();
-                svg.style.setProperty("--len", String(len));
-
-                let replayTimer: ReturnType<typeof setTimeout> | null = null;
-                let wasVisible = false;
-
-                const triggerReplay = () => {
-                    if (replayTimer) clearTimeout(replayTimer);
-                    svg.classList.remove("is-drawn");
-                    void svg.offsetWidth;
-                    replayTimer = setTimeout(() => { svg.classList.add("is-drawn"); }, 30);
-                };
-
-                const homeSection = document.getElementById("home");
-                if (homeSection) {
-                    const io = new IntersectionObserver(([entry]) => {
-                        if (entry.isIntersecting && !wasVisible) { wasVisible = true; triggerReplay(); }
-                        else if (!entry.isIntersecting) { wasVisible = false; }
-                    }, { threshold: 0.15 });
-                    io.observe(homeSection);
-                    cleanups.push(() => io.disconnect());
-                }
-
-                const homeAnchors = document.querySelectorAll<HTMLAnchorElement>('a[href="#home"], a[href="#"]');
-                const onHomeClick = () => { setTimeout(triggerReplay, 400); };
-                homeAnchors.forEach((a) => a.addEventListener("click", onHomeClick));
-                cleanups.push(() => homeAnchors.forEach((a) => a.removeEventListener("click", onHomeClick)));
-
-                triggerReplay();
-                cleanups.push(() => { if (replayTimer) clearTimeout(replayTimer); });
+                const io = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                        const len = path.getTotalLength();
+                        (svg as HTMLElement).style.setProperty("--len", String(len));
+                        svg.classList.add("is-drawn");
+                        io.disconnect();
+                    }
+                }, { threshold: 0.2 });
+                io.observe(svg);
+                cleanups.push(() => io.disconnect());
             }
         }
 

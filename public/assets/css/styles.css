@@ -7457,17 +7457,7 @@ button.animate-btn::after,
   background: transparent !important; width: 0 !important; opacity: 0 !important;
 }
 
-/* ── 3. Ribbon: reliable draw on every home visit ── */
-.scribble { opacity: 0; transition: opacity 0.3s ease; }
-.scribble.is-drawn { opacity: 1 !important; }
-.scribble path {
-  stroke-dasharray: var(--len, 1000) !important;
-  stroke-dashoffset: var(--len, 1000) !important;
-  transition: stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-.scribble.is-drawn path { stroke-dashoffset: 0 !important; }
-
-/* ── 4. Circular badge spacing ── */
+/* ── 3. Circular badge: don't shrink, let circle overflow its bounds ── */
 .wg-curve-text { flex-shrink: 0; }
 .text-rotate .circle { overflow: visible !important; }
 
@@ -7522,7 +7512,10 @@ button.animate-btn::after,
    that don't interfere with ScrollTrigger position calculations.
    ══════════════════════════════════════════════════════════ */
 @media (max-width: 991px) {
-  body, html { overflow-x: hidden; }
+  /* overflow-x:hidden on body would clip absolutely-positioned elements like the
+     circular badge - use clip on body only (not html) so absolutely positioned
+     children of positioned ancestors still paint correctly */
+  body { overflow-x: clip; }
 
   /* Hamburger — fixed top right */
   .action-open-mobile {
@@ -7884,4 +7877,20 @@ html, body {
 .form-contact .field-ip.has-error input,
 .form-contact .field-ip.has-error textarea {
   border-bottom-color: #ff5c5c !important;
+}
+
+/* ── Mobile: ensure intro-item has enough height for the circular badge ──
+   On mobile the scribble SVG shrinks to about 100px tall at phone widths.
+   The wg-curve-text badge (166px diameter) is positioned absolute relative
+   to intro-item. Without a min-height the badge can overflow into negative
+   space and get clipped or invisible. Also force the section-intro container
+   to not clip its children so the absolute badge always paints. ── */
+@media (max-width: 575px) {
+  .section-intro .intro-item {
+    min-height: 200px;
+    overflow: visible !important;
+  }
+  .section-intro {
+    overflow-x: visible !important;
+  }
 }
