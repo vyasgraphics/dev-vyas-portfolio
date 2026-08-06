@@ -7,6 +7,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     <NextThemesProvider
       attribute="data-theme"
       defaultTheme="dark"
+      forcedTheme="dark"
       enableSystem={false}
       storageKey="darkMode"
     >

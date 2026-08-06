@@ -7517,145 +7517,48 @@ button.animate-btn::after,
 }
 
 /* ══════════════════════════════════════════════════════════
-   MOBILE LAYOUT  (≤ 991px)  — single authoritative block
+   MOBILE LAYOUT  (≤ 991px)
+   Matching the original template's approach: minimal overrides
+   that don't interfere with ScrollTrigger position calculations.
    ══════════════════════════════════════════════════════════ */
 @media (max-width: 991px) {
-  body, html { overflow-x: hidden !important; }
-  #wrapper { padding-top: 0 !important; }
+  body, html { overflow-x: hidden; }
 
-  /* Hamburger stays at top-right (original position is fine, just ensure z-index) */
+  /* Hamburger — fixed top right */
   .action-open-mobile {
-    position: fixed !important;
-    right: 16px !important; top: 24px !important;
-    z-index: 199 !important;
+    position: fixed;
+    right: 16px;
+    top: 24px;
+    z-index: 199;
   }
 
-  /* Date/time — right-aligned inside the header wrap which stays relative */
+  /* Header clock — compact */
   .tf-header-wrap {
-    position: relative !important;
-    padding: 16px 16px 8px !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    justify-content: flex-end !important;
+    padding: 16px 16px 8px;
+    justify-content: flex-end;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
-  .tf-header-wrap .logo-site { display: none !important; }
-  .tf-header-wrap .left { padding-right: 48px !important; } /* clear of hamburger */
+  .tf-header-wrap .logo-site { display: none; }
+  .tf-header-wrap .left { padding-right: 48px; }
   .time-local {
-    display: flex !important; flex-direction: column !important;
-    align-items: flex-end !important; gap: 1px !important;
-    font-size: 10px !important; line-height: 1.4 !important;
-    color: rgba(255,255,255,0.45) !important; text-align: right !important;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    text-align: right;
   }
-  .time-local .date, .time-local .clock { margin: 0 !important; }
 
-  /* Main content — full width */
-  .main-content { margin-left: 0 !important; width: 100% !important; }
-  .main-content .container { padding: 0 !important; max-width: 100% !important; }
-  .main-content .row { margin: 0 !important; }
-  .main-content .col-lg-7,
-  .main-content .col-xl-8 {
-    width: 100% !important; max-width: 100% !important;
-    margin: 0 !important; padding: 0 !important; flex: none !important;
-  }
-  .wrap-container { padding: 0 16px !important; }
+  /* Desktop-only sidebar nav hidden */
+  .sidebar-tools.pst-v1 .nav-list { display: none; }
 
-  /* Sidebar card — centred, portrait format, full overlay */
-  .sidebar-user {
-    position: relative !important;
-    max-width: 430px !important;
-    width: calc(100% - 32px) !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    top: auto !important; left: auto !important; bottom: auto !important;
-  }
-  .sidebar-user .wrap {
-    border-radius: 20px !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    max-height: calc(100svh - 80px) !important;
-  }
-  /* Photo */
-  .sidebar-user .user-image { border-radius: 16px !important; overflow: hidden !important; }
-  .sidebar-user .user-image .image img {
-    width: 100% !important;
-    aspect-ratio: 0.547 !important;
-    max-height: 72vh !important;
-    object-fit: cover !important;
-    object-position: top center !important;
-    display: block !important;
-  }
-  /* Dark gradient overlay over photo so text is legible */
-  .sidebar-user .user-image::before {
-    content: "" !important;
-    position: absolute !important;
-    bottom: 0 !important; left: 0 !important; right: 0 !important; top: auto !important;
-    height: 78% !important;
-    background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.75) 35%, rgba(0,0,0,0.35) 65%, transparent 100%) !important;
-    z-index: 1 !important;
-    border-radius: 0 0 16px 16px !important;
-    pointer-events: none !important;
-  }
-  /* Hide vertical text bar */
-  .sidebar-user .meta-left { display: none !important; }
-  .sidebar-user .user-logo { display: none !important; }
-  /* Social icons */
-  .sidebar-user .user-social {
-    position: absolute !important; right: 16px !important; top: 16px !important; z-index: 10 !important;
-  }
-  /* Text info overlay */
-  .sidebar-user .user-info {
-    position: absolute !important; left: 20px !important; right: 20px !important;
-    bottom: 20px !important; z-index: 10 !important;
-  }
-  .sidebar-user .user-info .avaiable-dot {
-    margin-bottom: 10px !important; font-size: 12px !important;
-    color: rgba(255,255,255,0.8) !important;
-  }
-  .sidebar-user .user-info .greeting {
-    font-size: clamp(22px, 6vw, 30px) !important;
-    padding-bottom: 8px !important;
-    color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
-  }
-  /* Animated text always white - but ONLY force opacity on the visible word,
-     never on hidden ones, or the hide/show transition breaks and words stack. */
-  .sidebar-user .user-info .greeting .cd-words-wrapper,
-  .sidebar-user .user-info .greeting .item-text {
-    color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
-  }
-  .sidebar-user .user-info .greeting .item-text.is-visible {
-    opacity: 1 !important;
-  }
-  .sidebar-user .user-info .greeting .item-text.is-hidden {
-    opacity: 0 !important;
-  }
-  .animationtext.clip .cd-words-wrapper::after { background-color: #ffffff !important; }
-  .sidebar-user .user-info .introduce {
-    font-size: 12px !important; line-height: 1.55 !important;
-    color: rgba(255,255,255,0.6) !important;
-  }
-  .sidebar-user .user-info .br-line {
-    margin-top: 14px !important; margin-bottom: 14px !important;
-    background-color: rgba(255,255,255,0.12) !important;
-  }
-  .sidebar-user .action-group { gap: 10px !important; flex-wrap: nowrap !important; }
-
-  /* Section spacing */
-  .flat-spacing { padding-top: 36px !important; padding-bottom: 36px !important; }
-  .section-intro { padding-top: 16px !important; }
-
-  /* Timeline */
+  /* Timeline line */
   .section-education-experience .timeline { padding-left: 0; }
-  .section-education-experience .timeline-line { left: 4px !important; width: 2px; }
-
-  /* Desktop-only elements hidden */
-  .sidebar-tools.pst-v1 .nav-list { display: none !important; }
+  .section-education-experience .timeline-line { left: 4px; width: 2px; }
 }
 
 /* ── Small phones ── */
 @media (max-width: 425px) {
   .sidebar-user .user-image { display: flex; }
-  .sidebar-user .user-image .image img { aspect-ratio: 0.547 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════

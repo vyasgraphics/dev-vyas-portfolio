@@ -14,17 +14,18 @@ function ensureScrollTrigger() {
     pluginRegistered = true;
 }
 
-// This value never changes after the initial client read (no resize/
-// matchMedia listener - matching the previous implementation's behaviour
-// exactly), so subscribe is a no-op: useSyncExternalStore only needs it to
-// satisfy the API shape, not to drive re-renders.
+// Only skip Lenis for prefers-reduced-motion. Previously we also skipped it
+// on mobile (< 992px) to avoid Lenis "overhead" on touch devices - but that
+// was the wrong trade-off: GSAP ScrollTrigger drives ALL entrance animations
+// (effectFade, scrolling-effect, split-text, etc.) by listening to Lenis
+// scroll events. Without Lenis, those events never fire on mobile, so
+// everything is static and rigid - exactly the reported bug. The original
+// template runs Lenis on all devices with syncTouch:true and that is correct.
 function subscribeNever() {
     return () => {};
 }
 function getSkipLenisSnapshot() {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.innerWidth < 992;
-    return reducedMotion || isMobile;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 function getSkipLenisServerSnapshot() {
     return false;
@@ -33,52 +34,17 @@ function getSkipLenisServerSnapshot() {
 type SmoothScrollProps = { children: React.ReactNode };
 
 export default function SmoothScroll({ children }: SmoothScrollProps) {
-    // Mounted once at the root layout, alive for the entire session
-    // regardless of route - see the hook itself for why that matters for
-    // getting the browser back button right.
     useCrossRouteBackNav();
 
     const lenisRef = useRef<LenisRef>(null);
 
-    // Lenis attaches touchstart/touchmove listeners UNCONDITIONALLY,
-    // regardless of the syncTouch setting - confirmed directly in its
-    // source. Even with syncTouch:false (not acting on touch input to
-    // virtualize scroll), it's still running every touch event through
-    // its own JS for internal bookkeeping (velocity, direction, etc.),
-    // which is real overhead added to every single scroll gesture on
-    // exactly the class of device where that overhead is most
-    // noticeable. Native mobile touch-scroll already has excellent,
-    // extensively-tuned OS-level momentum physics; Lenis's actual value
-    // (eased, virtualized wheel input) is fundamentally a desktop mouse
-    // concept. Not mounting Lenis at all below the site's existing
-    // mobile breakpoint removes any possibility of it adding friction
-    // there - every scroll-driven feature already falls back to native
-    // APIs correctly when Lenis isn't present (see smoothScrollTo).
-    //
-    // Read via useSyncExternalStore rather than the old mount-then-setState
-    // pattern: this is React's documented way to pull in a client-only
-    // value (matchMedia/innerWidth aren't available during SSR) without an
-    // extra render-triggering setState call inside the effect body.
-    // getServerSnapshot keeps the SSR/first-paint value at false (Lenis
-    // mounted), matching the old default exactly, so there's still no
-    // hydration mismatch; the real value takes over on the client render
-    // right after.
+    // Only skip for reduced-motion - Lenis runs on all devices including mobile.
     const skipLenis = useSyncExternalStore(
         subscribeNever,
         getSkipLenisSnapshot,
         getSkipLenisServerSnapshot,
     );
 
-    // Expose the Lenis instance globally so any component (including
-    // vanilla-JS GSAP hooks) can route hash-link scrolling through it
-    // instead of the browser's native scroll, which otherwise fights
-    // Lenis and causes visible stutter on every nav click.
-    //
-    // This also tells GSAP's ScrollTrigger to recalculate whenever Lenis
-    // actually scrolls, so entrance animations stay in sync with Lenis's
-    // eased position rather than only the browser's own scroll events.
-    // This listener is purely additive - it never touches how Lenis itself
-    // renders scroll, so it cannot break basic scrolling.
     useEffect(() => {
         if (skipLenis) return;
         const id = requestAnimationFrame(() => {
@@ -104,13 +70,6 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
         };
     }, [skipLenis]);
 
-    // Mobile and prefers-reduced-motion both skip Lenis entirely and let
-    // the browser's native scrolling take over - see the reasoning above
-    // for mobile; for reduced-motion, continuous lerped scroll easing is
-    // exactly the kind of motion that preference is meant to turn off.
-    // GSAP's ScrollTrigger still works correctly without Lenis mounted -
-    // it listens to native scroll events directly by default - so entrance
-    // animations are unaffected either way.
     if (skipLenis) {
         return <>{children}</>;
     }
@@ -122,8 +81,12 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
             options={{
                 lerp: 0.1,
                 duration: 1.4,
-                smoothWheel: true,      // Smooth easing for desktop mouse-wheel input
-                syncTouch: false,
+                smoothWheel: true,
+                // syncTouch:true mirrors the original template and is essential
+                // for mobile: it lets Lenis intercept touch scroll events so
+                // they flow through ScrollTrigger's update loop - without this,
+                // GSAP animations simply don't fire on touch devices at all.
+                syncTouch: true,
                 infinite: false,
                 orientation: "vertical",
                 gestureOrientation: "vertical",
