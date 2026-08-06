@@ -10,14 +10,6 @@ let pluginsRegistered = false;
 function ensurePlugins() {
     if (pluginsRegistered) return;
     gsap.registerPlugin(ScrollTrigger, SplitText, ScrollToPlugin);
-    // Mobile browsers (mainly Safari) resize the viewport slightly as the
-    // address bar collapses/expands *during* scroll. ScrollTrigger's
-    // default behaviour treats that as a "real" resize and auto-refreshes
-    // immediately, which can fire mid-gesture and fight the deliberate,
-    // debounced refresh this hook already does via visualViewport below -
-    // two refresh mechanisms competing is worse than one. Let this hook's
-    // own handling own that responsibility instead.
-    ScrollTrigger.config({ ignoreMobileResize: true });
     pluginsRegistered = true;
 }
 
@@ -751,48 +743,13 @@ export function useIsakAnimations() {
         );
 
         /* ---------------- Refresh ScrollTrigger after layout settles ---------------- */
-        // A single 100ms timeout isn't enough on mobile: images/fonts often
-        // take longer to arrive on a slower connection/CPU, and every trigger
-        // position ScrollTrigger calculated before they load is now wrong.
-        // On top of that, mobile Safari's address bar collapsing/expanding
-        // as you scroll changes window.innerHeight *after* the initial
-        // calculation too - a well-known ScrollTrigger + mobile pitfall.
-        // Refresh on load, on any late image load, and on real viewport
-        // height changes (via visualViewport where available).
+        // Match the original template exactly: one simple timeout.
+        // The previous complex setup (visualViewport listener, image load
+        // listeners, orientationchange) was fighting Lenis's scroll event
+        // pipeline and causing ScrollTrigger to recalculate trigger positions
+        // at wrong moments on mobile - making animations appear to never fire.
         const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
-
-        const onWindowLoad = () => ScrollTrigger.refresh();
-        window.addEventListener("load", onWindowLoad);
-
-        let lastViewportHeight = window.innerHeight;
-        let viewportRefreshRaf = 0;
-        const onViewportChange = () => {
-            const vh = window.visualViewport?.height ?? window.innerHeight;
-            if (Math.abs(vh - lastViewportHeight) < 2) return;
-            lastViewportHeight = vh;
-            cancelAnimationFrame(viewportRefreshRaf);
-            viewportRefreshRaf = requestAnimationFrame(() => ScrollTrigger.refresh());
-        };
-        window.visualViewport?.addEventListener("resize", onViewportChange);
-        window.addEventListener("orientationchange", onViewportChange);
-
-        // Any image finishing its load after the initial pass can shift
-        // layout enough to desync trigger points, particularly the large
-        // hero/work-section images on a throttled mobile connection.
-        const images = Array.from(document.querySelectorAll("img"));
-        const onImageLoad = () => ScrollTrigger.refresh();
-        images.forEach((img) => {
-            if (!img.complete) img.addEventListener("load", onImageLoad, { once: true });
-        });
-
-        cleanups.push(() => {
-            clearTimeout(refreshTimer);
-            window.removeEventListener("load", onWindowLoad);
-            window.visualViewport?.removeEventListener("resize", onViewportChange);
-            window.removeEventListener("orientationchange", onViewportChange);
-            cancelAnimationFrame(viewportRefreshRaf);
-            images.forEach((img) => img.removeEventListener("load", onImageLoad));
-        });
+        cleanups.push(() => clearTimeout(refreshTimer));
 
         return () => {
             cleanups.forEach((fn) => fn());
