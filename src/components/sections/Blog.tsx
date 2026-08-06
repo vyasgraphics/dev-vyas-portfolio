@@ -23,14 +23,7 @@ export function Blog() {
             key={post.slug}
             href={`/blog/${post.slug}`}
             scroll={false}
-            id={`blog-item-${post.slug}`}
             className="blog-card scrolling-effect effectBottom"
-            onClick={() => {
-              // Read back by resolveScrollTarget when "← Back to Writing"
-              // (or the browser back button) restores the homepage, so it
-              // lands on this specific card rather than just the section top.
-              sessionStorage.setItem("lastBlogItemSlug", post.slug);
-            }}
             style={{
               display: "block",
               textDecoration: "none",

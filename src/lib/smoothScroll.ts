@@ -54,30 +54,20 @@ export function cleanHash(raw: string | null | undefined): string {
   return match ? match[0] : "";
 }
 
-// The specific-item sessionStorage keys written by Work.tsx and Blog.tsx
-// when a card is clicked into, and read back here to decide whether a
-// restoration should land on a precise card rather than just the section.
-const ITEM_STORAGE_KEY: Record<string, string> = {
-  "#work": "lastWorkItemSlug",
-  "#blog": "lastBlogItemSlug",
-};
-const ITEM_ID_PREFIX: Record<string, string> = {
-  "#work": "work-item-",
-  "#blog": "blog-item-",
-};
-
-// Upgrades a section-level hash ("#work") to a specific card's selector
-// ("#work-item-dissertation") if the person arrived at the detail page by
-// clicking that specific card - consumed once per restoration, so a later
-// visit to the section via a plain nav click (no specific card involved)
-// isn't affected by a stale value.
+// Upgrades "#work" to "#work-item-<slug>" if a specific work card was
+// clicked into, so "Back to Work" and the back button land on that exact
+// card rather than just the top of the section.
+//
+// Blog is intentionally excluded: blog cards are in a normal flow grid so
+// scrolling to the last card element overshoots into the Contact section
+// below it. "#work" is safe because work cards are full-viewport sticky
+// items that always land squarely on screen regardless of position.
 export function resolveScrollTarget(hash: string): string {
-  const key = ITEM_STORAGE_KEY[hash];
-  if (!key || typeof window === "undefined") return hash;
-  const slug = sessionStorage.getItem(key);
-  sessionStorage.removeItem(key);
+  if (hash !== "#work" || typeof window === "undefined") return hash;
+  const slug = sessionStorage.getItem("lastWorkItemSlug");
+  sessionStorage.removeItem("lastWorkItemSlug");
   if (!slug) return hash;
-  return `#${ITEM_ID_PREFIX[hash]}${slug}`;
+  return `#work-item-${slug}`;
 }
 
 function getLenis(): LenisLike | null {

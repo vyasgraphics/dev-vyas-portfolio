@@ -81,10 +81,6 @@ export function useCrossRouteBackNav() {
             }
             const target = document.querySelector(preferredTarget) || document.querySelector(hash);
             if (target) {
-                // Written explicitly rather than trusting whatever the
-                // browser already has for this history entry - see
-                // useUrlHashSync for why (an occasional malformed
-                // concatenated hash from Next's own Link handling).
                 history.replaceState(null, "", hash);
                 smoothScrollTo(target as HTMLElement, { immediate: true });
                 return true;
@@ -94,12 +90,6 @@ export function useCrossRouteBackNav() {
 
         const restoreToHash = (hash: string, preferredTarget: string, attemptsLeft = 30) => {
             if (positionTo(hash, preferredTarget)) {
-                // The immediate scroll call now has a double-rAF gap inside
-                // it (to let Lenis recalculate page dimensions after the
-                // route swap). Two follow-up corrections at 500ms and 1000ms
-                // act as a belt-and-suspenders safety net in case anything
-                // nudges the position again after that - e.g. a late image
-                // load shifting layout, or Next's own internal scroll reset.
                 settleTimers.push(setTimeout(() => positionTo(hash, preferredTarget), 500));
                 settleTimers.push(setTimeout(() => positionTo(hash, preferredTarget), 1000));
                 return;
@@ -132,14 +122,8 @@ export function useCrossRouteBackNav() {
             const stored = sessionStorage.getItem("lastActiveSection");
             const hash = cleanHash(stored || window.location.hash);
 
-            // Resolved once, up front - if a specific card was clicked
-            // into (see Work.tsx/Blog.tsx), land back on that card. Doing
-            // this once here (rather than inside positionTo, which runs
-            // repeatedly across retries and the settle-correction) matters
-            // because resolveScrollTarget consumes the stored slug on
-            // read - resolving it fresh on every call would lose it after
-            // the first successful positioning, and the settle-correction
-            // would then fall back to just the section top.
+            // Resolved once up front so the slug is consumed exactly once
+            // (resolveScrollTarget removes it from sessionStorage on read).
             const preferredTarget = resolveScrollTarget(hash);
 
             // See "Root cause #3" above - claim this navigation so

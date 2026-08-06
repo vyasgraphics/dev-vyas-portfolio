@@ -62,8 +62,10 @@ export function useUrlHashSync() {
         // once smoothScrollTo below actually runs. See suppressPassiveHashSync.
         suppressPassiveHashSync(2000);
 
-        // If a specific card was clicked into (see Work.tsx/Blog.tsx),
-        // land on that card rather than just the top of its section.
+        // For #work, restore to the specific card that was clicked into.
+        // For all other sections (including #blog), always restore to the
+        // section top - blog cards are in a flow grid and scrolling to a
+        // specific card element can overshoot into the next section.
         const preferredTarget = resolveScrollTarget(hash);
 
         let attempts = 0;
@@ -74,9 +76,6 @@ export function useUrlHashSync() {
             if (target) {
                 history.replaceState(null, "", hash);
                 smoothScrollTo(target as HTMLElement, { immediate: true });
-                // Belt-and-suspenders settle corrections: the immediate scroll
-                // has a double-rAF inside it for Lenis dimension recalculation,
-                // but late image loads or Next internals can still nudge position.
                 settleTimers.push(window.setTimeout(() => {
                     const t2 = document.querySelector(preferredTarget) || document.querySelector(hash);
                     if (t2) smoothScrollTo(t2 as HTMLElement, { immediate: true });

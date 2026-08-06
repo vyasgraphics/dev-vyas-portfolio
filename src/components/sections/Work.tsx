@@ -114,11 +114,6 @@ export function Work() {
                                                     scroll={false}
                                                     className="tf-btn-action style-white"
                                                     onClick={() => {
-                                                        // Read back by resolveScrollTarget when this
-                                                        // page's "← Back to Work" link (or the browser
-                                                        // back button) restores the homepage, so it lands
-                                                        // on this specific card rather than just the
-                                                        // section top.
                                                         sessionStorage.setItem("lastWorkItemSlug", w.slug);
                                                     }}
                                                 >
