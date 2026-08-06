@@ -1,34 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
-import { ReactLenis } from "lenis/react";
-import type { LenisRef } from "lenis/react";
+import { useEffect } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCrossRouteBackNav } from "./useCrossRouteBackNav";
 
-let pluginRegistered = false;
-function ensureScrollTrigger() {
-    if (pluginRegistered) return;
-    gsap.registerPlugin(ScrollTrigger);
-    pluginRegistered = true;
-}
+// Register ScrollTrigger once globally.
+gsap.registerPlugin(ScrollTrigger);
 
-// Only skip Lenis for prefers-reduced-motion. Previously we also skipped it
-// on mobile (< 992px) to avoid Lenis "overhead" on touch devices - but that
-// was the wrong trade-off: GSAP ScrollTrigger drives ALL entrance animations
-// (effectFade, scrolling-effect, split-text, etc.) by listening to Lenis
-// scroll events. Without Lenis, those events never fire on mobile, so
-// everything is static and rigid - exactly the reported bug. The original
-// template runs Lenis on all devices with syncTouch:true and that is correct.
-function subscribeNever() {
-    return () => {};
-}
-function getSkipLenisSnapshot() {
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-function getSkipLenisServerSnapshot() {
-    return false;
+// Inner component — lives inside the ReactLenis provider so useLenis() works.
+// Exposes the Lenis instance on window.__lenis so smoothScrollTo (used by nav
+// clicks and the back-button restoration) can route through it.
+function LenisExposer() {
+    const lenis = useLenis();
+    useEffect(() => {
+        if (!lenis) return;
+        (window as unknown as { __lenis?: unknown }).__lenis = lenis;
+        return () => {
+            delete (window as unknown as { __lenis?: unknown }).__lenis;
+        };
+    }, [lenis]);
+    return null;
 }
 
 type SmoothScrollProps = { children: React.ReactNode };
@@ -36,62 +29,24 @@ type SmoothScrollProps = { children: React.ReactNode };
 export default function SmoothScroll({ children }: SmoothScrollProps) {
     useCrossRouteBackNav();
 
-    const lenisRef = useRef<LenisRef>(null);
-
-    // Only skip for reduced-motion - Lenis runs on all devices including mobile.
-    const skipLenis = useSyncExternalStore(
-        subscribeNever,
-        getSkipLenisSnapshot,
-        getSkipLenisServerSnapshot,
-    );
-
-    useEffect(() => {
-        if (skipLenis) return;
-        const id = requestAnimationFrame(() => {
-            const lenis = lenisRef.current?.lenis;
-            if (!lenis) return;
-
-            (window as unknown as { __lenis?: unknown }).__lenis = lenis;
-
-            ensureScrollTrigger();
-            gsap.ticker.lagSmoothing(0);
-            lenis.on("scroll", ScrollTrigger.update);
-
-            (window as unknown as { __lenisCleanup?: () => void }).__lenisCleanup = () => {
-                lenis.off("scroll", ScrollTrigger.update);
-            };
-        });
-        return () => {
-            cancelAnimationFrame(id);
-            const w = window as unknown as { __lenisCleanup?: () => void; __lenis?: unknown };
-            w.__lenisCleanup?.();
-            delete w.__lenisCleanup;
-            delete w.__lenis;
-        };
-    }, [skipLenis]);
-
-    if (skipLenis) {
-        return <>{children}</>;
-    }
-
     return (
         <ReactLenis
             root
-            ref={lenisRef}
             options={{
-                lerp: 0.1,
-                duration: 1.4,
+                // Exact same values as the original template (tfisak.vercel.app).
+                // syncTouch:false means Lenis does NOT intercept touch events —
+                // the browser handles touch scrolling natively, which is smoother
+                // on mobile. ScrollTrigger listens to native scroll events directly,
+                // so all GSAP animations fire correctly without Lenis involvement
+                // on touch devices. This is how the original works and why it
+                // animates correctly in Safari on mobile.
+                lerp: 0.08,
+                duration: 1.2,
                 smoothWheel: true,
-                // syncTouch:true mirrors the original template and is essential
-                // for mobile: it lets Lenis intercept touch scroll events so
-                // they flow through ScrollTrigger's update loop - without this,
-                // GSAP animations simply don't fire on touch devices at all.
-                syncTouch: true,
-                infinite: false,
-                orientation: "vertical",
-                gestureOrientation: "vertical",
+                syncTouch: false,
             }}
         >
+            <LenisExposer />
             {children}
         </ReactLenis>
     );
