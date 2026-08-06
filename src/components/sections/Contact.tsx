@@ -7,6 +7,10 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function Contact() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  // Store the submitted values separately so the success message can show
+  // the real name/email even after the form fields are cleared.
+  const [submittedName, setSubmittedName] = useState("");
+  const [submittedEmail, setSubmittedEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -16,7 +20,6 @@ export function Contact() {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
     if (error) setError("");
-    // Clear that field's error the moment the person starts fixing it
     if (fieldErrors[name as "name" | "email"]) {
       setFieldErrors(prev => ({ ...prev, [name]: false }));
     }
@@ -52,6 +55,9 @@ export function Contact() {
         body: JSON.stringify(form),
       });
       if (res.ok) {
+        // Capture values BEFORE clearing the form so success message can show them
+        setSubmittedName(form.name.trim());
+        setSubmittedEmail(form.email.trim());
         setSubmitted(true);
         setForm({ name: "", email: "", subject: "", message: "" });
       } else {
@@ -62,6 +68,23 @@ export function Contact() {
     } finally {
       setSending(false);
     }
+  };
+
+  const handleSendAnother = () => {
+    // GSAP's effectFade animations set autoAlpha:0 on .form-content and
+    // .form-action when they first rendered. Going back to the form just
+    // with setSubmitted(false) leaves those elements permanently invisible
+    // because GSAP's inline styles persist. Force-clear them here so the
+    // form is visible when it re-appears.
+    setTimeout(() => {
+      document.querySelectorAll<HTMLElement>(".form-contact .form-content, .form-contact .form-action").forEach(el => {
+        el.style.opacity = "1";
+        el.style.visibility = "visible";
+      });
+    }, 0);
+    setSubmitted(false);
+    setSubmittedName("");
+    setSubmittedEmail("");
   };
 
   return (
@@ -88,7 +111,6 @@ export function Contact() {
           marginTop: "2rem",
           animation: "fadeInUp 0.5s ease forwards",
         }}>
-          {/* Animated checkmark */}
           <div style={{ marginBottom: "20px", display: "flex", justifyContent: "center" }}>
             <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="28" cy="28" r="27" stroke="#00C853" strokeWidth="1.5" />
@@ -110,12 +132,12 @@ export function Contact() {
             Message sent!
           </p>
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", lineHeight: 1.6, marginBottom: "24px" }}>
-            Thanks for reaching out, {form.name || ""}. I&apos;ll get back to you at{" "}
-            <span style={{ color: "rgba(255,255,255,0.8)" }}>{form.email || "your email"}</span>{" "}
+            Thanks for reaching out{submittedName ? `, ${submittedName}` : ""}. I&apos;ll get back to you at{" "}
+            <span style={{ color: "rgba(255,255,255,0.8)" }}>{submittedEmail}</span>{" "}
             as soon as I can — usually within a day or two.
           </p>
           <button
-            onClick={() => setSubmitted(false)}
+            onClick={handleSendAnother}
             style={{
               background: "none",
               border: "1px solid rgba(255,255,255,0.15)",
@@ -141,6 +163,7 @@ export function Contact() {
                 type="text" name="name" placeholder="Your Name *" autoComplete="name"
                 value={form.name} onChange={handleChange} required
                 aria-invalid={fieldErrors.name ? "true" : "false"}
+                style={{ textAlign: "left" }}
               />
             </fieldset>
             <fieldset className={`field-ip${fieldErrors.email ? " has-error" : ""}`}>
@@ -148,18 +171,21 @@ export function Contact() {
                 type="email" name="email" placeholder="Email Address *" autoComplete="email"
                 value={form.email} onChange={handleChange} required
                 aria-invalid={fieldErrors.email ? "true" : "false"}
+                style={{ textAlign: "left" }}
               />
             </fieldset>
             <fieldset className="field-ip">
               <input
                 type="text" name="subject" placeholder="Job opportunity / Freelance / Other"
                 value={form.subject} onChange={handleChange}
+                style={{ textAlign: "left" }}
               />
             </fieldset>
             <fieldset className="field-ip">
               <input
                 type="text" name="message" placeholder="Tell me a bit about your project or role"
                 value={form.message} onChange={handleChange}
+                style={{ textAlign: "left" }}
               />
             </fieldset>
           </div>

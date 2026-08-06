@@ -7836,3 +7836,12 @@ html, body {
 .wg-work .work-image .work-arrow-link:active {
   transform: scale(0.96);
 }
+
+/* ── Contact form: left-align typed text in all input fields ──
+   The template inherits text-align:center from some global rules on mobile.
+   Explicit left-align here ensures typed text is always readable from the
+   left edge regardless of device or theme. */
+.form-contact .field-ip input,
+.form-contact .field-ip textarea {
+  text-align: left !important;
+}
