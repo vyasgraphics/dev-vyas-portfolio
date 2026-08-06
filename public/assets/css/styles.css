@@ -7778,15 +7778,9 @@ textarea:focus-visible,
    animation on any device). Wired up via the existing scrolling-effect
    engine in useIsakAnimations.ts - see About.tsx for the classes. ── */
 
-/* ── Circular badge: text grew from ~31 to ~60 characters. The base
-   font-size (16px, inherited from body) was already near the limit of
-   what fits without overlap around this circle's circumference at the
-   old length - at 2x the characters it would visibly collide. Scale
-   down proportionally so every character keeps clean spacing. ── */
-.text-rotate .text span {
-  font-size: 9px !important;
-  letter-spacing: 0.01em;
-}
+/* ── Circular badge: 35-char text at the original radius (83px).
+   Remove the old 9px override - with correct text length the default
+   size inherited from the template works correctly. ── */
 
 /* ── Prevent pull-to-refresh / rubber-band edge bounce site-wide ──
    Previously only scoped to an unrelated off-canvas panel, meaning the

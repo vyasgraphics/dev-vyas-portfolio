@@ -403,7 +403,7 @@ export function useIsakAnimations() {
 
         /* ---------------- Text-rotate circular text ---------------- */
         document.querySelectorAll<HTMLElement>(".text-rotate .text").forEach((circularText) => {
-            const text = "Product Designer · UI/UX Designer · Graphic Designer · UK · ";
+            const text = "Dev Vyas - Product Designer - UK - ";
             const chars = text.split("");
             const degree = 360 / chars.length;
             circularText.innerHTML = "";
