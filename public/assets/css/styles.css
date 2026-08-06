@@ -7845,3 +7845,49 @@ html, body {
 .form-contact .field-ip textarea {
   text-align: left !important;
 }
+
+/* ── Contact form: underline-only style ──
+   Remove all box borders, outlines, and background from contact form fields.
+   Only show the bottom underline (already defined in the base template).
+   The green border box visible on focused fields was coming from the browser's
+   native focus ring on the input + Bootstrap's imported defaults. */
+.form-contact .field-ip,
+.form-contact fieldset.field-ip {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 0;
+}
+.form-contact .field-ip input,
+.form-contact .field-ip textarea {
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  width: 100%;
+  padding: 12px 0 12px 0 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 15px;
+  transition: border-color 0.3s ease !important;
+  text-align: left !important;
+}
+.form-contact .field-ip input::placeholder,
+.form-contact .field-ip textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+.form-contact .field-ip input:focus,
+.form-contact .field-ip input:focus-visible,
+.form-contact .field-ip textarea:focus,
+.form-contact .field-ip textarea:focus-visible {
+  border-bottom-color: #00C853 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.form-contact .field-ip.has-error input,
+.form-contact .field-ip.has-error textarea {
+  border-bottom-color: #ff5c5c !important;
+}
