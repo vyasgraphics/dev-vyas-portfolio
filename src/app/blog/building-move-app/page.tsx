@@ -104,6 +104,10 @@ export default function BuildingMoveAppPage() {
         giving up. Then the alternative: the app auto-syncing with her timetable, spotting the gap for her, and
         suggesting something that fits, no arithmetic required.
       </p>
+
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/scenario-summaries.jpg" alt="Scenario summaries for Liam (psychological safety) and Maya (efficiency), showing problem and solution for each" />
+
       <p>
         We also ran a claims analysis, borrowing from Carroll and Rosson&apos;s method, to weigh up the
         psychological trade-offs of each feature honestly. Automating the timetable sync, for instance, reduces
@@ -113,6 +117,9 @@ export default function BuildingMoveAppPage() {
         trade-offs upfront, rather than pretending every feature is a free win, felt like the more honest way to
         design.
       </p>
+
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/claims-analysis.jpg" alt="Claims analysis table weighing the positive and negative consequences of Gap Finder, Visual Proof, and Crowd Filter" />
 
       <h3>The Ideas We Killed Before They Shipped</h3>
       <p>
