@@ -83,19 +83,6 @@ export function BlogPostLayout({ slug, children }: { slug: string; children: Rea
           </div>
 
           <article className="blog-article">{children}</article>
-
-          <div className="entry-footer" style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "32px" }}>
-            <div className="tags-links list-tags">
-              <a>{post.tag}</a>
-            </div>
-
-            <div className="social-links">
-              <a href="https://www.linkedin.com/in/dev-vyas6/" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/images/social/linkedin.svg" width={20} height={20} alt="" />
-              </a>
-            </div>
-          </div>
         </div>
 
         <div style={{ marginTop: "56px", textAlign: "center" }}>
