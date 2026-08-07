@@ -7727,14 +7727,6 @@ textarea:focus-visible,
   .body-background::after {
     animation: none !important;
   }
-  .infiniteSlide-brand,
-  .infiniteSlide-brand * {
-    animation: none !important;
-  }
-  .scribble path {
-    transition: none !important;
-    stroke-dashoffset: 0 !important;
-  }
   .tf-btn:active,
   .tf-btn-action:active,
   .tf-btn-icon:active,
@@ -7742,6 +7734,22 @@ textarea:focus-visible,
   .footer-back-to-top:active,
   .blog-card:active {
     transform: none !important;
+  }
+}
+/* The discipline pill marquee and the hero ribbon draw are exempted from
+   the reduced-motion rule above: the original template always runs these
+   two regardless of the OS setting, and the universal *,*::before,*::after
+   rule was silently freezing them for anyone with Reduce Motion enabled -
+   they'd never scroll/draw at all rather than just skip transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .infiniteSlide-brand,
+  .infiniteSlide-brand *,
+  .text-rotate {
+    animation-duration: revert !important;
+    animation-iteration-count: revert !important;
+  }
+  .scribble path {
+    transition-duration: revert !important;
   }
 }
 
