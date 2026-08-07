@@ -18,7 +18,7 @@ export const works: Work[] = [
     description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on a visually cluttered news article search task. Conducted as a quantitative online study via Prolific, measuring Visual Working Memory distraction resistance against a complex real-world UI. Analysed in SPSS with reading speed as a control variable.",
     year: "2026",
     role: "UX Researcher · MSc Dissertation",
-    tags: ["Quantitative Research", "SPSS", "Prolific", "Complex UI"],
+    tags: ["Quantitative Research", "Python", "Prolific", "Complex UI"],
     image: "/assets/images/section/work-1.jpg",
     imagePortrait: "/assets/images/section/work-1-portrait.jpg",
     logo: "/assets/images/logo/logo-dv.svg",
