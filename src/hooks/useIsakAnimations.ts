@@ -228,6 +228,12 @@ export function useIsakAnimations() {
         if (sidebar && works.length) {
             const firstWork = works[0];
             const lastWork = works[works.length - 1];
+            const firstWrap = firstWork.querySelector(".wrap");
+            const lastWrap = lastWork.querySelector(".wrap");
+            const allWraps = Array.from(works)
+                .map((w) => w.querySelector(".wrap"))
+                .filter((el): el is Element => el !== null);
+
             const sidebarTrigger = ScrollTrigger.create({
                 trigger: firstWork,
                 start: "top 132px",
@@ -241,11 +247,6 @@ export function useIsakAnimations() {
             });
             triggers.push(sidebarTrigger);
 
-            // Keep a handle on each work item's own trigger (alongside its wrap
-            // element) so a click-triggered jump can re-check exactly which one,
-            // if any, the scroll landed inside of once it settles.
-            const workTriggers: { wrap: Element; trigger: ScrollTrigger }[] = [];
-
             works.forEach((work) => {
                 const wrap = work.querySelector(".wrap");
                 if (!wrap) return;
@@ -255,12 +256,12 @@ export function useIsakAnimations() {
                     end: "bottom 68px",
                     onEnter: () => {
                         if (isClickScrolling) return;
-                        document.querySelectorAll(".sticky-item .wrap").forEach((el) => el.classList.remove("active"));
+                        allWraps.forEach((el) => el.classList.remove("active"));
                         wrap.classList.add("active");
                     },
                     onEnterBack: () => {
                         if (isClickScrolling) return;
-                        document.querySelectorAll(".sticky-item .wrap").forEach((el) => el.classList.remove("active"));
+                        allWraps.forEach((el) => el.classList.remove("active"));
                         wrap.classList.add("active");
                     },
                     onLeave: () => { if (!isClickScrolling) wrap.classList.remove("active"); },
@@ -268,28 +269,50 @@ export function useIsakAnimations() {
                     invalidateOnRefresh: true,
                 });
                 triggers.push(t);
-                workTriggers.push({ wrap, trigger: t });
             });
 
-            const onAnchorClick = () => {
+            // Click-triggered nav (as opposed to organic wheel/touch scrolling)
+            // jumps straight to a destination, skipping past the intermediate
+            // scroll positions the ScrollTrigger callbacks above are keyed to -
+            // so relying on those callbacks to update the sidebar/wrap classes
+            // either fires them wrongly mid-flight (flicker through cards you
+            // never really visited) or, if suppressed, leaves the classes stale
+            // once the jump lands. Since a click always tells us the exact
+            // destination up front, we set the correct end-state directly, the
+            // instant the click happens, rather than waiting on scroll position
+            // to (maybe) confirm it later.
+            const onAnchorClick = (e: Event) => {
+                const href = (e.currentTarget as HTMLAnchorElement).getAttribute("href") ?? "";
                 isClickScrolling = true;
                 if (clickScrollTimer) clearTimeout(clickScrollTimer);
-                // Matches smoothScrollTo's default animated duration (1.2s) plus
-                // the same 500ms settle buffer used by suppressPassiveHashSync
-                // elsewhere - this was previously 800ms, which expired before a
-                // default-duration scroll had actually finished travelling.
+
+                if (href === "#work") {
+                    // Entering Work from Home (i.e. from above it) starts the
+                    // reveal on the first card; entering from any other section
+                    // (all of which sit below Work) starts on the last card -
+                    // each matches the edge of the section you're arriving from.
+                    const scrollY = window.scrollY;
+                    const workTop = firstWork.getBoundingClientRect().top + scrollY;
+                    const enteringFromAbove = scrollY < workTop;
+                    sidebar.classList.add("active");
+                    allWraps.forEach((el) => el.classList.remove("active"));
+                    (enteringFromAbove ? firstWrap : lastWrap)?.classList.add("active");
+                } else {
+                    // Any destination other than Work: the profile card should
+                    // be showing and no work card should be pinned, immediately -
+                    // not once the animated scroll eventually gets there.
+                    sidebar.classList.remove("active");
+                    allWraps.forEach((el) => el.classList.remove("active"));
+                }
+
+                // Keep the organic scroll callbacks suppressed until the jump's
+                // animated scroll (smoothScrollTo's default 1.2s) has actually
+                // finished, plus the same 500ms settle buffer used elsewhere in
+                // this codebase (see suppressPassiveHashSync) - otherwise they
+                // can fire on the tail end of the jump and immediately undo the
+                // state that was just set above.
                 clickScrollTimer = setTimeout(() => {
                     isClickScrolling = false;
-                    // The click-triggered jump has settled. onEnter/onLeave were
-                    // suppressed for its whole duration above, so the classes can
-                    // be stale relative to where we actually landed - resync both
-                    // the profile card and the work cards against each trigger's
-                    // own up-to-date isActive state (nav to/from the Work section,
-                    // and landing inside it, both go through this path).
-                    sidebar.classList.toggle("active", sidebarTrigger.isActive);
-                    const landedOn = workTriggers.find(({ trigger }) => trigger.isActive);
-                    workTriggers.forEach(({ wrap }) => wrap.classList.remove("active"));
-                    landedOn?.wrap.classList.add("active");
                 }, 1700);
             };
             const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
