@@ -43,7 +43,7 @@ export function Footer() {
         }}
       >
         <p className="text-nocopy text-black-56 effectFade fadeUp no-div" style={{ margin: 0 }}>
-          All rights reserved<br />© 2026 Dev Vyas Portfolio
+          All rights reserved<br />© 2026 Dev Vyas
         </p>
         <a
           href="#home"

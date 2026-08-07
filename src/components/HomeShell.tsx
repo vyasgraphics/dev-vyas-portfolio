@@ -12,7 +12,7 @@ import { Intro } from "./sections/Intro";
 import { About } from "./sections/About";
 import { Education } from "./sections/Education";
 import { Work } from "./sections/Work";
-import { Services } from "./sections/Services";
+import { Skills } from "./sections/Skills";
 import { Tech } from "./sections/Tech";
 import { Blog } from "./sections/Blog";
 import { Contact } from "./sections/Contact";
@@ -61,7 +61,7 @@ export function HomeShell() {
                                     <Intro />
                                     <Work />
                                     <About />
-                                    <Services />
+                                    <Skills />
                                     <Education />
                                     <Tech />
                                     <Blog />

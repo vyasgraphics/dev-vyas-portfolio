@@ -4970,7 +4970,7 @@ button.animate-btn::after,
   }
 }
 
-.section-service .br-line {
+.section-skill .br-line {
   background-color: var(--black-6);
 }
 
@@ -6603,11 +6603,11 @@ button.animate-btn::after,
   }
 }
 
-.service-accordion_item .ic-accordion-custom {
+.skill-accordion_item .ic-accordion-custom {
   width: 12px;
   height: 12px;
 }
-.service-accordion_item .ic-wrap {
+.skill-accordion_item .ic-wrap {
   width: 40px;
   height: 40px;
   display: flex;
@@ -6616,20 +6616,20 @@ button.animate-btn::after,
   border-radius: 50%;
   border: 1px solid var(--black-15);
 }
-.service-accordion_item .accordion-action {
+.skill-accordion_item .accordion-action {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 0;
 }
-.service-accordion_item .accordion-action:not(.collapsed) {
+.skill-accordion_item .accordion-action:not(.collapsed) {
   padding-bottom: 32px;
 }
-.service-accordion_item .tf-grid-layout {
+.skill-accordion_item .tf-grid-layout {
   gap: 12px;
   margin-bottom: 32px;
 }
-.service-accordion_item .service-image {
+.skill-accordion_item .skill-image {
   padding: 4px;
   border-radius: 24px;
   background-color: var(--white);
@@ -6640,44 +6640,44 @@ button.animate-btn::after,
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-.service-accordion_item .service-image .wrap_image {
+.skill-accordion_item .skill-image .wrap_image {
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--black-6);
 }
-.service-accordion_item .service-image img {
+.skill-accordion_item .skill-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   min-height: 200px;
 }
-.service-accordion_item .accordion-content {
+.skill-accordion_item .accordion-content {
   margin-bottom: 32px;
 }
-.service-accordion_item .service-tag {
+.skill-accordion_item .skill-tag {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
 }
-.service-accordion_item .service-tag .tag-item {
+.skill-accordion_item .skill-tag .tag-item {
   padding: 6px 12px;
   background-color: var(--white);
   box-shadow: var(--shadow);
   border-radius: 999px;
 }
-.service-accordion_item:last-child .accordion-action.collapsed {
+.skill-accordion_item:last-child .accordion-action.collapsed {
   padding-bottom: 0;
 }
-.service-accordion_item:last-child .accordion-content {
+.skill-accordion_item:last-child .accordion-content {
   margin-bottom: 0;
 }
 @media (min-width: 1200px) {
-  .service-accordion_item .service-image:nth-child(2) {
+  .skill-accordion_item .skill-image:nth-child(2) {
     transform: translateX(calc(-100% + 76px));
   }
-  .service-accordion_item .accordion-content:hover .service-image:nth-child(2) {
+  .skill-accordion_item .accordion-content:hover .skill-image:nth-child(2) {
     transform: translateX(0);
   }
 }
@@ -7069,12 +7069,12 @@ button.animate-btn::after,
 .dark-mode .wg-work .wrap .tf-btn-action.style-white .text {
   color: var(--black);
 }
-.dark-mode .service-accordion_item .service-image {
+.dark-mode .skill-accordion_item .skill-image {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   backdrop-filter: blur(12px);
   box-shadow: 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.0588235294), 0px 1px 1px -0.5px rgba(0, 0, 0, 0.0588235294), 0px 3px 3px -1.5px rgba(0, 0, 0, 0.0588235294), 0px 5px 5px -2.5px rgba(0, 0, 0, 0.1215686275), 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.0784313725) inset, 0px 1px 3px 0px rgba(255, 255, 255, 0.031372549) inset, 0px -4px 12px 0px rgba(255, 255, 255, 0.0392156863) inset;
 }
-.dark-mode .service-accordion_item .service-tag .tag-item {
+.dark-mode .skill-accordion_item .skill-tag .tag-item {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   box-shadow: 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.0588235294), 0px 1px 1px -0.5px rgba(0, 0, 0, 0.0588235294), 0px 3px 3px -1.5px rgba(0, 0, 0, 0.0588235294), 0px 5px 5px -2.5px rgba(0, 0, 0, 0.1215686275), 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.0784313725) inset, 0px 1px 3px 0px rgba(255, 255, 255, 0.031372549) inset, 0px -4px 12px 0px rgba(255, 255, 255, 0.0392156863) inset;
 }

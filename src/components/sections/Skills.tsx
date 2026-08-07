@@ -3,19 +3,19 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { services } from "@/data/services";
+import { skills } from "@/data/skills";
 import { smoothScrollTo } from "@/lib/smoothScroll";
 
-export function Services() {
+export function Skills() {
     useEffect(() => {
-        const container = document.getElementById("accordion-service");
+        const container = document.getElementById("accordion-skill");
         if (!container) return;
 
         // On mobile: scroll the opened item into view after Bootstrap finishes expanding
         const onShown = (e: Event) => {
             if (window.innerWidth >= 992) return;
             const collapseEl = e.target as HTMLElement;
-            const item = collapseEl.closest<HTMLElement>(".service-accordion_item");
+            const item = collapseEl.closest<HTMLElement>(".skill-accordion_item");
             if (!item) return;
             requestAnimationFrame(() => {
                 smoothScrollTo(item, { center: true, duration: 0.9 });
@@ -54,17 +54,17 @@ export function Services() {
     }, []);
 
     return (
-        <div id="service" className="section-service flat-spacing">
+        <div id="skill" className="section-skill flat-spacing">
             <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
                 <i className="icon icon-service" />
                 Skills
             </div>
 
-            <div id="accordion-service">
-                {services.map((s, idx) => {
+            <div id="accordion-skill">
+                {skills.map((s, idx) => {
                     const isOpen = idx === 0;
                     return (
-                        <div key={s.id} className="service-accordion_item">
+                        <div key={s.id} className="skill-accordion_item">
                             <a
                                 href={`#${s.id}`}
                                 className={`accordion-action${isOpen ? "" : " collapsed"}`}
@@ -80,12 +80,12 @@ export function Services() {
                             <div
                                 id={s.id}
                                 className={`collapse${isOpen ? " show" : ""}`}
-                                data-bs-parent="#accordion-service"
+                                data-bs-parent="#accordion-skill"
                             >
                                 <div className="accordion-content">
                                     <div className="tf-grid-layout sm-col-2">
                                         {s.images.map((img, i) => (
-                                            <div className="service-image" key={i}>
+                                            <div className="skill-image" key={i}>
                                                 <div className="wrap_image">
                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                                     <img
@@ -98,14 +98,14 @@ export function Services() {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="service-tag">
+                                    <div className="skill-tag">
                                         {s.tags.map((tag) => (
                                             <span key={tag} className="tag-item text-body-3 fw-medium text-black-72">
                                                 {tag}
                                             </span>
                                         ))}
                                     </div>
-                                    <p className="service-desc text-black-56">{s.description}</p>
+                                    <p className="skill-desc text-black-56">{s.description}</p>
                                 </div>
                             </div>
                         </div>
