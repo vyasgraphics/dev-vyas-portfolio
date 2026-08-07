@@ -22,7 +22,11 @@ export const awards: Award[] = [
     link: "https://www.coursera.org/account/accomplishments/professional-cert/Q6V876IAF0YS",
   },
   {
-    name: "Advanced Certification in Data Science with Specialisation in Business Intelligence & Data Analytics",
+    // Manual line break before "Business Intelligence" - this title runs
+    // long enough on desktop that without it, the wrapped first line runs
+    // right up against the "2025" year column, reading cramped. The break
+    // relies on white-space: pre-line on .award_name (see styles.css).
+    name: "Advanced Certification in Data Science with Specialisation in\nBusiness Intelligence & Data Analytics",
     publisher: "International Institute of Information Technology Bangalore",
     year: 2025,
     image: "/assets/images/section/award-4.jpg",

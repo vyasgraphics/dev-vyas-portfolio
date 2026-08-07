@@ -5480,6 +5480,10 @@ button.animate-btn::after,
 }
 .award-list .award-item .award_name {
   margin-bottom: 8px;
+  /* Lets a literal \n in the award name (see awards.ts) force a manual
+     line break, while still allowing normal auto-wrap everywhere else -
+     doesn't affect the other three entries, none of which contain \n. */
+  white-space: pre-line;
 }
 .award-list .award-item:last-child {
   padding-bottom: 23px;
@@ -5488,6 +5492,21 @@ button.animate-btn::after,
 @media (max-width: 575px) {
   .award-list .award-item {
     padding: 20px 0px;
+    /* On mobile, longer titles (e.g. the Data Science cert) wrap across
+       3-4 lines. Kept as a row, .award_year sits stranded at the top-right
+       with a lot of disconnected empty space beneath it while the title
+       keeps wrapping on the left - reads as two unrelated columns rather
+       than one entry. Stacking the year below the publisher, and toning
+       it down to read as metadata (smaller, muted) rather than a second
+       headline competing with the title, keeps every entry reading as one
+       coherent block regardless of how long its title is. */
+    flex-direction: column;
+    gap: 6px;
+  }
+  .award-list .award-item .award_year {
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--black-56);
   }
 }
 
