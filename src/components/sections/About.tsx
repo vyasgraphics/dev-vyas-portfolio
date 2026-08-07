@@ -31,7 +31,7 @@ export function About() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div className="left">
-                <h6 className="award_name letter-space--2 text-black-72" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <h6 className="award_name letter-space--2 text-black-72" style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
                   {a.name}
                   <i
                     className="icon icon-arrow-right-top award-link-arrow"

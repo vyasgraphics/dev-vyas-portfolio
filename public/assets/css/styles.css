@@ -5462,6 +5462,22 @@ button.animate-btn::after,
   position: relative;
   cursor: pointer;
 }
+/* .left (title + inline arrow icon) and .award_year had no width rules of
+   their own, so both relied on flex's default min-width:auto - which for
+   nested flex content means "never shrink below natural content width".
+   That's invisible on desktop where the title fits on one line, but on
+   mobile the title wraps to two lines and .left still refused to shrink,
+   overflowing its column and pushing the arrow icon out to the right on
+   top of .award_year. min-width:0 + flex:1 lets .left properly shrink and
+   wrap; flex-shrink:0 + nowrap keeps the year column reliably intact. */
+.award-list .award-item .left {
+  min-width: 0;
+  flex: 1;
+}
+.award-list .award-item .award_year {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 .award-list .award-item .award_name {
   margin-bottom: 8px;
 }
