@@ -445,6 +445,19 @@ export function useIsakAnimations() {
         // overflow - 68 chars gives each char slightly MORE room than the
         // previous 72-char string did, so the existing circle/font sizing
         // still fits comfortably without needing to be retuned.
+        //
+        // Each span's transform-origin sits at its own left edge (see
+        // .text-rotate .text span in styles.css), so without correction a
+        // character's LEFT edge - not its visual centre - lands exactly on
+        // its rotation angle. Every char then trails off to the right of
+        // its "true" position by its own width, which is invisible for
+        // average-width letters but shows up as a noticeable gap after
+        // narrow ones (I, l) where the next character's slot begins well
+        // before that narrow glyph visually ends. translateX(-50%) shifts
+        // each character left by half its own rendered width before the
+        // rotation is applied, so its centre - not its edge - is what
+        // lands on the angle, spacing every character evenly regardless
+        // of its own width.
         document.querySelectorAll<HTMLElement>(".text-rotate .text").forEach((circularText) => {
             const text = "DEV VYAS - PRODUCT - UI/UX - GRAPHIC - DESIGNER & RESEARCHER - UK - ";
             const chars = text.split("");
@@ -453,7 +466,7 @@ export function useIsakAnimations() {
             chars.forEach((char, i) => {
                 const span = document.createElement("span");
                 span.textContent = char;
-                span.style.transform = `rotate(${i * degree}deg)`;
+                span.style.transform = `rotate(${i * degree}deg) translateX(-50%)`;
                 circularText.appendChild(span);
             });
         });
