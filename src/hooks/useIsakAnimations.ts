@@ -245,7 +245,31 @@ export function useIsakAnimations() {
            the original ScrollTrigger start:"top 132px" / end:"bottom 68px"
            calculated (element's natural top/bottom converted to an absolute
            scroll-position range, then compared against current scroll) -
-           without depending on GSAP or on any discrete crossing event.        */
+           without depending on GSAP or on any discrete crossing event.
+
+           One more wrinkle that first attempt at offsetTop missed: offsetTop
+           is relative to the element's nearest positioned ANCESTOR, not the
+           true page top - and #wrapper (an ancestor several levels up) sets
+           position:relative, making it that reference point instead. Plain
+           offsetTop was silently measuring from #wrapper's top while
+           window.scrollY measures from the real page top, throwing every
+           comparison off by whatever #wrapper's own offset happens to be.
+           Each card's active window here is only as tall as its own thumbnail
+           (a few hundred px), so even a modest mismatch was enough to break
+           the handoff between cards. Walking the offsetParent chain all the
+           way up sidesteps the question of which ancestor is positioned
+           entirely, by summing every level's own offsetTop to get the same
+           frame of reference window.scrollY already uses.                    */
+        const getAbsoluteTop = (el: HTMLElement): number => {
+            let top = 0;
+            let node: HTMLElement | null = el;
+            while (node) {
+                top += node.offsetTop;
+                node = node.offsetParent as HTMLElement | null;
+            }
+            return top;
+        };
+
         let isClickScrolling = false;
         let clickScrollTimer: ReturnType<typeof setTimeout> | null = null;
         const sidebar = document.querySelector(".sidebar-user");
@@ -265,7 +289,7 @@ export function useIsakAnimations() {
                 const scrollY = window.scrollY;
                 let matched: Element | null = null;
                 for (const work of works) {
-                    const top = work.offsetTop;
+                    const top = getAbsoluteTop(work);
                     const bottom = top + work.offsetHeight;
                     if (scrollY + 132 >= top && scrollY + 68 < bottom) {
                         matched = work.querySelector(".wrap");
