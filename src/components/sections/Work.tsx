@@ -75,11 +75,20 @@ export function Work() {
                                 <div className="work-content">
                                     <div className="w-image">
                                         <Image
+                                            width={700}
+                                            height={427}
+                                            src={w.image}
+                                            alt={w.title}
+                                            priority={i === 0}
+                                            className="w-image-mobile-crop"
+                                        />
+                                        <Image
                                             width={468}
                                             height={856}
                                             src={w.imagePortrait}
                                             alt={w.title}
                                             priority={i === 0}
+                                            className="w-image-desktop-crop"
                                         />
                                     </div>
                                     <div className="content">

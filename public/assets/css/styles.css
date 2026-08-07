@@ -5745,7 +5745,6 @@ button.animate-btn::after,
     position: static !important;
     inset: unset !important;
     width: 100%;
-    aspect-ratio: 0.546728972;
     margin-bottom: 20px;
   }
   /* The heavy dark blur was tuned for the desktop case, where this image is
@@ -5754,6 +5753,25 @@ button.animate-btn::after,
      would just muddy the actual artwork - drop it. */
   .wg-work .work-content .w-image::after {
     display: none;
+  }
+  /* Mobile shows the landscape crop (matching the framing of the desktop
+     thumbnail that's hidden here) instead of the tall portrait crop - a
+     portrait image read narrow/awkward as the only image on a single
+     mobile card. Both crops exist in the DOM; only one is ever visible
+     per breakpoint (see the min-width:992px pair below for the reverse). */
+  .wg-work .work-content .w-image .w-image-desktop-crop {
+    display: none !important;
+  }
+  .wg-work .work-content .w-image .w-image-mobile-crop {
+    display: block !important;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 700 / 427 !important;
+  }
+}
+@media (min-width: 992px) {
+  .wg-work .work-content .w-image .w-image-mobile-crop {
+    display: none !important;
   }
 }
 @media (max-width: 575px) {
