@@ -1,6 +1,9 @@
-import type { ReactNode } from "react";
+"use client";
+
+import { useEffect, type ReactNode } from "react";
 import { BackLink } from "@/components/BackLink";
 import { blogPosts } from "@/data/blog";
+import { smoothScrollToTop } from "@/lib/smoothScroll";
 
 // Shared chrome for every blog post page: back link, tag/title/meta header,
 // hero image, then whatever body content the page itself provides as
@@ -16,6 +19,22 @@ import { blogPosts } from "@/data/blog";
 // for h2/h3/p/ul/a automatically.
 export function BlogPostLayout({ slug, children }: { slug: string; children: ReactNode }) {
   const post = blogPosts.find((p) => p.slug === slug);
+
+  // This site runs Lenis for smooth scrolling, which maintains its own
+  // internal scroll position independent of the browser's native scroll -
+  // so arriving here from a homepage scrolled down to the Blog section
+  // (a genuinely different route, not a same-page hash jump) carries that
+  // position over. Next.js's own scroll-reset doesn't help: Lenis's render
+  // loop is invisible to it and reasserts its own position on the very
+  // next frame regardless (the exact, previously-diagnosed root cause
+  // documented in useCrossRouteBackNav.ts for the equivalent back-button
+  // case). Routing through smoothScrollToTop keeps Lenis's own state in
+  // sync instead of fighting it. immediate:true - no animated travel from
+  // the old position, the page should just start at the top.
+  useEffect(() => {
+    smoothScrollToTop({ immediate: true });
+  }, []);
+
   if (!post) return null;
 
   return (
