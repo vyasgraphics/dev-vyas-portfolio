@@ -4754,6 +4754,22 @@ button.animate-btn::after,
   left: 50%;
   transform: translateX(-50%);
 }
+/* The original template's hero ends with a "Our clients" section using
+   BrandSlider - actual logo images, which render noticeably taller than
+   our DisciplineSlider's slim text pills. Combined with a shorter 2-line
+   headline here vs the original's 3-line one, this hero is meaningfully
+   shorter overall, so the Work section's own tag ("Work Highlights") was
+   showing up inside the same initial viewport that the original template
+   keeps clear. This restores that breathing room without touching Work's
+   own spacing, which is shared across every section on the site. */
+.section-intro .infiniteSlide-brand {
+  margin-bottom: 140px;
+}
+@media (max-width: 767px) {
+  .section-intro .infiniteSlide-brand {
+    margin-bottom: 70px;
+  }
+}
 .section-intro.type-2 {
   position: relative;
   overflow: hidden;
