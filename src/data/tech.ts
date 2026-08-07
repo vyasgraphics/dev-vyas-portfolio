@@ -47,7 +47,6 @@ export const techCategories: TechCategory[] = [
       { name: "CSS3",        image: "/assets/images/section/tech-css.svg" },
       { name: "JavaScript",  image: "/assets/images/section/tech-js.svg" },
       { name: "Next.js",     image: "/assets/images/section/tech-nextjs.svg" },
-      { name: "Node.js",     image: "/assets/images/section/tech-nodejs.svg" },
     ],
   },
   {
