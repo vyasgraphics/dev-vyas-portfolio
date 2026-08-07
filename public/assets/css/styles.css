@@ -7905,3 +7905,19 @@ html, body {
     overflow-x: visible !important;
   }
 }
+
+/* ── Mobile: centre the send button + email/phone in the contact form ──
+   .form-action is a space-between row on desktop (button left, contact
+   details right); on mobile it just wraps to two stacked left-aligned
+   blocks, which reads oddly once everything is sequential rather than a
+   two-column row. Stack and centre everything instead, mobile only. ── */
+@media (max-width: 575px) {
+  .form-contact .form-action {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .form-contact .form-action .contact-links {
+    align-items: center !important;
+  }
+}

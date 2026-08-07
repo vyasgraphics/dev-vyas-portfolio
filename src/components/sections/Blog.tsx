@@ -23,7 +23,11 @@ export function Blog() {
             key={post.slug}
             href={`/blog/${post.slug}`}
             scroll={false}
+            id={`blog-item-${post.slug}`}
             className="blog-card scrolling-effect effectBottom"
+            onClick={() => {
+              sessionStorage.setItem("lastBlogPostSlug", post.slug);
+            }}
             style={{
               display: "block",
               textDecoration: "none",

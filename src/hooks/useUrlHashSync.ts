@@ -63,9 +63,9 @@ export function useUrlHashSync() {
         suppressPassiveHashSync(2000);
 
         // For #work, restore to the specific card that was clicked into.
-        // For all other sections (including #blog), always restore to the
-        // section top - blog cards are in a flow grid and scrolling to a
-        // specific card element can overshoot into the next section.
+        // For #blog, the same happens but mobile-only (see
+        // resolveScrollTarget); other sections always restore to the
+        // section top.
         const preferredTarget = resolveScrollTarget(hash);
 
         let attempts = 0;

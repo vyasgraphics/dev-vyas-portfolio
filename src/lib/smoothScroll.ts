@@ -56,18 +56,31 @@ export function cleanHash(raw: string | null | undefined): string {
 
 // Upgrades "#work" to "#work-item-<slug>" if a specific work card was
 // clicked into, so "Back to Work" and the back button land on that exact
-// card rather than just the top of the section.
-//
-// Blog is intentionally excluded: blog cards are in a normal flow grid so
-// scrolling to the last card element overshoots into the Contact section
-// below it. "#work" is safe because work cards are full-viewport sticky
-// items that always land squarely on screen regardless of position.
+// card rather than just the top of the section. "#blog" gets the same
+// treatment, but mobile only: blog cards sit in a normal-flow grid that's
+// two columns wide on desktop, so a specific card isn't a well-defined
+// landing point there and risks overshooting into Contact below. Mobile
+// collapses that grid to a single column, where each card is its own
+// full-width row, so landing on exactly the one clicked into is both
+// meaningful and safe - desktop keeps the original section-top landing.
 export function resolveScrollTarget(hash: string): string {
-  if (hash !== "#work" || typeof window === "undefined") return hash;
-  const slug = sessionStorage.getItem("lastWorkItemSlug");
-  sessionStorage.removeItem("lastWorkItemSlug");
-  if (!slug) return hash;
-  return `#work-item-${slug}`;
+  if (typeof window === "undefined") return hash;
+
+  if (hash === "#work") {
+    const slug = sessionStorage.getItem("lastWorkItemSlug");
+    sessionStorage.removeItem("lastWorkItemSlug");
+    if (!slug) return hash;
+    return `#work-item-${slug}`;
+  }
+
+  if (hash === "#blog") {
+    const slug = sessionStorage.getItem("lastBlogPostSlug");
+    sessionStorage.removeItem("lastBlogPostSlug");
+    if (!slug || window.innerWidth >= 992) return hash;
+    return `#blog-item-${slug}`;
+  }
+
+  return hash;
 }
 
 function getLenis(): LenisLike | null {

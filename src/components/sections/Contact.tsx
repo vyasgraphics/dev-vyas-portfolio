@@ -224,7 +224,7 @@ export function Contact() {
                 )}
               </button>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
+            <div className="contact-links" style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
               <a href={`mailto:${profile.email}`} className="text-body-1 link letter-space--2 text-black-72">
                 {profile.email}
               </a>
