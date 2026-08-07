@@ -5714,8 +5714,39 @@ button.animate-btn::after,
     background: unset !important;
     box-shadow: unset !important;
   }
+  /* Below 992px, .work-content never gets the explicit height the desktop
+     block gives it (height: calc(100vh - 48px)) - it only exists there.
+     With no defined height, this absolutely-positioned image was collapsing
+     to whatever height the text beside it naturally took up (its own
+     height:100% can't resolve against an auto-height parent either), which
+     left no real visible area for the photo - effectively invisible behind
+     the text. Made it a normal, sized block sitting above the text instead
+     of a positioned background layer, so it always has its own real height
+     regardless of how tall the text next to it happens to be. It already
+     sits first in the markup, so no reordering is needed - just letting it
+     flow normally puts it above the text.
+     !important because this rule and the base .wg-work .work-content
+     .w-image rule have identical specificity - relying on source order to
+     win is not safe here: this file is pulled in via globals.scss's
+     `@use "../../public/assets/css/styles.css"`, and the Sass/Turbopack
+     bundling that runs on it does not preserve strict document order
+     across a media-query boundary the way a plain stylesheet would, so the
+     unscoped base rule was actually winning despite appearing earlier in
+     this source file - confirmed directly against the compiled/served CSS,
+     not assumed. */
   .wg-work .work-content .w-image {
-    inset: 0;
+    position: static !important;
+    inset: unset !important;
+    width: 100%;
+    aspect-ratio: 0.546728972;
+    margin-bottom: 20px;
+  }
+  /* The heavy dark blur was tuned for the desktop case, where this image is
+     a subtle backdrop peeking out behind text sat on top of it. Here it's a
+     normal, fully visible image in its own right, so the same treatment
+     would just muddy the actual artwork - drop it. */
+  .wg-work .work-content .w-image::after {
+    display: none;
   }
 }
 @media (max-width: 575px) {
@@ -7819,7 +7850,7 @@ html, body {
 }
 .wg-work .work-image .work-arrow-link {
   position: absolute;
-  bottom: 20px;
+  top: 20px;
   right: 20px;
   width: 48px;
   height: 48px;

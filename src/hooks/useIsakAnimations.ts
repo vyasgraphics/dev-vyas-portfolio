@@ -218,68 +218,67 @@ export function useIsakAnimations() {
             });
         });
 
-        /* ---------------- Work / sticky-item sidebar active (ORIGINAL approach) ----
-           The original uses a simple start/end ScrollTrigger - no IntersectionObserver.
-           This is what makes the work section work correctly on mobile.              */
+        /* ---------------- Work / sticky-item sidebar active ----------------------
+           Previously built on GSAP ScrollTrigger onEnter/onLeave/onEnterBack/
+           onLeaveBack callbacks - fragile in practice, because those only fire
+           on a boundary CROSSING event. If a crossing happened while suppressed
+           (isClickScrolling, mid-jump) or was otherwise missed, nothing ever
+           re-checked reality afterwards, so the sidebar/wrap classes could get
+           stuck at whatever they were last set to (the reported "scroll from
+           Work back to Home with the mouse and the profile card never comes
+           back" bug). Replaced with the same plain-scroll-listener pattern
+           DesktopSidebar.tsx already uses for its own active-section tracking:
+           on every scroll tick, read LIVE getBoundingClientRect() positions and
+           set the classes to match current reality directly - there's no
+           "event" to miss, so there's nothing to get stuck.                    */
         let isClickScrolling = false;
         let clickScrollTimer: ReturnType<typeof setTimeout> | null = null;
         const sidebar = document.querySelector(".sidebar-user");
         const works = document.querySelectorAll<HTMLElement>(".sticky-item");
         if (sidebar && works.length) {
             const firstWork = works[0];
-            const lastWork = works[works.length - 1];
             const firstWrap = firstWork.querySelector(".wrap");
             const allWraps = Array.from(works)
                 .map((w) => w.querySelector(".wrap"))
                 .filter((el): el is Element => el !== null);
 
-            const sidebarTrigger = ScrollTrigger.create({
-                trigger: firstWork,
-                start: "top 132px",
-                endTrigger: lastWork,
-                end: "bottom 68px",
-                onEnter: () => !isClickScrolling && sidebar.classList.add("active"),
-                onLeave: () => !isClickScrolling && sidebar.classList.remove("active"),
-                onEnterBack: () => !isClickScrolling && sidebar.classList.add("active"),
-                onLeaveBack: () => !isClickScrolling && sidebar.classList.remove("active"),
-                invalidateOnRefresh: true,
-            });
-            triggers.push(sidebarTrigger);
+            const syncSidebarToScroll = () => {
+                // A click already set the correct end-state immediately (see
+                // onAnchorClick below) - don't let a scroll tick mid-jump
+                // undo that before the jump has actually settled.
+                if (isClickScrolling) return;
+                let matched: Element | null = null;
+                for (const work of works) {
+                    const r = work.getBoundingClientRect();
+                    if (r.top <= 132 && r.bottom >= 68) {
+                        matched = work.querySelector(".wrap");
+                        break;
+                    }
+                }
+                sidebar.classList.toggle("active", matched !== null);
+                allWraps.forEach((el) => el.classList.toggle("active", el === matched));
+            };
 
-            works.forEach((work) => {
-                const wrap = work.querySelector(".wrap");
-                if (!wrap) return;
-                const t = ScrollTrigger.create({
-                    trigger: work,
-                    start: "top 132px",
-                    end: "bottom 68px",
-                    onEnter: () => {
-                        if (isClickScrolling) return;
-                        allWraps.forEach((el) => el.classList.remove("active"));
-                        wrap.classList.add("active");
-                    },
-                    onEnterBack: () => {
-                        if (isClickScrolling) return;
-                        allWraps.forEach((el) => el.classList.remove("active"));
-                        wrap.classList.add("active");
-                    },
-                    onLeave: () => { if (!isClickScrolling) wrap.classList.remove("active"); },
-                    onLeaveBack: () => { if (!isClickScrolling) wrap.classList.remove("active"); },
-                    invalidateOnRefresh: true,
+            let syncTicking = false;
+            const onScrollSync = () => {
+                if (syncTicking) return;
+                syncTicking = true;
+                requestAnimationFrame(() => {
+                    syncTicking = false;
+                    syncSidebarToScroll();
                 });
-                triggers.push(t);
-            });
+            };
+            window.addEventListener("scroll", onScrollSync, { passive: true });
+            cleanups.push(() => window.removeEventListener("scroll", onScrollSync));
+            syncSidebarToScroll(); // correct state immediately, e.g. landing mid-page on load
 
             // Click-triggered nav (as opposed to organic wheel/touch scrolling)
             // jumps straight to a destination, skipping past the intermediate
-            // scroll positions the ScrollTrigger callbacks above are keyed to -
-            // so relying on those callbacks to update the sidebar/wrap classes
-            // either fires them wrongly mid-flight (flicker through cards you
-            // never really visited) or, if suppressed, leaves the classes stale
-            // once the jump lands. Since a click always tells us the exact
-            // destination up front, we set the correct end-state directly, the
-            // instant the click happens, rather than waiting on scroll position
-            // to (maybe) confirm it later.
+            // scroll positions the sync above is keyed to - so relying on it
+            // alone either flickers through cards never really visited, or (if
+            // suppressed) leaves things stale until the next scroll tick. Since
+            // a click always tells us the exact destination up front, set the
+            // correct end-state directly, the instant the click happens.
             const onAnchorClick = (e: Event) => {
                 const href = (e.currentTarget as HTMLAnchorElement).getAttribute("href") ?? "";
                 isClickScrolling = true;
@@ -299,14 +298,16 @@ export function useIsakAnimations() {
                     allWraps.forEach((el) => el.classList.remove("active"));
                 }
 
-                // Keep the organic scroll callbacks suppressed until the jump's
-                // animated scroll (smoothScrollTo's default 1.2s) has actually
-                // finished, plus the same 500ms settle buffer used elsewhere in
-                // this codebase (see suppressPassiveHashSync) - otherwise they
-                // can fire on the tail end of the jump and immediately undo the
-                // state that was just set above.
+                // Once this lifts, the very next scroll tick (Lenis fires scroll
+                // events continuously through its own animated scrollTo, so
+                // there's always one along shortly) re-syncs from live position -
+                // this is just covering smoothScrollTo's default 1.2s animation
+                // plus the same 500ms settle buffer used elsewhere in this
+                // codebase (see suppressPassiveHashSync), so the sync can't fire
+                // mid-flight and immediately undo the state just set above.
                 clickScrollTimer = setTimeout(() => {
                     isClickScrolling = false;
+                    syncSidebarToScroll();
                 }, 1700);
             };
             const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
