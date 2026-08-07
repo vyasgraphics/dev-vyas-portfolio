@@ -6,27 +6,28 @@ export function DisciplineSlider() {
         <AutoRepeatMarquee
             direction="left"
             className="infiniteSlide-brand"
-            pauseOnHover={true}
-            speed={28}
-            repeat={6}
+            pauseOnHover={false}
+            speed={35}
+            repeat={8}
         >
             {disciplines.map((d) => (
                 <div
-                    className="discipline-pill"
+                    className="image-brand"
                     key={d.name}
                     style={{
                         display: "flex",
                         alignItems: "center",
                         gap: "8px",
-                        padding: "10px 20px",
+                        padding: "8px 18px",
                         borderRadius: "100px",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        background: "rgba(255,255,255,0.04)",
                         whiteSpace: "nowrap",
+                        marginRight: "12px",
                     }}
                 >
-                    <i className={`icon ${d.icon}`} style={{ fontSize: "13px", color: "#00C853" }} />
-                    <span style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.7)", letterSpacing: "0.01em" }}>
+                    <i className={`icon ${d.icon}`} style={{ fontSize: "12px", color: "#00C853" }} />
+                    <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.65)", letterSpacing: "0.01em" }}>
                         {d.name}
                     </span>
                 </div>

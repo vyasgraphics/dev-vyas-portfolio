@@ -7448,18 +7448,27 @@ button.animate-btn::after,
   content: none !important;
 }
 
-/* ── 2. Hero: type-2 always green; other spans white in dark ── */
+/* ── 2. Hero headline: type-2 span always green ── */
 .section-intro .intro-title span.type-2,
 .dark-mode .section-intro .intro-title span.type-2 { color: var(--primary) !important; }
-.dark-mode .section-intro .intro-title span:not(.type-2) { color: rgba(255,255,255,0.92) !important; }
-.dark-mode .section-intro .intro-title span:not(.type-2)::after,
-.dark-mode .section-intro .intro-title span:not(.type-2).active::after {
-  background: transparent !important; width: 0 !important; opacity: 0 !important;
-}
 
-/* ── 3. Circular badge: don't shrink, let circle overflow its bounds ── */
+/* ── 3. Circular badge: ensure spin works on all devices ── */
 .wg-curve-text { flex-shrink: 0; }
 .text-rotate .circle { overflow: visible !important; }
+/* Force GPU layer for the spin animation on iOS Safari */
+.text-rotate {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+}
+/* Ensure the spin animation name matches and isn't overridden */
+.text-rotate {
+  animation-name: spin !important;
+  animation-duration: 10s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  animation-play-state: running !important;
+}
 
 /* ── 5. Available dot always white in dark ── */
 .dark-mode .sidebar-user .user-image .meta-left .avaiable-dot,

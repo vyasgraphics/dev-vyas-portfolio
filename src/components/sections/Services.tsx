@@ -1,34 +1,56 @@
 "use client";
 
 import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { services } from "@/data/services";
 import { smoothScrollTo } from "@/lib/smoothScroll";
 
 export function Services() {
-    // When an accordion item is tapped open on mobile, the newly-revealed
-    // content often ends up mostly or entirely below the fold - the toggle
-    // itself may already be near the bottom of a small screen, so "opening"
-    // it doesn't visibly show anything without a manual scroll. Centre the
-    // item in the viewport once Bootstrap's expand transition finishes, so
-    // tapping "+" actually brings the content into view.
     useEffect(() => {
-        if (window.innerWidth >= 992) return;
-
         const container = document.getElementById("accordion-service");
         if (!container) return;
 
+        // On mobile: scroll the opened item into view after Bootstrap finishes expanding
         const onShown = (e: Event) => {
+            if (window.innerWidth >= 992) return;
             const collapseEl = e.target as HTMLElement;
             const item = collapseEl.closest<HTMLElement>(".service-accordion_item");
             if (!item) return;
-            // Let the browser paint the final expanded height before measuring
             requestAnimationFrame(() => {
                 smoothScrollTo(item, { center: true, duration: 0.9 });
             });
         };
 
+        // After any accordion transition ends, refresh ScrollTrigger so
+        // sections below (Education, Tech, Blog, Contact) recalculate their
+        // trigger points. Without this, GSAP thinks those sections are at
+        // the wrong scroll position and they stay permanently invisible.
+        const onTransitionEnd = () => {
+            ScrollTrigger.refresh();
+            // Also un-hide any elements that GSAP may have set to autoAlpha:0
+            // and whose ScrollTrigger already fired (past their trigger point)
+            const hiddenEls = document.querySelectorAll<HTMLElement>(
+                ".flat-spacing [style*='visibility: hidden'], .flat-spacing [style*='opacity: 0']"
+            );
+            hiddenEls.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                // If it's above or at the bottom of the viewport, make it visible
+                if (rect.top < window.innerHeight + 200) {
+                    gsap.set(el, { autoAlpha: 1, y: 0, x: 0 });
+                }
+            });
+        };
+
         container.addEventListener("shown.bs.collapse", onShown);
-        return () => container.removeEventListener("shown.bs.collapse", onShown);
+        container.addEventListener("hidden.bs.collapse", onTransitionEnd);
+        container.addEventListener("shown.bs.collapse", onTransitionEnd);
+
+        return () => {
+            container.removeEventListener("shown.bs.collapse", onShown);
+            container.removeEventListener("hidden.bs.collapse", onTransitionEnd);
+            container.removeEventListener("shown.bs.collapse", onTransitionEnd);
+        };
     }, []);
 
     return (
