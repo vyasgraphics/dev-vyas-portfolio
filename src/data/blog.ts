@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
     title: "How AI Actually Fits Into a UX Research Workflow (And Where It Still Can't Replace You)",
     excerpt: "Notes from using AI tools alongside traditional research methods - what speeds things up, and where human judgement still has to lead.",
     date: "Coming soon",
-    readTime: "5 min read",
+    readTime: "8 min read",
     tag: "UX Research",
     image: "/assets/images/section/blog-1.jpg",
   },
