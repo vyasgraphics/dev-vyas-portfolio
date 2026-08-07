@@ -7490,18 +7490,11 @@ button.animate-btn::after,
     box-shadow: 0 8px 24px rgba(0,200,83,0.12) !important;
   }
   /* Certificates carry no border/background of their own to hang a hover
-     state off, so the glow doubles as the "this is clickable" signal that
-     the .award-link-arrow alone doesn't fully cover on its own. Kept to
-     background/radius/shadow only (no padding or negative-margin inset) so
-     it can't push the row past the container edge on narrow viewports,
-     where .wrap-container's side padding drops to zero. */
-  .award-item:hover {
-    background: rgba(0,200,83,0.05) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 8px 24px rgba(0,200,83,0.12) !important;
-  }
+     state off, so the glow on the arrow itself is what signals "this is
+     clickable" rather than a hover state on the row. */
   .award-item:hover .award-link-arrow {
     transform: translate(2px, -2px) !important;
+    text-shadow: 0 0 6px rgba(0,200,83,0.9), 0 0 16px rgba(0,200,83,0.6) !important;
   }
 }
 

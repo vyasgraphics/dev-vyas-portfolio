@@ -35,7 +35,7 @@ export function About() {
                   {a.name}
                   <i
                     className="icon icon-arrow-right-top award-link-arrow"
-                    style={{ fontSize: "12px", color: "#00C853", transition: "transform 0.25s ease" }}
+                    style={{ fontSize: "12px", color: "#00C853", transition: "transform 0.25s ease, text-shadow 0.25s ease" }}
                   />
                 </h6>
                 <p className="award_desc text-black-56">{a.publisher}</p>
