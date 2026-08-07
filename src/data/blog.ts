@@ -33,7 +33,7 @@ export const blogPosts: BlogPost[] = [
     title: "From Lo-Fi to Live: Building Move App End to End",
     excerpt: "A full walkthrough of the HCD lifecycle behind Move - from the first user interview to the final A/B study proposal.",
     date: "Coming soon",
-    readTime: "6 min read",
+    readTime: "9 min read",
     tag: "Case Study",
     image: "/assets/images/section/blog-3.jpg",
   },
