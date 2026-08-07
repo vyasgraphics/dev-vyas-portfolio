@@ -335,24 +335,39 @@ export function useIsakAnimations() {
             cleanups.push(() => window.removeEventListener("resize", onResize));
         }
 
-        /* ---------------- Draw SVG scribble (exact original) ---------------- */
+        /* ---------------- Draw SVG scribble ---------------- */
+        // Strategy: use rAF to defer getTotalLength() until after the browser
+        // has laid out and painted the SVG. On mobile Safari, synchronous
+        // getTotalLength() can return 0 if called before the SVG renders.
+        // The IntersectionObserver then waits for the SVG to scroll into view
+        // before adding the is-drawn class which triggers the CSS transition.
         if (document.querySelector(".scribble-wrap")) {
             const path = document.getElementById("scribblePath") as unknown as SVGPathElement | null;
             const svg = document.querySelector(".scribble");
             if (path && svg) {
-                const len = path.getTotalLength();
-                (svg as HTMLElement).style.setProperty("--len", String(len));
-                const io = new IntersectionObserver(
-                    ([entry]) => {
-                        if (entry.isIntersecting) {
-                            svg.classList.add("is-drawn");
-                            io.disconnect();
-                        }
-                    },
-                    { threshold: 0.2 },
-                );
-                io.observe(svg);
-                cleanups.push(() => io.disconnect());
+                let rafId = 0;
+                const setup = () => {
+                    const len = path.getTotalLength();
+                    if (len === 0) {
+                        // SVG not painted yet — retry next frame
+                        rafId = requestAnimationFrame(setup);
+                        return;
+                    }
+                    (svg as HTMLElement).style.setProperty("--len", String(len));
+                    const io = new IntersectionObserver(
+                        ([entry]) => {
+                            if (entry.isIntersecting) {
+                                svg.classList.add("is-drawn");
+                                io.disconnect();
+                            }
+                        },
+                        { threshold: 0.1 },
+                    );
+                    io.observe(svg);
+                    cleanups.push(() => io.disconnect());
+                };
+                rafId = requestAnimationFrame(setup);
+                cleanups.push(() => cancelAnimationFrame(rafId));
             }
         }
 

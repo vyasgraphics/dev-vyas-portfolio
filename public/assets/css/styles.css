@@ -7455,17 +7455,24 @@ button.animate-btn::after,
 .section-intro .intro-title span.type-2,
 .dark-mode .section-intro .intro-title span.type-2 { color: var(--primary) !important; }
 
-/* ── 3. Circular badge: GPU-accelerated spin on all devices ── */
+/* ── 3. Circular badge: reliable spin on all devices ── */
 .wg-curve-text { flex-shrink: 0; }
 .text-rotate .circle { overflow: visible !important; }
-/* Force GPU compositing for iOS Safari - prevents the spin from
-   stalling when the element is near the viewport edge */
+/* will-change promotes to GPU layer without conflicting with the
+   spin animation's own transform. Do NOT set a static transform here
+   because both transform:translateZ(0) and animation:spin set the
+   CSS transform property - the static one wins in some browsers and
+   the rotation never plays. */
 .text-rotate {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
   will-change: transform;
   animation: spin 12s linear infinite !important;
   animation-play-state: running !important;
+}
+/* Ensure the parent doesn't clip the rotating badge */
+.wg-curve-text {
+  overflow: visible !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* ── 5. Available dot always white in dark ── */
