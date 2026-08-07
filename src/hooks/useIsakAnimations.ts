@@ -335,23 +335,22 @@ export function useIsakAnimations() {
             cleanups.push(() => window.removeEventListener("resize", onResize));
         }
 
-        /* ---------------- Draw SVG scribble ---------------- */
-        // Match the original exactly: observe the SVG itself (not the whole #home section),
-        // disconnect after first fire, and measure getTotalLength() inside the observer
-        // callback - this guarantees the SVG is laid out before we measure it, which
-        // matters on mobile Safari where SVG layout can lag JS execution on mount.
+        /* ---------------- Draw SVG scribble (exact original) ---------------- */
         if (document.querySelector(".scribble-wrap")) {
             const path = document.getElementById("scribblePath") as unknown as SVGPathElement | null;
             const svg = document.querySelector(".scribble");
             if (path && svg) {
-                const io = new IntersectionObserver(([entry]) => {
-                    if (entry.isIntersecting) {
-                        const len = path.getTotalLength();
-                        (svg as HTMLElement).style.setProperty("--len", String(len));
-                        svg.classList.add("is-drawn");
-                        io.disconnect();
-                    }
-                }, { threshold: 0.2 });
+                const len = path.getTotalLength();
+                (svg as HTMLElement).style.setProperty("--len", String(len));
+                const io = new IntersectionObserver(
+                    ([entry]) => {
+                        if (entry.isIntersecting) {
+                            svg.classList.add("is-drawn");
+                            io.disconnect();
+                        }
+                    },
+                    { threshold: 0.2 },
+                );
                 io.observe(svg);
                 cleanups.push(() => io.disconnect());
             }
@@ -386,8 +385,11 @@ export function useIsakAnimations() {
         }
 
         /* ---------------- Text-rotate circular text ---------------- */
+        // Full text requested: DEV VYAS - PRODUCT DESIGNER - UI/UX DESIGNER -
+        // GRAPHICS DESIGNER - UK - (72 chars). Circle is resized to 184px
+        // diameter (r=92) so all chars fit without upside-down overflow.
         document.querySelectorAll<HTMLElement>(".text-rotate .text").forEach((circularText) => {
-            const text = "Dev Vyas - Product Designer - UK - ";
+            const text = "DEV VYAS - PRODUCT DESIGNER - UI/UX DESIGNER - GRAPHICS DESIGNER - UK - ";
             const chars = text.split("");
             const degree = 360 / chars.length;
             circularText.innerHTML = "";

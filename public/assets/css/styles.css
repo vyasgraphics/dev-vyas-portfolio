@@ -4875,11 +4875,12 @@ button.animate-btn::after,
     transform: translate(-50%, -50%);
   }
   .section-intro .text-rotate .circle {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
   }
   .section-intro .text-rotate .text span {
-    transform-origin: 0 75px;
+    transform-origin: 0 90px;
+    font-size: 7.5px;
   }
   .section-intro .intro-title {
     margin-bottom: 30px;
@@ -5838,8 +5839,8 @@ button.animate-btn::after,
   animation: spin 10s linear infinite;
 }
 .text-rotate .circle {
-  width: 166px;
-  height: 166px;
+  width: 184px;
+  height: 184px;
   border-radius: 50%;
   position: relative;
 }
@@ -5847,10 +5848,12 @@ button.animate-btn::after,
   position: absolute;
   top: 0;
   left: 50%;
-  transform-origin: 0 83px;
+  transform-origin: 0 92px;
   color: var(--black);
   text-transform: uppercase;
   padding-top: 4px;
+  font-size: 8px;
+  letter-spacing: 0.05em;
 }
 
 .wg-curve-text {
@@ -7452,21 +7455,16 @@ button.animate-btn::after,
 .section-intro .intro-title span.type-2,
 .dark-mode .section-intro .intro-title span.type-2 { color: var(--primary) !important; }
 
-/* ── 3. Circular badge: ensure spin works on all devices ── */
+/* ── 3. Circular badge: GPU-accelerated spin on all devices ── */
 .wg-curve-text { flex-shrink: 0; }
 .text-rotate .circle { overflow: visible !important; }
-/* Force GPU layer for the spin animation on iOS Safari */
+/* Force GPU compositing for iOS Safari - prevents the spin from
+   stalling when the element is near the viewport edge */
 .text-rotate {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   will-change: transform;
-}
-/* Ensure the spin animation name matches and isn't overridden */
-.text-rotate {
-  animation-name: spin !important;
-  animation-duration: 10s !important;
-  animation-timing-function: linear !important;
-  animation-iteration-count: infinite !important;
+  animation: spin 12s linear infinite !important;
   animation-play-state: running !important;
 }
 
@@ -7896,7 +7894,7 @@ html, body {
    to not clip its children so the absolute badge always paints. ── */
 @media (max-width: 575px) {
   .section-intro .intro-item {
-    min-height: 200px;
+    min-height: 220px;
     overflow: visible !important;
   }
   .section-intro {

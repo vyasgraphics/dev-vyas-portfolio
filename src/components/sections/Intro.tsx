@@ -15,7 +15,7 @@ export function Intro() {
             <h1 className="intro-title letter-space--2">
                 Designing ideas into{" "}
                 <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>functional</span>{" "}
-                <span className="is-bg">experiences</span>
+                experiences
             </h1>
 
             <div className="intro-item">

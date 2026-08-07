@@ -11,7 +11,7 @@ type AutoRepeatMarqueeProps = {
   gap?: number;
   direction?: Direction;
   className?: string;
-  repeat?: number; 
+  repeat?: number;
 };
 
 export default function AutoRepeatMarquee({
@@ -25,33 +25,30 @@ export default function AutoRepeatMarquee({
 }: AutoRepeatMarqueeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  // Only measured (via ResizeObserver) when no fixed repeat count is given -
-  // when the caller passes `repeat`, it's used directly below with no
-  // extra state or effect needed for that path.
-  const [measuredRepeatCount, setMeasuredRepeatCount] = useState(1);
-  const repeatCount = repeat || measuredRepeatCount;
+  const [repeatCount, setRepeatCount] = useState(() => repeat || 1);
 
   const childrenCount = Array.isArray(children) ? children.length : 1;
 
   useEffect(() => {
-    if (repeat) return;
-    if (direction !== "left" && direction !== "right") return;
+    if ((direction === "left" || direction === "right") && !repeat) {
+      const updateRepeatCount = () => {
+        const containerWidth = containerRef.current?.offsetWidth || 0;
+        const contentWidth = contentRef.current?.scrollWidth || 0;
 
-    const updateRepeatCount = () => {
-      const containerWidth = containerRef.current?.offsetWidth || 0;
-      const contentWidth = contentRef.current?.scrollWidth || 0;
+        if (containerWidth && contentWidth) {
+          const neededRepeat = Math.ceil(containerWidth / contentWidth) + 1;
+          setRepeatCount(neededRepeat);
+        }
+      };
 
-      if (containerWidth && contentWidth) {
-        const neededRepeat = Math.ceil(containerWidth / contentWidth) + 1;
-        setMeasuredRepeatCount(neededRepeat);
-      }
-    };
+      updateRepeatCount();
+      const resizeObserver = new ResizeObserver(updateRepeatCount);
+      if (containerRef.current) resizeObserver.observe(containerRef.current);
 
-    updateRepeatCount();
-    const resizeObserver = new ResizeObserver(updateRepeatCount);
-    if (containerRef.current) resizeObserver.observe(containerRef.current);
-
-    return () => resizeObserver.disconnect();
+      return () => resizeObserver.disconnect();
+    } else if (repeat) {
+      // repeat is fixed - handled by lazy useState initialiser above
+    }
   }, [childrenCount, direction, repeat]);
 
   if (direction === "left" || direction === "right") {
@@ -62,6 +59,10 @@ export default function AutoRepeatMarquee({
           pauseOnHover={pauseOnHover}
           gradient={false}
           direction={direction}
+          // autoFill ensures the marquee always fills the container width
+          // regardless of how many items are in the list - critical for
+          // mobile where container width measurement can lag on first render
+          autoFill={true}
         >
           {Array.from({ length: repeatCount }).map((_, i) => (
             <div
@@ -90,7 +91,7 @@ export default function AutoRepeatMarquee({
       className={className}
       style={{
         overflow: "hidden",
-        height: "100%", // set fixed height
+        height: "100%",
       }}
     >
       <div style={verticalStyle}>
@@ -103,21 +104,12 @@ export default function AutoRepeatMarquee({
 
       <style jsx>{`
         @keyframes scroll-up {
-          0% {
-            transform: translateY(0%);
-          }
-          100% {
-            transform: translateY(-50%);
-          }
+          0% { transform: translateY(0%); }
+          100% { transform: translateY(-50%); }
         }
-
         @keyframes scroll-down {
-          0% {
-            transform: translateY(-50%);
-          }
-          100% {
-            transform: translateY(0%);
-          }
+          0% { transform: translateY(-50%); }
+          100% { transform: translateY(0%); }
         }
       `}</style>
     </div>
