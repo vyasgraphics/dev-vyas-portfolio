@@ -241,6 +241,11 @@ export function useIsakAnimations() {
             });
             triggers.push(sidebarTrigger);
 
+            // Keep a handle on each work item's own trigger (alongside its wrap
+            // element) so a click-triggered jump can re-check exactly which one,
+            // if any, the scroll landed inside of once it settles.
+            const workTriggers: { wrap: Element; trigger: ScrollTrigger }[] = [];
+
             works.forEach((work) => {
                 const wrap = work.querySelector(".wrap");
                 if (!wrap) return;
@@ -263,12 +268,29 @@ export function useIsakAnimations() {
                     invalidateOnRefresh: true,
                 });
                 triggers.push(t);
+                workTriggers.push({ wrap, trigger: t });
             });
 
             const onAnchorClick = () => {
                 isClickScrolling = true;
                 if (clickScrollTimer) clearTimeout(clickScrollTimer);
-                clickScrollTimer = setTimeout(() => { isClickScrolling = false; }, 800);
+                // Matches smoothScrollTo's default animated duration (1.2s) plus
+                // the same 500ms settle buffer used by suppressPassiveHashSync
+                // elsewhere - this was previously 800ms, which expired before a
+                // default-duration scroll had actually finished travelling.
+                clickScrollTimer = setTimeout(() => {
+                    isClickScrolling = false;
+                    // The click-triggered jump has settled. onEnter/onLeave were
+                    // suppressed for its whole duration above, so the classes can
+                    // be stale relative to where we actually landed - resync both
+                    // the profile card and the work cards against each trigger's
+                    // own up-to-date isActive state (nav to/from the Work section,
+                    // and landing inside it, both go through this path).
+                    sidebar.classList.toggle("active", sidebarTrigger.isActive);
+                    const landedOn = workTriggers.find(({ trigger }) => trigger.isActive);
+                    workTriggers.forEach(({ wrap }) => wrap.classList.remove("active"));
+                    landedOn?.wrap.classList.add("active");
+                }, 1700);
             };
             const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
             anchors.forEach((a) => a.addEventListener("click", onAnchorClick));

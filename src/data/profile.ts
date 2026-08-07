@@ -5,7 +5,7 @@ export const profile = {
   introBio: "Bridging visual craft and evidence-based design - with AI woven into the process. Based in York, UK, open to UK and remote roles from September 2026.",
   email: "vyasdev.6303@gmail.com",
   phone: "+447799752283",
-  rotatingNames: ["Dev", "Designer", "Researcher"],
+  rotatingNames: ["Dev", "Product Designer", "UX Researcher"],
   location: "York, United Kingdom",
   availability: "Available Sep 2026",
   cvUrl: "/assets/Dev_Vyas_CV.pdf",
