@@ -8110,6 +8110,12 @@ html, body {
   color: var(--white);
   font-weight: 600;
 }
+.blog-article img {
+  width: 100%;
+  border-radius: 16px;
+  margin: 8px 0 32px;
+  display: block;
+}
 .blog-article > *:first-child {
   margin-top: 0;
 }
