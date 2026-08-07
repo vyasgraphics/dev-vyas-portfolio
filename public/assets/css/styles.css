@@ -8053,3 +8053,49 @@ html, body {
     align-items: center !important;
   }
 }
+
+/* ── Blog post body typography ──
+   Scoped to .blog-article so it only affects prose content inside blog
+   post pages - doesn't touch headings/paragraphs anywhere else on the
+   site. Sits on top of the existing pre-built .blog-single-wrap,
+   .meta-list, .entry-footer, .blockquote-wrap, .social-links, .list-tags
+   classes already in this file (unused until now) rather than
+   duplicating them. */
+.blog-article h2 {
+  font-size: clamp(24px, 2.2vw + 8px, 32px);
+  line-height: 1.3;
+  color: var(--white);
+  margin: 48px 0 20px;
+}
+.blog-article h3 {
+  font-size: clamp(19px, 1.4vw + 8px, 22px);
+  line-height: 1.4;
+  color: var(--white);
+  margin: 36px 0 16px;
+}
+.blog-article p {
+  margin-bottom: 22px;
+}
+.blog-article ul,
+.blog-article ol {
+  margin: 0 0 22px;
+  padding-left: 22px;
+}
+.blog-article li {
+  margin-bottom: 10px;
+}
+.blog-article li::marker {
+  color: var(--primary);
+}
+.blog-article a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.blog-article strong {
+  color: var(--white);
+  font-weight: 600;
+}
+.blog-article > *:first-child {
+  margin-top: 0;
+}
