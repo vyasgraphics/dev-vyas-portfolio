@@ -226,11 +226,26 @@ export function useIsakAnimations() {
            re-checked reality afterwards, so the sidebar/wrap classes could get
            stuck at whatever they were last set to (the reported "scroll from
            Work back to Home with the mouse and the profile card never comes
-           back" bug). Replaced with the same plain-scroll-listener pattern
-           DesktopSidebar.tsx already uses for its own active-section tracking:
-           on every scroll tick, read LIVE getBoundingClientRect() positions and
-           set the classes to match current reality directly - there's no
-           "event" to miss, so there's nothing to get stuck.                    */
+           back" bug).
+
+           Replaced with a plain scroll listener that recomputes which card is
+           current on every tick - but NOT by reading each item's live
+           getBoundingClientRect(), which was the first attempt at this fix and
+           had its own bug: .sticky-item is position:sticky, so while an item is
+           actually stuck/pinned, its live rect.top sits locked at 132px and
+           rect.bottom stays far below the viewport for its entire pinned
+           duration - both stay comfortably "in range" long after the NEXT card
+           should have taken over, so the loop's first-match-wins logic kept
+           matching card 1 and never advanced to 2 or 3.
+
+           offsetTop/offsetHeight give the element's natural, un-stuck flow
+           position instead - per spec, sticky elements report these as if they
+           were position:relative, unaffected by the pinning. Comparing THAT
+           fixed position against live window.scrollY reproduces exactly what
+           the original ScrollTrigger start:"top 132px" / end:"bottom 68px"
+           calculated (element's natural top/bottom converted to an absolute
+           scroll-position range, then compared against current scroll) -
+           without depending on GSAP or on any discrete crossing event.        */
         let isClickScrolling = false;
         let clickScrollTimer: ReturnType<typeof setTimeout> | null = null;
         const sidebar = document.querySelector(".sidebar-user");
@@ -247,10 +262,12 @@ export function useIsakAnimations() {
                 // onAnchorClick below) - don't let a scroll tick mid-jump
                 // undo that before the jump has actually settled.
                 if (isClickScrolling) return;
+                const scrollY = window.scrollY;
                 let matched: Element | null = null;
                 for (const work of works) {
-                    const r = work.getBoundingClientRect();
-                    if (r.top <= 132 && r.bottom >= 68) {
+                    const top = work.offsetTop;
+                    const bottom = top + work.offsetHeight;
+                    if (scrollY + 132 >= top && scrollY + 68 < bottom) {
                         matched = work.querySelector(".wrap");
                         break;
                     }
