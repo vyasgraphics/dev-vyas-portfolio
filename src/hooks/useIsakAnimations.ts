@@ -439,11 +439,14 @@ export function useIsakAnimations() {
         }
 
         /* ---------------- Text-rotate circular text ---------------- */
-        // Full text requested: DEV VYAS - PRODUCT DESIGNER - UI/UX DESIGNER -
-        // GRAPHICS DESIGNER - UK - (72 chars). Circle is resized to 184px
-        // diameter (r=92) so all chars fit without upside-down overflow.
+        // Full text requested: DEV VYAS - PRODUCT - UI/UX - GRAPHIC -
+        // DESIGNER & RESEARCHER - UK - (68 chars). Circle is resized to
+        // 184px diameter (r=92) so all chars fit without upside-down
+        // overflow - 68 chars gives each char slightly MORE room than the
+        // previous 72-char string did, so the existing circle/font sizing
+        // still fits comfortably without needing to be retuned.
         document.querySelectorAll<HTMLElement>(".text-rotate .text").forEach((circularText) => {
-            const text = "DEV VYAS - PRODUCT DESIGNER - UI/UX DESIGNER - GRAPHICS DESIGNER - UK - ";
+            const text = "DEV VYAS - PRODUCT - UI/UX - GRAPHIC - DESIGNER & RESEARCHER - UK - ";
             const chars = text.split("");
             const degree = 360 / chars.length;
             circularText.innerHTML = "";

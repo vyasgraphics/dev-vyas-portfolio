@@ -32,7 +32,7 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                     <div style={{
                         position: "absolute",
                         bottom: 0, left: 0, right: 0,
-                        height: "72%",
+                        height: "85%",
                         background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.65) 35%, rgba(0,0,0,0.25) 65%, transparent 100%)",
                         borderRadius: "0 0 18px 18px",
                         pointerEvents: "none",
