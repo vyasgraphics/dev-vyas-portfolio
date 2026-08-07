@@ -17,7 +17,7 @@ export const blogPosts: BlogPost[] = [
     date: "Coming soon",
     readTime: "5 min read",
     tag: "UX Research",
-    image: "/assets/images/section/service-1.jpg",
+    image: "/assets/images/section/blog-1.jpg",
   },
   {
     slug: "dissertation-notes",
@@ -26,7 +26,7 @@ export const blogPosts: BlogPost[] = [
     date: "Coming soon",
     readTime: "7 min read",
     tag: "Research",
-    image: "/assets/images/section/service-3.jpg",
+    image: "/assets/images/section/blog-2.jpg",
   },
   {
     slug: "building-move-app",
@@ -35,6 +35,6 @@ export const blogPosts: BlogPost[] = [
     date: "Coming soon",
     readTime: "6 min read",
     tag: "Case Study",
-    image: "/assets/images/section/service-5.jpg",
+    image: "/assets/images/section/blog-3.jpg",
   },
 ];

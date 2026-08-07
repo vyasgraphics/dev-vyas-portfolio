@@ -51,8 +51,18 @@ export function Blog() {
                   position: "absolute", top: "12px", left: "12px",
                   fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
                   padding: "4px 10px", borderRadius: "100px",
-                  background: "rgba(0,200,83,0.15)", color: "#00C853",
-                  border: "1px solid rgba(0,200,83,0.3)",
+                  // Was a 15%-opacity green fill - basically just a tint over
+                  // whatever the photo happened to show underneath, so
+                  // legibility depended entirely on that spot of the image.
+                  // A solid dark backdrop (+ blur, for photos that show
+                  // through at the pill's rounded edges) guarantees contrast
+                  // regardless of what's behind it. Colour corrected to the
+                  // site's actual --primary green (#00de51) too - the old
+                  // #00C853 was a slightly different shade.
+                  background: "rgba(27,30,35,0.85)",
+                  backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+                  color: "#00DE51",
+                  border: "1px solid rgba(0,222,81,0.4)",
                 }}
               >
                 {post.tag}
