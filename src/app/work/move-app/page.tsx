@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BackLink } from "@/components/BackLink";
 
 export const metadata: Metadata = {
-  title: "Move — University Exercise App",
+  title: "Move - University Exercise App",
   description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
 };
 

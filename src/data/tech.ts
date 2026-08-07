@@ -3,19 +3,11 @@ export type TechCategory = {
   tools: { name: string; image: string }[];
 };
 
-// Order follows the actual shape of the design process: understanding
-// people and data first, then designing, then the AI-augmented layer on
-// top of both design and development, then full custom code, then the
-// graphics/motion work that finishes a piece.
+// Order follows the actual shape of the design process: designing first,
+// then the AI-augmented layer on top of both design and development, then
+// the quantitative/data side of the research work, then coding (AI-assisted
+// and full custom), then the graphics/motion work that finishes a piece.
 export const techCategories: TechCategory[] = [
-  {
-    label: "Quantitative Data Analysis",
-    tools: [
-      { name: "Python",         image: "/assets/images/section/tech-python.svg" },
-      { name: "Jupyter Notebook", image: "/assets/images/section/tech-jupyter.svg" },
-      { name: "Google Colab",   image: "/assets/images/section/tech-colab.svg" },
-    ],
-  },
   {
     label: "UI / UX",
     tools: [
@@ -30,6 +22,14 @@ export const techCategories: TechCategory[] = [
       { name: "Claude",          image: "/assets/images/section/tech-claude.svg" },
       { name: "Gemini",          image: "/assets/images/section/tech-gemini.svg" },
       { name: "Gemini Notebook", image: "/assets/images/section/tech-gemini-notebook.svg" },
+    ],
+  },
+  {
+    label: "Quantitative Data Analysis",
+    tools: [
+      { name: "Python",         image: "/assets/images/section/tech-python.svg" },
+      { name: "Jupyter Notebook", image: "/assets/images/section/tech-jupyter.svg" },
+      { name: "Google Colab",   image: "/assets/images/section/tech-colab.svg" },
     ],
   },
   {

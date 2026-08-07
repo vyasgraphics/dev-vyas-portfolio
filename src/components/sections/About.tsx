@@ -15,7 +15,7 @@ export function About() {
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         Product designer with four years of commercial experience and an MSc in
         Human-Centred Interactive Technologies at the University of York. I work at the
-        intersection of rigorous UX research and considered visual design — from
+        intersection of rigorous UX research and considered visual design - from
         think-aloud studies and Figma prototypes to brand identities and motion graphics.
         AI runs through everything I do: faster ideation, sharper synthesis, every
         decision still grounded in real user evidence.

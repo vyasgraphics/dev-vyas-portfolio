@@ -7,8 +7,8 @@ import "./globals.scss";
 
 export const metadata: Metadata = {
     title: {
-        default: "Dev Vyas — Product Designer",
-        template: "%s — Dev Vyas",
+        default: "Dev Vyas - Product Designer",
+        template: "%s - Dev Vyas",
     },
     description: "Dev Vyas - Product Designer. Bridging visual craft and evidence-based design. Based in York, UK.",
     authors: [{ name: "Dev Vyas" }],

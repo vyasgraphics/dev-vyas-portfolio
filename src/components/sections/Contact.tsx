@@ -134,7 +134,7 @@ export function Contact() {
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", lineHeight: 1.6, marginBottom: "24px" }}>
             Thanks for reaching out{submittedName ? `, ${submittedName}` : ""}. I&apos;ll get back to you at{" "}
             <span style={{ color: "rgba(255,255,255,0.8)" }}>{submittedEmail}</span>{" "}
-            as soon as I can — usually within a day or two.
+            as soon as I can - usually within a day or two.
           </p>
           <button
             onClick={handleSendAnother}
