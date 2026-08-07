@@ -224,52 +224,32 @@ export function useIsakAnimations() {
            on a boundary CROSSING event. If a crossing happened while suppressed
            (isClickScrolling, mid-jump) or was otherwise missed, nothing ever
            re-checked reality afterwards, so the sidebar/wrap classes could get
-           stuck at whatever they were last set to (the reported "scroll from
-           Work back to Home with the mouse and the profile card never comes
-           back" bug).
+           stuck at whatever they were last set to.
 
-           Replaced with a plain scroll listener that recomputes which card is
-           current on every tick - but NOT by reading each item's live
-           getBoundingClientRect(), which was the first attempt at this fix and
-           had its own bug: .sticky-item is position:sticky, so while an item is
-           actually stuck/pinned, its live rect.top sits locked at 132px and
-           rect.bottom stays far below the viewport for its entire pinned
-           duration - both stay comfortably "in range" long after the NEXT card
-           should have taken over, so the loop's first-match-wins logic kept
-           matching card 1 and never advanced to 2 or 3.
+           Two follow-up attempts at a plain-scroll-listener replacement both
+           tried to precisely reproduce the original ScrollTrigger's absolute
+           pixel math (natural element position vs. scroll offset) and both
+           had their own bugs - live getBoundingClientRect() reads locked at
+           the pinned value for the whole time an item is actually stuck, and
+           offsetTop's reference frame turned out not to line up with
+           window.scrollY the way assumed. Rather than a third attempt at that
+           same style of fix, this uses a different strategy that doesn't
+           depend on any absolute-position math being exactly right:
 
-           offsetTop/offsetHeight give the element's natural, un-stuck flow
-           position instead - per spec, sticky elements report these as if they
-           were position:relative, unaffected by the pinning. Comparing THAT
-           fixed position against live window.scrollY reproduces exactly what
-           the original ScrollTrigger start:"top 132px" / end:"bottom 68px"
-           calculated (element's natural top/bottom converted to an absolute
-           scroll-position range, then compared against current scroll) -
-           without depending on GSAP or on any discrete crossing event.
-
-           One more wrinkle that first attempt at offsetTop missed: offsetTop
-           is relative to the element's nearest positioned ANCESTOR, not the
-           true page top - and #wrapper (an ancestor several levels up) sets
-           position:relative, making it that reference point instead. Plain
-           offsetTop was silently measuring from #wrapper's top while
-           window.scrollY measures from the real page top, throwing every
-           comparison off by whatever #wrapper's own offset happens to be.
-           Each card's active window here is only as tall as its own thumbnail
-           (a few hundred px), so even a modest mismatch was enough to break
-           the handoff between cards. Walking the offsetParent chain all the
-           way up sidesteps the question of which ancestor is positioned
-           entirely, by summing every level's own offsetTop to get the same
-           frame of reference window.scrollY already uses.                    */
-        const getAbsoluteTop = (el: HTMLElement): number => {
-            let top = 0;
-            let node: HTMLElement | null = el;
-            while (node) {
-                top += node.offsetTop;
-                node = node.offsetParent as HTMLElement | null;
-            }
-            return top;
-        };
-
+           On every scroll tick, check every item's LIVE getBoundingClientRect
+           - which is always accurate for current on-screen position, no
+           reference-frame ambiguity - and take the LAST one (highest index)
+           whose top has reached the 132px line. A pinned item's top sits at
+           132px for its whole pinned duration, which is fine: the moment the
+           NEXT item's natural position also reaches 132px (which is what
+           "stuck" sticky items do at the handoff point), it also satisfies
+           the check and, being later, wins - so the fact that an earlier
+           item is still trivially "satisfying" its own check no longer
+           blocks recognising a later one, which is exactly what going
+           first-match-wins got wrong twice already. The only extra piece
+           needed is knowing when to show nothing at all (scrolled past the
+           very last card into whatever follows Work) - checked only for
+           that last card, via its own live bottom edge.                       */
         let isClickScrolling = false;
         let clickScrollTimer: ReturnType<typeof setTimeout> | null = null;
         const sidebar = document.querySelector(".sidebar-user");
@@ -286,14 +266,16 @@ export function useIsakAnimations() {
                 // onAnchorClick below) - don't let a scroll tick mid-jump
                 // undo that before the jump has actually settled.
                 if (isClickScrolling) return;
-                const scrollY = window.scrollY;
+                const rects = Array.from(works, (w) => w.getBoundingClientRect());
+                let matchedIndex = -1;
+                for (let idx = 0; idx < rects.length; idx++) {
+                    if (rects[idx].top <= 132) matchedIndex = idx;
+                }
                 let matched: Element | null = null;
-                for (const work of works) {
-                    const top = getAbsoluteTop(work);
-                    const bottom = top + work.offsetHeight;
-                    if (scrollY + 132 >= top && scrollY + 68 < bottom) {
-                        matched = work.querySelector(".wrap");
-                        break;
+                if (matchedIndex !== -1) {
+                    const isLastItem = matchedIndex === works.length - 1;
+                    if (!isLastItem || rects[matchedIndex].bottom >= 68) {
+                        matched = works[matchedIndex].querySelector(".wrap");
                     }
                 }
                 sidebar.classList.toggle("active", matched !== null);
