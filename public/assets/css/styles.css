@@ -5707,8 +5707,15 @@ button.animate-btn::after,
   }
 }
 @media (max-width: 991px) {
+  /* Below 992px there's no fixed-sidebar swap to drive - .work-image and
+     .wrap both rendered as two separate, stacked image blocks for the same
+     project, which read as duplicated/redundant on a single mobile column.
+     .work-image's only other job (the small arrow-link to the case study)
+     is already covered by the "View project" button inside .wrap's own
+     content, so hiding it here loses no functionality - just the second
+     image on mobile only. */
   .wg-work .work-image {
-    margin-bottom: 4px;
+    display: none;
   }
   .wg-work .work-content {
     background: unset !important;
