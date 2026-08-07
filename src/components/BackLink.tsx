@@ -47,6 +47,7 @@ export function BackLink({ href, label }: { href: `/#${string}`; label: string }
   return (
     <Link
       href={href}
+      className="back-link-btn"
       style={style}
       onClick={(e) => {
         e.preventDefault();
