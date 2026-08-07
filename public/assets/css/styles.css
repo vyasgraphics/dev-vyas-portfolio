@@ -5707,6 +5707,19 @@ button.animate-btn::after,
   }
 }
 @media (max-width: 991px) {
+  /* .wg-work has border-radius:24px plus (in dark mode) a heavy layered
+     box-shadow/backdrop-filter for the glass-card effect, but no
+     overflow:hidden of its own. iOS Safari has a known bug where it fails
+     to clip a rounded corner in that combination - the shadow/blur forces
+     the element onto its own compositing layer, and the corner renders
+     square despite the border-radius being correct. Desktop never shows
+     this because .wg-work .wrap is position:fixed there and paints
+     differently. Scoped to mobile only since that's the only place the
+     bug appears, and .wg-work has no transform anywhere that a fixed-
+     position descendant would need to escape. */
+  .wg-work {
+    overflow: hidden;
+  }
   /* Below 992px there's no fixed-sidebar swap to drive - .work-image and
      .wrap both rendered as two separate, stacked image blocks for the same
      project, which read as duplicated/redundant on a single mobile column.
