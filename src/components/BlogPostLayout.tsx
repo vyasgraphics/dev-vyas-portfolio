@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import { BackLink } from "@/components/BackLink";
+import { BackToTop } from "@/components/BackToTop";
 import { blogPosts } from "@/data/blog";
 import { smoothScrollToTop } from "@/lib/smoothScroll";
 
@@ -89,6 +90,8 @@ export function BlogPostLayout({ slug, children }: { slug: string; children: Rea
           <BackLink href="/#blog" label="← Back to Writing" />
         </div>
       </div>
+
+      <BackToTop />
     </div>
   );
 }

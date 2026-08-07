@@ -1,37 +1,146 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
+import { SectionNav } from "@/components/SectionNav";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 
 export const metadata: Metadata = {
   title: "Move - University Exercise App",
   description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
 };
 
-export default function WorkDetailPage() {
+const IMG = "/assets/images/blog/building-move-app";
+
+const SECTIONS = [
+  { id: "problem", label: "The Problem" },
+  { id: "personas", label: "Who It's For" },
+  { id: "screens", label: "The Screens" },
+  { id: "finding", label: "Key Finding" },
+  { id: "next", label: "What's Next" },
+];
+
+export default function MoveAppWorkPage() {
   return (
-    <div style={{
-      minHeight: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      background: "#0a0a0a",
-      color: "#fff",
-      padding: "24px",
-      textAlign: "center",
-      gap: "20px",
-    }}>
-      <svg width="48" height="44" viewBox="0 0 58 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 10 L4 38 L17 38 C25.8 38 32 32.4 32 24 C32 15.6 25.8 10 17 10 Z" fill="none" stroke="white" strokeOpacity="0.85" strokeWidth="2.5" strokeLinejoin="round"/>
-        <path d="M35 10 L44 28 L53 10" fill="none" stroke="#00C853" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"/>
-        <circle cx="44" cy="37" r="3.5" fill="#00C853"/>
-      </svg>
-      <h1 style={{ fontSize: "clamp(24px,4vw,40px)", fontWeight: 700, maxWidth: "600px", lineHeight: 1.3 }}>
-        Move - University Exercise App
-      </h1>
-      <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "15px", maxWidth: "440px", lineHeight: 1.6 }}>
-        Full case study coming soon - write-up, process, and visuals are on the way.
-      </p>
-      <BackLink href="/#work" label="← Back to Work" />
+    <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+      <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 100px" }}>
+        <BackLink href="/#work" label="← Back to Work" />
+
+        <header style={{ marginTop: "40px", marginBottom: "32px" }}>
+          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
+            Move — University Exercise App
+          </h1>
+          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "560px", marginBottom: "24px" }}>
+            Helping sedentary students actually start exercising - not by adding more options, but by removing the
+            anxiety and mental effort standing between them and the ones already there.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
+            {["UX Researcher & Designer", "2025", "Figma", "Lo-Fi Prototype"].map((t) => (
+              <span key={t} style={{
+                padding: "6px 14px", borderRadius: "100px",
+                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                color: "rgba(255,255,255,0.7)",
+              }}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </header>
+
+        <SectionNav sections={SECTIONS} />
+
+        <ScrollReveal>
+          <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "140px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The problem</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
+              York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
+              was never a lack of choice. It was time pressure, self-consciousness, and unfamiliarity standing
+              between students and using what was already there.
+            </p>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${IMG}/personas-liam-maya.jpg`} alt="Personas: Liam, the Anxious Beginner, and Maya, the Time-Constrained Planner" style={{ width: "100%", borderRadius: "16px", marginBottom: "20px" }} />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic" }}>
+                Liam needs reassurance, not motivation.
+              </p>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic" }}>
+                Maya needs cognitive offloading, not encouragement.
+              </p>
+            </div>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The four screens that mattered</h2>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${IMG}/four-components.jpg`} alt="Four key screens: Smart Input Onboarding, Quiet Mode Dashboard, See Before You Go, Gap Finder Scheduler" style={{ width: "100%", borderRadius: "16px" }} />
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The key finding</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+              In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
+              the one feature built to protect anxious users was the one nobody trusted enough to touch. Renaming it
+              to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
+              &ldquo;Social/Solo&rdquo; control, and adding explicit confirmation feedback fixed it.
+            </p>
+            <BeforeAfterSlider
+              before={`${IMG}/slider-before.jpg`}
+              after={`${IMG}/slider-after.jpg`}
+              beforeLabel="Quiet Mode"
+              afterLabel="Crowd Filter"
+            />
+            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", marginTop: "12px", textAlign: "center" }}>
+              Drag to compare
+            </p>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "140px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What&apos;s next</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
+              A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
+              the moment this moves from prototype to production.
+            </p>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div style={{
+            padding: "28px", borderRadius: "16px",
+            background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
+            textAlign: "center",
+          }}>
+            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.7)", marginBottom: "16px" }}>
+              Want the full story - the research, the rejected ideas, and the usability testing that led here?
+            </p>
+            <Link
+              href="/blog/building-move-app"
+              style={{
+                display: "inline-block", padding: "12px 28px", borderRadius: "100px",
+                background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
+                fontSize: "14px", fontWeight: 700,
+              }}
+            >
+              Read the full case study →
+            </Link>
+          </div>
+        </ScrollReveal>
+
+        <div style={{ marginTop: "56px", textAlign: "center" }}>
+          <BackLink href="/#work" label="← Back to Work" />
+        </div>
+      </div>
     </div>
   );
 }
