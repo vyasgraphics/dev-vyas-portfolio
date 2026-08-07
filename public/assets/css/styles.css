@@ -7593,6 +7593,17 @@ button.animate-btn::after,
 @media (max-width: 380px) {
   .sidebar-user .user-info .greeting { font-size: 18px !important; }
 }
+/* The default h5 clamp maxes out at 32px, which is wide enough that the
+   longest rotating word ("Product Designer") plus the "Hey, I'm" prefix
+   overflows past the card's right edge at the narrower end of the desktop
+   sidebar's own width range (max-width: 400px, 992-1439px viewport) -
+   confirmed by measuring the actual rendered text against the card's real
+   available width (card width minus the .wrap padding and the .user-info
+   inset) rather than guessing. 26px keeps a comfortable margin at that
+   tightest tier and scales fine at the wider 480px tier too. */
+@media (min-width: 992px) {
+  .sidebar-user .user-info .greeting { font-size: 26px !important; }
+}
 
 /* ── Slogan: EB Garamond serif ── */
 .footer-slogan {
