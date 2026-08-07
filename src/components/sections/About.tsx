@@ -27,7 +27,7 @@ export function About() {
               href={a.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="award-item hover-cursor-img"
+              className="award-item"
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div className="left">
@@ -35,22 +35,12 @@ export function About() {
                   {a.name}
                   <i
                     className="icon icon-arrow-right-top award-link-arrow"
-                    style={{
-                      fontSize: "12px",
-                      opacity: 0,
-                      transform: "translate(-4px, 4px)",
-                      transition: "opacity 0.25s ease, transform 0.25s ease",
-                      color: "#00C853",
-                    }}
+                    style={{ fontSize: "12px", color: "#00C853" }}
                   />
                 </h6>
                 <p className="award_desc text-black-56">{a.publisher}</p>
               </div>
               <h6 className="award_year text-black-72">{a.year}</h6>
-              <div className="award_img hover-image">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img loading="lazy" width={158} height={224} src={a.image} alt={a.name} />
-              </div>
             </a>
           </li>
         ))}

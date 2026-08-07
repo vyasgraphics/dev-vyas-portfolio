@@ -2909,24 +2909,6 @@ h6,
   visibility: visible;
 }
 
-.hover-cursor-img .hover-image {
-  display: none;
-}
-@media (min-width: 1200px) {
-  .hover-cursor-img {
-    position: relative;
-  }
-  .hover-cursor-img .hover-image {
-    position: fixed;
-    display: block;
-    transform: scale(0);
-    pointer-events: none;
-    opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    z-index: 1000;
-  }
-}
-
 /* ---------------------------------------------------------
     * Name: Isak - Personal Portfolio HTML Template
     * Version: 1.0.0

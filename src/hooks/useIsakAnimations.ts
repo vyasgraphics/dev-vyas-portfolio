@@ -229,7 +229,6 @@ export function useIsakAnimations() {
             const firstWork = works[0];
             const lastWork = works[works.length - 1];
             const firstWrap = firstWork.querySelector(".wrap");
-            const lastWrap = lastWork.querySelector(".wrap");
             const allWraps = Array.from(works)
                 .map((w) => w.querySelector(".wrap"))
                 .filter((el): el is Element => el !== null);
@@ -287,16 +286,11 @@ export function useIsakAnimations() {
                 if (clickScrollTimer) clearTimeout(clickScrollTimer);
 
                 if (href === "#work") {
-                    // Entering Work from Home (i.e. from above it) starts the
-                    // reveal on the first card; entering from any other section
-                    // (all of which sit below Work) starts on the last card -
-                    // each matches the edge of the section you're arriving from.
-                    const scrollY = window.scrollY;
-                    const workTop = firstWork.getBoundingClientRect().top + scrollY;
-                    const enteringFromAbove = scrollY < workTop;
+                    // Always starts the reveal on the first card, regardless of
+                    // which section you're arriving from.
                     sidebar.classList.add("active");
                     allWraps.forEach((el) => el.classList.remove("active"));
-                    (enteringFromAbove ? firstWrap : lastWrap)?.classList.add("active");
+                    firstWrap?.classList.add("active");
                 } else {
                     // Any destination other than Work: the profile card should
                     // be showing and no work card should be pinned, immediately -
@@ -513,24 +507,6 @@ export function useIsakAnimations() {
             onScrollLink();
             cleanups.push(() => document.removeEventListener("scroll", onScrollLink));
         }
-
-        /* ---------------- Hover cursor img ---------------- */
-        const hoverEls = document.querySelectorAll<HTMLElement>(".hover-cursor-img");
-        const hoverHandlers: Array<[HTMLElement, (e: Event) => void, string]> = [];
-        hoverEls.forEach((el) => {
-            const img = el.querySelector<HTMLElement>(".hover-image");
-            if (!img) return;
-            const onMove = (e: MouseEvent) => { img.style.top = e.clientY + 20 + "px"; img.style.left = e.clientX + 20 + "px"; };
-            const onEnter = () => { img.style.transform = "scale(1)"; img.style.opacity = "1"; };
-            const onLeave = () => { img.style.transform = "scale(0)"; img.style.opacity = "0"; };
-            el.addEventListener("mousemove", onMove);
-            el.addEventListener("mouseenter", onEnter);
-            el.addEventListener("mouseleave", onLeave);
-            hoverHandlers.push([el, onMove as unknown as (e: Event) => void, "mousemove"]);
-            hoverHandlers.push([el, onEnter, "mouseenter"]);
-            hoverHandlers.push([el, onLeave, "mouseleave"]);
-        });
-        cleanups.push(() => hoverHandlers.forEach(([el, fn, type]) => el.removeEventListener(type, fn)));
 
         /* ---------------- Refresh ScrollTrigger (exact original: 100ms) --------- */
         const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 100);

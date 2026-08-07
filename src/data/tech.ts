@@ -3,8 +3,19 @@ export type TechCategory = {
   tools: { name: string; image: string }[];
 };
 
-// Order: UI/UX -> AI for UX -> Web Development -> Graphics
+// Order follows the actual shape of the design process: understanding
+// people and data first, then designing, then the AI-augmented layer on
+// top of both design and development, then full custom code, then the
+// graphics/motion work that finishes a piece.
 export const techCategories: TechCategory[] = [
+  {
+    label: "Quantitative Data Analysis",
+    tools: [
+      { name: "Python",         image: "/assets/images/section/tech-python.svg" },
+      { name: "Jupyter Notebook", image: "/assets/images/section/tech-jupyter.svg" },
+      { name: "Google Colab",   image: "/assets/images/section/tech-colab.svg" },
+    ],
+  },
   {
     label: "UI / UX",
     tools: [
@@ -19,6 +30,14 @@ export const techCategories: TechCategory[] = [
       { name: "Claude",          image: "/assets/images/section/tech-claude.svg" },
       { name: "Gemini",          image: "/assets/images/section/tech-gemini.svg" },
       { name: "Gemini Notebook", image: "/assets/images/section/tech-gemini-notebook.svg" },
+    ],
+  },
+  {
+    label: "Vibe Coding",
+    tools: [
+      { name: "Claude Code", image: "/assets/images/section/tech-claude-code.svg" },
+      { name: "Lovable",     image: "/assets/images/section/tech-lovable.svg" },
+      { name: "Bolt",        image: "/assets/images/section/tech-bolt.svg" },
     ],
   },
   {
