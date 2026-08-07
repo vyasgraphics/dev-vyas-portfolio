@@ -63,8 +63,12 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${IMG}/personas-liam-maya.jpg`} alt="Personas: Liam, the Anxious Beginner, and Maya, the Time-Constrained Planner" style={{ width: "100%", borderRadius: "16px", marginBottom: "20px" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`${IMG}/persona-liam.png`} alt="Persona: Liam, the Anxious Beginner" style={{ width: "100%", borderRadius: "16px" }} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`${IMG}/persona-maya.png`} alt="Persona: Maya, the Time-Constrained Planner" style={{ width: "100%", borderRadius: "16px" }} />
+            </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic" }}>
                 Liam needs reassurance, not motivation.
@@ -79,8 +83,17 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The four screens that mattered</h2>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${IMG}/four-components.jpg`} alt="Four key screens: Smart Input Onboarding, Quiet Mode Dashboard, See Before You Go, Gap Finder Scheduler" style={{ width: "100%", borderRadius: "16px" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+              {[
+                { img: "component-01-smart-input.png", alt: "The Smart Input Onboarding: a Social Meter slider and Connect Timetable toggle" },
+                { img: "component-02-quiet-mode.png", alt: "The Quiet Mode Dashboard showing tailored, low-traffic recommendations" },
+                { img: "component-03-see-before-you-go.png", alt: "The See Before You Go detail screen with a 10s video preview and live crowd meter" },
+                { img: "component-04-gap-finder.png", alt: "The Gap Finder Scheduler detecting a free window and suggesting a 20-minute walk" },
+              ].map((s) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={s.img} src={`${IMG}/${s.img}`} alt={s.alt} style={{ width: "100%", borderRadius: "16px" }} />
+              ))}
+            </div>
           </section>
         </ScrollReveal>
 
@@ -94,8 +107,8 @@ export default function MoveAppWorkPage() {
               &ldquo;Social/Solo&rdquo; control, and adding explicit confirmation feedback fixed it.
             </p>
             <BeforeAfterSlider
-              before={`${IMG}/slider-before.jpg`}
-              after={`${IMG}/slider-after.jpg`}
+              before={`${IMG}/slider-before.png`}
+              after={`${IMG}/slider-after.png`}
               beforeLabel="Quiet Mode"
               afterLabel="Crowd Filter"
             />

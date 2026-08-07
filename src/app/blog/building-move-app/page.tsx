@@ -71,7 +71,9 @@ export default function BuildingMoveAppPage() {
       </p>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/personas-liam-maya.jpg" alt="Persona cards for Liam, the Anxious Beginner, and Maya, the Time-Constrained Planner" />
+      <img src="/assets/images/blog/building-move-app/persona-liam.png" alt="Persona: Liam, the Anxious Beginner" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/persona-maya.png" alt="Persona: Maya, the Time-Constrained Planner" />
 
       <p>
         <strong>Liam, the Anxious Beginner</strong>, is 19, lives on campus, and knows exercise would help his
@@ -106,7 +108,9 @@ export default function BuildingMoveAppPage() {
       </p>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/scenario-summaries.jpg" alt="Scenario summaries for Liam (psychological safety) and Maya (efficiency), showing problem and solution for each" />
+      <img src="/assets/images/blog/building-move-app/scenario-01-liam.png" alt="Scenario Set 1: Liam, addressing feeling self-conscious and the intention-action gap, from The Retreat to Visual Proof" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/scenario-02-maya.png" alt="Scenario Set 2: Maya, addressing lack of free time and timetable consent, from Logistics Paralysis to Smart Gap" />
 
       <p>
         We also ran a claims analysis, borrowing from Carroll and Rosson&apos;s method, to weigh up the
@@ -119,7 +123,7 @@ export default function BuildingMoveAppPage() {
       </p>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/claims-analysis.jpg" alt="Claims analysis table weighing the positive and negative consequences of Gap Finder, Visual Proof, and Crowd Filter" />
+      <img src="/assets/images/blog/building-move-app/claims-analysis-table.png" alt="Claims analysis table weighing the positive and negative consequences of Gap Finder, Visual Proof, and Crowd Filter" />
 
       <h3>The Ideas We Killed Before They Shipped</h3>
       <p>
@@ -141,7 +145,9 @@ export default function BuildingMoveAppPage() {
       <p>Knowing what not to build is, in my experience, just as much a design skill as knowing what to build.</p>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/rejected-concepts.jpg" alt="Rejected concepts: the Social Leaderboard and the Manual Planner, with reasoning for why each was cut" />
+      <img src="/assets/images/blog/building-move-app/rejected-01-leaderboard.png" alt="Rejected: The Social Leaderboard - target Liam, conflict fear of judgment, replaced with Quiet Mode" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/rejected-02-manual-planner.png" alt="Rejected: The Manual Planner - target Maya, conflict high interaction cost, replaced with Auto-Sync Gap Finder" />
 
       <h2>The Four Screens That Actually Mattered</h2>
       <p>
@@ -173,7 +179,13 @@ export default function BuildingMoveAppPage() {
       </p>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/four-components.jpg" alt="The four key screens: Smart Input Onboarding, Quiet Mode Dashboard, See Before You Go, and Gap Finder Scheduler" />
+      <img src="/assets/images/blog/building-move-app/component-01-smart-input.png" alt="The Smart Input Onboarding: a Social Meter slider and Connect Timetable toggle" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/component-02-quiet-mode.png" alt="The Quiet Mode Dashboard showing tailored, low-traffic recommendations" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/component-03-see-before-you-go.png" alt="The See Before You Go detail screen with a 10s video preview and live crowd meter" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/assets/images/blog/building-move-app/component-04-gap-finder.png" alt="The Gap Finder Scheduler detecting a free window and suggesting a 20-minute walk" />
 
       <h2>Putting It In Front of Real Humans</h2>
       <p>This is the part of any project where your assumptions get tested, and mine certainly did.</p>
@@ -227,7 +239,7 @@ export default function BuildingMoveAppPage() {
       <p>Small change on paper. But it&apos;s the difference between a feature people trust and one they quietly avoid.</p>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/redesign-before-after.jpg" alt="Before and after: the original ambiguous Quiet Mode toggle next to the redesigned Crowd Filter with explicit feedback" />
+      <img src="/assets/images/blog/building-move-app/redesign-before-after.png" alt="Before and after: the original ambiguous Quiet Mode toggle next to the redesigned Crowd Filter with explicit feedback" />
 
       <h2>What&apos;s Next: Taking It Properly Live</h2>
       <p>

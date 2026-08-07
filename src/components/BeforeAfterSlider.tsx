@@ -54,13 +54,13 @@ export function BeforeAfterSlider({
       style={{
         position: "relative",
         width: "100%",
-        aspectRatio: "1050 / 1200",
+        aspectRatio: "900 / 1643",
         borderRadius: "16px",
         overflow: "hidden",
         cursor: "ew-resize",
         userSelect: "none",
         touchAction: "none",
-        background: "#fff",
+        background: "#0a0a0a",
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
