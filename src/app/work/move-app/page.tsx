@@ -4,6 +4,8 @@ import { BackLink } from "@/components/BackLink";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
+import { PersonaCard } from "@/components/PersonaCard";
+import { personas } from "@/data/personas";
 
 export const metadata: Metadata = {
   title: "Move - University Exercise App",
@@ -64,10 +66,8 @@ export default function MoveAppWorkPage() {
           <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${IMG}/persona-liam.png`} alt="Persona: Liam, the Anxious Beginner" style={{ width: "100%", borderRadius: "16px" }} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`${IMG}/persona-maya.png`} alt="Persona: Maya, the Time-Constrained Planner" style={{ width: "100%", borderRadius: "16px" }} />
+              <PersonaCard persona={personas[0]} />
+              <PersonaCard persona={personas[1]} />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic" }}>

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
+import { PersonaCard } from "@/components/PersonaCard";
+import { personas } from "@/data/personas";
 
 export const metadata: Metadata = {
   title: "From Lo-Fi to Live: Building Move App End to End",
@@ -70,10 +72,10 @@ export default function BuildingMoveAppPage() {
         keep the team honest about who we were actually building for.
       </p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/persona-liam.png" alt="Persona: Liam, the Anxious Beginner" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/persona-maya.png" alt="Persona: Maya, the Time-Constrained Planner" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "8px" }}>
+        <PersonaCard persona={personas[0]} />
+        <PersonaCard persona={personas[1]} />
+      </div>
 
       <p>
         <strong>Liam, the Anxious Beginner</strong>, is 19, lives on campus, and knows exercise would help his

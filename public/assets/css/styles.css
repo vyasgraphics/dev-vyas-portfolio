@@ -7633,7 +7633,36 @@ button.animate-btn::after,
   }
 }
 
-/* ── 8. Misc ── */
+/* ── 8. 3D tilt cards (PersonaCard etc.) ──
+   Transform is driven every pointermove by TiltCard.tsx setting --rx/--ry/
+   --px/--py/--glow-x/--glow-y directly on the element (no React re-render).
+   No transition while the pointer is moving, so rotation tracks the cursor
+   1:1 with zero lag; .tilt-resetting adds a transition only for the
+   snap-back on pointer leave, then removes itself once that's done. */
+.tilt-card {
+  --rx: 0deg; --ry: 0deg; --px: 0; --py: 0; --glow-x: 50%; --glow-y: 50%;
+}
+.tilt-card.tilt-resetting {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tilt-layer {
+  transform: translate3d(calc(var(--px) * var(--layer-shift, 14px)), calc(var(--py) * var(--layer-shift, 14px)), var(--layer-depth, 30px));
+}
+.tilt-glare {
+  background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(0,222,81,0.16), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.tilt-card:hover .tilt-glare { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card { transform: none !important; }
+  .tilt-layer { transform: none !important; }
+}
+@media (hover: none) {
+  .tilt-glare { display: none; }
+}
+
+/* ── 9. Misc ── */
 * { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr !important; } }
 @media (max-width: 576px) { .form-contact .field-ip input { font-size: 16px !important; } }
