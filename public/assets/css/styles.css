@@ -5738,6 +5738,14 @@ button.animate-btn::after,
     opacity: 1;
     visibility: visible;
   }
+  /* Applied briefly (a couple of animation frames) by useIsakAnimations
+     during a "Back to Work" restoration, on both the sidebar and whichever
+     .wrap is becoming active - see the comment at that toggle for why a
+     restoration skips this transition rather than playing it. */
+  .wg-work .wrap.no-entrance-anim,
+  .sidebar-user.no-entrance-anim {
+    transition: none !important;
+  }
   .wg-work .work-content {
     padding: 6px;
     background-color: var(--white);

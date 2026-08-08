@@ -312,11 +312,40 @@ export function useIsakAnimations() {
                     }
                 }
 
+                // Same reasoning as the mobile fadeUp fix: a "Back to
+                // Work" restoration already played its own scroll
+                // animation to get here, so the card's own 0.3s
+                // opacity/transform crossfade (see .wg-work .wrap and
+                // .sidebar-user in styles.css) on top of that reads as
+                // extra settling time rather than a real reveal - the
+                // user already knows this card and is being returned to
+                // it, not discovering it. Skip that transition just for
+                // this specific toggle when a restoration is flagged as
+                // active, so the card is simply there the instant the
+                // scroll lands; ordinary scroll-driven swapping between
+                // different project cards never sets this flag and keeps
+                // its normal crossfade.
+                const wRestore = window as unknown as { __suppressHashSyncUntil?: number };
+                const isRestoring = !!wRestore.__suppressHashSyncUntil && Date.now() < wRestore.__suppressHashSyncUntil;
+                if (isRestoring) {
+                    sidebar.classList.add("no-entrance-anim");
+                    allWraps.forEach((el) => el.classList.add("no-entrance-anim"));
+                }
+
                 sidebar.classList.toggle("active", matched !== null);
                 allWraps.forEach((el) => el.classList.toggle("active", el === matched));
                 if (matched !== null) {
                     restoredAtScrollY = window.scrollY;
                     restoredAtTime = Date.now();
+                }
+
+                if (isRestoring) {
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            sidebar.classList.remove("no-entrance-anim");
+                            allWraps.forEach((el) => el.classList.remove("no-entrance-anim"));
+                        });
+                    });
                 }
             };
 
