@@ -91,20 +91,24 @@ export function BeforeAfterSlider({
 
       {/* labels */}
       <span style={{
-        position: "absolute", top: "14px", left: "14px",
-        fontSize: "11px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase",
-        padding: "5px 12px", borderRadius: "100px",
-        background: "rgba(10,10,10,0.7)", color: "#fff",
+        position: "absolute", top: "10px", left: "10px",
+        fontSize: "10px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase",
+        padding: "4px 10px", borderRadius: "100px",
+        background: "rgba(10,10,10,0.82)", color: "#fff",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
         opacity: position > 12 ? 1 : 0, transition: "opacity 0.2s ease",
+        whiteSpace: "nowrap",
       }}>
         {beforeLabel}
       </span>
       <span style={{
-        position: "absolute", top: "14px", right: "14px",
-        fontSize: "11px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase",
-        padding: "5px 12px", borderRadius: "100px",
-        background: "rgba(10,10,10,0.7)", color: "#fff",
+        position: "absolute", top: "10px", right: "10px",
+        fontSize: "10px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase",
+        padding: "4px 10px", borderRadius: "100px",
+        background: "rgba(10,10,10,0.82)", color: "#fff",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
         opacity: position < 88 ? 1 : 0, transition: "opacity 0.2s ease",
+        whiteSpace: "nowrap",
       }}>
         {afterLabel}
       </span>

@@ -22,28 +22,47 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
+    let raf = 0;
     const onScroll = () => {
-      const children = Array.from(el.children) as HTMLElement[];
-      let closest = 0;
-      let minDist = Infinity;
-      children.forEach((c, i) => {
-        const dist = Math.abs(c.offsetLeft - el.scrollLeft);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        // Slides snap on their centre (scroll-snap-align: center), so the
+        // "active" slide is whichever child's centre sits closest to the
+        // viewport's centre - not whichever child's left edge is closest to
+        // scrollLeft. Comparing left edges was the source of the drift.
+        const viewportCenter = el.scrollLeft + el.clientWidth / 2;
+        const children = Array.from(el.children) as HTMLElement[];
+        let closest = 0;
+        let minDist = Infinity;
+        children.forEach((c, i) => {
+          const childCenter = c.offsetLeft + c.clientWidth / 2;
+          const dist = Math.abs(childCenter - viewportCenter);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = i;
+          }
+        });
+        setActive(closest);
       });
-      setActive(closest);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   const scrollToIndex = (i: number) => {
     const el = trackRef.current;
     if (!el) return;
     const child = el.children[i] as HTMLElement | undefined;
-    if (child) el.scrollTo({ left: child.offsetLeft, behavior: "smooth" });
+    if (!child) return;
+    // Target the same point the CSS snap would settle on: the child's centre
+    // aligned with the viewport's centre. Scrolling to offsetLeft instead
+    // (left-edge alignment) fought the center-based snap and produced the
+    // inaccurate, jumpy settle.
+    const target = child.offsetLeft + child.clientWidth / 2 - el.clientWidth / 2;
+    el.scrollTo({ left: target, behavior: "smooth" });
   };
 
   return (
@@ -124,6 +143,8 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
           gap: 16px;
           overflow-x: auto;
           scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          overscroll-behavior-x: contain;
           -webkit-overflow-scrolling: touch;
           padding: 4px 2px 10px;
           scrollbar-width: none;

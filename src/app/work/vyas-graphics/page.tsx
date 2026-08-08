@@ -9,6 +9,8 @@ import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { LogoMarkTile } from "@/components/LogoMarkTile";
 import { PlayableStill } from "@/components/PlayableStill";
 import { Carousel } from "@/components/Carousel";
+import { SectionDivider } from "@/components/SectionDivider";
+import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
 
 export const metadata: Metadata = {
   title: "Vyas Graphics - Brand Identity & Sports Media",
@@ -30,6 +32,14 @@ const SECTIONS = [
 ];
 
 const IMG = "/assets/images/vyas-graphics";
+
+const TOOLS = [
+  { icon: "tech-ai.svg", name: "Illustrator" },
+  { icon: "tech-ps.svg", name: "Photoshop" },
+  { icon: "tech-ae.svg", name: "After Effects" },
+  { icon: "tech-id.svg", name: "InDesign" },
+  { icon: "tech-pr.svg", name: "Premiere Pro" },
+];
 
 const FLIPBOOKS = [
   {
@@ -75,7 +85,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 function Body({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px", maxWidth: "700px", ...style }}>
+    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px", maxWidth: "780px", ...style }}>
       {children}
     </p>
   );
@@ -100,17 +110,16 @@ function Caption({ children }: { children: React.ReactNode }) {
 export default function VyasGraphicsWorkPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
-      <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 100px" }}>
+      <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 0" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
-        <header style={{ marginTop: "40px", marginBottom: "32px" }}>
+        <header className="vg-hero-in" style={{ marginTop: "40px", marginBottom: "36px" }}>
           <h1 style={{ fontSize: "clamp(28px, 3.4vw + 8px, 46px)", fontWeight: 700, lineHeight: 1.15, marginBottom: "16px", maxWidth: "820px" }}>
             Vyas Graphics - Brand Identity &amp; Sports Media
           </h1>
-          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "620px", marginBottom: "24px" }}>
-            Four years of self-directed brand and motion work - logo identities built from scratch, a full sports
-            media campaign run like a real client account, and a habit of shipping in public that turned one
-            LinkedIn comment into a rebuilt portfolio flipbook.
+          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.55, maxWidth: "700px", marginBottom: "24px" }}>
+            Four years of self-directed brand and motion work - logo identities built from scratch, sports campaigns
+            run like real client accounts, and a habit of shipping in public.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "After Effects"].map((t) => (
@@ -124,18 +133,40 @@ export default function VyasGraphicsWorkPage() {
             ))}
           </div>
         </header>
+      </div>
 
+      <div className="vg-hero-in" style={{ marginBottom: "44px", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
+        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={32} gap={14} repeat={6}>
+          {TOOLS.map((tool) => (
+            <div
+              key={tool.name}
+              style={{
+                display: "flex", alignItems: "center", gap: "10px",
+                padding: "8px 18px", borderRadius: "100px",
+                border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <Image src={`/assets/images/section/${tool.icon}`} alt="" width={16} height={16} />
+              <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.65)" }}>{tool.name}</span>
+            </div>
+          ))}
+        </AutoRepeatMarquee>
+      </div>
+
+      <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 24px 100px" }}>
         <SectionNav sections={SECTIONS} />
 
         {/* ── Brand Identity ── */}
         <ScrollReveal>
-          <section id="identity" style={{ marginTop: "40px", marginBottom: "72px", scrollMarginTop: "24px" }}>
+          <section id="identity" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
+            <SectionDivider index="01" tag="5 marks, 1 voice" />
             <SectionHeading>Brand identity, from scratch</SectionHeading>
             <Body>
               Five marks, five different problems. A personal wordmark that needed to work as a spinning badge and a
               static lockup. A visa consultancy that needed to feel established. An abstract monogram with no brief
-              at all beyond &ldquo;make it interesting.&rdquo; And two full circular badge identities - a charitable
-              trust and a dairy brand - each one drawn, not templated.
+              beyond &ldquo;make it interesting.&rdquo; And two full circular badge identities - a charitable trust
+              and a dairy brand - each one drawn, not templated.
             </Body>
             <AutoGrid min="190px">
               <LogoMarkTile src={`${IMG}/logo-vg-mark.png`} alt="Vyas Graphics VG wordmark" width={1239} height={264} label="Vyas Graphics" />
@@ -148,29 +179,28 @@ export default function VyasGraphicsWorkPage() {
             <div style={{ marginTop: "56px" }}>
               <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>AI-generated logo vectorisation</h3>
               <Body>
-                The clearest brief I&apos;ve taken on didn&apos;t come from a mood board - it came from AI. Clients
-                arrived with logo concepts generated by AI tools: on-brief, on-brand, and completely unusable past a
-                business card. I rebuilt each one as a clean, scalable vector in Illustrator - reconstructing paths,
-                rebuilding gradients, and producing print-ready SVG exports. Drag each slider to compare.
+                Clients arrived with AI-generated logo concepts - on-brief, on-brand, and unusable past a business
+                card. I rebuilt each one as a clean, scalable vector in Illustrator, print-ready at any size. Drag
+                each slider to compare.
               </Body>
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "36px" }}>
                 {[
                   ["3", "AI logos rebuilt as vector"],
-                  ["Raster → SVG", "pixelates vs. print-ready at any size"],
+                  ["Raster → SVG", "pixelates vs. print-ready"],
                   ["0", "gradients or paths left unrebuilt"],
                 ].map(([stat, label]) => (
                   <div key={label} style={{
-                    flex: "1 1 200px", padding: "16px 18px", borderRadius: "12px",
+                    flex: "1 1 190px", padding: "14px 16px", borderRadius: "12px",
                     background: "rgba(0,222,81,0.05)", border: "1px solid rgba(0,222,81,0.18)",
                   }}>
-                    <div style={{ fontSize: "20px", fontWeight: 700, color: "#00DE51", marginBottom: "2px" }}>{stat}</div>
-                    <div style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.6)" }}>{label}</div>
+                    <div style={{ fontSize: "18px", fontWeight: 700, color: "#00DE51", marginBottom: "2px" }}>{stat}</div>
+                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>{label}</div>
                   </div>
                 ))}
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: "32px 28px" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "28px 20px", justifyItems: "center" }}>
                 <div>
                   <BeforeAfterSlider
                     before={`${IMG}/vectorise-northstar-before.jpg`}
@@ -178,9 +208,9 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="100%"
+                    maxWidth="300px"
                   />
-                  <Caption>NorthstarWin Limited - IT Solutions, UK</Caption>
+                  <Caption>NorthstarWin Limited</Caption>
                 </div>
                 <div>
                   <BeforeAfterSlider
@@ -189,7 +219,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="100%"
+                    maxWidth="300px"
                   />
                   <Caption>Lakeshore Pool &amp; Deck</Caption>
                 </div>
@@ -200,9 +230,9 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="100%"
+                    maxWidth="300px"
                   />
-                  <Caption>Promith - SaaS, Restaurant Management</Caption>
+                  <Caption>Promith</Caption>
                 </div>
               </div>
             </div>
@@ -212,6 +242,7 @@ export default function VyasGraphicsWorkPage() {
         {/* ── Motion ── */}
         <ScrollReveal>
           <section id="motion" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
+            <SectionDivider index="02" tag="Play to reveal" />
             <SectionHeading>Logo reveal animation</SectionHeading>
             <Body>
               Four export variants of the Vyas Graphics logo reveal, built in After Effects for different placement
@@ -230,6 +261,7 @@ export default function VyasGraphicsWorkPage() {
         {/* ── Social Media ── */}
         <ScrollReveal>
           <section id="social" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
+            <SectionDivider index="03" tag="Feed-ready craft" />
             <SectionHeading>Social media posts</SectionHeading>
             <Body>
               The Vyas Graphics self-promotion series on Instagram - promotional posts, service announcements, and
@@ -263,6 +295,7 @@ export default function VyasGraphicsWorkPage() {
         {/* ── Print ── */}
         <ScrollReveal>
           <section id="print" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
+            <SectionDivider index="04" tag="Ink & layout" />
             <SectionHeading>Brochures</SectionHeading>
             <Body>
               Two-edition trifold brochures for R.N.G. Patel Institute of Technology&apos;s CSE department - faculty
@@ -274,7 +307,7 @@ export default function VyasGraphicsWorkPage() {
                 src={`${IMG}/brochure-v1.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition one"
                 width={1700}
-                height={947}
+                height={936}
                 className="vg-card"
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
@@ -282,7 +315,7 @@ export default function VyasGraphicsWorkPage() {
                 src={`${IMG}/brochure-v2.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition two"
                 width={1700}
-                height={961}
+                height={936}
                 className="vg-card"
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
@@ -293,13 +326,14 @@ export default function VyasGraphicsWorkPage() {
         {/* ── Sports Media ── */}
         <ScrollReveal>
           <section id="sports" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
+            <SectionDivider index="05" tag="Client-grade campaigns" />
             <SectionHeading>Sports media graphics</SectionHeading>
             <Body>
               Self-initiated sports media campaigns run like real client accounts - tournament identity, match-day
               coverage, and championship posters for two of cricket&apos;s biggest events.
             </Body>
             <div style={{
-              padding: "14px 18px", borderRadius: "10px", marginBottom: "36px", maxWidth: "700px",
+              padding: "14px 18px", borderRadius: "10px", marginBottom: "36px", maxWidth: "780px",
               background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
             }}>
               <p style={{ fontSize: "12.5px", lineHeight: 1.6, color: "rgba(255,255,255,0.5)" }}>
@@ -357,11 +391,12 @@ export default function VyasGraphicsWorkPage() {
         {/* ── Flipbooks ── */}
         <ScrollReveal>
           <section id="flipbooks" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
+            <SectionDivider index="06" tag="3 years, rebuilt" />
             <SectionHeading>Flipbooks</SectionHeading>
             <Body>
               Three years of the same portfolio flipbook, rebuilt each time, plus a themed editorial for India&apos;s
-              T20 World Cup run - a small, honest record of how the work (and the process behind it) kept moving.
-              Each cover links through to the live, page-turning version.
+              T20 World Cup run - a small, honest record of how the work kept moving. Each cover links through to
+              the live, page-turning version.
             </Body>
 
             <AutoGrid min="230px">
@@ -396,7 +431,7 @@ export default function VyasGraphicsWorkPage() {
             </AutoGrid>
 
             <div style={{
-              marginTop: "40px", padding: "22px", borderRadius: "14px", maxWidth: "700px",
+              marginTop: "40px", padding: "22px", borderRadius: "14px", maxWidth: "780px",
               background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.2)",
             }}>
               <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "10px" }}>
@@ -446,6 +481,19 @@ export default function VyasGraphicsWorkPage() {
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
+
+      <style>{`
+        @keyframes vg-hero-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .vg-hero-in {
+          animation: vg-hero-in 0.7s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .vg-hero-in { animation: none; }
+        }
+      `}</style>
     </div>
   );
 }
