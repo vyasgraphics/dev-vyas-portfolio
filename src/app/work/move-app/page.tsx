@@ -4,21 +4,19 @@ import { BackLink } from "@/components/BackLink";
 import { BackToTop } from "@/components/BackToTop";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { PersonaCard } from "@/components/PersonaCard";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
 import { WireframeSmartInput } from "@/components/wireframes/WireframeSmartInput";
 import { WireframeQuietMode } from "@/components/wireframes/WireframeQuietMode";
 import { WireframeSeeBeforeYouGo } from "@/components/wireframes/WireframeSeeBeforeYouGo";
 import { WireframeGapFinder } from "@/components/wireframes/WireframeGapFinder";
+import { WireframeCrowdFilter } from "@/components/wireframes/WireframeCrowdFilter";
 import { personas } from "@/data/personas";
 
 export const metadata: Metadata = {
   title: "Move - University Exercise App",
   description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
 };
-
-const IMG = "/assets/images/blog/building-move-app";
 
 const SECTIONS = [
   { id: "problem", label: "The Problem" },
@@ -114,15 +112,19 @@ export default function MoveAppWorkPage() {
               to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
               &ldquo;Social/Solo&rdquo; control, and adding explicit confirmation feedback fixed it.
             </p>
-            <BeforeAfterSlider
-              before={`${IMG}/slider-before.png`}
-              after={`${IMG}/slider-after.png`}
-              beforeLabel="Quiet Mode"
-              afterLabel="Crowd Filter"
-            />
-            <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", marginTop: "12px", textAlign: "center" }}>
-              Drag to compare
-            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+              <WireframeQuietMode
+                badge="A"
+                title={"Home \u2014 \u201cQuiet Mode\u201d (Original)"}
+                description={
+                  <>
+                    <strong style={{ color: "#fff" }}>The problem:</strong> in testing, this toggle got read as a
+                    system audio control, not a crowd filter.
+                  </>
+                }
+              />
+              <WireframeCrowdFilter />
+            </div>
           </section>
         </ScrollReveal>
 

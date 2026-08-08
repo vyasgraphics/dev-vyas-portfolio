@@ -4,23 +4,27 @@ import { useState } from "react";
 import { PhoneFrame, WireframeIntro } from "./PhoneFrame";
 import { TiltCard } from "@/components/TiltCard";
 
-export function WireframeQuietMode({ showIntro = true }: { showIntro?: boolean }) {
+export function WireframeQuietMode({
+  showIntro = true,
+  badge = "02",
+  title = "The \u201cQuiet Mode\u201d Dashboard",
+  description = (
+    <>
+      <strong style={{ color: "#fff" }}>Component:</strong> Tailored Recommendations. Click the panel below to
+      simulate toggling <strong style={{ color: "#fff" }}>&ldquo;Quiet Mode&rdquo;</strong> on and off.
+    </>
+  ),
+}: {
+  showIntro?: boolean;
+  badge?: string;
+  title?: string;
+  description?: React.ReactNode;
+}) {
   const [quietMode, setQuietMode] = useState(true);
 
   return (
     <div>
-      {showIntro && (
-        <WireframeIntro
-          badge="02"
-          title="The &ldquo;Quiet Mode&rdquo; Dashboard"
-          description={
-            <>
-              <strong style={{ color: "#fff" }}>Component:</strong> Tailored Recommendations. Click the panel below to
-              simulate toggling <strong style={{ color: "#fff" }}>&ldquo;Quiet Mode&rdquo;</strong> on and off.
-            </>
-          }
-        />
-      )}
+      {showIntro && <WireframeIntro badge={badge} title={title} description={description} />}
       <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "16px 16px 0", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #cbd5e1", paddingBottom: "12px" }}>

@@ -57,7 +57,7 @@ export function ClaimsTable() {
       {/* Mobile: one stacked card per feature - each fact gets its own full-
           width block instead of a cramped column, so nothing wraps into
           unreadable slivers or gets clipped off-screen. */}
-      <div className="claims-cards-wrap" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+      <div className="claims-cards-wrap" style={{ flexDirection: "column", gap: "14px" }}>
         {claimsRows.map((row) => (
           <div key={row.feature} style={{ border: "1px solid rgba(255,255,255,0.1)", borderRadius: "14px", background: "rgba(255,255,255,0.02)", padding: "18px" }}>
             <h5 style={{ fontSize: "15px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>{row.feature}</h5>

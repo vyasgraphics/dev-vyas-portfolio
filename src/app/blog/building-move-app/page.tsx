@@ -9,6 +9,7 @@ import { WireframeSmartInput } from "@/components/wireframes/WireframeSmartInput
 import { WireframeQuietMode } from "@/components/wireframes/WireframeQuietMode";
 import { WireframeSeeBeforeYouGo } from "@/components/wireframes/WireframeSeeBeforeYouGo";
 import { WireframeGapFinder } from "@/components/wireframes/WireframeGapFinder";
+import { WireframeCrowdFilter } from "@/components/wireframes/WireframeCrowdFilter";
 import { personas } from "@/data/personas";
 import { scenarios } from "@/data/scenarios";
 import { rejectedConcepts } from "@/data/rejectedConcepts";
@@ -244,8 +245,18 @@ export default function BuildingMoveAppPage() {
       </p>
       <p>Small change on paper. But it&apos;s the difference between a feature people trust and one they quietly avoid.</p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/redesign-before-after.png" alt="Before and after: the original ambiguous Quiet Mode toggle next to the redesigned Crowd Filter with explicit feedback" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "36px", marginBottom: "8px" }}>
+        <WireframeQuietMode showIntro={false} />
+        <WireframeCrowdFilter showIntro={false} />
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
+          <strong style={{ color: "#fff" }}>A &mdash; Control:</strong> the original, ambiguous toggle
+        </p>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
+          <strong style={{ color: "#fff" }}>B &mdash; Treatment:</strong> Crowd Filter with explicit feedback
+        </p>
+      </div>
 
       <h2>What&apos;s Next: Taking It Properly Live</h2>
       <p>

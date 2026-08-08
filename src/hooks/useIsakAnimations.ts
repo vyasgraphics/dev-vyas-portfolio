@@ -261,6 +261,9 @@ export function useIsakAnimations() {
                 .map((w) => w.querySelector(".wrap"))
                 .filter((el): el is Element => el !== null);
 
+            let restoredAtScrollY: number | null = null;
+            let restoredAtTime = 0;
+
             const syncSidebarToScroll = () => {
                 // A click already set the correct end-state immediately (see
                 // onAnchorClick below) - don't let a scroll tick mid-jump
@@ -293,6 +296,36 @@ export function useIsakAnimations() {
                         matched = works[matchedIndex].querySelector(".wrap");
                     }
                 }
+
+                // Confirmed live, on the real deployed site rather than
+                // locally (images fetched over the network shift layout
+                // noticeably later than local dev's near-instant static
+                // assets do): a "Back to Work" restoration would correctly
+                // activate a card, then a card image finishing loading a
+                // couple of seconds later would nudge the sticky-item's
+                // rendered position just enough that THIS check briefly
+                // read "no match", clearing the very card that was just
+                // (correctly) restored - even though the user never
+                // touched the scroll position at all. Guard specifically
+                // against that: right after a restoration activates a
+                // card, remember the scrollY it happened at; if a later
+                // sync comes back with no match while scrollY has barely
+                // moved from that point, it's almost certainly the same
+                // layout-shift artefact, not the user actually scrolling
+                // away, so keep the restored card active instead of
+                // clearing it. Any real scroll of more than a few px
+                // clears this guard immediately and syncs normally.
+                if (restoredAtScrollY !== null) {
+                    const scrolledSince = Math.abs(window.scrollY - restoredAtScrollY);
+                    const withinGraceWindow = Date.now() - restoredAtTime < 6000;
+                    if (matched === null && scrolledSince < 40 && withinGraceWindow) {
+                        return;
+                    }
+                    if (scrolledSince >= 40 || !withinGraceWindow) {
+                        restoredAtScrollY = null;
+                    }
+                }
+
                 sidebar.classList.toggle("active", matched !== null);
                 allWraps.forEach((el) => el.classList.toggle("active", el === matched));
             };
@@ -320,7 +353,13 @@ export function useIsakAnimations() {
             if (w.__suppressHashSyncUntil) {
                 const remaining = w.__suppressHashSyncUntil - Date.now();
                 if (remaining > 0) {
-                    const settleTimer = setTimeout(syncSidebarToScroll, remaining + 50);
+                    const settleTimer = setTimeout(() => {
+                        syncSidebarToScroll();
+                        if (sidebar.classList.contains("active")) {
+                            restoredAtScrollY = window.scrollY;
+                            restoredAtTime = Date.now();
+                        }
+                    }, remaining + 50);
                     cleanups.push(() => clearTimeout(settleTimer));
                 }
             }
@@ -361,6 +400,10 @@ export function useIsakAnimations() {
                 clickScrollTimer = setTimeout(() => {
                     isClickScrolling = false;
                     syncSidebarToScroll();
+                    if (sidebar.classList.contains("active")) {
+                        restoredAtScrollY = window.scrollY;
+                        restoredAtTime = Date.now();
+                    }
                 }, 1700);
             };
             const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
