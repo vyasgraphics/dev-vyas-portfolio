@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { VideoPlayer } from "./VideoPlayer";
 
 // Shows a still frame with a play-button overlay for motion/video pieces.
 // Pass `videoSrc` once a real export is available and this switches to an
@@ -36,20 +37,14 @@ export function PlayableStill({
           borderRadius: "14px",
           overflow: "hidden",
           background: "#000",
-          cursor: videoSrc ? "pointer" : "default",
+          cursor: videoSrc && !playing ? "pointer" : "default",
         }}
         onClick={() => {
-          if (videoSrc) setPlaying(true);
+          if (videoSrc && !playing) setPlaying(true);
         }}
       >
         {playing && videoSrc ? (
-          <video
-            src={videoSrc}
-            controls
-            autoPlay
-            playsInline
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          <VideoPlayer src={videoSrc} poster={poster} onClose={() => setPlaying(false)} />
         ) : (
           <>
             <Image
