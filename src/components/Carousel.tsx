@@ -22,9 +22,22 @@ type CarouselItem = {
 // just its own offsetLeft, matching scrollLeft directly, no compensating
 // padding required, and it's the same interaction model as most native
 // feed carousels (current slide flush, next slide peeking from the right).
-export function Carousel({ items, label, showArrows = true }: { items: CarouselItem[]; label?: string; showArrows?: boolean }) {
+export function Carousel({
+  items,
+  label,
+  showArrows = true,
+  showCounter = true,
+  showDots = true,
+}: {
+  items: CarouselItem[];
+  label?: string;
+  showArrows?: boolean;
+  showCounter?: boolean;
+  showDots?: boolean;
+}) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const snapRestoreTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   // Active index and scroll targets are both derived from scroll PROGRESS
   // (scrollLeft / maxScroll, 0 to 1) mapped proportionally across the index
@@ -82,12 +95,33 @@ export function Carousel({ items, label, showArrows = true }: { items: CarouselI
     // always lands exactly where that reading back through measure() will
     // report - clicking dot 4 shows dot 4 as active, never dot 6.
     const target = items.length > 1 ? (clamped / (items.length - 1)) * maxScroll : 0;
+
+    // A long jump (e.g. slide 6 back to slide 1) is a single continuous
+    // scroll that passes through every snap point in between.
+    // scroll-snap-stop:always on each slide means "never let a scroll skip
+    // past a snap point uninterrupted" - which is exactly what a long
+    // programmatic jump needs to do, so the browser can cut the animation
+    // short partway there instead of reaching the intended target. Native
+    // swipe/drag should still respect that rule (it's what stops a fast
+    // flick from sailing past three cards at once), so rather than removing
+    // it outright, snap is switched off just for the duration of this
+    // programmatic scroll and restored right after.
+    el.style.scrollSnapType = "none";
+    window.clearTimeout(snapRestoreTimeout.current);
+    snapRestoreTimeout.current = setTimeout(() => {
+      el.style.scrollSnapType = "";
+    }, 500);
+
     el.scrollTo({ left: target, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    return () => window.clearTimeout(snapRestoreTimeout.current);
+  }, []);
+
   return (
     <div style={{ position: "relative" }}>
-      {label && (
+      {(label || showCounter) && (
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           marginBottom: "12px",
@@ -95,9 +129,11 @@ export function Carousel({ items, label, showArrows = true }: { items: CarouselI
           <span style={{ fontSize: "12.5px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>
             {label}
           </span>
-          <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.4)" }}>
-            {active + 1} / {items.length}
-          </span>
+          {showCounter && (
+            <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.4)" }}>
+              {active + 1} / {items.length}
+            </span>
+          )}
         </div>
       )}
 
@@ -141,22 +177,24 @@ export function Carousel({ items, label, showArrows = true }: { items: CarouselI
         )}
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "14px" }}>
-        {items.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label={`Go to slide ${i + 1}`}
-            onClick={() => scrollToIndex(i)}
-            style={{
-              width: active === i ? "22px" : "7px", height: "7px", borderRadius: "100px",
-              background: active === i ? "#00DE51" : "rgba(255,255,255,0.25)",
-              border: "none", padding: 0, cursor: "pointer",
-              transition: "all 0.25s ease",
-            }}
-          />
-        ))}
-      </div>
+      {showDots && (
+        <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "14px" }}>
+          {items.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => scrollToIndex(i)}
+              style={{
+                width: active === i ? "22px" : "7px", height: "7px", borderRadius: "100px",
+                background: active === i ? "#00DE51" : "rgba(255,255,255,0.25)",
+                border: "none", padding: 0, cursor: "pointer",
+                transition: "all 0.25s ease",
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <style jsx>{`
         .vg-carousel-wrap {

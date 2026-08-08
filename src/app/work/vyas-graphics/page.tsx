@@ -43,6 +43,19 @@ const TOOLS = [
   { icon: "tech-pr.svg", name: "Premiere Pro" },
 ];
 
+const GALLERY_IMAGES = [
+  { src: "social-01.jpg", alt: "Vyas Graphics custom design promo post", w: 900, h: 1124 },
+  { src: "icc-03-final.jpg", alt: "ICC T20 World Cup final poster", w: 800, h: 1066 },
+  { src: "social-08.jpg", alt: "Vyas Graphics portrait brand post", w: 900, h: 1199 },
+  { src: "ipl-champions-poster.jpg", alt: "RCB IPL champions poster", w: 1100, h: 1466 },
+  { src: "social-03.jpg", alt: "Vyas Graphics Instagram post" , w: 900, h: 1123 },
+  { src: "icc-04-champions.jpg", alt: "India T20 World Cup champions poster", w: 800, h: 1066 },
+  { src: "social-05.jpg", alt: "Elevate your visual identity promotional post", w: 900, h: 1125 },
+  { src: "ipl-final-poster.jpg", alt: "IPL final poster, RCB vs Gujarat Titans", w: 1100, h: 1466 },
+  { src: "social-09.jpg", alt: "Vyas Graphics New Year post", w: 900, h: 1124 },
+  { src: "social-10.jpg", alt: "Vyas Graphics design fundamentals post", w: 900, h: 1199 },
+];
+
 const FLIPBOOKS = [
   {
     src: "flipbook-v1.png",
@@ -140,6 +153,22 @@ export default function VyasGraphicsWorkPage() {
             ))}
           </div>
         </header>
+      </div>
+
+      <div className="vg-hero-in vg-tilt-gallery" style={{ marginBottom: "36px", padding: "28px 0" }}>
+        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={26} gap={22} repeat={3}>
+          {GALLERY_IMAGES.map((img) => (
+            <div key={img.src} className="vg-tilt-card vg-card">
+              <Image
+                src={`${IMG}/${img.src}`}
+                alt={img.alt}
+                width={img.w}
+                height={img.h}
+                style={{ height: "180px", width: "auto", display: "block", borderRadius: "10px" }}
+              />
+            </div>
+          ))}
+        </AutoRepeatMarquee>
       </div>
 
       <div className="vg-hero-in" style={{ marginBottom: "44px", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
@@ -280,6 +309,8 @@ export default function VyasGraphicsWorkPage() {
               <Carousel
                 label="Carousel post"
                 showArrows={false}
+                showCounter={false}
+                showDots={false}
                 items={SERVICES_CAROUSEL.map((s) => ({ ...s, src: `${IMG}/${s.src}` }))}
               />
             </div>
