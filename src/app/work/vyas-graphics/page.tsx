@@ -178,25 +178,6 @@ export default function VyasGraphicsWorkPage() {
         </AutoRepeatMarquee>
       </div>
 
-      <div className="vg-hero-in" style={{ marginBottom: "44px", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
-        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={32} gap={14} repeat={6}>
-          {TOOLS.map((tool) => (
-            <div
-              key={tool.name}
-              style={{
-                display: "flex", alignItems: "center", gap: "10px",
-                padding: "8px 18px", borderRadius: "100px",
-                border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <Image src={`/assets/images/section/${tool.icon}`} alt="" width={16} height={16} />
-              <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.65)" }}>{tool.name}</span>
-            </div>
-          ))}
-        </AutoRepeatMarquee>
-      </div>
-
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 24px 100px" }}>
         <SectionNav sections={SECTIONS} />
 
@@ -498,6 +479,25 @@ export default function VyasGraphicsWorkPage() {
             </div>
           </section>
         </ScrollReveal>
+
+        <div className="vg-hero-in" style={{ margin: "48px 0", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
+          <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={32} gap={14} repeat={6}>
+            {TOOLS.map((tool) => (
+              <div
+                key={tool.name}
+                style={{
+                  display: "flex", alignItems: "center", gap: "10px",
+                  padding: "8px 18px", borderRadius: "100px",
+                  border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.03)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <Image src={`/assets/images/section/${tool.icon}`} alt="" width={16} height={16} />
+                <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.65)" }}>{tool.name}</span>
+              </div>
+            ))}
+          </AutoRepeatMarquee>
+        </div>
 
         <div style={{ position: "relative", padding: "8px 0" }}>
           <div
