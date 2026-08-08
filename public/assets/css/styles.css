@@ -8393,24 +8393,13 @@ html, body {
   }
 }
 
-/* ── Vyas Graphics: hero tilted gallery strip ──
-   Ambient auto-scrolling showcase of real work, each card at a consistent
-   slight lean (coverflow-style) with a soft edge fade so the strip reads as
-   continuous rather than hard-cut at the container boundary. Hover
-   straightens + lifts a card - desktop only, same (hover:hover) guard as
-   .vg-card so it never sticks on a tap. ── */
+/* ── Vyas Graphics: hero gallery strip ──
+   Ambient auto-scrolling showcase of real work with a soft edge fade so the
+   strip reads as continuous rather than hard-cut at the container
+   boundary. ── */
 .vg-tilt-gallery {
   -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
   mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-}
-.vg-tilt-card {
-  transform: rotate(-4deg);
-  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1);
-}
-@media (hover: hover) {
-  .vg-tilt-card:hover {
-    transform: rotate(0deg) scale(1.05);
-  }
 }
 
 /* ── Liquid-glass pass ──
