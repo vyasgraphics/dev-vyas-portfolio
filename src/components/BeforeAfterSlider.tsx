@@ -10,11 +10,15 @@ export function BeforeAfterSlider({
   after,
   beforeLabel = "Before",
   afterLabel = "After",
+  aspectRatio = "900 / 1643",
+  maxWidth = "380px",
 }: {
   before: string;
   after: string;
   beforeLabel?: string;
   afterLabel?: string;
+  aspectRatio?: string;
+  maxWidth?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState(50); // percent
@@ -45,7 +49,7 @@ export function BeforeAfterSlider({
   }, [updateFromClientX]);
 
   return (
-    <div style={{ maxWidth: "380px", margin: "0 auto" }}>
+    <div style={{ maxWidth, margin: "0 auto" }}>
     <div
       ref={containerRef}
       onPointerDown={(e) => {
@@ -55,7 +59,7 @@ export function BeforeAfterSlider({
       style={{
         position: "relative",
         width: "100%",
-        aspectRatio: "900 / 1643",
+        aspectRatio,
         borderRadius: "16px",
         overflow: "hidden",
         cursor: "ew-resize",

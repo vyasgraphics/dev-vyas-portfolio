@@ -40,7 +40,7 @@ export const works: Work[] = [
     slug: "vyas-graphics",
     title: "Vyas Graphics - Brand Identity & Sports Media",
     description: "Self-directed brand and motion work spanning logo design in Illustrator, four animated logo reveal variants in After Effects, and a full sports media campaign for the ICC T20 World Cup 2026 - tournament promos, match-day posters, and a 15-player champions composite.",
-    year: "2024-2026",
+    year: "2020-2026",
     role: "Brand & Motion Designer",
     tags: ["Illustrator", "After Effects", "Brand Identity", "Sports Media"],
     image: "/assets/images/section/work-3.jpg",
