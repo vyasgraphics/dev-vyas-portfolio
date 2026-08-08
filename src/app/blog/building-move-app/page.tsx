@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 import { PersonaCard } from "@/components/PersonaCard";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
+import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { ScenarioCard } from "@/components/ScenarioCard";
 import { ClaimsTable } from "@/components/ClaimsTable";
 import { RejectedConceptCard } from "@/components/RejectedConceptCard";
@@ -84,6 +85,7 @@ export default function BuildingMoveAppPage() {
       </p>
 
       <TiltPermissionPrompt />
+      <FloatingTiltToggle />
       <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "8px" }}>
         <PersonaCard persona={personas[0]} />
         <PersonaCard persona={personas[1]} />

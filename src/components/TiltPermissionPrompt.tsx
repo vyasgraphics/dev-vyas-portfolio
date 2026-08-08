@@ -60,23 +60,25 @@ export function TiltPermissionPrompt() {
           used inside the wireframe screens, so on/off reads instantly. */}
       <span
         style={{
-          width: "30px",
-          height: "17px",
+          width: "34px",
+          height: "20px",
           borderRadius: "999px",
           background: enabled ? "#00DE51" : "rgba(255,255,255,0.18)",
           border: `1.5px solid ${enabled ? "#00DE51" : "rgba(255,255,255,0.3)"}`,
           position: "relative",
           flexShrink: 0,
+          boxSizing: "border-box",
           transition: "background 0.2s ease, border-color 0.2s ease",
         }}
       >
         <span
           style={{
             position: "absolute",
-            top: "1px",
-            left: enabled ? "14px" : "1px",
-            width: "11px",
-            height: "11px",
+            top: "50%",
+            left: enabled ? "calc(100% - 16px)" : "2px",
+            transform: "translateY(-50%)",
+            width: "14px",
+            height: "14px",
             borderRadius: "50%",
             background: enabled ? "#0a0a0a" : "#fff",
             transition: "left 0.22s cubic-bezier(0.34,1.56,0.64,1)",

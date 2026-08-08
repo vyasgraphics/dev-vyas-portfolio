@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
 import { BackToTop } from "@/components/BackToTop";
+import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PersonaCard } from "@/components/PersonaCard";
@@ -166,6 +167,7 @@ export default function MoveAppWorkPage() {
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
+      <FloatingTiltToggle />
     </div>
   );
 }

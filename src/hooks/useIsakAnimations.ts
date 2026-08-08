@@ -269,20 +269,6 @@ export function useIsakAnimations() {
                 // onAnchorClick below) - don't let a scroll tick mid-jump
                 // undo that before the jump has actually settled.
                 if (isClickScrolling) return;
-                // A cross-route "Back to Work" landing is a separate
-                // restoration path (BackLink -> useUrlHashSync) that calls
-                // suppressPassiveHashSync and sets this same window flag -
-                // already used elsewhere in the codebase for exactly this
-                // "a deliberate restoration is under way, don't let passive
-                // syncing fight it" purpose. Respecting it here means this
-                // sync simply doesn't run on the stale intermediate scroll
-                // positions restoration passes through (mount, before the
-                // jump; then the jump itself; then each settle-correction),
-                // so the card's reveal transition only ever plays once,
-                // cleanly - without adding any delay to ordinary scrolling,
-                // which never sets this flag and always syncs instantly.
-                const w = window as unknown as { __suppressHashSyncUntil?: number };
-                if (w.__suppressHashSyncUntil && Date.now() < w.__suppressHashSyncUntil) return;
 
                 const rects = Array.from(works, (w) => w.getBoundingClientRect());
                 let matchedIndex = -1;
@@ -328,6 +314,10 @@ export function useIsakAnimations() {
 
                 sidebar.classList.toggle("active", matched !== null);
                 allWraps.forEach((el) => el.classList.toggle("active", el === matched));
+                if (matched !== null) {
+                    restoredAtScrollY = window.scrollY;
+                    restoredAtTime = Date.now();
+                }
             };
 
             let syncTicking = false;
@@ -343,25 +333,37 @@ export function useIsakAnimations() {
             cleanups.push(() => {
                 window.removeEventListener("scroll", onScrollSync);
             });
-            syncSidebarToScroll(); // correct state immediately, e.g. landing mid-page on load
 
-            // Once suppression from a restoration lifts, do one final sync
-            // so the sidebar reflects wherever the page actually settled,
-            // even if no further scroll event happens to fire right at
-            // that instant (e.g. the jump was the last scroll motion).
-            const w = window as unknown as { __suppressHashSyncUntil?: number };
-            if (w.__suppressHashSyncUntil) {
-                const remaining = w.__suppressHashSyncUntil - Date.now();
-                if (remaining > 0) {
-                    const settleTimer = setTimeout(() => {
-                        syncSidebarToScroll();
-                        if (sidebar.classList.contains("active")) {
-                            restoredAtScrollY = window.scrollY;
-                            restoredAtTime = Date.now();
-                        }
-                    }, remaining + 50);
-                    cleanups.push(() => clearTimeout(settleTimer));
-                }
+            // The one genuinely problematic moment: this hook can mount
+            // and run before a pending cross-route restoration ("Back to
+            // Work") has actually jumped the scroll position - calling
+            // syncSidebarToScroll right now would read scrollY still at 0
+            // and correctly, but wrongly, conclude nothing is active,
+            // which used to require waiting out a long fixed suppression
+            // window to correct. Skipping specifically this one call when
+            // a restoration is flagged as pending fixes that without
+            // needing to hold back every ordinary scroll-driven sync
+            // behind the same delay - the real jump generally lands within
+            // a frame or two, and the very next native scroll event (or,
+            // failing that, one of the short safety-net checks below)
+            // picks it up and activates the card almost immediately
+            // instead of only after the full window elapses.
+            const restorationPending = () => {
+                const w = window as unknown as { __suppressHashSyncUntil?: number };
+                return !!w.__suppressHashSyncUntil && Date.now() < w.__suppressHashSyncUntil;
+            };
+            if (!restorationPending()) {
+                syncSidebarToScroll(); // correct state immediately, e.g. landing mid-page on load
+            } else {
+                // Short, closely-spaced safety net in case the restoration's
+                // own jump doesn't happen to fire a native scroll event
+                // (e.g. it lands at a position identical to the current
+                // one) - each check is cheap and a no-op if a scroll event
+                // already handled it first.
+                [120, 300, 600, 1000].forEach((delay) => {
+                    const t = setTimeout(syncSidebarToScroll, delay);
+                    cleanups.push(() => clearTimeout(t));
+                });
             }
 
             // Click-triggered nav (as opposed to organic wheel/touch scrolling)
@@ -400,10 +402,6 @@ export function useIsakAnimations() {
                 clickScrollTimer = setTimeout(() => {
                     isClickScrolling = false;
                     syncSidebarToScroll();
-                    if (sidebar.classList.contains("active")) {
-                        restoredAtScrollY = window.scrollY;
-                        restoredAtTime = Date.now();
-                    }
                 }, 1700);
             };
             const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
