@@ -99,11 +99,11 @@ export default function VyasGraphicsWorkPage() {
               trust and a dairy brand - each one drawn, not templated.
             </Body>
             <AutoGrid min="130px">
-              <LogoMarkTile src={`${IMG}/logo-vg-mark.jpg`} alt="Vyas Graphics VG wordmark" width={670} height={215} label="Vyas Graphics" />
-              <LogoMarkTile src={`${IMG}/logo-raj-tailor.jpg`} alt="Raj Tailor visa and immigration consultancy logo" width={500} height={220} label="Raj Tailor Consultancy" />
-              <LogoMarkTile src={`${IMG}/logo-diamond.jpg`} alt="Abstract diamond monogram mark" width={270} height={220} label="Diamond Monogram" />
-              <LogoMarkTile src={`${IMG}/logo-jeevan-badge.jpg`} alt="Jeevan Deep Sahay charitable trust badge" width={370} height={307} label="Jeevan Deep Sahay Trust" />
-              <LogoMarkTile src={`${IMG}/logo-lunara-badge.jpg`} alt="Lunara Dairy Co circular badge logo" width={420} height={307} label="Lunara Dairy Co." />
+              <LogoMarkTile src={`${IMG}/logo-vg-mark.png`} alt="Vyas Graphics VG wordmark" width={1239} height={264} label="Vyas Graphics" />
+              <LogoMarkTile src={`${IMG}/logo-raj-tailor.png`} alt="Raj Tailor visa and immigration consultancy logo" width={1311} height={395} label="Raj Tailor Consultancy" />
+              <LogoMarkTile src={`${IMG}/logo-diamond.png`} alt="Abstract diamond monogram mark" width={633} height={633} label="Diamond Monogram" />
+              <LogoMarkTile src={`${IMG}/logo-jeevan-badge.png`} alt="Jeevan Deep Sahay charitable trust badge" width={645} height={645} label="Jeevan Deep Sahay Trust" />
+              <LogoMarkTile src={`${IMG}/logo-lunara-badge.png`} alt="Lunara Dairy Co circular badge logo" width={645} height={645} label="Lunara Dairy Co." />
             </AutoGrid>
 
             <div style={{ marginTop: "48px" }}>
@@ -122,7 +122,7 @@ export default function VyasGraphicsWorkPage() {
                     after={`${IMG}/vectorise-northstar-after.jpg`}
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
-                    aspectRatio="640 / 480"
+                    aspectRatio="900 / 720"
                     maxWidth="440px"
                   />
                   <Caption>NorthstarWin Limited - IT Solutions, UK</Caption>
@@ -133,7 +133,7 @@ export default function VyasGraphicsWorkPage() {
                     after={`${IMG}/vectorise-lakeshore-after.jpg`}
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
-                    aspectRatio="640 / 480"
+                    aspectRatio="900 / 720"
                     maxWidth="440px"
                   />
                   <Caption>Lakeshore Pool &amp; Deck</Caption>
@@ -144,7 +144,7 @@ export default function VyasGraphicsWorkPage() {
                     after={`${IMG}/vectorise-promith-after.jpg`}
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
-                    aspectRatio="640 / 480"
+                    aspectRatio="900 / 720"
                     maxWidth="440px"
                   />
                   <Caption>Promith - SaaS, Restaurant Management</Caption>
@@ -164,10 +164,10 @@ export default function VyasGraphicsWorkPage() {
               signature.
             </Body>
             <AutoGrid min="200px">
-              <PlayableStill poster={`${IMG}/reveal-01-crt.jpg`} alt="CRT monitor logo reveal" width={886} height={499} caption="CRT Boot-up" />
-              <PlayableStill poster={`${IMG}/reveal-02-gold.jpg`} alt="Gold title card logo reveal" width={886} height={499} caption="Gold Title Card" />
-              <PlayableStill poster={`${IMG}/reveal-03-mono.jpg`} alt="Monochrome logo reveal" width={886} height={499} caption="High-Contrast Mono" />
-              <PlayableStill poster={`${IMG}/reveal-04-script.jpg`} alt="Script signature logo reveal" width={886} height={499} caption="Script Signature" />
+              <PlayableStill poster={`${IMG}/reveal-01-crt.jpg`} videoSrc={`${IMG}/reveal-01-crt.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" />
+              <PlayableStill poster={`${IMG}/reveal-02-gold.jpg`} videoSrc={`${IMG}/reveal-02-gold.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" />
+              <PlayableStill poster={`${IMG}/reveal-03-mono.jpg`} videoSrc={`${IMG}/reveal-03-mono.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" />
+              <PlayableStill poster={`${IMG}/reveal-04-script.jpg`} videoSrc={`${IMG}/reveal-04-script.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" />
             </AutoGrid>
           </section>
         </ScrollReveal>
@@ -182,16 +182,19 @@ export default function VyasGraphicsWorkPage() {
               hand.
             </Body>
             <AutoGrid min="130px">
-              {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
-                <Image
-                  key={n}
-                  src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
-                  alt={`Vyas Graphics Instagram post ${n}`}
-                  width={473}
-                  height={591}
-                  style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
-                />
-              ))}
+              {[1124, 1123, 1123, 1124, 1125, 1125, 1125, 1199, 1124, 1199].map((h, i) => {
+                const n = i + 1;
+                return (
+                  <Image
+                    key={n}
+                    src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
+                    alt={`Vyas Graphics Instagram post ${n}`}
+                    width={900}
+                    height={h}
+                    style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
+                  />
+                );
+              })}
             </AutoGrid>
           </section>
         </ScrollReveal>
@@ -209,15 +212,15 @@ export default function VyasGraphicsWorkPage() {
               <Image
                 src={`${IMG}/brochure-v1.jpg`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition one"
-                width={1600}
-                height={931}
+                width={1700}
+                height={947}
                 style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
               />
               <Image
                 src={`${IMG}/brochure-v2.jpg`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition two"
-                width={1600}
-                height={931}
+                width={1700}
+                height={961}
                 style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
               />
             </div>
@@ -245,10 +248,10 @@ export default function VyasGraphicsWorkPage() {
             <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
             <AutoGrid min="150px">
-              <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} alt="ICC T20 World Cup 2026 tournament promo" width={591} height={788} caption="Tournament Promo" />
-              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={443} height={788} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={591} height={788} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={591} height={788} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} videoSrc={`${IMG}/icc-01-promo.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" />
+              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
             </AutoGrid>
 
             <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "40px 0 10px" }}>IPL 2026</h3>
@@ -262,25 +265,25 @@ export default function VyasGraphicsWorkPage() {
                   key={n}
                   src={`${IMG}/ipl-identity-${String(n).padStart(2, "0")}.jpg`}
                   alt={`IPL 2026 visual identity case study, slide ${n}`}
-                  width={325}
-                  height={433}
+                  width={800}
+                  height={1067}
                   style={{ width: "100%", height: "auto", borderRadius: "8px" }}
                 />
               ))}
             </AutoGrid>
 
             <div style={{ margin: "18px 0" }}>
-              <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} alt="IPL 2026 season promo animation" width={827} height={434} caption="Season Promo Animation" />
+              <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} videoSrc={`${IMG}/ipl-promo-wide.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" />
             </div>
 
             <AutoGrid min="160px">
-              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={443} height={788} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={443} height={788} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
             </AutoGrid>
             <div style={{ height: "14px" }} />
             <AutoGrid min="220px">
-              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={827} height={1103} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={827} height={1103} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
             </AutoGrid>
           </section>
         </ScrollReveal>
@@ -295,15 +298,15 @@ export default function VyasGraphicsWorkPage() {
             </Body>
             <AutoGrid min="150px">
               <div>
-                <Image src={`${IMG}/flipbook-v1.png`} alt="Portfolio flipbook version one, dark gradient aesthetic" width={666} height={526} style={{ width: "100%", height: "auto" }} />
+                <Image src={`${IMG}/flipbook-v1.png`} alt="Portfolio flipbook version one, dark gradient aesthetic" width={900} height={647} style={{ width: "100%", height: "auto" }} />
                 <Caption>Version 01 - dark gradient aesthetic</Caption>
               </div>
               <div>
-                <Image src={`${IMG}/flipbook-v2.png`} alt="Portfolio flipbook version two, LinkedIn upload" width={666} height={526} style={{ width: "100%", height: "auto" }} />
+                <Image src={`${IMG}/flipbook-v2.png`} alt="Portfolio flipbook version two, LinkedIn upload" width={900} height={647} style={{ width: "100%", height: "auto" }} />
                 <Caption>Version 02 - LinkedIn upload</Caption>
               </div>
               <div>
-                <Image src={`${IMG}/flipbook-v3.png`} alt="Portfolio flipbook version three, navigable table of contents" width={666} height={526} style={{ width: "100%", height: "auto" }} />
+                <Image src={`${IMG}/flipbook-v3.png`} alt="Portfolio flipbook version three, navigable table of contents" width={900} height={647} style={{ width: "100%", height: "auto" }} />
                 <Caption>Version 03 - fully navigable TOC</Caption>
               </div>
             </AutoGrid>
@@ -337,8 +340,8 @@ export default function VyasGraphicsWorkPage() {
               <Image
                 src={`${IMG}/flipbook-t20.png`}
                 alt="Team India's Road to Final flipbook, T20 World Cup editorial"
-                width={666}
-                height={526}
+                width={900}
+                height={647}
                 style={{ width: "100%", maxWidth: "440px", height: "auto", display: "block", margin: "0 auto" }}
               />
             </div>
