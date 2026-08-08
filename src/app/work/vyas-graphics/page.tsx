@@ -130,20 +130,6 @@ function Caption({ children }: { children: React.ReactNode }) {
 export default function VyasGraphicsWorkPage() {
   return (
     <div id="vg-top" style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
-      {/* Displacement-map filter powering the lensing enhancement in
-          .vg-glass-thick (see styles.css) - gentle, large-scale warp
-          rather than noisy texture, gated behind @supports so browsers
-          without url()-filter backdrop-filter support just get the
-          plain blur+saturate recipe instead. Zero visual footprint of
-          its own (0x0, aria-hidden) - it only exists to be referenced. */}
-      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
-        <filter id="vg-lens" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.012" numOctaves="1" seed="7" result="noise" />
-          <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
-          <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="12" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 0" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
@@ -157,9 +143,10 @@ export default function VyasGraphicsWorkPage() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "After Effects"].map((t) => (
-              <span key={t} className="vg-glass-thin" style={{
+              <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
-                color: "rgba(255,255,255,0.75)",
+                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+                color: "rgba(255,255,255,0.7)",
               }}>
                 {t}
               </span>
@@ -505,52 +492,39 @@ export default function VyasGraphicsWorkPage() {
           </AutoRepeatMarquee>
         </div>
 
-        <div style={{ position: "relative", padding: "8px 0" }}>
-          <div
-            aria-hidden
-            style={{
-              position: "absolute", inset: "-30px -10% 0", zIndex: 0,
-              background: "radial-gradient(ellipse 55% 60% at 50% 20%, rgba(0,222,81,0.18), transparent 70%), radial-gradient(ellipse 40% 45% at 78% 75%, rgba(130,90,255,0.12), transparent 70%), radial-gradient(ellipse 35% 40% at 15% 80%, rgba(0,180,255,0.1), transparent 70%)",
-              filter: "blur(6px)",
-              pointerEvents: "none",
-            }}
-          />
-
-          <ScrollReveal>
-            <div className="vg-glass-thick" style={{
-              position: "relative", zIndex: 1,
-              padding: "36px 28px",
-              borderRadius: "20px",
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "18px",
-            }}>
-              <Link
-                href="https://www.instagram.com/vyas.graphics/?hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Vyas Graphics on Instagram"
-                style={{ display: "inline-flex" }}
-              >
-                <Image src="/assets/images/social/instagram.svg" alt="" width={52} height={52} />
-              </Link>
-              <Link
-                href="https://www.instagram.com/vyas.graphics/?hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-block", padding: "12px 28px", borderRadius: "100px",
-                  background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
-                  fontSize: "14px", fontWeight: 700,
-                }}
-              >
-                Explore more on Instagram →
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
+        <ScrollReveal>
+          <div style={{
+            padding: "28px", borderRadius: "16px",
+            background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "18px",
+          }}>
+            <Link
+              href="https://www.instagram.com/vyas.graphics/?hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Vyas Graphics on Instagram"
+              style={{ display: "inline-flex" }}
+            >
+              <Image src="/assets/images/social/instagram.svg" alt="" width={52} height={52} />
+            </Link>
+            <Link
+              href="https://www.instagram.com/vyas.graphics/?hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block", padding: "12px 28px", borderRadius: "100px",
+                background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
+                fontSize: "14px", fontWeight: 700,
+              }}
+            >
+              Explore more on Instagram →
+            </Link>
+          </div>
+        </ScrollReveal>
 
         <div style={{ marginTop: "56px", textAlign: "center" }}>
           <BackLink href="/#work" label="← Back to Work" />

@@ -177,11 +177,9 @@ export function VideoPlayer({
           gap: 5px;
           padding: 5px 7px;
           border-radius: 100px;
-          background: rgba(10, 10, 10, 0.5);
-          border: 1px solid rgba(255, 255, 255, 0.14);
-          backdrop-filter: blur(16px) saturate(160%);
-          -webkit-backdrop-filter: blur(16px) saturate(160%);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2);
+          background: rgba(10, 10, 10, 0.72);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
         .vg-vp-btn {
           flex: 0 0 auto;

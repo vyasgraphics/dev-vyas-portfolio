@@ -7867,15 +7867,8 @@ button.animate-btn::after,
     white-space: nowrap;
     padding: 6px 12px;
     border-radius: 8px;
-    background: rgba(20,22,26,0.5);
-    border: 1px solid rgba(255,255,255,0.2);
-    backdrop-filter: blur(16px) saturate(180%) brightness(1.05);
-    -webkit-backdrop-filter: blur(16px) saturate(180%) brightness(1.05);
-    box-shadow:
-      0 8px 20px rgba(0,0,0,0.3),
-      inset 0 1.5px 0 rgba(255,255,255,0.38),
-      inset 0 -1px 0 rgba(0,0,0,0.2),
-      inset 1px 0 0 rgba(255,255,255,0.1);
+    background: rgba(20,22,26,0.92);
+    border: 1px solid rgba(255,255,255,0.1);
     color: rgba(255,255,255,0.85);
     opacity: 0;
     pointer-events: none;
@@ -8418,51 +8411,6 @@ html, body {
   }
 }
 
-/* ── Liquid-glass pass ──
-   Richer frosted-glass treatment for floating/overlay chrome site-wide:
-   saturate() alongside blur so colour behind the panel stays vivid instead
-   of graying out (the actual visual difference between "blurred" and
-   "glass"), plus a hairline inset highlight along the top edge and a
-   matching dark hairline along the bottom, standing in for the way real
-   glass catches light on one edge and falls into shadow on the other.
-   Applied to the two nav/back-to-top components shared across every work
-   page, plus a reusable .vg-glass utility for page-specific chrome. ── */
-.section-nav-trigger {
-  background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,0.28), transparent 55%);
-  background-color: rgba(20,22,26,0.4);
-  border-color: rgba(255,255,255,0.18);
-  backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
-  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.05);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.32),
-    inset 0 1.5px 0 rgba(255,255,255,0.4),
-    inset 0 -1px 0 rgba(0,0,0,0.22),
-    inset 1px 0 0 rgba(255,255,255,0.12),
-    inset -1px 0 0 rgba(255,255,255,0.06);
-  transition: transform 0.15s cubic-bezier(0.2,0.8,0.2,1);
-}
-.section-nav-trigger:active {
-  transform: scale(0.95);
-}
-.section-nav-list {
-  background-color: rgba(20,22,26,0.55);
-  border-color: rgba(255,255,255,0.16);
-  backdrop-filter: blur(26px) saturate(190%) brightness(1.06);
-  -webkit-backdrop-filter: blur(26px) saturate(190%) brightness(1.06);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,0.42),
-    inset 0 2px 0 rgba(255,255,255,0.4),
-    inset 0 -1.5px 0 rgba(0,0,0,0.26),
-    inset 1.5px 0 0 rgba(255,255,255,0.13),
-    inset -1.5px 0 0 rgba(255,255,255,0.06);
-}
-@supports (backdrop-filter: url(#vg-lens)) {
-  .section-nav-list {
-    backdrop-filter: url(#vg-lens) blur(18px) saturate(190%) brightness(1.06);
-    -webkit-backdrop-filter: url(#vg-lens) blur(18px) saturate(190%) brightness(1.06);
-  }
-}
-
 /* ── Vyas Graphics: gallery hover-lift + scale ──
    Extends the existing lift with a subtle scale, consistent with the
    tilted gallery's own hover treatment. ── */
@@ -8486,97 +8434,5 @@ html, body {
 @media (hover: hover) {
   .vg-brochure-tilt:hover {
     transform: rotate(0deg) scale(1.015);
-  }
-}
-
-/* ── Liquid Glass v2: rim-lit lensing, per Apple's actual spec ──
-   Rebuilt after reading Apple's own documentation and WWDC25 session
-   notes rather than approximating from screenshots. Two things this
-   version corrects:
-
-   1. Rim lighting, not a diagonal sheen. Apple's docs describe the
-      highlight as concentrated at the EDGES of the glass, intensity
-      varying with the angle of the surface normal to a fixed light
-      source - brightest where the surface curves toward the light (the
-      top edge), tapering down the sides, dark at the bottom where the
-      surface faces away. A diagonal gradient wash across the whole
-      surface (what v1 did) doesn't read as glass; a rim does.
-
-   2. Lensing, not blur. Apple is explicit that Liquid Glass is NOT the
-      frosted-blur material iOS used from 15-18 - it REFRACTS the content
-      behind it (bends/displaces pixels, the way light bends through
-      curved glass) rather than just scattering them into softness.
-      blur()/saturate() alone can't produce that; it needs an actual
-      displacement map. #vg-lens below is a conservative SVG
-      feDisplacementMap - gentle, large-scale warping (not noisy
-      texture) at a modest 12px scale, so it reads as "glass" rather
-      than "broken." Applied via backdrop-filter: url(#vg-lens), which
-      has real but uneven browser support, so it's gated behind
-      @supports with the plain blur+saturate recipe as the fallback -
-      nothing regresses on a browser that doesn't support it, the
-      lensing is pure upside where it does.
-
-   Two thickness tiers, matching Apple's own note that "larger elements
-   simulate thicker material with deeper shadows and more pronounced
-   lensing": .vg-glass-thin for small controls (buttons, pills),
-   .vg-glass-thick for larger panels (the CTA card, the expanded nav
-   list). ── */
-
-.vg-glass-thin,
-.vg-glass-thick {
-  position: relative;
-  background: rgba(255,255,255,0.045);
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow:
-    inset 0 1.5px 0 rgba(255,255,255,0.4),
-    inset 0 -1px 0 rgba(0,0,0,0.22),
-    inset 1px 0 0 rgba(255,255,255,0.12),
-    inset -1px 0 0 rgba(255,255,255,0.06);
-}
-.vg-glass-thin {
-  backdrop-filter: blur(18px) saturate(180%) brightness(1.05);
-  -webkit-backdrop-filter: blur(18px) saturate(180%) brightness(1.05);
-  box-shadow:
-    0 6px 20px rgba(0,0,0,0.28),
-    inset 0 1.5px 0 rgba(255,255,255,0.4),
-    inset 0 -1px 0 rgba(0,0,0,0.22),
-    inset 1px 0 0 rgba(255,255,255,0.12),
-    inset -1px 0 0 rgba(255,255,255,0.06);
-}
-.vg-glass-thick {
-  backdrop-filter: blur(28px) saturate(190%) brightness(1.06);
-  -webkit-backdrop-filter: blur(28px) saturate(190%) brightness(1.06);
-  box-shadow:
-    0 20px 50px rgba(0,0,0,0.4),
-    inset 0 2px 0 rgba(255,255,255,0.45),
-    inset 0 -1.5px 0 rgba(0,0,0,0.28),
-    inset 1.5px 0 0 rgba(255,255,255,0.14),
-    inset -1.5px 0 0 rgba(255,255,255,0.07);
-}
-
-/* Radial pointer-highlight layer, shared by anything setting --mx/--my
-   (BackToTop, SectionNav trigger) - a second background layer so it
-   composes with whichever base background the element already has,
-   rather than needing its own element. */
-.vg-glass-pointer {
-  background-image: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,0.3), transparent 55%);
-}
-
-@supports (backdrop-filter: url(#vg-lens)) {
-  .vg-glass-thick {
-    backdrop-filter: url(#vg-lens) blur(20px) saturate(190%) brightness(1.06);
-    -webkit-backdrop-filter: url(#vg-lens) blur(20px) saturate(190%) brightness(1.06);
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .vg-glass-thin,
-  .vg-glass-thick,
-  .section-nav-trigger,
-  .section-nav-list,
-  .section-nav-label {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(18,20,24,0.96) !important;
   }
 }
