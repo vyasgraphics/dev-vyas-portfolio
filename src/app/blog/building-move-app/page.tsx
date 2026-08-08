@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 import { PersonaCard } from "@/components/PersonaCard";
+import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
 import { ScenarioCard } from "@/components/ScenarioCard";
 import { ClaimsTable } from "@/components/ClaimsTable";
 import { RejectedConceptCard } from "@/components/RejectedConceptCard";
@@ -81,6 +82,7 @@ export default function BuildingMoveAppPage() {
         keep the team honest about who we were actually building for.
       </p>
 
+      <TiltPermissionPrompt />
       <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginBottom: "8px" }}>
         <PersonaCard persona={personas[0]} />
         <PersonaCard persona={personas[1]} />
@@ -101,7 +103,7 @@ export default function BuildingMoveAppPage() {
       </p>
       <p>Two very different people. Two very different design problems.</p>
 
-      <h2>From Data to Story: Scenario Based Design</h2>
+      <h2 style={{ color: "#00DE51" }}>From Data to Story: Scenario Based Design</h2>
       <p>
         With personas in hand, we built two scenarios to see how these barriers actually play out in real moments,
         and how the app could intervene.
@@ -184,7 +186,7 @@ export default function BuildingMoveAppPage() {
         in an activity that fit, turning Maya&apos;s mental arithmetic problem into a single tap.
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "36px", marginBottom: "8px" }}>
+      <div className="wireframes-grid" style={{ marginBottom: "8px" }}>
         <WireframeSmartInput showIntro={false} />
         <WireframeQuietMode showIntro={false} />
         <WireframeSeeBeforeYouGo showIntro={false} />

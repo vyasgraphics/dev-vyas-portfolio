@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PhoneFrame, WireframeIntro } from "./PhoneFrame";
+import { TiltCard } from "@/components/TiltCard";
 
 export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: boolean }) {
   const [playing, setPlaying] = useState(false);
@@ -20,6 +21,7 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
           }
         />
       )}
+      <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: "8px", borderBottom: "1px solid #e2e8f0" }}>
           <span style={{ fontSize: "13px" }}>&larr;</span>
@@ -80,6 +82,7 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
           </div>
         </div>
       </PhoneFrame>
+      </TiltCard>
     </div>
   );
 }

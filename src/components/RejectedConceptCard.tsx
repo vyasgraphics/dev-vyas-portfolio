@@ -87,7 +87,7 @@ export function RejectedConceptCard({ concept }: { concept: RejectedConcept }) {
           {concept.number}
         </div>
         <div>
-          <h4 style={{ fontSize: "20px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{concept.title}</h4>
+          <h4 style={{ fontSize: "20px", fontWeight: 700, color: "#00DE51", marginBottom: "4px" }}>{concept.title}</h4>
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>
             Target: {concept.target} | Conflict: {concept.conflict}
           </p>

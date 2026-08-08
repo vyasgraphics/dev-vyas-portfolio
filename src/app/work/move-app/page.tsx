@@ -5,6 +5,7 @@ import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { PersonaCard } from "@/components/PersonaCard";
+import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
 import { WireframeSmartInput } from "@/components/wireframes/WireframeSmartInput";
 import { WireframeQuietMode } from "@/components/wireframes/WireframeQuietMode";
 import { WireframeSeeBeforeYouGo } from "@/components/wireframes/WireframeSeeBeforeYouGo";
@@ -69,6 +70,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
+            <TiltPermissionPrompt />
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
               <PersonaCard persona={personas[0]} />
               <PersonaCard persona={personas[1]} />
@@ -87,7 +89,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The four screens that mattered</h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+            <div className="wireframes-grid">
               <WireframeSmartInput />
               <WireframeQuietMode />
               <WireframeSeeBeforeYouGo />

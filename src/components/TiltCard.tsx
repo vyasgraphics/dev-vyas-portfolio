@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { subscribeDeviceTilt } from "@/hooks/useDeviceTilt";
 
 // Mouse-tracking 3D tilt wrapper. A persistent rAF loop eases the applied
 // rotation toward a target every frame (current += (target - current) *
@@ -10,6 +11,10 @@ import { useEffect, useRef, type ReactNode } from "react";
 // pointer entered and released just as abruptly on leave. Lerping the
 // same way in both directions is what actually reads as a smooth,
 // weighted card rather than a hard-wired cursor follower.
+//
+// On touch devices, the same target/lerp/applyToDOM pipeline is instead
+// fed by the phone's own tilt (see useDeviceTilt.ts) - physically tilting
+// the device moves the card, no touch/hover required at all.
 const SMOOTHING = 0.12;
 const SETTLE_EPSILON = 0.01;
 
@@ -80,6 +85,19 @@ export function TiltCard({
     return () => {
       if (rafId.current !== null) cancelAnimationFrame(rafId.current);
     };
+  }, []);
+
+  useEffect(() => {
+    const isTouchPrimary =
+      typeof window !== "undefined" && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    if (!isTouchPrimary) return;
+    const unsubscribe = subscribeDeviceTilt((px, py) => {
+      if (prefersReducedMotion()) return;
+      target.current = { px, py };
+      ensureLoopRunning();
+    });
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleMove = (e: React.PointerEvent<HTMLDivElement>) => {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PhoneFrame, WireframeIntro } from "./PhoneFrame";
+import { TiltCard } from "@/components/TiltCard";
 
 export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }) {
   const [added, setAdded] = useState(false);
@@ -15,6 +16,7 @@ export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }
           description={<><strong style={{ color: "#fff" }}>Component:</strong> Additional Functionality (Timetable Sync).</>}
         />
       )}
+      <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #cbd5e1" }}>
           <span style={{ fontWeight: 700, fontSize: "13px" }}>Schedule</span>
@@ -59,6 +61,7 @@ export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }
           </div>
         </div>
       </PhoneFrame>
+      </TiltCard>
     </div>
   );
 }

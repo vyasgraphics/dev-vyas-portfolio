@@ -60,7 +60,7 @@ export function BeforeAfterSlider({
         overflow: "hidden",
         cursor: "ew-resize",
         userSelect: "none",
-        touchAction: "none",
+        touchAction: "pan-y",
         background: "#0a0a0a",
       }}
     >

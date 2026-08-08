@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PhoneFrame, WireframeIntro } from "./PhoneFrame";
+import { TiltCard } from "@/components/TiltCard";
 
 export function WireframeQuietMode({ showIntro = true }: { showIntro?: boolean }) {
   const [quietMode, setQuietMode] = useState(true);
@@ -20,6 +21,7 @@ export function WireframeQuietMode({ showIntro = true }: { showIntro?: boolean }
           }
         />
       )}
+      <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "16px 16px 0", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #cbd5e1", paddingBottom: "12px" }}>
           <span style={{ fontWeight: 700, fontSize: "13px" }}>Home</span>
@@ -90,6 +92,7 @@ export function WireframeQuietMode({ showIntro = true }: { showIntro?: boolean }
           ))}
         </div>
       </PhoneFrame>
+      </TiltCard>
     </div>
   );
 }

@@ -7660,62 +7660,137 @@ button.animate-btn::after,
 @media (max-width: 760px) {
   .rejected-grid, .scenario-grid { grid-template-columns: 1fr !important; }
 }
-
-/* ── 8b. Section nav: glass pill bar (default), collapses to a right-edge
-   dot rail on wide screens so it doesn't sit in the reading column ── */
-.section-nav {
-  position: sticky;
-  top: 24px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 8px;
-  margin-bottom: 8px;
-  z-index: 20;
-  border-radius: 100px;
-  background: rgba(20,22,26,0.55);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  width: fit-content;
+.claims-cards-wrap { display: none; }
+@media (max-width: 760px) {
+  .claims-table-wrap { display: none; }
+  .claims-cards-wrap { display: flex !important; }
 }
-.section-nav-btn {
-  padding: 7px 16px;
+.wireframes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+@media (min-width: 1180px) {
+  .wireframes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 28px;
+    align-items: start;
+  }
+}
+
+/* ── 8b. Section nav: collapsed floating trigger + tap-out list on
+   narrow/touch screens, collapses to a right-edge hover dot rail on wide
+   screens - neither variant sits in the document flow or overlaps
+   scrolled content the way the old sticky pill bar did. ── */
+.section-nav {
+  position: fixed;
+  bottom: 24px;
+  left: 20px;
+  z-index: 30;
+}
+.section-nav-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
   border-radius: 100px;
+  background: rgba(20,22,26,0.85);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #fff;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  border: 1px solid transparent;
-  background: transparent;
-  color: rgba(255,255,255,0.6);
-  box-shadow: none;
-  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   white-space: nowrap;
 }
+.section-nav-trigger-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00de51;
+  box-shadow: 0 0 8px rgba(0,222,81,0.7);
+  flex-shrink: 0;
+}
+.section-nav-chevron {
+  color: rgba(255,255,255,0.5);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+.section-nav.is-expanded .section-nav-chevron {
+  transform: rotate(180deg);
+}
+.section-nav-list {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border-radius: 16px;
+  background: rgba(20,22,26,0.92);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  min-width: 190px;
+}
+.section-nav.is-expanded .section-nav-list {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.section-nav-btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
 .section-nav-btn.is-active {
-  border-color: rgba(0,222,81,0.5);
   background: rgba(0,222,81,0.14);
   color: #00de51;
-  box-shadow: 0 0 16px rgba(0,222,81,0.15);
 }
 @media (min-width: 1180px) {
   .section-nav {
-    position: fixed;
     top: 50%;
     right: 28px;
+    left: auto;
+    bottom: auto;
     transform: translateY(-50%);
+  }
+  .section-nav-trigger {
+    display: none;
+  }
+  .section-nav-list {
+    position: static;
     flex-direction: column;
     align-items: flex-end;
     gap: 14px;
     padding: 0;
-    margin-bottom: 0;
+    margin: 0;
     background: none;
     border: none;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    width: auto;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+    min-width: 0;
   }
   .section-nav-btn {
     position: relative;

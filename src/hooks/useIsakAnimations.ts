@@ -261,6 +261,7 @@ export function useIsakAnimations() {
                 .map((w) => w.querySelector(".wrap"))
                 .filter((el): el is Element => el !== null);
 
+            let debounceTimer: ReturnType<typeof setTimeout> | null = null;
             const syncSidebarToScroll = () => {
                 // A click already set the correct end-state immediately (see
                 // onAnchorClick below) - don't let a scroll tick mid-jump
@@ -278,8 +279,23 @@ export function useIsakAnimations() {
                         matched = works[matchedIndex].querySelector(".wrap");
                     }
                 }
-                sidebar.classList.toggle("active", matched !== null);
-                allWraps.forEach((el) => el.classList.toggle("active", el === matched));
+                // A cross-route "Back to Work" landing calls this several
+                // times in quick succession - once on mount (before the
+                // restoration jump has actually happened, so this first
+                // read is stale), again once the jump lands, and again
+                // after each of useUrlHashSync's settle-correction retries.
+                // Writing every intermediate result straight to the DOM
+                // made the card's reveal transition restart mid-flight
+                // instead of playing once - debouncing the write (not the
+                // read) means only the last, correct result actually
+                // triggers a class change, so the CSS transition plays
+                // cleanly a single time. 30ms is short enough that organic
+                // scroll-driven syncing still feels immediate.
+                if (debounceTimer) clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    sidebar.classList.toggle("active", matched !== null);
+                    allWraps.forEach((el) => el.classList.toggle("active", el === matched));
+                }, 30);
             };
 
             let syncTicking = false;
@@ -292,7 +308,10 @@ export function useIsakAnimations() {
                 });
             };
             window.addEventListener("scroll", onScrollSync, { passive: true });
-            cleanups.push(() => window.removeEventListener("scroll", onScrollSync));
+            cleanups.push(() => {
+                window.removeEventListener("scroll", onScrollSync);
+                if (debounceTimer) clearTimeout(debounceTimer);
+            });
             syncSidebarToScroll(); // correct state immediately, e.g. landing mid-page on load
 
             // Click-triggered nav (as opposed to organic wheel/touch scrolling)

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PhoneFrame, WireframeIntro } from "./PhoneFrame";
+import { TiltCard } from "@/components/TiltCard";
 
 export function WireframeSmartInput({ showIntro = true }: { showIntro?: boolean }) {
   const [social, setSocial] = useState(20);
@@ -18,6 +19,7 @@ export function WireframeSmartInput({ showIntro = true }: { showIntro?: boolean 
           rationale='For Liam, selecting "Solo" filters out intimidating environments immediately.'
         />
       )}
+      <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "24px 20px", flex: 1, display: "flex", flexDirection: "column" }}>
           <div style={{ width: "40px", height: "40px", background: "#e2e8f0", border: "2px solid #cbd5e1", borderRadius: "8px", marginBottom: "20px" }} />
@@ -89,6 +91,7 @@ export function WireframeSmartInput({ showIntro = true }: { showIntro?: boolean 
           </div>
         </div>
       </PhoneFrame>
+      </TiltCard>
     </div>
   );
 }
