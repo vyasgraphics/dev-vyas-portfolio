@@ -76,6 +76,29 @@ export function useUrlHashSync() {
             if (target) {
                 history.replaceState(null, "", hash);
                 smoothScrollTo(target as HTMLElement, { immediate: true });
+
+                // Confirmed via direct scrollY sampling: for a
+                // position:sticky target (the Work section's
+                // .sticky-item cards), each settle-correction below was
+                // producing an extra, real +132px jump - not a rounding
+                // artefact. Once such an element is scrolled far enough
+                // to engage its own CSS sticky pinning, its measured
+                // getBoundingClientRect().top permanently reads as its
+                // sticky offset (132px here) instead of 0, because that
+                // offset *is* its correct, fully-arrived resting
+                // position - CSS is holding it there on purpose. Passing
+                // that non-zero top into another "scroll until top is 0"
+                // correction reads it as "still 132px short" and jumps
+                // again, and does so identically every time it re-checks,
+                // which is exactly the "twice, in two distinct steps"
+                // pattern reported. Non-sticky targets (ordinary blog
+                // sections etc.) don't have this failure mode and still
+                // benefit from these corrections when a slow-loading
+                // image genuinely shifts the layout after the initial
+                // jump, so this only skips them for sticky targets.
+                const isSticky = getComputedStyle(target as HTMLElement).position === "sticky";
+                if (isSticky) return;
+
                 settleTimers.push(window.setTimeout(() => {
                     const t2 = document.querySelector(preferredTarget) || document.querySelector(hash);
                     if (t2) smoothScrollTo(t2 as HTMLElement, { immediate: true });

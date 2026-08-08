@@ -5865,21 +5865,37 @@ button.animate-btn::after,
      single side-by-side row (they're two short label+value pairs, not
      paragraphs - there's no real reason for them to cost two full rows
      here specifically). */
+  /* !important throughout this rule and the ones below it: this file's
+     Sass/Turbopack bundling does not reliably preserve source order
+     across media-query boundaries (confirmed elsewhere in this file
+     against the actual compiled/served CSS) - without it, the earlier
+     max-width:1439px tier's values were winning here despite this block
+     coming later in the source. */
   .wg-work .w-logo,
   .wg-work .w-desc,
   .wg-work .w-highlight {
-    margin-bottom: 20px;
+    margin-bottom: 16px !important;
   }
   .wg-work .w-title {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
+  }
+  /* The DV/VG logo mark reads as pure branding flourish here - the title
+     immediately below it already names the project - and on mobile,
+     where every row of height is what's standing between the card and
+     fitting on one screen, it was one of the more removable rows rather
+     than a functional one. Desktop keeps it (untouched, no media query
+     scoping it out there) since there's genuinely spare room to spend on
+     it in that spacious sticky card. */
+  .wg-work .w-logo {
+    display: none !important;
   }
   .wg-work .w-highlight {
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
   }
   .wg-work .br-line {
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
   }
 }
 @media (min-width: 992px) {
