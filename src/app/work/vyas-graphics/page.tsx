@@ -499,43 +499,56 @@ export default function VyasGraphicsWorkPage() {
           </section>
         </ScrollReveal>
 
-        <div style={{ textAlign: "center", marginBottom: "20px" }}>
-          <ScrollToTopLink />
-        </div>
+        <div style={{ position: "relative", padding: "8px 0" }}>
+          <div
+            aria-hidden
+            style={{
+              position: "absolute", inset: "-30px -10% 0", zIndex: 0,
+              background: "radial-gradient(ellipse 55% 60% at 50% 20%, rgba(0,222,81,0.18), transparent 70%), radial-gradient(ellipse 40% 45% at 78% 75%, rgba(130,90,255,0.12), transparent 70%), radial-gradient(ellipse 35% 40% at 15% 80%, rgba(0,180,255,0.1), transparent 70%)",
+              filter: "blur(6px)",
+              pointerEvents: "none",
+            }}
+          />
 
-        <ScrollReveal>
-          <div className="vg-glass" style={{
-            padding: "36px 28px",
-            borderRadius: "20px",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "18px",
-          }}>
-            <Link
-              href="https://www.instagram.com/vyas.graphics/?hl=en"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Vyas Graphics on Instagram"
-              style={{ display: "inline-flex" }}
-            >
-              <Image src="/assets/images/social/instagram.svg" alt="" width={52} height={52} />
-            </Link>
-            <Link
-              href="https://www.instagram.com/vyas.graphics/?hl=en"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block", padding: "12px 28px", borderRadius: "100px",
-                background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
-                fontSize: "14px", fontWeight: 700,
-              }}
-            >
-              Explore more on Instagram →
-            </Link>
+          <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: "20px" }}>
+            <ScrollToTopLink />
           </div>
-        </ScrollReveal>
+
+          <ScrollReveal>
+            <div className="vg-glass" style={{
+              position: "relative", zIndex: 1,
+              padding: "36px 28px",
+              borderRadius: "20px",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "18px",
+            }}>
+              <Link
+                href="https://www.instagram.com/vyas.graphics/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Vyas Graphics on Instagram"
+                style={{ display: "inline-flex" }}
+              >
+                <Image src="/assets/images/social/instagram.svg" alt="" width={52} height={52} />
+              </Link>
+              <Link
+                href="https://www.instagram.com/vyas.graphics/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-block", padding: "12px 28px", borderRadius: "100px",
+                  background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
+                  fontSize: "14px", fontWeight: 700,
+                }}
+              >
+                Explore more on Instagram →
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
 
         <div style={{ marginTop: "56px", textAlign: "center" }}>
           <BackLink href="/#work" label="← Back to Work" />
