@@ -1,13 +1,18 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
-// Mouse-tracking 3D tilt wrapper. Sets --rx/--ry/--px/--py custom properties
-// on the card element directly (no React state, no re-renders) so inner
-// elements can reference them in their own transforms via calc() - that's
-// what gives the avatar/glow their extra parallax "pop" beyond the outer
-// tilt. Resets through a CSS transition on pointer leave rather than a JS
-// animation loop.
+// Mouse-tracking 3D tilt wrapper. A persistent rAF loop eases the applied
+// rotation toward a target every frame (current += (target - current) *
+// SMOOTHING) rather than snapping the CSS vars straight to the cursor's
+// computed value on every pointermove - that first version tracked 1:1,
+// which meant the tilt jumped straight to full deflection the instant the
+// pointer entered and released just as abruptly on leave. Lerping the
+// same way in both directions is what actually reads as a smooth,
+// weighted card rather than a hard-wired cursor follower.
+const SMOOTHING = 0.12;
+const SETTLE_EPSILON = 0.01;
+
 export function TiltCard({
   children,
   maxTilt = 9,
@@ -21,6 +26,9 @@ export function TiltCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const reducedMotionRef = useRef<boolean | null>(null);
+  const target = useRef({ px: 0, py: 0 });
+  const current = useRef({ px: 0, py: 0 });
+  const rafId = useRef<number | null>(null);
 
   const prefersReducedMotion = () => {
     if (reducedMotionRef.current === null) {
@@ -31,13 +39,9 @@ export function TiltCard({
     return reducedMotionRef.current;
   };
 
-  const handleMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse" || prefersReducedMotion()) return;
+  const applyToDOM = (px: number, py: number) => {
     const el = cardRef.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 .. 0.5
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
     el.style.setProperty("--ry", `${(px * maxTilt * 2).toFixed(2)}deg`);
     el.style.setProperty("--rx", `${(-py * maxTilt * 2).toFixed(2)}deg`);
     el.style.setProperty("--px", px.toFixed(3));
@@ -46,17 +50,53 @@ export function TiltCard({
     el.style.setProperty("--glow-y", `${((py + 0.5) * 100).toFixed(1)}%`);
   };
 
-  const handleLeave = () => {
+  const tick = () => {
+    const c = current.current;
+    const t = target.current;
+    c.px += (t.px - c.px) * SMOOTHING;
+    c.py += (t.py - c.py) * SMOOTHING;
+    applyToDOM(c.px, c.py);
+
+    const settled = Math.abs(t.px - c.px) < SETTLE_EPSILON && Math.abs(t.py - c.py) < SETTLE_EPSILON;
+    if (settled) {
+      // Snap the last fraction of a percent so it actually reaches exactly
+      // 0 (or the live target) instead of asymptotically crawling forever,
+      // then stop the loop entirely rather than running it at rest.
+      applyToDOM(t.px, t.py);
+      current.current = { ...t };
+      rafId.current = null;
+      return;
+    }
+    rafId.current = requestAnimationFrame(tick);
+  };
+
+  const ensureLoopRunning = () => {
+    if (rafId.current === null) {
+      rafId.current = requestAnimationFrame(tick);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (rafId.current !== null) cancelAnimationFrame(rafId.current);
+    };
+  }, []);
+
+  const handleMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse" || prefersReducedMotion()) return;
     const el = cardRef.current;
     if (!el) return;
-    el.classList.add("tilt-resetting");
-    el.style.setProperty("--rx", "0deg");
-    el.style.setProperty("--ry", "0deg");
-    el.style.setProperty("--px", "0");
-    el.style.setProperty("--py", "0");
-    el.style.setProperty("--glow-x", "50%");
-    el.style.setProperty("--glow-y", "50%");
-    window.setTimeout(() => el.classList.remove("tilt-resetting"), 500);
+    const rect = el.getBoundingClientRect();
+    target.current = {
+      px: (e.clientX - rect.left) / rect.width - 0.5,
+      py: (e.clientY - rect.top) / rect.height - 0.5,
+    };
+    ensureLoopRunning();
+  };
+
+  const handleLeave = () => {
+    target.current = { px: 0, py: 0 };
+    ensureLoopRunning();
   };
 
   return (

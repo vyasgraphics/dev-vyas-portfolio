@@ -60,7 +60,6 @@ export function Work() {
                                 {w.link && w.link !== "#" && (
                                     <Link
                                         href={w.link}
-                                        scroll={false}
                                         className="work-arrow-link"
                                         aria-label={`View ${w.title}`}
                                         onClick={() => {
@@ -133,7 +132,6 @@ export function Work() {
                                             <div className="group-action">
                                                 <Link
                                                     href={w.link ?? "#"}
-                                                    scroll={false}
                                                     className="tf-btn-action style-white"
                                                     onClick={() => {
                                                         sessionStorage.setItem("lastWorkItemSlug", w.slug);

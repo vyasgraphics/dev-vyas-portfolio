@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 import { PersonaCard } from "@/components/PersonaCard";
+import { ScenarioCard } from "@/components/ScenarioCard";
+import { ClaimsTable } from "@/components/ClaimsTable";
+import { RejectedConceptCard } from "@/components/RejectedConceptCard";
+import { WireframeSmartInput } from "@/components/wireframes/WireframeSmartInput";
+import { WireframeQuietMode } from "@/components/wireframes/WireframeQuietMode";
+import { WireframeSeeBeforeYouGo } from "@/components/wireframes/WireframeSeeBeforeYouGo";
+import { WireframeGapFinder } from "@/components/wireframes/WireframeGapFinder";
 import { personas } from "@/data/personas";
+import { scenarios } from "@/data/scenarios";
+import { rejectedConcepts } from "@/data/rejectedConcepts";
 
 export const metadata: Metadata = {
   title: "From Lo-Fi to Live: Building Move App End to End",
@@ -109,10 +118,8 @@ export default function BuildingMoveAppPage() {
         suggesting something that fits, no arithmetic required.
       </p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/scenario-01-liam.png" alt="Scenario Set 1: Liam, addressing feeling self-conscious and the intention-action gap, from The Retreat to Visual Proof" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/scenario-02-maya.png" alt="Scenario Set 2: Maya, addressing lack of free time and timetable consent, from Logistics Paralysis to Smart Gap" />
+      <ScenarioCard scenario={scenarios[0]} />
+      <ScenarioCard scenario={scenarios[1]} />
 
       <p>
         We also ran a claims analysis, borrowing from Carroll and Rosson&apos;s method, to weigh up the
@@ -124,8 +131,7 @@ export default function BuildingMoveAppPage() {
         design.
       </p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/claims-analysis-table.png" alt="Claims analysis table weighing the positive and negative consequences of Gap Finder, Visual Proof, and Crowd Filter" />
+      <ClaimsTable />
 
       <h3>The Ideas We Killed Before They Shipped</h3>
       <p>
@@ -146,10 +152,8 @@ export default function BuildingMoveAppPage() {
       </p>
       <p>Knowing what not to build is, in my experience, just as much a design skill as knowing what to build.</p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/rejected-01-leaderboard.png" alt="Rejected: The Social Leaderboard - target Liam, conflict fear of judgment, replaced with Quiet Mode" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/rejected-02-manual-planner.png" alt="Rejected: The Manual Planner - target Maya, conflict high interaction cost, replaced with Auto-Sync Gap Finder" />
+      <RejectedConceptCard concept={rejectedConcepts[0]} />
+      <RejectedConceptCard concept={rejectedConcepts[1]} />
 
       <h2>The Four Screens That Actually Mattered</h2>
       <p>
@@ -180,14 +184,12 @@ export default function BuildingMoveAppPage() {
         in an activity that fit, turning Maya&apos;s mental arithmetic problem into a single tap.
       </p>
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/component-01-smart-input.png" alt="The Smart Input Onboarding: a Social Meter slider and Connect Timetable toggle" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/component-02-quiet-mode.png" alt="The Quiet Mode Dashboard showing tailored, low-traffic recommendations" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/component-03-see-before-you-go.png" alt="The See Before You Go detail screen with a 10s video preview and live crowd meter" />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/assets/images/blog/building-move-app/component-04-gap-finder.png" alt="The Gap Finder Scheduler detecting a free window and suggesting a 20-minute walk" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "36px", marginBottom: "8px" }}>
+        <WireframeSmartInput showIntro={false} />
+        <WireframeQuietMode showIntro={false} />
+        <WireframeSeeBeforeYouGo showIntro={false} />
+        <WireframeGapFinder showIntro={false} />
+      </div>
 
       <h2>Putting It In Front of Real Humans</h2>
       <p>This is the part of any project where your assumptions get tested, and mine certainly did.</p>

@@ -45,6 +45,7 @@ export function BeforeAfterSlider({
   }, [updateFromClientX]);
 
   return (
+    <div style={{ maxWidth: "380px", margin: "0 auto" }}>
     <div
       ref={containerRef}
       onPointerDown={(e) => {
@@ -124,6 +125,7 @@ export function BeforeAfterSlider({
           </svg>
         </div>
       </div>
+    </div>
     </div>
   );
 }

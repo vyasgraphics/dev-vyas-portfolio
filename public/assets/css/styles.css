@@ -7634,16 +7634,12 @@ button.animate-btn::after,
 }
 
 /* ── 8. 3D tilt cards (PersonaCard etc.) ──
-   Transform is driven every pointermove by TiltCard.tsx setting --rx/--ry/
-   --px/--py/--glow-x/--glow-y directly on the element (no React re-render).
-   No transition while the pointer is moving, so rotation tracks the cursor
-   1:1 with zero lag; .tilt-resetting adds a transition only for the
-   snap-back on pointer leave, then removes itself once that's done. */
+   Transform is driven by a rAF loop in TiltCard.tsx that lerps toward the
+   cursor-derived target each frame, setting --rx/--ry/--px/--py/--glow-x/
+   --glow-y directly on the element (no React re-render, no CSS transition -
+   a transition here would double up with the JS easing and feel laggy). */
 .tilt-card {
   --rx: 0deg; --ry: 0deg; --px: 0; --py: 0; --glow-x: 50%; --glow-y: 50%;
-}
-.tilt-card.tilt-resetting {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .tilt-layer {
   transform: translate3d(calc(var(--px) * var(--layer-shift, 14px)), calc(var(--py) * var(--layer-shift, 14px)), var(--layer-depth, 30px));
@@ -7660,6 +7656,9 @@ button.animate-btn::after,
 }
 @media (hover: none) {
   .tilt-glare { display: none; }
+}
+@media (max-width: 760px) {
+  .rejected-grid, .scenario-grid { grid-template-columns: 1fr !important; }
 }
 
 /* ── 9. Misc ── */

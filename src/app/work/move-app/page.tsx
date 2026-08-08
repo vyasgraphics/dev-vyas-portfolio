@@ -5,6 +5,10 @@ import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { PersonaCard } from "@/components/PersonaCard";
+import { WireframeSmartInput } from "@/components/wireframes/WireframeSmartInput";
+import { WireframeQuietMode } from "@/components/wireframes/WireframeQuietMode";
+import { WireframeSeeBeforeYouGo } from "@/components/wireframes/WireframeSeeBeforeYouGo";
+import { WireframeGapFinder } from "@/components/wireframes/WireframeGapFinder";
 import { personas } from "@/data/personas";
 
 export const metadata: Metadata = {
@@ -83,16 +87,11 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The four screens that mattered</h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-              {[
-                { img: "component-01-smart-input.png", alt: "The Smart Input Onboarding: a Social Meter slider and Connect Timetable toggle" },
-                { img: "component-02-quiet-mode.png", alt: "The Quiet Mode Dashboard showing tailored, low-traffic recommendations" },
-                { img: "component-03-see-before-you-go.png", alt: "The See Before You Go detail screen with a 10s video preview and live crowd meter" },
-                { img: "component-04-gap-finder.png", alt: "The Gap Finder Scheduler detecting a free window and suggesting a 20-minute walk" },
-              ].map((s) => (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img key={s.img} src={`${IMG}/${s.img}`} alt={s.alt} style={{ width: "100%", borderRadius: "16px" }} />
-              ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+              <WireframeSmartInput />
+              <WireframeQuietMode />
+              <WireframeSeeBeforeYouGo />
+              <WireframeGapFinder />
             </div>
           </section>
         </ScrollReveal>
