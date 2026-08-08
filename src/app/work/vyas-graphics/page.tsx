@@ -8,6 +8,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { LogoMarkTile } from "@/components/LogoMarkTile";
 import { PlayableStill } from "@/components/PlayableStill";
+import { Carousel } from "@/components/Carousel";
 
 export const metadata: Metadata = {
   title: "Vyas Graphics - Brand Identity & Sports Media",
@@ -30,13 +31,51 @@ const SECTIONS = [
 
 const IMG = "/assets/images/vyas-graphics";
 
+const FLIPBOOKS = [
+  {
+    src: "flipbook-v1.png",
+    alt: "Portfolio flipbook version one, dark gradient aesthetic",
+    caption: "Version 01 - dark gradient",
+    href: "https://devvyas-portfolio-sep2022.netlify.app/mobile/index.html",
+  },
+  {
+    src: "flipbook-v2.png",
+    alt: "Portfolio flipbook version two, LinkedIn upload",
+    caption: "Version 02 - LinkedIn upload",
+    href: "https://dev-vyas-portfolio.netlify.app/mobile/index.html",
+  },
+  {
+    src: "flipbook-v3.png",
+    alt: "Portfolio flipbook version three, navigable table of contents",
+    caption: "Version 03 - navigable TOC",
+    href: "https://vyas-dev-portfolio-2024.netlify.app/mobile/index.html",
+  },
+  {
+    src: "flipbook-t20.png",
+    alt: "Team India's Road to Final flipbook, T20 World Cup editorial",
+    caption: "Team India's Road to Final",
+    href: "https://india-wc24.web.app/mobile/index.html",
+  },
+];
+
+const SERVICES_CAROUSEL = [
+  { src: "social-05.jpg", alt: "Elevate your visual identity promotional post", width: 900, height: 1125 },
+  { src: "social-06.jpg", alt: "Digital & motion, branding & media services breakdown", width: 900, height: 1125 },
+  { src: "social-07.jpg", alt: "Follow Vyas Graphics for amazing content", width: 900, height: 1125 },
+];
+
+const SOCIAL_GRID = [
+  { n: 1, h: 1124 }, { n: 2, h: 1123 }, { n: 3, h: 1123 }, { n: 4, h: 1124 },
+  { n: 8, h: 1199 }, { n: 9, h: 1124 }, { n: 10, h: 1199 },
+];
+
 function SectionHeading({ children }: { children: React.ReactNode }) {
-  return <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>{children}</h2>;
+  return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "14px" }}>{children}</h2>;
 }
 
 function Body({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px", ...style }}>
+    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px", maxWidth: "700px", ...style }}>
       {children}
     </p>
   );
@@ -44,7 +83,7 @@ function Body({ children, style }: { children: React.ReactNode; style?: React.CS
 
 function AutoGrid({ min, children }: { min: string; children: React.ReactNode }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${min}, 1fr))`, gap: "14px" }}>
+    <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${min}, 1fr))`, gap: "20px" }}>
       {children}
     </div>
   );
@@ -61,14 +100,14 @@ function Caption({ children }: { children: React.ReactNode }) {
 export default function VyasGraphicsWorkPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
-      <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 100px" }}>
+      <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 100px" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>
-          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
+          <h1 style={{ fontSize: "clamp(28px, 3.4vw + 8px, 46px)", fontWeight: 700, lineHeight: 1.15, marginBottom: "16px", maxWidth: "820px" }}>
             Vyas Graphics - Brand Identity &amp; Sports Media
           </h1>
-          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "580px", marginBottom: "24px" }}>
+          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "620px", marginBottom: "24px" }}>
             Four years of self-directed brand and motion work - logo identities built from scratch, a full sports
             media campaign run like a real client account, and a habit of shipping in public that turned one
             LinkedIn comment into a rebuilt portfolio flipbook.
@@ -90,7 +129,7 @@ export default function VyasGraphicsWorkPage() {
 
         {/* ── Brand Identity ── */}
         <ScrollReveal>
-          <section id="identity" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <section id="identity" style={{ marginTop: "40px", marginBottom: "72px", scrollMarginTop: "24px" }}>
             <SectionHeading>Brand identity, from scratch</SectionHeading>
             <Body>
               Five marks, five different problems. A personal wordmark that needed to work as a spinning badge and a
@@ -98,7 +137,7 @@ export default function VyasGraphicsWorkPage() {
               at all beyond &ldquo;make it interesting.&rdquo; And two full circular badge identities - a charitable
               trust and a dairy brand - each one drawn, not templated.
             </Body>
-            <AutoGrid min="130px">
+            <AutoGrid min="190px">
               <LogoMarkTile src={`${IMG}/logo-vg-mark.png`} alt="Vyas Graphics VG wordmark" width={1239} height={264} label="Vyas Graphics" />
               <LogoMarkTile src={`${IMG}/logo-raj-tailor.png`} alt="Raj Tailor visa and immigration consultancy logo" width={1311} height={395} label="Raj Tailor Consultancy" />
               <LogoMarkTile src={`${IMG}/logo-diamond.png`} alt="Abstract diamond monogram mark" width={633} height={633} label="Diamond Monogram" />
@@ -106,16 +145,32 @@ export default function VyasGraphicsWorkPage() {
               <LogoMarkTile src={`${IMG}/logo-lunara-badge.png`} alt="Lunara Dairy Co circular badge logo" width={645} height={645} label="Lunara Dairy Co." />
             </AutoGrid>
 
-            <div style={{ marginTop: "48px" }}>
-              <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>AI-generated logo vectorisation</h3>
+            <div style={{ marginTop: "56px" }}>
+              <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>AI-generated logo vectorisation</h3>
               <Body>
                 The clearest brief I&apos;ve taken on didn&apos;t come from a mood board - it came from AI. Clients
                 arrived with logo concepts generated by AI tools: on-brief, on-brand, and completely unusable past a
-                business card. Raster output pixelates at scale and fails in print. I rebuilt each one as a clean,
-                scalable vector in Illustrator - reconstructing paths, rebuilding gradients, and producing
-                print-ready SVG exports. Drag each slider to compare the AI original against the rebuilt mark.
+                business card. I rebuilt each one as a clean, scalable vector in Illustrator - reconstructing paths,
+                rebuilding gradients, and producing print-ready SVG exports. Drag each slider to compare.
               </Body>
-              <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
+
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "36px" }}>
+                {[
+                  ["3", "AI logos rebuilt as vector"],
+                  ["Raster → SVG", "pixelates vs. print-ready at any size"],
+                  ["0", "gradients or paths left unrebuilt"],
+                ].map(([stat, label]) => (
+                  <div key={label} style={{
+                    flex: "1 1 200px", padding: "16px 18px", borderRadius: "12px",
+                    background: "rgba(0,222,81,0.05)", border: "1px solid rgba(0,222,81,0.18)",
+                  }}>
+                    <div style={{ fontSize: "20px", fontWeight: 700, color: "#00DE51", marginBottom: "2px" }}>{stat}</div>
+                    <div style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.6)" }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))", gap: "32px 28px" }}>
                 <div>
                   <BeforeAfterSlider
                     before={`${IMG}/vectorise-northstar-before.jpg`}
@@ -123,7 +178,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="440px"
+                    maxWidth="100%"
                   />
                   <Caption>NorthstarWin Limited - IT Solutions, UK</Caption>
                 </div>
@@ -134,7 +189,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="440px"
+                    maxWidth="100%"
                   />
                   <Caption>Lakeshore Pool &amp; Deck</Caption>
                 </div>
@@ -145,7 +200,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="440px"
+                    maxWidth="100%"
                   />
                   <Caption>Promith - SaaS, Restaurant Management</Caption>
                 </div>
@@ -156,72 +211,80 @@ export default function VyasGraphicsWorkPage() {
 
         {/* ── Motion ── */}
         <ScrollReveal>
-          <section id="motion" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <section id="motion" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
             <SectionHeading>Logo reveal animation</SectionHeading>
             <Body>
               Four export variants of the Vyas Graphics logo reveal, built in After Effects for different placement
               contexts - a retro CRT boot-up, a warm gold title card, a high-contrast mono cut, and a soft script
-              signature.
+              signature. Click any of them to play.
             </Body>
-            <AutoGrid min="200px">
-              <PlayableStill poster={`${IMG}/reveal-01-crt.jpg`} videoSrc={`${IMG}/reveal-01-crt.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" />
-              <PlayableStill poster={`${IMG}/reveal-02-gold.jpg`} videoSrc={`${IMG}/reveal-02-gold.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" />
-              <PlayableStill poster={`${IMG}/reveal-03-mono.jpg`} videoSrc={`${IMG}/reveal-03-mono.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" />
-              <PlayableStill poster={`${IMG}/reveal-04-script.jpg`} videoSrc={`${IMG}/reveal-04-script.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" />
+            <AutoGrid min="280px">
+              <PlayableStill poster={`${IMG}/reveal-01-crt.jpg`} videoSrc={`${IMG}/reveal-01-crt.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
+              <PlayableStill poster={`${IMG}/reveal-02-gold.jpg`} videoSrc={`${IMG}/reveal-02-gold.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" duration="0:06" />
+              <PlayableStill poster={`${IMG}/reveal-03-mono.jpg`} videoSrc={`${IMG}/reveal-03-mono.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />
+              <PlayableStill poster={`${IMG}/reveal-04-script.jpg`} videoSrc={`${IMG}/reveal-04-script.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" duration="0:11" />
             </AutoGrid>
           </section>
         </ScrollReveal>
 
         {/* ── Social Media ── */}
         <ScrollReveal>
-          <section id="social" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <section id="social" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
             <SectionHeading>Social media posts</SectionHeading>
             <Body>
               The Vyas Graphics self-promotion series on Instagram - promotional posts, service announcements, and
               festival greetings, moving between dark, minimal, and editorial aesthetics without losing a consistent
               hand.
             </Body>
-            <AutoGrid min="130px">
-              {[1124, 1123, 1123, 1124, 1125, 1125, 1125, 1199, 1124, 1199].map((h, i) => {
-                const n = i + 1;
-                return (
-                  <Image
-                    key={n}
-                    src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
-                    alt={`Vyas Graphics Instagram post ${n}`}
-                    width={900}
-                    height={h}
-                    style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
-                  />
-                );
-              })}
+
+            <div style={{ marginBottom: "36px" }}>
+              <Carousel
+                label="Carousel post"
+                items={SERVICES_CAROUSEL.map((s) => ({ ...s, src: `${IMG}/${s.src}` }))}
+              />
+            </div>
+
+            <AutoGrid min="210px">
+              {SOCIAL_GRID.map(({ n, h }) => (
+                <Image
+                  key={n}
+                  src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
+                  alt={`Vyas Graphics Instagram post ${n}`}
+                  width={900}
+                  height={h}
+                  className="vg-card"
+                  style={{ width: "100%", height: "auto", borderRadius: "12px", display: "block" }}
+                />
+              ))}
             </AutoGrid>
           </section>
         </ScrollReveal>
 
         {/* ── Print ── */}
         <ScrollReveal>
-          <section id="print" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <section id="print" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
             <SectionHeading>Brochures</SectionHeading>
             <Body>
               Two-edition trifold brochures for R.N.G. Patel Institute of Technology&apos;s CSE department - faculty
               profiles, top-ranking students, campus facilities, and career pathways, laid out and print-prepared in
               InDesign.
             </Body>
-            <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
               <Image
-                src={`${IMG}/brochure-v1.jpg`}
+                src={`${IMG}/brochure-v1.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition one"
                 width={1700}
                 height={947}
-                style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
+                className="vg-card"
+                style={{ width: "100%", height: "auto", display: "block" }}
               />
               <Image
-                src={`${IMG}/brochure-v2.jpg`}
+                src={`${IMG}/brochure-v2.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition two"
                 width={1700}
                 height={961}
-                style={{ width: "100%", height: "auto", borderRadius: "10px", display: "block" }}
+                className="vg-card"
+                style={{ width: "100%", height: "auto", display: "block" }}
               />
             </div>
           </section>
@@ -229,14 +292,14 @@ export default function VyasGraphicsWorkPage() {
 
         {/* ── Sports Media ── */}
         <ScrollReveal>
-          <section id="sports" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <section id="sports" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
             <SectionHeading>Sports media graphics</SectionHeading>
             <Body>
               Self-initiated sports media campaigns run like real client accounts - tournament identity, match-day
               coverage, and championship posters for two of cricket&apos;s biggest events.
             </Body>
             <div style={{
-              padding: "14px 18px", borderRadius: "10px", marginBottom: "32px",
+              padding: "14px 18px", borderRadius: "10px", marginBottom: "36px", maxWidth: "700px",
               background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
             }}>
               <p style={{ fontSize: "12.5px", lineHeight: 1.6, color: "rgba(255,255,255,0.5)" }}>
@@ -245,45 +308,48 @@ export default function VyasGraphicsWorkPage() {
               </p>
             </div>
 
-            <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
+            <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
-            <AutoGrid min="150px">
-              <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} videoSrc={`${IMG}/icc-01-promo.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" />
-              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+            <AutoGrid min="230px">
+              <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} videoSrc={`${IMG}/icc-01-promo.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
+              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
 
-            <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "40px 0 10px" }}>IPL 2026</h3>
+            <h3 style={{ fontSize: "19px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
             <Body>
               A six-slide visual identity carousel breaking down the tournament&apos;s burst motif and colour
               language through an HCI lens, followed by season coverage through to the final.
             </Body>
-            <AutoGrid min="100px">
-              {Array.from({ length: 6 }, (_, i) => i + 1).map((n) => (
-                <Image
-                  key={n}
-                  src={`${IMG}/ipl-identity-${String(n).padStart(2, "0")}.jpg`}
-                  alt={`IPL 2026 visual identity case study, slide ${n}`}
-                  width={800}
-                  height={1067}
-                  style={{ width: "100%", height: "auto", borderRadius: "8px" }}
-                />
-              ))}
-            </AutoGrid>
 
-            <div style={{ margin: "18px 0" }}>
-              <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} videoSrc={`${IMG}/ipl-promo-wide.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" />
+            <div style={{ marginBottom: "32px" }}>
+              <Carousel
+                label="Visual identity case study"
+                items={Array.from({ length: 6 }, (_, i) => {
+                  const n = i + 1;
+                  return {
+                    src: `${IMG}/ipl-identity-${String(n).padStart(2, "0")}.jpg`,
+                    alt: `IPL 2026 visual identity case study, slide ${n}`,
+                    width: 800,
+                    height: 1067,
+                  };
+                })}
+              />
             </div>
 
-            <AutoGrid min="160px">
-              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+            <div style={{ marginBottom: "28px" }}>
+              <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} videoSrc={`${IMG}/ipl-promo-wide.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
+            </div>
+
+            <AutoGrid min="280px">
+              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
-            <div style={{ height: "14px" }} />
-            <AutoGrid min="220px">
-              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
-              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} style={{ width: "100%", height: "auto", borderRadius: "10px" }} />
+            <div style={{ height: "20px" }} />
+            <AutoGrid min="320px">
+              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
           </section>
         </ScrollReveal>
@@ -293,26 +359,44 @@ export default function VyasGraphicsWorkPage() {
           <section id="flipbooks" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
             <SectionHeading>Flipbooks</SectionHeading>
             <Body>
-              Three years of the same portfolio flipbook, rebuilt each time - a small, honest record of how the
-              work (and the process behind it) kept moving.
+              Three years of the same portfolio flipbook, rebuilt each time, plus a themed editorial for India&apos;s
+              T20 World Cup run - a small, honest record of how the work (and the process behind it) kept moving.
+              Each cover links through to the live, page-turning version.
             </Body>
-            <AutoGrid min="150px">
-              <div>
-                <Image src={`${IMG}/flipbook-v1.png`} alt="Portfolio flipbook version one, dark gradient aesthetic" width={900} height={647} style={{ width: "100%", height: "auto" }} />
-                <Caption>Version 01 - dark gradient aesthetic</Caption>
-              </div>
-              <div>
-                <Image src={`${IMG}/flipbook-v2.png`} alt="Portfolio flipbook version two, LinkedIn upload" width={900} height={647} style={{ width: "100%", height: "auto" }} />
-                <Caption>Version 02 - LinkedIn upload</Caption>
-              </div>
-              <div>
-                <Image src={`${IMG}/flipbook-v3.png`} alt="Portfolio flipbook version three, navigable table of contents" width={900} height={647} style={{ width: "100%", height: "auto" }} />
-                <Caption>Version 03 - fully navigable TOC</Caption>
-              </div>
+
+            <AutoGrid min="230px">
+              {FLIPBOOKS.map((fb) => (
+                <div key={fb.href}>
+                  <Link href={fb.href} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
+                    <Image
+                      src={`${IMG}/${fb.src}`}
+                      alt={fb.alt}
+                      width={900}
+                      height={647}
+                      className="vg-card"
+                      style={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                  </Link>
+                  <div style={{ marginTop: "10px", textAlign: "center" }}>
+                    <Caption>{fb.caption}</Caption>
+                    <Link
+                      href={fb.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "4px",
+                        fontSize: "12.5px", fontWeight: 600, color: "#00DE51", textDecoration: "none",
+                      }}
+                    >
+                      Flip through it ↗
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </AutoGrid>
 
             <div style={{
-              marginTop: "28px", padding: "22px", borderRadius: "14px",
+              marginTop: "40px", padding: "22px", borderRadius: "14px", maxWidth: "700px",
               background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.2)",
             }}>
               <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "10px" }}>
@@ -328,22 +412,6 @@ export default function VyasGraphicsWorkPage() {
                 <span><strong style={{ color: "#fff" }}>Research:</strong> <span style={{ color: "rgba(255,255,255,0.65)" }}>researched and applied InDesign&apos;s interactive export tools.</span></span>
                 <span><strong style={{ color: "#fff" }}>Outcome:</strong> <span style={{ color: "rgba(255,255,255,0.65)" }}>a fully navigable Version 03, and a small case study in rapid, user-led iteration.</span></span>
               </div>
-            </div>
-
-            <div style={{ marginTop: "40px" }}>
-              <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>Team India&apos;s Road to Final</h3>
-              <Body>
-                A multi-page editorial documenting India&apos;s T20 World Cup campaign, with ICC branding integrated
-                throughout and a bold purple-and-magenta identity built around a lightning motif - designed for
-                digital distribution as an interactive PDF.
-              </Body>
-              <Image
-                src={`${IMG}/flipbook-t20.png`}
-                alt="Team India's Road to Final flipbook, T20 World Cup editorial"
-                width={900}
-                height={647}
-                style={{ width: "100%", maxWidth: "440px", height: "auto", display: "block", margin: "0 auto" }}
-              />
             </div>
           </section>
         </ScrollReveal>

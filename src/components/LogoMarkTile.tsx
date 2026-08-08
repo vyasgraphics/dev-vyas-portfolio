@@ -26,16 +26,17 @@ export function LogoMarkTile({
       }}
     >
       <div
+        className="vg-card"
         style={{
           width: "100%",
-          minHeight: "108px",
+          minHeight: "128px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           background: "rgba(255,255,255,0.03)",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "14px",
-          padding: "18px",
+          padding: "22px",
         }}
       >
         <Image
@@ -43,7 +44,7 @@ export function LogoMarkTile({
           alt={alt}
           width={width}
           height={height}
-          style={{ width: "100%", height: "auto", maxHeight: "72px", objectFit: "contain" }}
+          style={{ width: "100%", height: "auto", maxHeight: "88px", objectFit: "contain" }}
         />
       </div>
       <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
