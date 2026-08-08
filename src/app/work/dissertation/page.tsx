@@ -83,7 +83,7 @@ export default function DissertationWorkPage() {
         <ScrollReveal>
           <section id="study" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The study</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "32px" }}>
               To test it, I built a purpose-made news article search task from scratch: five rounds, each with a
               real search query, a grid of genuine-looking headlines, and three sponsored boxes plus a trending
               sidebar competing for attention throughout. In every round, one correct article sits sandwiched
@@ -93,12 +93,12 @@ export default function DissertationWorkPage() {
             <TiltPermissionPrompt />
             <WireframeNewsTask />
 
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", margin: "36px 0 20px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", margin: "44px 0 32px" }}>
               Forty-two participants, recruited through Prolific, completed the task alongside a validated
               working-memory test that separately scores two kinds of distraction resistance - one for filtering
               distraction the instant it appears, another for protecting something already held in mind once
               distraction turns up later - plus a quick reading-speed check used as a control variable, since the
-              task itself is entirely reading-driven.
+              task itself is entirely reading-driven. Give it a try below - pick a trial type and run it yourself.
             </p>
             <WireframeCirclesTest />
           </section>
