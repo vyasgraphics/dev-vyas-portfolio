@@ -59,13 +59,13 @@ export function BackToTop() {
         width: "44px",
         height: "44px",
         borderRadius: "50%",
-        border: `1px solid ${hover ? "rgba(0,222,81,0.5)" : "rgba(255,255,255,0.2)"}`,
-        background: "radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,0.32), transparent 55%), linear-gradient(150deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0.01) 100%), rgba(27,30,35,0.45)",
-        backdropFilter: "blur(26px) saturate(190%) brightness(1.08)",
-        WebkitBackdropFilter: "blur(26px) saturate(190%) brightness(1.08)",
+        border: `1px solid ${hover ? "rgba(0,222,81,0.5)" : "rgba(255,255,255,0.18)"}`,
+        background: "radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255,255,255,0.3), transparent 55%), rgba(27,30,35,0.45)",
+        backdropFilter: "blur(18px) saturate(180%) brightness(1.05)",
+        WebkitBackdropFilter: "blur(18px) saturate(180%) brightness(1.05)",
         boxShadow: hover
-          ? "0 0 18px 2px rgba(0,222,81,0.35), inset 0 1.5px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.18)"
-          : "0 10px 30px rgba(0,0,0,0.32), inset 0 1.5px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.18)",
+          ? "0 0 18px 2px rgba(0,222,81,0.35), inset 0 1.5px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.22), inset 1px 0 0 rgba(255,255,255,0.12), inset -1px 0 0 rgba(255,255,255,0.06)"
+          : "0 8px 24px rgba(0,0,0,0.32), inset 0 1.5px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.22), inset 1px 0 0 rgba(255,255,255,0.12), inset -1px 0 0 rgba(255,255,255,0.06)",
         color: hover ? "#00de51" : "#fff",
         display: "flex",
         alignItems: "center",

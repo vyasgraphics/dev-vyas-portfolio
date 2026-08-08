@@ -11,8 +11,7 @@ import { PlayableStill } from "@/components/PlayableStill";
 import { Carousel } from "@/components/Carousel";
 import { SectionDivider } from "@/components/SectionDivider";
 import { StaggerReveal } from "@/components/StaggerReveal";
-import { PhotoStackTile } from "@/components/PhotoStackTile";
-import { ScrollToTopLink } from "@/components/ScrollToTopLink";
+import { BackToTop } from "@/components/BackToTop";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
 
 export const metadata: Metadata = {
@@ -131,6 +130,20 @@ function Caption({ children }: { children: React.ReactNode }) {
 export default function VyasGraphicsWorkPage() {
   return (
     <div id="vg-top" style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+      {/* Displacement-map filter powering the lensing enhancement in
+          .vg-glass-thick (see styles.css) - gentle, large-scale warp
+          rather than noisy texture, gated behind @supports so browsers
+          without url()-filter backdrop-filter support just get the
+          plain blur+saturate recipe instead. Zero visual footprint of
+          its own (0x0, aria-hidden) - it only exists to be referenced. */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
+        <filter id="vg-lens" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.012" numOctaves="1" seed="7" result="noise" />
+          <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
+          <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="12" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
+
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 0" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
@@ -144,7 +157,7 @@ export default function VyasGraphicsWorkPage() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "After Effects"].map((t) => (
-              <span key={t} className="vg-glass" style={{
+              <span key={t} className="vg-glass-thin" style={{
                 padding: "6px 14px", borderRadius: "100px",
                 color: "rgba(255,255,255,0.75)",
               }}>
@@ -298,12 +311,14 @@ export default function VyasGraphicsWorkPage() {
 
             <AutoGrid min="210px">
               {SOCIAL_GRID.map(({ n, h }) => (
-                <PhotoStackTile
+                <Image
                   key={n}
                   src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
                   alt={`Vyas Graphics Instagram post ${n}`}
                   width={900}
                   height={h}
+                  className="vg-card"
+                  style={{ width: "100%", height: "auto", borderRadius: "12px", display: "block" }}
                 />
               ))}
             </AutoGrid>
@@ -364,9 +379,9 @@ export default function VyasGraphicsWorkPage() {
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
             <AutoGrid min="230px">
               <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} videoSrc={`${IMG}/icc-01-promo.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
-              <PhotoStackTile src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} />
-              <PhotoStackTile src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} />
-              <PhotoStackTile src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} />
+              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
 
             <h3 style={{ fontSize: "19px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
@@ -397,13 +412,13 @@ export default function VyasGraphicsWorkPage() {
             </div>
 
             <AutoGrid min="280px">
-              <PhotoStackTile src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} />
-              <PhotoStackTile src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} />
+              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
             <div style={{ height: "20px" }} />
             <AutoGrid min="320px">
-              <PhotoStackTile src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} />
-              <PhotoStackTile src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} />
+              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
           </section>
         </ScrollReveal>
@@ -501,12 +516,8 @@ export default function VyasGraphicsWorkPage() {
             }}
           />
 
-          <div style={{ position: "relative", zIndex: 1, textAlign: "center", marginBottom: "20px" }}>
-            <ScrollToTopLink />
-          </div>
-
           <ScrollReveal>
-            <div className="vg-glass" style={{
+            <div className="vg-glass-thick" style={{
               position: "relative", zIndex: 1,
               padding: "36px 28px",
               borderRadius: "20px",
@@ -546,6 +557,7 @@ export default function VyasGraphicsWorkPage() {
         </div>
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
+      <BackToTop />
 
       <style>{`
         @keyframes vg-hero-in {
