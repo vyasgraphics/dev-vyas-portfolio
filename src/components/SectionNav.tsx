@@ -16,6 +16,7 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
   const [active, setActive] = useState(sections[0]?.id);
   const [expanded, setExpanded] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   // While a nav click's scroll animation is in flight, the passive scroll
   // tracker below would otherwise recompute "active" from whatever section
   // happens to be under the fold at each intermediate frame of that ~1.2s
@@ -63,13 +64,27 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
     smoothScrollTo(`#${id}`, { offset: -24 });
   };
 
+  // Specular highlight tracks the pointer across the glass trigger pill -
+  // the same "reacts to pointer interactions in real time" behaviour Apple
+  // documents for Liquid Glass, rather than a flat blur that looks the same
+  // regardless of where the cursor actually is.
+  const updateTriggerPointer = (clientX: number, clientY: number) => {
+    const el = triggerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--mx", `${((clientX - rect.left) / rect.width) * 100}%`);
+    el.style.setProperty("--my", `${((clientY - rect.top) / rect.height) * 100}%`);
+  };
+
   return (
     <div ref={navRef} className={`section-nav${expanded ? " is-expanded" : ""}`}>
       {/* Mobile/tablet collapsed trigger - CSS hides this at desktop width */}
       <button
+        ref={triggerRef}
         type="button"
         className="section-nav-trigger"
         onClick={() => setExpanded((v) => !v)}
+        onPointerMove={(e) => updateTriggerPointer(e.clientX, e.clientY)}
         aria-expanded={expanded}
       >
         <span className="section-nav-trigger-dot" />
