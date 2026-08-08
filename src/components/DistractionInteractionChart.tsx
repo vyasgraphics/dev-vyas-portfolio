@@ -79,6 +79,7 @@ export function DistractionInteractionChart() {
               style={{
                 flex: 1, padding: "9px 10px", borderRadius: "7px", fontSize: "12px", fontWeight: 700,
                 cursor: "pointer", transition: "all 0.2s ease", border: "1px solid transparent",
+                display: "flex", justifyContent: "center", alignItems: "center", textAlign: "center",
                 background: line === opt.key ? "rgba(255,255,255,0.09)" : "transparent",
                 color: line === opt.key ? opt.color : "rgba(255,255,255,0.42)",
                 borderColor: line === opt.key ? `${opt.color}50` : "transparent",

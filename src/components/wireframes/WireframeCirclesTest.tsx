@@ -146,6 +146,7 @@ export function WireframeCirclesTest({
                 style={{
                   flex: 1, padding: "9px 6px", textAlign: "center", fontSize: "12.5px", fontWeight: 700, borderRadius: "7px",
                   cursor: "pointer", transition: "all 0.2s ease",
+                  display: "flex", justifyContent: "center", alignItems: "center",
                   background: condition === c.key ? "#fff" : "transparent",
                   color: condition === c.key ? "#1e293b" : "#94a3b8",
                   boxShadow: condition === c.key ? "0 1px 4px rgba(0,0,0,0.14)" : "none",
