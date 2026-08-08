@@ -416,7 +416,40 @@ export function useIsakAnimations() {
                     trigger: work,
                     start: "top 85%",
                     once: true,
-                    onEnter: () => work.classList.add("in-view"),
+                    onEnter: () => {
+                        // The 700ms fadeUp (see styles.css) is designed for
+                        // organic scroll-discovery - meeting a card for the
+                        // first time as you scroll down the page. A "Back
+                        // to Work" restoration is the opposite situation:
+                        // the user already knows this card, they're being
+                        // deliberately returned to it, and the button-to-
+                        // section scroll animation they just watched is
+                        // supposed to be the payoff - making them then wait
+                        // out another ~700ms slide-up-from-below on arrival
+                        // reads as extra lag stacked on top of a jump that
+                        // already felt complete. Restoration sets the same
+                        // suppression window BackLink/useUrlHashSync already
+                        // use elsewhere for "a deliberate landing is under
+                        // way" - if this card's reveal happens to fire
+                        // inside that window, skip the transition entirely
+                        // so it's just there, instantly, matching how the
+                        // scroll itself already landed. Ordinary scrolling
+                        // never sets this flag, so the fadeUp still plays
+                        // normally for every card met by exploring the page.
+                        const w = window as unknown as { __suppressHashSyncUntil?: number };
+                        const isRestoring = !!w.__suppressHashSyncUntil && Date.now() < w.__suppressHashSyncUntil;
+                        if (isRestoring) {
+                            work.classList.add("no-entrance-anim");
+                        }
+                        work.classList.add("in-view");
+                        if (isRestoring) {
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    work.classList.remove("no-entrance-anim");
+                                });
+                            });
+                        }
+                    },
                 });
                 triggers.push(t);
             });

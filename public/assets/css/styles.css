@@ -5847,6 +5847,32 @@ button.animate-btn::after,
     height: auto;
     aspect-ratio: 700 / 427 !important;
   }
+  /* The 32px section margins and the 40px Year/Role gap (inherited from
+     the tablet breakpoint above) were originally sized for the desktop
+     sticky card, which has a full viewport's height to spend - stacked
+     one above the other with that much breathing room between each, the
+     mobile card ran well past one screen before reaching "View project",
+     forcing a scroll inside the card just to find the CTA. Mobile gets
+     its own tighter spacing, and Year/Role move from stacked rows to a
+     single side-by-side row (they're two short label+value pairs, not
+     paragraphs - there's no real reason for them to cost two full rows
+     here specifically). */
+  .wg-work .w-logo,
+  .wg-work .w-desc,
+  .wg-work .w-highlight {
+    margin-bottom: 20px;
+  }
+  .wg-work .w-title {
+    margin-bottom: 10px;
+  }
+  .wg-work .w-highlight {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .wg-work .br-line {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
 }
 @media (min-width: 992px) {
   .wg-work .work-content .w-image .w-image-mobile-crop {
@@ -8116,6 +8142,9 @@ textarea:focus-visible,
   .work-list .sticky-item.in-view {
     opacity: 1;
     transform: translateY(0);
+  }
+  .work-list .sticky-item.no-entrance-anim {
+    transition: none !important;
   }
 }
 @media (max-width: 991px) and (prefers-reduced-motion: reduce) {
