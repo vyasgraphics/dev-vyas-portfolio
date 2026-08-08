@@ -8,13 +8,13 @@ export type BlogPost = {
   image: string;
 };
 
-// Placeholder posts - replace with real writing when ready
+// All three posts are fully written - dates reflect when each went live.
 export const blogPosts: BlogPost[] = [
   {
     slug: "ai-in-ux-research",
     title: "How AI Actually Fits Into a UX Research Workflow (And Where It Still Can't Replace You)",
     excerpt: "Notes from using AI tools alongside traditional research methods - what speeds things up, and where human judgement still has to lead.",
-    date: "Coming soon",
+    date: "7 August 2026",
     readTime: "8 min read",
     tag: "UX Research",
     image: "/assets/images/section/blog-1.jpg",
@@ -23,7 +23,7 @@ export const blogPosts: BlogPost[] = [
     slug: "dissertation-notes",
     title: "What My Dissertation Taught Me About Complex Interfaces",
     excerpt: "A behind-the-scenes look at designing a distraction-resistance study, and what the early data is starting to show.",
-    date: "Coming soon",
+    date: "8 August 2026",
     readTime: "7 min read",
     tag: "Research",
     image: "/assets/images/section/blog-2.jpg",
@@ -32,7 +32,7 @@ export const blogPosts: BlogPost[] = [
     slug: "building-move-app",
     title: "From Lo-Fi to Live: Building Move App End to End",
     excerpt: "A full walkthrough of the HCD lifecycle behind Move - from the first user interview to the final A/B study proposal.",
-    date: "Coming soon",
+    date: "7 August 2026",
     readTime: "9 min read",
     tag: "Case Study",
     image: "/assets/images/section/blog-3.jpg",

@@ -67,7 +67,7 @@ export function DistractionInteractionChart() {
           </p>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", gap: "3px", background: "rgba(255,255,255,0.05)", padding: "4px", borderRadius: "100px", maxWidth: "460px", margin: "0 auto 28px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px", background: "rgba(255,255,255,0.05)", padding: "4px", borderRadius: "10px", maxWidth: "420px", margin: "0 auto 26px" }}>
           {([
             { key: "weak", label: "Weaker delay-stage resistance", color: "#f87171" },
             { key: "strong", label: "Stronger delay-stage resistance", color: "#34d399" },
@@ -77,11 +77,11 @@ export function DistractionInteractionChart() {
               type="button"
               onClick={() => setLine(opt.key)}
               style={{
-                flex: 1, padding: "10px 14px", borderRadius: "100px", fontSize: "12.5px", fontWeight: 700,
+                flex: 1, padding: "9px 10px", borderRadius: "7px", fontSize: "12px", fontWeight: 700,
                 cursor: "pointer", transition: "all 0.2s ease", border: "1px solid transparent",
-                background: line === opt.key ? "rgba(255,255,255,0.08)" : "transparent",
-                color: line === opt.key ? opt.color : "rgba(255,255,255,0.4)",
-                borderColor: line === opt.key ? `${opt.color}55` : "transparent",
+                background: line === opt.key ? "rgba(255,255,255,0.09)" : "transparent",
+                color: line === opt.key ? opt.color : "rgba(255,255,255,0.42)",
+                borderColor: line === opt.key ? `${opt.color}50` : "transparent",
               }}
             >
               {opt.label}

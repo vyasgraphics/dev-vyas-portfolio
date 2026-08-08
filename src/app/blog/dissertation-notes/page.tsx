@@ -33,7 +33,7 @@ const MERGE_SOURCES = [
 
 const MERGE_STEPS = [
   { title: "Python merge script", subtitle: "Joined by Prolific ID and WM_ID", tone: "accent" as const },
-  { title: "Exclude 2 participants", subtitle: "Confirmed concurrency bug in the write pipeline", tone: "accent" as const },
+  { title: "Exclude 2 participants", subtitle: "Backend concurrency bug", tone: "accent" as const },
   { title: "Merged dataset", subtitle: "One clean CSV, N = 42", tone: "accent" as const },
 ];
 
@@ -97,7 +97,7 @@ export default function DissertationNotesPage() {
         instrument (McNab et al., 2015) that scores two things separately: how well someone filters distraction the
         moment it appears, and how well they protect something already held in mind once distraction turns up
         later. The timing turns out to matter a lot in the literature, and it&apos;s the whole reason the study
-        measures two scores instead of one. Give it a try below - pick a trial type and run it yourself.
+        measures two scores instead of one. Here&apos;s how each trial type is put together:
       </p>
 
       <div style={{ margin: "40px 0" }}>

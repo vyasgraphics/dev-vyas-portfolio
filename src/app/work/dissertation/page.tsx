@@ -98,7 +98,7 @@ export default function DissertationWorkPage() {
               working-memory test that separately scores two kinds of distraction resistance - one for filtering
               distraction the instant it appears, another for protecting something already held in mind once
               distraction turns up later - plus a quick reading-speed check used as a control variable, since the
-              task itself is entirely reading-driven. Give it a try below - pick a trial type and run it yourself.
+              task itself is entirely reading-driven. Here&apos;s how each trial type is put together:
             </p>
             <WireframeCirclesTest />
           </section>

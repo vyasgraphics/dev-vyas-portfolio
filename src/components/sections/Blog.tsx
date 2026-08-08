@@ -14,7 +14,6 @@ export function Blog() {
       </h4>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
         A space for longer-form notes on process, research findings, and lessons learned.
-        First posts landing soon.
       </p>
 
       <div className="tf-grid-layout md-col-2 blog-grid">

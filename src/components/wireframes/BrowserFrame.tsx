@@ -4,8 +4,15 @@ import type { ReactNode } from "react";
 // grid backdrop, #334155 ink) so the two frame types read as one visual
 // language, just swapping a phone bezel for a browser chrome bar. Font is
 // Segoe UI/Arial/Calibri to match the real news_article_search_task.html
-// exactly, rather than PhoneFrame's monospace treatment - this frame
-// recreates an actual desktop-first Prolific study, not a mobile app.
+// exactly, rather than PhoneFrame's monospace treatment.
+//
+// Fixed desktop sizing throughout, deliberately not responsive on its own -
+// the real news task required a laptop/desktop computer (it's in the
+// consent form participants saw), so this recreation should look like an
+// actual desktop webpage at every viewport, not reflow into a mobile
+// layout. On narrow screens it's the caller's job to scale the whole thing
+// down as a unit (see ScaleToFit), the way a phone browser shows a shrunk
+// desktop site rather than a redesigned mobile one.
 export function BrowserFrame({ children }: { children: ReactNode }) {
   return (
     <div
