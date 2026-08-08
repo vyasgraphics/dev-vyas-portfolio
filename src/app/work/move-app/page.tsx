@@ -87,10 +87,10 @@ export default function MoveAppWorkPage() {
               <PersonaCard persona={personas[1]} />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic" }}>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic", textAlign: "center" }}>
                 Liam needs reassurance, not motivation.
               </p>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic" }}>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic", textAlign: "center" }}>
                 Maya needs cognitive offloading, not encouragement.
               </p>
             </div>

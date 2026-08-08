@@ -8,7 +8,7 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
   const [playing, setPlaying] = useState(false);
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {showIntro && (
         <WireframeIntro
           badge="03"
@@ -21,6 +21,7 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
           }
         />
       )}
+      <div style={{ marginTop: "auto" }}>
       <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: "8px", borderBottom: "1px solid #e2e8f0" }}>
@@ -83,6 +84,7 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
         </div>
       </PhoneFrame>
       </TiltCard>
+      </div>
     </div>
   );
 }

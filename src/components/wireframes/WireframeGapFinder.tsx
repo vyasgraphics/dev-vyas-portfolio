@@ -8,7 +8,7 @@ export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }
   const [added, setAdded] = useState(false);
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {showIntro && (
         <WireframeIntro
           badge="04"
@@ -16,6 +16,7 @@ export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }
           description={<><strong style={{ color: "#fff" }}>Component:</strong> Additional Functionality (Timetable Sync).</>}
         />
       )}
+      <div style={{ marginTop: "auto" }}>
       <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "14px 16px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #cbd5e1" }}>
@@ -62,6 +63,7 @@ export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }
         </div>
       </PhoneFrame>
       </TiltCard>
+      </div>
     </div>
   );
 }

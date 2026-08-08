@@ -23,8 +23,9 @@ export function WireframeQuietMode({
   const [quietMode, setQuietMode] = useState(true);
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {showIntro && <WireframeIntro badge={badge} title={title} description={description} />}
+      <div style={{ marginTop: "auto" }}>
       <TiltCard maxTilt={6}>
       <PhoneFrame>
         <div style={{ padding: "16px 16px 0", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #cbd5e1", paddingBottom: "12px" }}>
@@ -97,6 +98,7 @@ export function WireframeQuietMode({
         </div>
       </PhoneFrame>
       </TiltCard>
+      </div>
     </div>
   );
 }

@@ -252,14 +252,16 @@ export default function BuildingMoveAppPage() {
       </p>
       <p>Small change on paper. But it&apos;s the difference between a feature people trust and one they quietly avoid.</p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "36px", marginBottom: "8px" }}>
-        <WireframeQuietMode showIntro={false} />
-        <WireframeCrowdFilter showIntro={false} />
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
-        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
+      <div style={{ display: "flex", flexDirection: "column", marginBottom: "8px" }}>
+        <div style={{ marginBottom: "12px" }}>
+          <WireframeQuietMode showIntro={false} />
+        </div>
+        <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center", marginBottom: "36px" }}>
           <strong style={{ color: "#fff" }}>A - Control:</strong> the original, ambiguous toggle
         </p>
+        <div style={{ marginBottom: "12px" }}>
+          <WireframeCrowdFilter showIntro={false} />
+        </div>
         <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
           <strong style={{ color: "#fff" }}>B - Treatment:</strong> Crowd Filter with explicit feedback
         </p>
