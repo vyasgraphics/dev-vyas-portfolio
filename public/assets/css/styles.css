@@ -8404,6 +8404,15 @@ html, body {
   -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
   mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
 }
+.vg-tilt-card {
+  transform: rotate(-4deg);
+  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1);
+}
+@media (hover: hover) {
+  .vg-tilt-card:hover {
+    transform: rotate(0deg) scale(1.05);
+  }
+}
 
 /* ── Liquid-glass pass ──
    Richer frosted-glass treatment for floating/overlay chrome site-wide:

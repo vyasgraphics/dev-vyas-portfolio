@@ -11,8 +11,8 @@ import { PlayableStill } from "@/components/PlayableStill";
 import { Carousel } from "@/components/Carousel";
 import { SectionDivider } from "@/components/SectionDivider";
 import { StaggerReveal } from "@/components/StaggerReveal";
+import { PhotoStackTile } from "@/components/PhotoStackTile";
 import { ScrollToTopLink } from "@/components/ScrollToTopLink";
-import { StackedImageCard } from "@/components/StackedImageCard";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
 
 export const metadata: Metadata = {
@@ -44,27 +44,17 @@ const TOOLS = [
   { icon: "tech-pr.svg", name: "Premiere Pro" },
 ];
 
-const GALLERY_STACKS: { front: { src: string; alt: string; w: number; h: number }; back: { src: string; alt: string; w: number; h: number } }[] = [
-  {
-    front: { src: "social-01.jpg", alt: "Vyas Graphics custom design promo post", w: 900, h: 1124 },
-    back: { src: "icc-03-final.jpg", alt: "ICC T20 World Cup final poster", w: 800, h: 1066 },
-  },
-  {
-    front: { src: "ipl-champions-poster.jpg", alt: "RCB IPL champions poster", w: 1100, h: 1466 },
-    back: { src: "social-08.jpg", alt: "Vyas Graphics portrait brand post", w: 900, h: 1199 },
-  },
-  {
-    front: { src: "icc-04-champions.jpg", alt: "India T20 World Cup champions poster", w: 800, h: 1066 },
-    back: { src: "social-03.jpg", alt: "Vyas Graphics Instagram post", w: 900, h: 1123 },
-  },
-  {
-    front: { src: "ipl-final-poster.jpg", alt: "IPL final poster, RCB vs Gujarat Titans", w: 1100, h: 1466 },
-    back: { src: "social-05.jpg", alt: "Elevate your visual identity promotional post", w: 900, h: 1125 },
-  },
-  {
-    front: { src: "social-10.jpg", alt: "Vyas Graphics design fundamentals post", w: 900, h: 1199 },
-    back: { src: "social-09.jpg", alt: "Vyas Graphics New Year post", w: 900, h: 1124 },
-  },
+const GALLERY_IMAGES = [
+  { src: "social-01.jpg", alt: "Vyas Graphics custom design promo post", w: 900, h: 1124 },
+  { src: "icc-03-final.jpg", alt: "ICC T20 World Cup final poster", w: 800, h: 1066 },
+  { src: "social-08.jpg", alt: "Vyas Graphics portrait brand post", w: 900, h: 1199 },
+  { src: "ipl-champions-poster.jpg", alt: "RCB IPL champions poster", w: 1100, h: 1466 },
+  { src: "social-03.jpg", alt: "Vyas Graphics Instagram post", w: 900, h: 1123 },
+  { src: "icc-04-champions.jpg", alt: "India T20 World Cup champions poster", w: 800, h: 1066 },
+  { src: "social-05.jpg", alt: "Elevate your visual identity promotional post", w: 900, h: 1125 },
+  { src: "ipl-final-poster.jpg", alt: "IPL final poster, RCB vs Gujarat Titans", w: 1100, h: 1466 },
+  { src: "social-09.jpg", alt: "Vyas Graphics New Year post", w: 900, h: 1124 },
+  { src: "social-10.jpg", alt: "Vyas Graphics design fundamentals post", w: 900, h: 1199 },
 ];
 
 const FLIPBOOKS = [
@@ -166,14 +156,17 @@ export default function VyasGraphicsWorkPage() {
       </div>
 
       <div className="vg-hero-in vg-tilt-gallery" style={{ marginBottom: "36px", padding: "34px 0" }}>
-        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={22} gap={44} repeat={3}>
-          {GALLERY_STACKS.map((stack) => (
-            <StackedImageCard
-              key={stack.front.src}
-              front={{ ...stack.front, src: `${IMG}/${stack.front.src}` }}
-              back={{ ...stack.back, src: `${IMG}/${stack.back.src}` }}
-              height={260}
-            />
+        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={26} gap={24} repeat={3}>
+          {GALLERY_IMAGES.map((img) => (
+            <div key={img.src} className="vg-tilt-card vg-card">
+              <Image
+                src={`${IMG}/${img.src}`}
+                alt={img.alt}
+                width={img.w}
+                height={img.h}
+                style={{ height: "260px", width: "auto", display: "block", borderRadius: "10px" }}
+              />
+            </div>
           ))}
         </AutoRepeatMarquee>
       </div>
@@ -305,14 +298,12 @@ export default function VyasGraphicsWorkPage() {
 
             <AutoGrid min="210px">
               {SOCIAL_GRID.map(({ n, h }) => (
-                <Image
+                <PhotoStackTile
                   key={n}
                   src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
                   alt={`Vyas Graphics Instagram post ${n}`}
                   width={900}
                   height={h}
-                  className="vg-card"
-                  style={{ width: "100%", height: "auto", borderRadius: "12px", display: "block" }}
                 />
               ))}
             </AutoGrid>
@@ -373,9 +364,9 @@ export default function VyasGraphicsWorkPage() {
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
             <AutoGrid min="230px">
               <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} videoSrc={`${IMG}/icc-01-promo.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
-              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <PhotoStackTile src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} />
+              <PhotoStackTile src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} />
+              <PhotoStackTile src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} />
             </AutoGrid>
 
             <h3 style={{ fontSize: "19px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
@@ -406,13 +397,13 @@ export default function VyasGraphicsWorkPage() {
             </div>
 
             <AutoGrid min="280px">
-              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <PhotoStackTile src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} />
+              <PhotoStackTile src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} />
             </AutoGrid>
             <div style={{ height: "20px" }} />
             <AutoGrid min="320px">
-              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <PhotoStackTile src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} />
+              <PhotoStackTile src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} />
             </AutoGrid>
           </section>
         </ScrollReveal>
