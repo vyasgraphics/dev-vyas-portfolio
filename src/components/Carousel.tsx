@@ -10,11 +10,18 @@ type CarouselItem = {
   height: number;
 };
 
-// Horizontal scroll-snap carousel for multi-slide Instagram posts - native
-// touch/trackpad swipe via CSS scroll-snap (no drag physics to reinvent),
-// with dot indicators and desktop-only hover arrows layered on top. Active
-// dot is derived from scroll position, not clicks, so it stays correct
-// whether the person swipes, drags, or clicks an arrow.
+// Horizontal scroll-snap carousel for multi-slide Instagram posts.
+//
+// Slides snap on their LEFT edge (scroll-snap-align: start), not centre.
+// Centre-snap needs the track padded on both ends by roughly
+// (viewport - slide width) / 2 so the first and last slides can actually
+// reach true centre - without that padding, edge slides physically can't
+// centre, so distance-based "closest slide" math misidentifies the active
+// index right at the edges, which is exactly where the arrow buttons live.
+// Start-align sidesteps the whole problem: a slide's resting position is
+// just its own offsetLeft, matching scrollLeft directly, no compensating
+// padding required, and it's the same interaction model as most native
+// feed carousels (current slide flush, next slide peeking from the right).
 export function Carousel({ items, label }: { items: CarouselItem[]; label?: string }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -23,31 +30,29 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
     const el = trackRef.current;
     if (!el) return;
     let raf = 0;
+    const measure = () => {
+      const children = Array.from(el.children) as HTMLElement[];
+      let closest = 0;
+      let minDist = Infinity;
+      children.forEach((c, i) => {
+        const dist = Math.abs(c.offsetLeft - el.scrollLeft);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = i;
+        }
+      });
+      setActive(closest);
+    };
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        // Slides snap on their centre (scroll-snap-align: center), so the
-        // "active" slide is whichever child's centre sits closest to the
-        // viewport's centre - not whichever child's left edge is closest to
-        // scrollLeft. Comparing left edges was the source of the drift.
-        const viewportCenter = el.scrollLeft + el.clientWidth / 2;
-        const children = Array.from(el.children) as HTMLElement[];
-        let closest = 0;
-        let minDist = Infinity;
-        children.forEach((c, i) => {
-          const childCenter = c.offsetLeft + c.clientWidth / 2;
-          const dist = Math.abs(childCenter - viewportCenter);
-          if (dist < minDist) {
-            minDist = dist;
-            closest = i;
-          }
-        });
-        setActive(closest);
-      });
+      raf = requestAnimationFrame(measure);
     };
+    measure();
     el.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     return () => {
       el.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
     };
   }, []);
@@ -55,14 +60,10 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
   const scrollToIndex = (i: number) => {
     const el = trackRef.current;
     if (!el) return;
-    const child = el.children[i] as HTMLElement | undefined;
+    const clamped = Math.max(0, Math.min(items.length - 1, i));
+    const child = el.children[clamped] as HTMLElement | undefined;
     if (!child) return;
-    // Target the same point the CSS snap would settle on: the child's centre
-    // aligned with the viewport's centre. Scrolling to offsetLeft instead
-    // (left-edge alignment) fought the center-based snap and produced the
-    // inaccurate, jumpy settle.
-    const target = child.offsetLeft + child.clientWidth / 2 - el.clientWidth / 2;
-    el.scrollTo({ left: target, behavior: "smooth" });
+    el.scrollTo({ left: child.offsetLeft, behavior: "smooth" });
   };
 
   return (
@@ -101,7 +102,7 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
           type="button"
           aria-label="Previous slide"
           className="vg-carousel-arrow vg-carousel-arrow-left"
-          onClick={() => scrollToIndex(Math.max(0, active - 1))}
+          onClick={() => scrollToIndex(active - 1)}
           disabled={active === 0}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 2L4 8l6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -110,7 +111,7 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
           type="button"
           aria-label="Next slide"
           className="vg-carousel-arrow vg-carousel-arrow-right"
-          onClick={() => scrollToIndex(Math.min(items.length - 1, active + 1))}
+          onClick={() => scrollToIndex(active + 1)}
           disabled={active === items.length - 1}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -154,13 +155,14 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
         }
         .vg-carousel-slide {
           flex: 0 0 auto;
-          width: 62%;
-          max-width: 360px;
-          scroll-snap-align: center;
+          width: 68%;
+          max-width: 340px;
+          scroll-snap-align: start;
+          scroll-snap-stop: always;
         }
         @media (min-width: 700px) {
           .vg-carousel-slide {
-            width: 32%;
+            width: 30%;
           }
         }
         .vg-carousel-arrow {
@@ -170,7 +172,7 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: rgba(10, 10, 10, 0.7);
+          background: rgba(10, 10, 10, 0.78);
           border: 1px solid rgba(255, 255, 255, 0.15);
           color: #fff;
           display: none;
@@ -190,14 +192,14 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
           cursor: default;
         }
         .vg-carousel-arrow:disabled:hover {
-          background: rgba(10, 10, 10, 0.7);
+          background: rgba(10, 10, 10, 0.78);
           color: #fff;
         }
         .vg-carousel-arrow-left {
-          left: -8px;
+          left: 6px;
         }
         .vg-carousel-arrow-right {
-          right: -8px;
+          right: 6px;
         }
         @media (hover: hover) and (min-width: 700px) {
           .vg-carousel-arrow {

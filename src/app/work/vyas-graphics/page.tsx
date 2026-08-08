@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Children } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
@@ -10,6 +11,7 @@ import { LogoMarkTile } from "@/components/LogoMarkTile";
 import { PlayableStill } from "@/components/PlayableStill";
 import { Carousel } from "@/components/Carousel";
 import { SectionDivider } from "@/components/SectionDivider";
+import { StaggerReveal } from "@/components/StaggerReveal";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
 
 export const metadata: Metadata = {
@@ -92,9 +94,14 @@ function Body({ children, style }: { children: React.ReactNode; style?: React.CS
 }
 
 function AutoGrid({ min, children }: { min: string; children: React.ReactNode }) {
+  const items = Children.toArray(children);
   return (
     <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fill, minmax(${min}, 1fr))`, gap: "20px" }}>
-      {children}
+      {items.map((child, i) => (
+        <StaggerReveal key={i} index={i}>
+          {child}
+        </StaggerReveal>
+      ))}
     </div>
   );
 }
@@ -200,7 +207,7 @@ export default function VyasGraphicsWorkPage() {
                 ))}
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "28px 20px", justifyItems: "center" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "28px 24px" }}>
                 <div>
                   <BeforeAfterSlider
                     before={`${IMG}/vectorise-northstar-before.jpg`}
@@ -208,7 +215,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="300px"
+                    maxWidth="420px"
                   />
                   <Caption>NorthstarWin Limited</Caption>
                 </div>
@@ -219,7 +226,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="300px"
+                    maxWidth="420px"
                   />
                   <Caption>Lakeshore Pool &amp; Deck</Caption>
                 </div>
@@ -230,7 +237,7 @@ export default function VyasGraphicsWorkPage() {
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
-                    maxWidth="300px"
+                    maxWidth="420px"
                   />
                   <Caption>Promith</Caption>
                 </div>
@@ -373,7 +380,9 @@ export default function VyasGraphicsWorkPage() {
             </div>
 
             <div style={{ marginBottom: "28px" }}>
-              <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} videoSrc={`${IMG}/ipl-promo-wide.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
+              <StaggerReveal>
+                <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} videoSrc={`${IMG}/ipl-promo-wide.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
+              </StaggerReveal>
             </div>
 
             <AutoGrid min="280px">
