@@ -42,8 +42,8 @@ export const scenarios: Scenario[] = [
     solution: {
       label: "2. Solution: \u201cSmart Gap\u201d",
       icon: "smart-gap",
-      caption: "Gap Detected (2 hrs) \u2014 You have time for \u2018Campus East Loop\u2019 (20 mins).",
-      context: "The app auto-syncs with her Outlook timetable, detects the gap, and performs the \u201cmental math\u201d.",
+      caption: "Gap Detected (2 hrs) - You have time for \u2018Campus East Loop\u2019 (20 mins).",
+      context: "The app auto-syncs with her Outlook timetable, detects the gap, and performs the \u201cmental maths\u201d.",
       outcome: "Logistics solved instantly. Maya trusts the system and accepts.",
     },
   },

@@ -55,7 +55,7 @@ export function TiltPermissionPrompt() {
         <rect x="7" y="2" width="10" height="20" rx="2" />
         <path d="M11 18h2" />
       </svg>
-      <span>{enabled ? "Tilt effect is on" : "Press here \u2014 tilt your phone for 3D cards"}</span>
+      <span>{enabled ? "Tilt effect is on" : "Press here - tilt your phone for 3D cards"}</span>
       {/* A real toggle-switch visual, matching the same component already
           used inside the wireframe screens, so on/off reads instantly. */}
       <span

@@ -25,7 +25,7 @@ export function WireframeCrowdFilter({ showIntro = true }: { showIntro?: boolean
       {showIntro && (
         <WireframeIntro
           badge="B"
-          title={"Setup Profile \u2014 \u201cCrowd Filter\u201d"}
+          title={"Setup Profile - \u201cCrowd Filter\u201d"}
           description={
             <>
               <strong style={{ color: "#fff" }}>The fix:</strong> a segmented control replaces the ambiguous toggle,

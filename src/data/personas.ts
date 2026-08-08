@@ -45,9 +45,9 @@ export const personas: Persona[] = [
     role: "The Time-Constrained Planner",
     avatar: `${IMG}/avatar-maya.png`,
     quote: "I need things that are quick. I have a one-hour gap on Tuesdays and Thursdays\u2026 I need to find exercises that fit without needing to travel far.",
-    bio: "Maya is a high-achieving student with a packed timetable. She suffers from \u201cLogistics Paralysis\u201d \u2013 the mental effort of calculating travel time, changeover time, and workout time prevents her from acting. She views fitness as a logistical problem to be solved, not a leisure activity.",
+    bio: "Maya is a high-achieving student with a packed timetable. She suffers from \u201cLogistics Paralysis\u201d - the mental effort of calculating travel time, changeover time, and workout time prevents her from acting. She views fitness as a logistical problem to be solved, not a leisure activity.",
     goals: [
-      "Utilise short 20\u201340 minute gaps between lectures.",
+      "Utilise short 20-40 minute gaps between lectures.",
       "Remove the \u201cmental maths\u201d of planning.",
       "Maintain fitness without impacting study time.",
     ],

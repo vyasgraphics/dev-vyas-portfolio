@@ -17,6 +17,11 @@ import { personas } from "@/data/personas";
 export const metadata: Metadata = {
   title: "Move - University Exercise App",
   description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
+  openGraph: {
+    title: "Move - University Exercise App - Dev Vyas",
+    description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
+    type: "article",
+  },
 };
 
 const SECTIONS = [
@@ -41,7 +46,7 @@ export default function MoveAppWorkPage() {
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>
           <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
-            Move — University Exercise App
+            Move - University Exercise App
           </h1>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "560px", marginBottom: "24px" }}>
             Helping sedentary students actually start exercising - not by adding more options, but by removing the
@@ -116,7 +121,7 @@ export default function MoveAppWorkPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
               <WireframeQuietMode
                 badge="A"
-                title={"Home \u2014 \u201cQuiet Mode\u201d (Original)"}
+                title={"Home - \u201cQuiet Mode\u201d (Original)"}
                 description={
                   <>
                     <strong style={{ color: "#fff" }}>The problem:</strong> in testing, this toggle got read as a

@@ -4,6 +4,11 @@ import { BackLink } from "@/components/BackLink";
 export const metadata: Metadata = {
   title: "Distraction Resistance & Complex User Interfaces",
   description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces.",
+  openGraph: {
+    title: "Distraction Resistance & Complex User Interfaces - Dev Vyas",
+    description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces.",
+    type: "article",
+  },
 };
 
 export default function WorkDetailPage() {

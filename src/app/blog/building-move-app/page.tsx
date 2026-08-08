@@ -18,6 +18,11 @@ import { rejectedConcepts } from "@/data/rejectedConcepts";
 export const metadata: Metadata = {
   title: "From Lo-Fi to Live: Building Move App End to End",
   description: "A UX case study on Move App - from student research and personas to prototype testing, a mid-project redesign, and a proposed live A/B study.",
+  openGraph: {
+    title: "From Lo-Fi to Live: Building Move App End to End - Dev Vyas",
+    description: "A UX case study on Move App - from student research and personas to prototype testing, a mid-project redesign, and a proposed live A/B study.",
+    type: "article",
+  },
 };
 
 export default function BuildingMoveAppPage() {
@@ -36,7 +41,7 @@ export default function BuildingMoveAppPage() {
         real world.
       </p>
       <p>
-        This post walks through that journey properly: the research, the personas, the design decisions we made
+        This post walks through all of it properly: the research, the personas, the design decisions we made
         (and the ones we deliberately didn&apos;t), the usability testing that humbled us, and the redesign that
         came out of it.
       </p>
@@ -253,10 +258,10 @@ export default function BuildingMoveAppPage() {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "32px" }}>
         <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
-          <strong style={{ color: "#fff" }}>A &mdash; Control:</strong> the original, ambiguous toggle
+          <strong style={{ color: "#fff" }}>A - Control:</strong> the original, ambiguous toggle
         </p>
         <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", textAlign: "center" }}>
-          <strong style={{ color: "#fff" }}>B &mdash; Treatment:</strong> Crowd Filter with explicit feedback
+          <strong style={{ color: "#fff" }}>B - Treatment:</strong> Crowd Filter with explicit feedback
         </p>
       </div>
 

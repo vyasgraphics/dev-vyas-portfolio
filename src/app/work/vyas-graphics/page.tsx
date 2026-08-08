@@ -4,6 +4,11 @@ import { BackLink } from "@/components/BackLink";
 export const metadata: Metadata = {
   title: "Vyas Graphics - Brand Identity & Sports Media",
   description: "Self-directed brand and motion work spanning logo design, animated logo reveals, and a full sports media campaign for the ICC T20 World Cup 2026.",
+  openGraph: {
+    title: "Vyas Graphics - Brand Identity & Sports Media - Dev Vyas",
+    description: "Self-directed brand and motion work spanning logo design, animated logo reveals, and a full sports media campaign for the ICC T20 World Cup 2026.",
+    type: "article",
+  },
 };
 
 export default function WorkDetailPage() {

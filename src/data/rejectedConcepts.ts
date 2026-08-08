@@ -17,7 +17,7 @@ export const rejectedConcepts: RejectedConcept[] = [
     number: "1",
     title: "Rejected: \u201cThe Social Leaderboard\u201d",
     target: "Liam (Anxiety)",
-    conflict: "Fear of Judgment",
+    conflict: "Fear of Judgement",
     accent: "#f87171",
     accentSoft: "rgba(248,113,113,0.12)",
     hypothesis: "Gamification would drive motivation.",

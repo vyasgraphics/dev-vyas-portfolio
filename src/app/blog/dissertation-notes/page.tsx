@@ -4,6 +4,11 @@ import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 export const metadata: Metadata = {
   title: "What My Dissertation Taught Me About Complex Interfaces",
   description: "A behind-the-scenes look at designing a distraction-resistance study, and what the early data is starting to show.",
+  openGraph: {
+    title: "What My Dissertation Taught Me About Complex Interfaces - Dev Vyas",
+    description: "A behind-the-scenes look at designing a distraction-resistance study, and what the early data is starting to show.",
+    type: "article",
+  },
 };
 
 export default function DissertationNotesPage() {

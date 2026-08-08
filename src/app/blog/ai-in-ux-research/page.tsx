@@ -4,6 +4,11 @@ import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 export const metadata: Metadata = {
   title: "How AI Actually Fits Into a UX Research Workflow (And Where It Still Can't Replace You)",
   description: "AI won't replace UX researchers, but it will change how you work. Here's a practical, honest look at where AI fits into your research process.",
+  openGraph: {
+    title: "How AI Actually Fits Into a UX Research Workflow - Dev Vyas",
+    description: "AI won't replace UX researchers, but it will change how you work. Here's a practical, honest look at where AI fits into your research process.",
+    type: "article",
+  },
 };
 
 export default function AiInUxResearchPage() {
@@ -209,7 +214,7 @@ export default function AiInUxResearchPage() {
         you&apos;re actively arguing with, not a conclusion.
       </p>
 
-      <h2>The Bottom Line</h2>
+      <h2>Where This Leaves Us</h2>
       <p>
         AI hasn&apos;t changed <em>what</em> good UX research looks like. It&apos;s changed how much of the
         repetitive work gets in the way of doing it well. Used thoughtfully, it clears space for more thinking
@@ -222,10 +227,9 @@ export default function AiInUxResearchPage() {
         draw the line, and who never stop checking the AI&apos;s homework.
       </p>
       <p>
-        If you&apos;re a product team or founder trying to figure out where AI actually belongs in your research
-        process, rather than just chasing whatever tool is trending this month, that&apos;s exactly the kind of
-        practical, human-centred thinking I like to bring to projects. Get in touch if you&apos;d like to talk it
-        through.
+        If you&apos;re working out where AI actually belongs in your own research process, rather than just
+        chasing whatever tool is trending this month, I&apos;m happy to talk it through. Get in touch via the
+        Contact section.
       </p>
     </BlogPostLayout>
   );
