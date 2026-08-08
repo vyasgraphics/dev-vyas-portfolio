@@ -27,7 +27,7 @@ export function StaggerReveal({ children, index = 0 }: { children: ReactNode; in
     return () => io.disconnect();
   }, []);
 
-  const delay = Math.min(index, 7) * 65;
+  const delay = Math.min(index, 6) * 55;
 
   return (
     <div
@@ -35,8 +35,8 @@ export function StaggerReveal({ children, index = 0 }: { children: ReactNode; in
       style={{
         height: "100%",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(16px)",
-        transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+        transform: visible ? "translateY(0)" : "translateY(14px)",
+        transition: `opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
       }}
     >
       {children}

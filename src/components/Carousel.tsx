@@ -22,26 +22,42 @@ type CarouselItem = {
 // just its own offsetLeft, matching scrollLeft directly, no compensating
 // padding required, and it's the same interaction model as most native
 // feed carousels (current slide flush, next slide peeking from the right).
-export function Carousel({ items, label }: { items: CarouselItem[]; label?: string }) {
+export function Carousel({ items, label, showArrows = true }: { items: CarouselItem[]; label?: string; showArrows?: boolean }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+
+  // Active index and scroll targets are both derived from scroll PROGRESS
+  // (scrollLeft / maxScroll, 0 to 1) mapped proportionally across the index
+  // range, rather than each slide's individual offsetLeft.
+  //
+  // Individual-offsetLeft targeting looks right until slide width × count
+  // doesn't evenly divide the scrollable range - which is the normal case,
+  // not an edge case (e.g. 6 slides at 30% width on this page). Once you're
+  // within one viewport-width of the end, several trailing slides' true
+  // offsetLeft values exceed maxScroll and all clamp to the same position,
+  // so distance-based "closest slide" matching permanently undercounts them
+  // - the index gets stuck and clicking "next" stops doing anything visible.
+  // No per-slide targeting scheme fixes that; it's a hard geometric ceiling
+  // on scrollLeft, not a comparison bug.
+  //
+  // Proportional mapping sidesteps it entirely: scrollLeft=0 is defined as
+  // index 0 and scrollLeft=maxScroll is defined as the last index, by
+  // construction, so every index is always reachable and "next" always
+  // makes forward progress, regardless of how the slide widths divide up.
+  const itemsLength = items.length;
 
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
     let raf = 0;
     const measure = () => {
-      const children = Array.from(el.children) as HTMLElement[];
-      let closest = 0;
-      let minDist = Infinity;
-      children.forEach((c, i) => {
-        const dist = Math.abs(c.offsetLeft - el.scrollLeft);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
-      });
-      setActive(closest);
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      if (maxScroll <= 1) {
+        setActive(0);
+        return;
+      }
+      const progress = Math.min(1, Math.max(0, el.scrollLeft / maxScroll));
+      setActive(Math.round(progress * (itemsLength - 1)));
     };
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -55,15 +71,18 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
       window.removeEventListener("resize", onScroll);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [itemsLength]);
 
   const scrollToIndex = (i: number) => {
     const el = trackRef.current;
     if (!el) return;
     const clamped = Math.max(0, Math.min(items.length - 1, i));
-    const child = el.children[clamped] as HTMLElement | undefined;
-    if (!child) return;
-    el.scrollTo({ left: child.offsetLeft, behavior: "smooth" });
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    // Same proportional mapping as the scroll listener above, so a click
+    // always lands exactly where that reading back through measure() will
+    // report - clicking dot 4 shows dot 4 as active, never dot 6.
+    const target = items.length > 1 ? (clamped / (items.length - 1)) * maxScroll : 0;
+    el.scrollTo({ left: target, behavior: "smooth" });
   };
 
   return (
@@ -98,24 +117,28 @@ export function Carousel({ items, label }: { items: CarouselItem[]; label?: stri
           ))}
         </div>
 
-        <button
-          type="button"
-          aria-label="Previous slide"
-          className="vg-carousel-arrow vg-carousel-arrow-left"
-          onClick={() => scrollToIndex(active - 1)}
-          disabled={active === 0}
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 2L4 8l6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
-        <button
-          type="button"
-          aria-label="Next slide"
-          className="vg-carousel-arrow vg-carousel-arrow-right"
-          onClick={() => scrollToIndex(active + 1)}
-          disabled={active === items.length - 1}
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
+        {showArrows && (
+          <>
+            <button
+              type="button"
+              aria-label="Previous slide"
+              className="vg-carousel-arrow vg-carousel-arrow-left"
+              onClick={() => scrollToIndex(active - 1)}
+              disabled={active === 0}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 2L4 8l6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Next slide"
+              className="vg-carousel-arrow vg-carousel-arrow-right"
+              onClick={() => scrollToIndex(active + 1)}
+              disabled={active === items.length - 1}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 2l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </button>
+          </>
+        )}
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "14px" }}>

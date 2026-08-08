@@ -279,6 +279,7 @@ export default function VyasGraphicsWorkPage() {
             <div style={{ marginBottom: "36px" }}>
               <Carousel
                 label="Carousel post"
+                showArrows={false}
                 items={SERVICES_CAROUSEL.map((s) => ({ ...s, src: `${IMG}/${s.src}` }))}
               />
             </div>
