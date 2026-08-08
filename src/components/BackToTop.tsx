@@ -28,9 +28,10 @@ export function BackToTop() {
         height: "44px",
         borderRadius: "50%",
         border: "1px solid rgba(255,255,255,0.2)",
-        background: "rgba(27,30,35,0.85)",
-        backdropFilter: "blur(8px)",
-        WebkitBackdropFilter: "blur(8px)",
+        background: "rgba(27,30,35,0.55)",
+        backdropFilter: "blur(20px) saturate(160%)",
+        WebkitBackdropFilter: "blur(20px) saturate(160%)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2)",
         color: "#fff",
         display: "flex",
         alignItems: "center",
@@ -45,12 +46,12 @@ export function BackToTop() {
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = "rgba(0,222,81,0.5)";
         e.currentTarget.style.color = "#00de51";
-        e.currentTarget.style.boxShadow = "0 0 16px 2px rgba(0,222,81,0.35)";
+        e.currentTarget.style.boxShadow = "0 0 16px 2px rgba(0,222,81,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
         e.currentTarget.style.color = "#fff";
-        e.currentTarget.style.boxShadow = "none";
+        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2)";
       }}
     >
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">

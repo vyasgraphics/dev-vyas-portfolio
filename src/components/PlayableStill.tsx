@@ -122,10 +122,13 @@ export function PlayableStill({
           font-size: 11.5px;
           font-weight: 600;
           color: #fff;
-          background: rgba(10, 10, 10, 0.6);
+          background: rgba(10, 10, 10, 0.45);
+          border: 1px solid rgba(255, 255, 255, 0.14);
           padding: 3px 8px;
           border-radius: 100px;
-          backdrop-filter: blur(4px);
+          backdrop-filter: blur(10px) saturate(160%);
+          -webkit-backdrop-filter: blur(10px) saturate(160%);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
           letter-spacing: 0.02em;
         }
         @media (hover: hover) {

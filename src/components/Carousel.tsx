@@ -233,14 +233,16 @@ export function Carousel({
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: rgba(10, 10, 10, 0.78);
-          border: 1px solid rgba(255, 255, 255, 0.15);
+          background: rgba(10, 10, 10, 0.55);
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          backdrop-filter: blur(14px) saturate(160%);
+          -webkit-backdrop-filter: blur(14px) saturate(160%);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2);
           color: #fff;
           display: none;
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          backdrop-filter: blur(6px);
           transition: background 0.2s ease, opacity 0.2s ease;
           z-index: 2;
         }
@@ -253,7 +255,7 @@ export function Carousel({
           cursor: default;
         }
         .vg-carousel-arrow:disabled:hover {
-          background: rgba(10, 10, 10, 0.78);
+          background: rgba(10, 10, 10, 0.55);
           color: #fff;
         }
         .vg-carousel-arrow-left {

@@ -3,7 +3,6 @@ import { Children } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
-import { BackToTop } from "@/components/BackToTop";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
@@ -12,6 +11,7 @@ import { PlayableStill } from "@/components/PlayableStill";
 import { Carousel } from "@/components/Carousel";
 import { SectionDivider } from "@/components/SectionDivider";
 import { StaggerReveal } from "@/components/StaggerReveal";
+import { ScrollToTopLink } from "@/components/ScrollToTopLink";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
 
 export const metadata: Metadata = {
@@ -129,7 +129,7 @@ function Caption({ children }: { children: React.ReactNode }) {
 
 export default function VyasGraphicsWorkPage() {
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+    <div id="vg-top" style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 0" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
@@ -143,10 +143,9 @@ export default function VyasGraphicsWorkPage() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "After Effects"].map((t) => (
-              <span key={t} style={{
+              <span key={t} className="vg-glass" style={{
                 padding: "6px 14px", borderRadius: "100px",
-                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(255,255,255,0.7)",
+                color: "rgba(255,255,255,0.75)",
               }}>
                 {t}
               </span>
@@ -155,8 +154,8 @@ export default function VyasGraphicsWorkPage() {
         </header>
       </div>
 
-      <div className="vg-hero-in vg-tilt-gallery" style={{ marginBottom: "36px", padding: "28px 0" }}>
-        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={26} gap={22} repeat={3}>
+      <div className="vg-hero-in vg-tilt-gallery" style={{ marginBottom: "36px", padding: "34px 0" }}>
+        <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={26} gap={24} repeat={3}>
           {GALLERY_IMAGES.map((img) => (
             <div key={img.src} className="vg-tilt-card vg-card">
               <Image
@@ -164,7 +163,7 @@ export default function VyasGraphicsWorkPage() {
                 alt={img.alt}
                 width={img.w}
                 height={img.h}
-                style={{ height: "180px", width: "auto", display: "block", borderRadius: "10px" }}
+                style={{ height: "260px", width: "auto", display: "block", borderRadius: "10px" }}
               />
             </div>
           ))}
@@ -341,13 +340,13 @@ export default function VyasGraphicsWorkPage() {
               profiles, top-ranking students, campus facilities, and career pathways, laid out and print-prepared in
               InDesign.
             </Body>
-            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "44px", padding: "8px 0" }}>
               <Image
                 src={`${IMG}/brochure-v1.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition one"
                 width={1700}
                 height={936}
-                className="vg-card"
+                className="vg-card vg-brochure-tilt"
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
               <Image
@@ -355,7 +354,7 @@ export default function VyasGraphicsWorkPage() {
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition two"
                 width={1700}
                 height={936}
-                className="vg-card"
+                className="vg-card vg-brochure-tilt"
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
             </div>
@@ -492,15 +491,29 @@ export default function VyasGraphicsWorkPage() {
           </section>
         </ScrollReveal>
 
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <ScrollToTopLink />
+        </div>
+
         <ScrollReveal>
-          <div style={{
-            padding: "28px", borderRadius: "16px",
-            background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
+          <div className="vg-glass" style={{
+            padding: "36px 28px",
+            borderRadius: "20px",
             textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "18px",
           }}>
-            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.7)", marginBottom: "16px" }}>
-              Follow along for design breakdowns, brand work, and new sports campaigns as they ship.
-            </p>
+            <Link
+              href="https://www.instagram.com/vyas.graphics/?hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Vyas Graphics on Instagram"
+              style={{ display: "inline-flex" }}
+            >
+              <Image src="/assets/images/social/instagram.svg" alt="" width={52} height={52} />
+            </Link>
             <Link
               href="https://www.instagram.com/vyas.graphics/?hl=en"
               target="_blank"
@@ -521,7 +534,6 @@ export default function VyasGraphicsWorkPage() {
         </div>
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
-      <BackToTop />
 
       <style>{`
         @keyframes vg-hero-in {

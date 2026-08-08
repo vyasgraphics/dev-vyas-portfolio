@@ -8412,3 +8412,57 @@ html, body {
     transform: rotate(0deg) scale(1.05);
   }
 }
+
+/* ── Liquid-glass pass ──
+   Richer frosted-glass treatment for floating/overlay chrome site-wide:
+   saturate() alongside blur so colour behind the panel stays vivid instead
+   of graying out (the actual visual difference between "blurred" and
+   "glass"), plus a hairline inset highlight along the top edge and a
+   matching dark hairline along the bottom, standing in for the way real
+   glass catches light on one edge and falls into shadow on the other.
+   Applied to the two nav/back-to-top components shared across every work
+   page, plus a reusable .vg-glass utility for page-specific chrome. ── */
+.section-nav-trigger {
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+.section-nav-list {
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.25);
+}
+
+.vg-glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(0,0,0,0.18);
+}
+
+/* ── Vyas Graphics: gallery hover-lift + scale ──
+   Extends the existing lift with a subtle scale, consistent with the
+   tilted gallery's own hover treatment. ── */
+@media (hover: hover) {
+  .vg-card:hover {
+    transform: translateY(-5px) scale(1.015);
+  }
+}
+
+/* ── Vyas Graphics: brochure resting tilt ──
+   Small, alternating lean (opposite direction per brochure) so the pair
+   reads as two prints set down at slightly different angles rather than a
+   single mechanical rotation repeated twice. Hover straightens + lifts. ── */
+.vg-brochure-tilt {
+  transform: rotate(-1.4deg);
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1);
+}
+.vg-brochure-tilt:nth-of-type(2) {
+  transform: rotate(1.1deg);
+}
+@media (hover: hover) {
+  .vg-brochure-tilt:hover {
+    transform: rotate(0deg) scale(1.015);
+  }
+}
