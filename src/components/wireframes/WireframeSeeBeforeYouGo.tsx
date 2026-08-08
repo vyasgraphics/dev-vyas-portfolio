@@ -28,7 +28,7 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
           <span style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase" }}>Back</span>
         </div>
         <div style={{ padding: "18px 16px", flex: 1, display: "flex", flexDirection: "column" }}>
-          <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "12px" }}>Hidden Library Walk</h3>
+          <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "12px", color: "#334155" }}>Hidden Library Walk</h3>
 
           <button
             type="button"

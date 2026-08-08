@@ -23,7 +23,7 @@ export function WireframeSmartInput({ showIntro = true }: { showIntro?: boolean 
       <PhoneFrame>
         <div style={{ padding: "24px 20px", flex: 1, display: "flex", flexDirection: "column" }}>
           <div style={{ width: "40px", height: "40px", background: "#e2e8f0", border: "2px solid #cbd5e1", borderRadius: "8px", marginBottom: "20px" }} />
-          <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "24px", lineHeight: 1.3 }}>
+          <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "24px", lineHeight: 1.3, color: "#334155" }}>
             Let&apos;s tailor this
             <br />
             to you.

@@ -31,6 +31,12 @@ export default function MoveAppWorkPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
       <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 100px" }}>
+        {/* Extra bottom room isn't visible under normal scrolling (it sits
+            below "Back to Work") - it exists so clicking "What's Next" in
+            the nav, the last section, has enough scrollable page left
+            below it to actually reach a clean top-of-viewport landing.
+            Without it Lenis simply runs out of page to scroll and the
+            section lands wherever the bottom of the document allows. */}
         <BackLink href="/#work" label="← Back to Work" />
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>
@@ -57,7 +63,7 @@ export default function MoveAppWorkPage() {
         <SectionNav sections={SECTIONS} />
 
         <ScrollReveal>
-          <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "140px" }}>
+          <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The problem</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
@@ -68,7 +74,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
+          <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
             <TiltPermissionPrompt />
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
@@ -87,7 +93,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
+          <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The four screens that mattered</h2>
             <div className="wireframes-grid">
               <WireframeSmartInput />
@@ -99,7 +105,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "140px" }}>
+          <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
@@ -120,7 +126,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "140px" }}>
+          <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
@@ -154,6 +160,7 @@ export default function MoveAppWorkPage() {
         <div style={{ marginTop: "56px", textAlign: "center" }}>
           <BackLink href="/#work" label="← Back to Work" />
         </div>
+        <div aria-hidden style={{ height: "45vh" }} />
       </div>
     </div>
   );
