@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
+import { BackToTop } from "@/components/BackToTop";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
@@ -162,6 +163,7 @@ export default function MoveAppWorkPage() {
         </div>
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
+      <BackToTop />
     </div>
   );
 }

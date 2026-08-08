@@ -8,16 +8,22 @@
 //
 // iOS 13+ requires DeviceOrientationEvent.requestPermission(), which must
 // be called from a real user gesture (a tap) - it can't be requested
-// automatically on load. Android and older iOS don't gate it at all.
-// TiltPermissionPrompt.tsx is the tap target that satisfies this for iOS;
-// everywhere else just starts listening immediately.
+// automatically on load. Android and older iOS don't gate it behind a
+// permission prompt at all, but this still waits for the same explicit
+// tap on both platforms: silently tilting cards the instant someone lands
+// on the page (Android) is a worse surprise than just asking everyone,
+// consistently, once - see TiltPermissionPrompt.tsx, which doubles as
+// the on/off control once the effect is live.
 
 type TiltListener = (px: number, py: number) => void;
+type StateListener = (enabled: boolean) => void;
 
 const listeners = new Set<TiltListener>();
+const stateListeners = new Set<StateListener>();
 let listening = false;
 let baseline: { beta: number; gamma: number } | null = null;
 let permissionGranted = false;
+let enabled = false;
 
 // How many degrees of physical tilt (from wherever the phone happened to
 // be held when listening started) maps to the card's full range of
@@ -25,7 +31,7 @@ let permissionGranted = false;
 const DEGREES_FOR_FULL_TILT = 24;
 
 function handleOrientation(e: DeviceOrientationEvent) {
-  if (e.beta === null || e.gamma === null) return;
+  if (!enabled || e.beta === null || e.gamma === null) return;
   // First reading becomes the neutral baseline - people hold phones at
   // all sorts of resting angles, so calibrating to "flat" or "90°" would
   // feel arbitrary. Tilt is reported relative to however they were
@@ -57,25 +63,39 @@ export function isDeviceTiltGranted() {
   return permissionGranted;
 }
 
-export async function requestDeviceTiltPermission(): Promise<boolean> {
-  if (!deviceTiltNeedsPermission()) {
-    permissionGranted = true;
-    ensureListening();
-    return true;
+export function isDeviceTiltEnabled() {
+  return enabled;
+}
+
+// The toggle button's tap handler. First tap: requests OS permission if
+// this platform needs it (iOS), otherwise just flips on. Every tap after
+// that just flips the existing on/off state - no re-prompting.
+export async function toggleDeviceTilt(): Promise<boolean> {
+  if (enabled) {
+    enabled = false;
+    baseline = null; // re-calibrate to wherever the phone is next time it's turned on
+    listeners.forEach((l) => l(0, 0)); // snap every card back to flat, not stuck mid-tilt
+    stateListeners.forEach((l) => l(false));
+    return false;
   }
-  try {
-    const DOE = window.DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> };
-    const result = await DOE.requestPermission();
-    if (result === "granted") {
-      permissionGranted = true;
-      ensureListening();
-      return true;
+
+  if (!permissionGranted) {
+    if (deviceTiltNeedsPermission()) {
+      try {
+        const DOE = window.DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> };
+        const result = await DOE.requestPermission();
+        if (result !== "granted") return false;
+      } catch {
+        return false;
+      }
     }
-  } catch {
-    // Ignore - user declined, or the API rejected for some other reason.
-    // The prompt component just stays available to try again.
+    permissionGranted = true;
   }
-  return false;
+
+  ensureListening();
+  enabled = true;
+  stateListeners.forEach((l) => l(true));
+  return true;
 }
 
 export function subscribeDeviceTilt(cb: TiltListener): () => void {
@@ -85,10 +105,9 @@ export function subscribeDeviceTilt(cb: TiltListener): () => void {
   };
 }
 
-// Android and pre-iOS-13 Safari never gate this behind a permission
-// prompt at all - safe to just start listening as soon as this module
-// loads on a client that has the API and doesn't need permission.
-if (typeof window !== "undefined" && typeof window.DeviceOrientationEvent !== "undefined" && !deviceTiltNeedsPermission()) {
-  permissionGranted = true;
-  ensureListening();
+export function subscribeDeviceTiltState(cb: StateListener): () => void {
+  stateListeners.add(cb);
+  return () => {
+    stateListeners.delete(cb);
+  };
 }
