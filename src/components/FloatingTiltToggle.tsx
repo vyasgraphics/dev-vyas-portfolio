@@ -26,7 +26,7 @@ export function FloatingTiltToggle() {
   if (!visible) return null;
 
   return (
-    <div style={{ position: "fixed", bottom: "84px", right: "28px", zIndex: 40, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
+    <div style={{ position: "fixed", bottom: "100px", right: "28px", zIndex: 40, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
       {/* Same "iOS gives no dialog on a repeat denial" situation as
           TiltPermissionPrompt - doing nothing here reads as broken. */}
       {denied && (
