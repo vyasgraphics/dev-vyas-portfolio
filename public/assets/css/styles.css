@@ -8073,14 +8073,21 @@ textarea:focus-visible,
 
 /* ── Tactile press feedback (mobile taps + mouse clicks) ──
    Nothing in the base stylesheet gives any visual confirmation that a
-   tap/click registered. Upgraded from a flat scale(0.96) snap to the same
-   "lift then settle" feel as the Send Message button: a subtle hover-lift
-   (scale up a touch, shadow grows) that then compresses back down with a
-   tightened shadow on press - so pressing reads as pushing an already-
-   slightly-raised surface back down, rather than an unrelated shrink from a
-   flat resting state. The hover-lift is gated behind (hover:hover) so touch
-   devices only ever see the press-settle half (no lift to get "stuck" on
-   after a tap lifts the finger). */
+   tap/click registered. Aims for the same "lift then settle" feel as the
+   Send Message button, but the first version of this (scale(1.015) hover /
+   scale(0.96) press, plain dark box-shadows) turned out to be imperceptible
+   in practice on this page: every one of these buttons sits on an already
+   near-black background, so a dark rgba(0,0,0,...) shadow has almost no
+   visible contrast to show against - and the 1.5% hover-lift was too small
+   a pixel change on compact buttons (e.g. "Let's talk" at ~100px wide) to
+   register at all. The Send button itself only reads well because, beyond
+   its own scale change, it also carries a constant BRIGHT rim highlight
+   (rgba(255,255,255,...)) that stays visible against dark backgrounds
+   regardless of the button's own colour. Fixed by: (1) a much larger scale
+   swing (hover 1.035 / press 0.93 - roughly a 10% swing, clearly visible at
+   any button size or colour), and (2) adding that same light rim highlight
+   so there is always a visible edge to see change, on top of (rather than
+   instead of) the darker ambient shadow for depth. */
 .tf-btn,
 .tf-btn-action,
 .tf-btn-icon,
@@ -8090,8 +8097,8 @@ textarea:focus-visible,
 .nav-mobile-item .item-link,
 .sidebar-tools .item-link,
 .footer-back-to-top {
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease,
-    background 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease,
+    background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 @media (hover: hover) {
   .tf-btn:hover,
@@ -8099,8 +8106,8 @@ textarea:focus-visible,
   .tf-btn-icon:hover,
   .action-down:hover,
   .footer-back-to-top:hover {
-    transform: scale(1.015);
-    box-shadow: 0 10px 22px -8px rgba(0,0,0,0.35);
+    transform: scale(1.035);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.14), 0 12px 26px -8px rgba(0,0,0,0.45);
   }
 }
 .tf-btn:active,
@@ -8108,8 +8115,9 @@ textarea:focus-visible,
 .tf-btn-icon:active,
 .action-down:active,
 .footer-back-to-top:active {
-  transform: scale(0.96);
-  box-shadow: 0 2px 8px -2px rgba(0,0,0,0.3), inset 0 1px 4px rgba(0,0,0,0.2);
+  transform: scale(0.93);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.22), 0 2px 8px -2px rgba(0,0,0,0.4),
+    inset 0 1px 6px rgba(0,0,0,0.3);
 }
 .blog-card:active {
   transform: scale(0.985);
