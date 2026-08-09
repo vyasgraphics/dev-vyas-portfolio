@@ -8800,6 +8800,22 @@ html, body {
   width: calc(50% - 7px);
   max-width: 220px;
 }
+/* The generic open-state width above (calc(50% - 7px), forcing every card
+   to roughly half the row regardless of its image's real proportions) was
+   winning over the contain-fit deck's own deliberate sizing (width:auto,
+   height capped - see .vg-deck-fit-contain rules) because both rules carry
+   the same specificity and this one comes later in the file. That mismatch
+   between a forced container width and the image's real aspect ratio was
+   what caused the story graphics to render cropped on mobile once the deck
+   was opened, even though the same deck was correctly uncropped on desktop
+   (which has its own separate, unaffected desktop-layer contain rules).
+   Re-asserted here at higher specificity (three classes on the deck element
+   instead of two) so contain-fit decks keep their real aspect ratio in the
+   open state too. */
+.vg-deck-touch.vg-deck-fit-contain.is-open .vg-deck-card {
+  width: auto;
+  max-width: none;
+}
 .vg-deck-touch.is-open .vg-deck-card img { filter: blur(0px) brightness(1); }
 .vg-deck-touch.is-open .vg-deck-card::before { opacity: 0; }
 /* Playing video on touch: clear regardless of open state. */

@@ -59,7 +59,7 @@ const STRUCTURED_DATA = {
       description:
         "Self-directed brand and motion work spanning logo design, animated logo reveals, social media, print, and a full sports media campaign for the ICC T20 World Cup 2026 and IPL 2026.",
       url: PAGE_URL,
-      image: `${IMG_URL}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`,
+      image: `${IMG_URL}/icc-t20-world-cup-2026-india-champions-poster.jpg`,
       creator: {
         "@type": "Person",
         name: "Dev Vyas",
@@ -122,7 +122,6 @@ const TOOLS = [
 
 const GALLERY_IMAGES = [
   { src: "vyas-graphics-custom-design-promo-instagram-post.jpg", alt: "Vyas Graphics custom design promo post", w: 900, h: 1124 },
-  { src: "icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg", alt: "ICC T20 World Cup final poster", w: 800, h: 1066 },
   { src: "vyas-graphics-founder-portrait-instagram-post.jpg", alt: "Vyas Graphics portrait brand post", w: 900, h: 1199 },
   { src: "rcb-ipl-2026-champions-poster.jpg", alt: "RCB IPL champions poster", w: 1100, h: 1466 },
   { src: "vyas-graphics-unforgettable-post-instagram-post.jpg", alt: "Vyas Graphics Instagram post", w: 900, h: 1123 },
@@ -479,7 +478,6 @@ export default function VyasGraphicsWorkPage() {
             <GlassDeck min="230px">
               <PlayableStill deck poster={`${IMG}/icc-t20-world-cup-2026-tournament-promo-poster.jpg`} videoSrc={`${IMG}/icc-t20-world-cup-2026-tournament-promo-animation.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
               <Image src={`${IMG}/icc-t20-world-cup-2026-final-instagram-poll-story.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} style={{ width: "100%", height: "auto", display: "block" }} />
-              <Image src={`${IMG}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
               <Image src={`${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
             </GlassDeck>
 
