@@ -43,7 +43,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
     width: "device-width",
     initialScale: 1,
-    maximumScale: 1,
+    // maximumScale deliberately left unset - capping it at 1 (as this used
+    // to) blocks pinch-to-zoom entirely, which fails WCAG 1.4.4 (Resize
+    // Text): anyone with low vision who relies on zooming to read content
+    // couldn't. Leaving zoom unrestricted costs nothing for everyone else.
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

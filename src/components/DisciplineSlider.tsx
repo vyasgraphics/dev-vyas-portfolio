@@ -6,7 +6,7 @@ export function DisciplineSlider() {
         // repeat={8} ensures 64 pill instances render immediately on SSR
         // so the marquee has enough content to scroll before JS measures
         // the container width. autoFill in AutoRepeatMarquee backs this up.
-        // Without an explicit repeat, the initial state is 1 set of 8 pills —
+        // Without an explicit repeat, the initial state is 1 set of 8 pills -
         // on mobile that's only 2-3 visible and the ResizeObserver hasn't
         // fired yet, so no scrolling animation appears.
         <AutoRepeatMarquee

@@ -14,11 +14,20 @@ function ensurePlugins() {
 }
 
 /**
- * Exact port of the original Isak template's animation hook.
- * Any deviation from the original breaks mobile - particularly the work
- * section trigger approach and the simple 100ms ScrollTrigger.refresh().
+ * Sets up every scroll-triggered animation used on the homepage: split-text
+ * headline reveals, the hand-drawn scribble under the hero, the "functional"
+ * highlight sweep, the active-card tracking in the Work section, counters,
+ * and several others further down this file. Runs once per page load
+ * (guarded by hasRun below) and cleans up all its listeners and GSAP
+ * triggers on unmount.
+ *
+ * The exact timing and trigger approach here matter more than they might
+ * look - several pieces (the work section trigger in particular, and the
+ * ScrollTrigger.refresh() call) were tuned against real mobile Safari
+ * behaviour, not just desktop Chrome, so changes here are worth testing on
+ * an actual phone rather than just a resized browser window.
  */
-export function useIsakAnimations() {
+export function useScrollAnimations() {
     const hasRun = useRef(false);
 
     useEffect(() => {
@@ -554,7 +563,7 @@ export function useIsakAnimations() {
                 const setup = () => {
                     const len = path.getTotalLength();
                     if (len === 0) {
-                        // SVG not painted yet — retry next frame
+                        // SVG not painted yet - retry next frame
                         rafId = requestAnimationFrame(setup);
                         return;
                     }

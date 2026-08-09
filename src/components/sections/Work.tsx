@@ -36,10 +36,10 @@ export function Work() {
 
     return (
         <div id="work" className="section-work flat-spacing">
-            <div className="sect-tag text-caption fw-medium">
+            <h2 className="sect-tag text-caption fw-medium">
                 <i className="icon icon-high-light" />
                 Work Highlights
-            </div>
+            </h2>
             <div className="work-list element-sticky">
                 {works.map((w, i) => (
                     <div
@@ -99,13 +99,13 @@ export function Work() {
                                                     width={40}
                                                     height={40}
                                                     src={w.logo}
-                                                    alt="logo"
+                                                    alt={`${w.title} logo`}
                                                     style={{ objectFit: "contain" }}
                                                 />
                                             </div>
-                                            <h4 className="w-title letter-space--2 text-white-72">
+                                            <h3 className="w-title letter-space--2 text-white-72">
                                                 {w.title}
-                                            </h4>
+                                            </h3>
                                             <p className="w-desc text-white-56 text-body-3">
                                                 {w.description}
                                             </p>

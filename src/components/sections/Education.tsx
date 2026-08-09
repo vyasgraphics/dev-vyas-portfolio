@@ -16,10 +16,10 @@ export function Education() {
         <i className="icon icon-edu" />
         Education &amp; Experience
       </div>
-      <h4 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+      <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
         A mix of formal training <br className="d-none d-lg-block" />
         and real-world commercial work
-      </h4>
+      </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
         The kind of combination that means I understand both the theory behind good design
         and what it actually takes to ship work on time.

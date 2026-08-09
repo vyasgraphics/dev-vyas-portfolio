@@ -106,7 +106,7 @@ export function BodyBackground({
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
-          {/* Video B — standby clone */}
+          {/* Video B - standby clone */}
           <video
             ref={videoBRef}
             className="video"

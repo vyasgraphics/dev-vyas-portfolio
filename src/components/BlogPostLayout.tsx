@@ -6,12 +6,31 @@ import { BackToTop } from "@/components/BackToTop";
 import { blogPosts } from "@/data/blog";
 import { smoothScrollToTop } from "@/lib/smoothScroll";
 
+const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
+
+// Human-readable dates in blog.ts ("7 August 2026") don't parse reliably
+// with new Date() across browsers, so each post's date is mapped to ISO
+// format here by hand for the structured data below - only three posts,
+// so a small lookup is simpler and more reliable than a date-parsing
+// library just for this.
+const ISO_DATES: Record<string, string> = {
+  "ai-in-ux-research": "2026-08-07",
+  "dissertation-notes": "2026-08-08",
+  "building-move-app": "2026-08-07",
+};
+
 // Shared chrome for every blog post page: back link, tag/title/meta header,
 // hero image, then whatever body content the page itself provides as
 // children, then a tags + share footer. Metadata (title, date, readTime,
 // tag, image) is looked up from blog.ts by slug rather than repeated in
 // each page.tsx, so there's one source of truth - update blog.ts and both
 // the homepage card and this header stay in sync automatically.
+//
+// Structured data (BlogPosting JSON-LD) lives here for the same reason -
+// generated once from the looked-up post, rather than duplicated by hand
+// in each of the three post pages. Rendering it from a "use client"
+// component is fine for SEO purposes: Next.js still server-renders client
+// components for the initial HTML search engines actually crawl.
 //
 // Body content is intentionally just `children`: each post's writing has
 // its own mix of headings, paragraphs, quotes, and lists, which doesn't
@@ -38,8 +57,40 @@ export function BlogPostLayout({ slug, children }: { slug: string; children: Rea
 
   if (!post) return null;
 
+  const pageUrl = `${SITE_URL}/blog/${post.slug}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: `${SITE_URL}${post.image}`,
+    url: pageUrl,
+    datePublished: ISO_DATES[post.slug] ?? undefined,
+    dateModified: ISO_DATES[post.slug] ?? undefined,
+    author: {
+      "@type": "Person",
+      name: "Dev Vyas",
+      url: SITE_URL,
+      jobTitle: "Product Designer",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Dev Vyas",
+      url: SITE_URL,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+    },
+    keywords: post.tag,
+  };
+
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <div style={{ maxWidth: "720px", margin: "0 auto", padding: "56px 24px 120px" }}>
         <BackLink href="/#blog" label="← Back to Writing" />
 

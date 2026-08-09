@@ -30,8 +30,9 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
         <ReactLenis
             root
             options={{
-                // Exact same values as the original template (tfisak.vercel.app).
-                // syncTouch:false — browser handles touch scrolling natively.
+                // Values matched to the original template's own live demo,
+                // kept as-is since they were already well tuned.
+                // syncTouch:false - browser handles touch scrolling natively.
                 // GSAP ScrollTrigger listens to native scroll events directly,
                 // so animations fire correctly on mobile without Lenis involvement.
                 lerp: 0.08,

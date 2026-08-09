@@ -1,6 +1,6 @@
 import { techCategories } from "@/data/tech";
 
-// Tools whose SVG already contains the text label — don't repeat the name in the pill
+// Tools whose SVG already contains the text label - don't repeat the name in the pill
 const ICON_ONLY_LABELS = new Set(["Gemini Notebook"]);
 
 export function Tech() {
@@ -10,9 +10,9 @@ export function Tech() {
                 <i className="icon icon-tech-stack" />
                 Tools &amp; Tech
             </div>
-            <h4 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+            <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
                 The tools I reach for every day
-            </h4>
+            </h2>
 
             <div className="tech-categories" style={{ marginTop: "2.5rem", display: "flex", flexDirection: "column", gap: "2rem" }}>
                 {techCategories.map((cat) => (

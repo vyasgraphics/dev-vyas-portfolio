@@ -109,13 +109,13 @@ export function Contact() {
         <i className="icon icon-send" />
         Get in Touch
       </div>
-      <h4 className="s-title letter-space--2 split-text effect-blur-fade">
+      <h2 className="s-title letter-space--2 split-text effect-blur-fade">
         Whether it&apos;s a job opportunity,{" "}
         <br className="d-none d-lg-block" />
         a freelance project, or just a{" "}
         <br className="d-none d-lg-block" />
         question - I&apos;d love to hear from you
-      </h4>
+      </h2>
 
       {submitted ? (
         <div style={{

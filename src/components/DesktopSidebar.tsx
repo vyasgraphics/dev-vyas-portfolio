@@ -28,7 +28,7 @@ export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps
     // offsetTop:2559 while its true page position was 4359, a 1800px gap
     // matching the intro's own height exactly. Same class of bug already
     // hit and fixed once before for the Work sidebar (see the reference-
-    // frame note in useIsakAnimations.ts) - same fix here: getBoundingClientRect()
+    // frame note in useScrollAnimations.ts) - same fix here: getBoundingClientRect()
     // is always viewport-accurate regardless of any ancestor's positioning,
     // no reference-frame ambiguity.
     const runOnScroll = () => {

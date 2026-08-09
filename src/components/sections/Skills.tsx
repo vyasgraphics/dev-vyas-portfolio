@@ -55,10 +55,10 @@ export function Skills() {
 
     return (
         <div id="skill" className="section-skill flat-spacing">
-            <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
+            <h2 className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
                 <i className="icon icon-service" />
                 Skills
-            </div>
+            </h2>
 
             <div id="accordion-skill">
                 {skills.map((s, idx) => {
@@ -74,7 +74,7 @@ export function Skills() {
                                 aria-controls={s.id}
                                 role="button"
                             >
-                                <h4 className="text letter-space--2 text-black-72">{s.title}</h4>
+                                <h3 className="text letter-space--2 text-black-72">{s.title}</h3>
                                 <div className="ic-wrap"><span className="ic-accordion-custom" /></div>
                             </a>
                             <div

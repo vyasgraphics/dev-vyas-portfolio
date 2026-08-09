@@ -1,8 +1,5 @@
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -125,10 +122,7 @@
 
 /*------------ Core CSS ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -617,10 +611,7 @@ p {
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -913,10 +904,7 @@ h6,
   }
 }
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -1308,10 +1296,7 @@ h6,
 /*------------ Component ---------------- */
 /*------------ Layout ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -1516,10 +1501,7 @@ h6,
 
 /*------------ Header ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -1729,10 +1711,7 @@ h6,
 
 /*------------ Blog ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -2134,10 +2113,7 @@ h6,
 
 /*------------ Element ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -2704,10 +2680,7 @@ h6,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -3017,10 +2990,7 @@ h6,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -3224,10 +3194,7 @@ h6,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -3582,10 +3549,7 @@ h6,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -3686,10 +3650,7 @@ h6,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -3970,10 +3931,7 @@ select option {
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -4349,10 +4307,7 @@ button.animate-btn::after,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -4657,7 +4612,7 @@ button.animate-btn::after,
   aspect-ratio: 0.546728972;
 }
 /* Scoped to desktop only: this class is toggled by the sticky-card Work
-   section logic (window.innerWidth >= 992 gate in useIsakAnimations.ts) to
+   section logic (window.innerWidth >= 992 gate in useScrollAnimations.ts) to
    hide the fixed profile sidebar while a work card is active. Previously
    unscoped, so if this class was ever set while the viewport was >=992px
    and the window was then resized/rotated narrower (dev tools, a tablet
@@ -5231,10 +5186,7 @@ button.animate-btn::after,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -5469,10 +5421,7 @@ button.animate-btn::after,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -5518,10 +5467,7 @@ button.animate-btn::after,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -5831,7 +5777,7 @@ button.animate-btn::after,
     opacity: 1;
     visibility: visible;
   }
-  /* Applied briefly (a couple of animation frames) by useIsakAnimations
+  /* Applied briefly (a couple of animation frames) by useScrollAnimations
      during a "Back to Work" restoration, on both the sidebar and whichever
      .wrap is becoming active - see the comment at that toggle for why a
      restoration skips this transition rather than playing it. */
@@ -6361,10 +6307,7 @@ button.animate-btn::after,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -6666,10 +6609,7 @@ button.animate-btn::after,
 }
 
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -6841,10 +6781,7 @@ button.animate-btn::after,
 
 /*------------ Footer ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -6886,19 +6823,11 @@ button.animate-btn::after,
   margin-bottom: 8px;
   gap: 12px;
 }
-.tf-footer .foot-inner .isak {
-  max-width: 354px;
-  width: 100%;
-}
 .tf-footer .foot-bottom {
   display: flex;
   justify-content: space-between;
   align-items: end;
   gap: 12px;
-}
-.tf-footer .foot-bottom .isak {
-  max-width: 428px;
-  width: 100%;
 }
 .tf-footer .f-logo {
   background-color: var(--white);
@@ -6913,9 +6842,6 @@ button.animate-btn::after,
 }
 .tf-footer .text-nocopy {
   white-space: nowrap;
-}
-.tf-footer .isak {
-  width: auto;
 }
 @media (max-width: 767px) {
   .tf-footer .f-logo {
@@ -6934,10 +6860,7 @@ button.animate-btn::after,
 
 /*------------ Mode ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -7274,12 +7197,6 @@ button.animate-btn::after,
   backdrop-filter: blur(12px);
   color: var(--white);
 }
-.dark-mode .tf-footer .foot-inner .isak path {
-  fill: #fff;
-}
-.dark-mode .tf-footer .foot-bottom .isak path {
-  stroke: #fff;
-}
 .dark-mode .tf-footer .f-logo {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
   box-shadow: 0px 0.5px 0.5px 0px rgba(0, 0, 0, 0.0588235294), 0px 1px 1px -0.5px rgba(0, 0, 0, 0.0588235294), 0px 3px 3px -1.5px rgba(0, 0, 0, 0.0588235294), 0px 5px 5px -2.5px rgba(0, 0, 0, 0.1215686275), 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.0784313725) inset, 0px 1px 3px 0px rgba(255, 255, 255, 0.031372549) inset, 0px -4px 12px 0px rgba(255, 255, 255, 0.0392156863) inset;
@@ -7435,10 +7352,7 @@ button.animate-btn::after,
 
 /*------------ Landing ---------------- */
 /* ---------------------------------------------------------
-    * Name: Isak - Personal Portfolio HTML Template
-    * Version: 1.0.0
-    * Author: Themesflat
-    * Author URI: http://themesflat.com 
+    * Dev Vyas - Product Designer Portfolio
 
 	* Abstracts variable
 
@@ -7697,7 +7611,7 @@ button.animate-btn::after,
 /*# sourceMappingURL=styles.css.map */
 
 /* ══════════════════════════════════════════════════════════
-   DEV VYAS — Custom overrides  (single authoritative block)
+   DEV VYAS - Custom overrides  (single authoritative block)
    ══════════════════════════════════════════════════════════ */
 
 /* ── 1. Lock to dark-v3 theme colours ── */
@@ -7744,7 +7658,7 @@ button.animate-btn::after,
 
 /* ── 6. Desktop sidebar: fixed position, never scrollable ── */
 /* NOTE: opacity/visibility are intentionally NOT forced here -
-   the .active class (toggled by ScrollTrigger in useIsakAnimations)
+   the .active class (toggled by ScrollTrigger in useScrollAnimations)
    controls show/hide exactly as in the original template. */
 @media (min-width: 992px) {
   .sidebar-user {
@@ -8001,7 +7915,7 @@ button.animate-btn::after,
      children of positioned ancestors still paint correctly */
   body { overflow-x: clip; }
 
-  /* Hamburger — fixed top right */
+  /* Hamburger - fixed top right */
   .action-open-mobile {
     position: fixed;
     right: 16px;
@@ -8009,7 +7923,7 @@ button.animate-btn::after,
     z-index: 199;
   }
 
-  /* Header clock — compact */
+  /* Header clock - compact */
   .tf-header-wrap {
     padding: 16px 16px 8px;
     justify-content: flex-end;
@@ -8039,13 +7953,14 @@ button.animate-btn::after,
 }
 
 /* ══════════════════════════════════════════════════════════
-   WORK SECTION — original template mechanism (sticky + fixed wrap)
+   WORK SECTION - original template mechanism (sticky + fixed wrap)
    ══════════════════════════════════════════════════════════ */
-/* This restores the ORIGINAL isak design:
+/* This restores the original design from the template this site was
+   built on:
    - .sticky-item sticks natively via CSS (position: sticky; top: 132px)
    - .wg-work .wrap is a FIXED card pinned top-left, toggled via .active
    - .sidebar-user (profile) is hidden via .active toggled the same way
-   All show/hide logic lives in useIsakAnimations.ts ScrollTrigger,
+   All show/hide logic lives in useScrollAnimations.ts ScrollTrigger,
    using the exact class names ("active") the CSS already expects. */
 
 /* Slightly darker image blur backing so text stays legible (kept from our tuning) */
@@ -8133,7 +8048,7 @@ button.animate-btn::after,
 }
 
 /* ══════════════════════════════════════════════════════════
-   MICRO-INTERACTIONS PASS — accessibility, motion, tactile feedback
+   MICRO-INTERACTIONS PASS - accessibility, motion, tactile feedback
    ══════════════════════════════════════════════════════════ */
 
 /* ── Focus-visible: keyboard users get a clear, tasteful indicator ──
@@ -8347,7 +8262,7 @@ textarea:focus-visible,
 /* ── About: certificate list gets the same staggered reveal as everything
    else on the site (was the one static list left with zero entrance
    animation on any device). Wired up via the existing scrolling-effect
-   engine in useIsakAnimations.ts - see About.tsx for the classes. ── */
+   engine in useScrollAnimations.ts - see About.tsx for the classes. ── */
 
 /* ── Circular badge: 35-char text at the original radius (83px).
    Remove the old 9px override - with correct text length the default

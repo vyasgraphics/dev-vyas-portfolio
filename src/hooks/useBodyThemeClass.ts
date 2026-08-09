@@ -8,7 +8,11 @@ export function useBodyThemeClass() {
 
     useEffect(() => {
         setTheme("dark");
-        localStorage.removeItem("isak-color-variant");
+        // Clears out a colour-variant preference that the site's theme
+        // picker used to write before the theme was locked permanently to
+        // dark-v3 - harmless to run even if nothing was ever stored under
+        // this key.
+        localStorage.removeItem("dev-vyas-color-variant");
 
         const body = document.body;
         body.classList.remove(

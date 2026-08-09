@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, CSSProperties } from "react";
+import { useEffect, useRef, useState, CSSProperties, Children, cloneElement, isValidElement } from "react";
 import Marquee from "react-fast-marquee";
 type Direction = "left" | "right" | "up" | "down";
 
@@ -13,6 +13,28 @@ type AutoRepeatMarqueeProps = {
   className?: string;
   repeat?: number;
 };
+
+// react-fast-marquee wraps each item passed to it in its own ".rfm-child"
+// container, with no gap or margin between them by default - fine for a
+// single set of children, but this component renders several separate
+// "repeat" copies (see below) to guarantee enough content for a seamless
+// loop, and each copy becomes its own such wrapper. A flexbox `gap` on the
+// div wrapping each copy only ever applies to items *within* that one
+// div, so the seam between one copy and the next had no spacing at all -
+// producing a visibly smaller gap there than everywhere else, once every
+// `children.length` items. Applying the gap as a trailing margin on each
+// individual item instead, rather than as a `gap` on the wrapping div,
+// keeps the spacing constant everywhere, including at those seams,
+// regardless of how the underlying library chunks things up.
+function withTrailingMargin(children: React.ReactNode, gap: number) {
+  return Children.map(children, (child) => {
+    if (!isValidElement(child)) return child;
+    const existing = (child.props as { style?: CSSProperties }).style ?? {};
+    return cloneElement(child as React.ReactElement<{ style?: CSSProperties }>, {
+      style: { ...existing, marginRight: gap },
+    });
+  });
+}
 
 export default function AutoRepeatMarquee({
   children,
@@ -68,9 +90,9 @@ export default function AutoRepeatMarquee({
             <div
               key={i}
               ref={i === 0 ? contentRef : null}
-              style={{ display: "flex", gap }}
+              style={{ display: "flex" }}
             >
-              {children}
+              {withTrailingMargin(children, gap)}
             </div>
           ))}
         </Marquee>

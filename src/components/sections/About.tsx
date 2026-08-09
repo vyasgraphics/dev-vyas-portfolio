@@ -7,11 +7,11 @@ export function About() {
         <i className="icon icon-user-circle" />
         About
       </div>
-      <h4 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+      <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
         Bridging visual craft <br className="d-none d-lg-block" />
         and evidence-based design, <br className="d-none d-lg-block" />
         one user at a time
-      </h4>
+      </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         Product designer with four years of commercial experience and an MSc in
         Human-Centred Interactive Technologies at the University of York. I work at the
@@ -31,16 +31,16 @@ export function About() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div className="left">
-                <h6 className="award_name letter-space--2 text-black-72" style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                <h3 className="award_name letter-space--2 text-black-72" style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
                   {a.name}
                   <i
                     className="icon icon-arrow-right-top award-link-arrow"
                     style={{ fontSize: "12px", color: "#00C853", transition: "transform 0.25s ease, text-shadow 0.25s ease" }}
                   />
-                </h6>
+                </h3>
                 <p className="award_desc text-black-56">{a.publisher}</p>
               </div>
-              <h6 className="award_year text-black-72">{a.year}</h6>
+              <span className="award_year text-black-72">{a.year}</span>
             </a>
           </li>
         ))}

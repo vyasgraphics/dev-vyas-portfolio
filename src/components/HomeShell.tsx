@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { useScroll, useTransform, useMotionValueEvent } from "motion/react";
 import { BodyBackground } from "./BodyBackground";
-import { SettingColorMenu } from "./SettingColorMenu";
 import { MobileMenu } from "./MobileMenu";
 import { DesktopSidebar } from "./DesktopSidebar";
 import { HeaderClock } from "./HeaderClock";
@@ -19,7 +18,7 @@ import { Tech } from "./sections/Tech";
 import { Blog } from "./sections/Blog";
 import { Contact } from "./sections/Contact";
 import { Footer } from "./sections/Footer";
-import { useIsakAnimations } from "@/hooks/useIsakAnimations";
+import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 import { useClock } from "@/hooks/useClock";
 import { useHeadlineRotate } from "@/hooks/useHeadlineRotate";
 import { useInfiniteSlide } from "@/hooks/useInfiniteSlide";
@@ -41,7 +40,7 @@ export function HomeShell() {
     useClock();
     useInfiniteSlide();
     useHeadlineRotate();
-    useIsakAnimations();
+    useScrollAnimations();
     useUrlHashSync();
 
     // Owns the welcome track's scroll progress at this level (rather than
@@ -132,7 +131,6 @@ export function HomeShell() {
                 ref={chromeRef1}
                 style={{ position: "relative", zIndex: 100 }}
             >
-                <SettingColorMenu />
                 <MobileMenu />
                 <DesktopSidebar positionClass="pst-v1" />
             </div>

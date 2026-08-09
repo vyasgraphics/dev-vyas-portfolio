@@ -24,6 +24,53 @@ export const metadata: Metadata = {
   },
 };
 
+const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
+const PAGE_URL = `${SITE_URL}/work/move-app`;
+
+// Structured data (JSON-LD), same reasoning as the dissertation case study
+// page: BreadcrumbList for the Home > Work > Move App path, CreativeWork
+// for the case study itself, pointing at the site's own generated Open
+// Graph image since this page is built from custom wireframes rather than
+// photographs.
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Dev Vyas", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Work", item: `${SITE_URL}/#work` },
+        { "@type": "ListItem", position: 3, name: "Move App", item: PAGE_URL },
+      ],
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": PAGE_URL,
+      name: "Move - University Exercise App",
+      description: "A full human-centred design lifecycle project tackling how to get students moving despite time pressures and fear of judgement, from user research through to a proposed A/B study.",
+      url: PAGE_URL,
+      image: `${SITE_URL}/opengraph-image`,
+      creator: {
+        "@type": "Person",
+        name: "Dev Vyas",
+        url: SITE_URL,
+        jobTitle: "Product Designer",
+        sameAs: [
+          "https://www.linkedin.com/in/dev-vyas6",
+          "https://www.behance.net/devvyas_graphics",
+        ],
+      },
+      keywords: [
+        "UX design",
+        "human-centred design",
+        "user research",
+        "Figma prototyping",
+        "usability testing",
+      ],
+    },
+  ],
+};
+
 const SECTIONS = [
   { id: "problem", label: "The Problem" },
   { id: "personas", label: "Who It's For" },
@@ -35,6 +82,10 @@ const SECTIONS = [
 export default function MoveAppWorkPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+      />
       <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 100px" }}>
         {/* Extra bottom room isn't visible under normal scrolling (it sits
             below "Back to Work") - it exists so clicking "What's Next" in

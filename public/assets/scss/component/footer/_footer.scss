@@ -17,11 +17,6 @@
         justify-content: space-between;
         margin-bottom: 8px;
         gap: 12px;
-
-        .isak {
-            max-width: 354px;
-            width: 100%;
-        }
     }
 
     .foot-bottom {
@@ -29,11 +24,6 @@
         justify-content: space-between;
         align-items: end;
         gap: 12px;
-
-        .isak {
-            max-width: 428px;
-            width: 100%;
-        }
     }
 
     .f-logo {
@@ -48,10 +38,6 @@
 
     .text-nocopy {
         white-space: nowrap
-    }
-
-    .isak {
-        width: auto;
     }
 
     @include res(md) {

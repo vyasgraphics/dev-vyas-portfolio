@@ -8,10 +8,10 @@ export function Blog() {
         <i className="icon icon-edu" />
         Writing
       </div>
-      <h4 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+      <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
         Thoughts on design, research, <br className="d-none d-lg-block" />
         and where AI actually helps
-      </h4>
+      </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
         A space for longer-form notes on process, research findings, and lessons learned.
       </p>
@@ -67,12 +67,12 @@ export function Blog() {
               </span>
             </div>
             <div style={{ padding: "20px 22px 24px" }}>
-              <h6
+              <h3
                 className="text-black-72"
                 style={{ fontSize: "16px", fontWeight: 700, lineHeight: 1.4, marginBottom: "8px" }}
               >
                 {post.title}
-              </h6>
+              </h3>
               <p className="text-black-56" style={{ fontSize: "13px", lineHeight: 1.6, marginBottom: "14px" }}>
                 {post.excerpt}
               </p>
