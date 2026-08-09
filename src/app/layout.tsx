@@ -3,8 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import BootstrapClient from "@/hooks/BootstrapClient";
 import SmoothScroll from "@/hooks/SmoothScroll";
-import { PageTransition } from "@/components/premium/PageTransition";
-import { MagneticButtons } from "@/components/premium/MagneticButtons";
 import "./globals.scss";
 
 export const metadata: Metadata = {
@@ -53,14 +51,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en-GB" suppressHydrationWarning>
             <body className="dark-mode dark-v3" suppressHydrationWarning>
                 <BootstrapClient />
-                {/* Route-change curtain: purely visual, Lenis-independent,
-                    reduced-motion aware. Sits beside restoration logic. */}
-                <PageTransition />
-                {/* Magnetic CTAs across every route, including /work and /blog
-                    detail pages that don't mount HomeShell. The enhancer is
-                    idempotent (skips already-wired elements), so the homepage
-                    mounting it too via HomeShell is harmless. */}
-                <MagneticButtons />
                 <SmoothScroll>
                     <ThemeProvider>{children}</ThemeProvider>
                 </SmoothScroll>
