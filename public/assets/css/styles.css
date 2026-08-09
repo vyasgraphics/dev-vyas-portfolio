@@ -8565,14 +8565,16 @@ html, body {
     background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); opacity: 1; transition: opacity 0.5s ease;
   }
-  /* Video cards (PlayableStill) skip the frost treatment entirely - shown
-     sharp and plain in the deck, no blur, no glass veil, at rest or open.
-     They still overlap/fan/rotate like every other card; only the frost
-     cosmetic layer is removed. */
-  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playable-deck) img {
+  /* Plain-media decks (currently just Logo Reveal) skip the frost treatment
+     entirely for every card - shown sharp and plain, no blur, no glass veil,
+     at rest or open. They still overlap/fan/rotate like any other deck; only
+     the frost cosmetic layer is removed. Scoped by class (opt-in per deck)
+     rather than applied to every video card, so ICC/IPL video cards keep the
+     same blurred-at-rest treatment as their neighbouring image cards. */
+  .vg-deck.vg-deck-plain-media:not(.vg-deck-touch) .vg-deck-card img {
     filter: none !important;
   }
-  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playable-deck)::before {
+  .vg-deck.vg-deck-plain-media:not(.vg-deck-touch) .vg-deck-card::before {
     display: none;
   }
   .vg-deck-label {
@@ -8615,12 +8617,21 @@ html, body {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: padding 0.5s cubic-bezier(0.2,0.8,0.2,1);
+  /* Soft fade at the left/right edges instead of a hard clip or a scrollbar:
+     any card that runs past the container edge (a wide open deck on a narrow
+     phone) gently fades into the background rather than being sharply cut
+     off or requiring a swipe to reach. Purely visual, no interaction. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 28px, black calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black 28px, black calc(100% - 28px), transparent 100%);
 }
 .vg-deck-touch .vg-deck-card {
   --vg-deck-r: 0;
   position: relative;
   flex: 0 0 auto;
-  width: clamp(150px, calc(70vw / var(--vg-deck-count, 4)), 230px);
+  /* Smaller floor than the desktop layer so large decks (6-7 cards) shrink
+     enough to mostly fit the row rather than relying on scroll (removed -
+     see .is-open below) or hard clipping at the container edge. */
+  width: clamp(110px, calc(72vw / var(--vg-deck-count, 4)), 230px);
   aspect-ratio: 4 / 5;
   margin: 0 -30px;
   border-radius: 14px;
@@ -8636,7 +8647,12 @@ html, body {
 .vg-deck-touch .vg-deck-card > *:not(.vg-deck-label) { width: 100% !important; height: 100% !important; }
 .vg-deck-touch .vg-deck-card img,
 .vg-deck-touch .vg-deck-card video {
-  width: 100% !important; height: 100% !important; object-fit: cover !important; display: block;
+  width: 100% !important; height: 100% !important; display: block;
+  /* contain, not cover: mobile never crops the image - the whole graphic
+     stays visible (letterboxed within the card) rather than cutting off
+     edges/text, per feedback that cropping was cutting content off. */
+  object-fit: contain !important;
+  background: #111;
 }
 .vg-deck-touch.vg-deck-fit-contain .vg-deck-card img {
   object-fit: contain !important;
@@ -8662,12 +8678,12 @@ html, body {
   background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); opacity: 1; transition: opacity 0.5s ease;
 }
-/* Video cards skip the frost treatment entirely, same as desktop - sharp,
-   plain poster with no blur or glass veil, at rest or open. */
-.vg-deck-touch .vg-deck-card:has(.vg-playable-deck) img {
+/* Plain-media decks skip the frost treatment entirely, same reasoning and
+   scoping as the desktop layer above. */
+.vg-deck-touch.vg-deck-plain-media .vg-deck-card img {
   filter: none !important;
 }
-.vg-deck-touch .vg-deck-card:has(.vg-playable-deck)::before {
+.vg-deck-touch.vg-deck-plain-media .vg-deck-card::before {
   display: none;
 }
 .vg-deck-touch .vg-deck-label {
@@ -8680,50 +8696,54 @@ html, body {
 .vg-deck-touch:not(.is-open)::after {
   content: "Tap to open";
   position: absolute;
-  bottom: 8px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
+  font-size: 11.5px;
   letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.55);
-  background: rgba(255,255,255,0.06);
-  padding: 4px 12px;
+  color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 7px 16px;
   border-radius: 100px;
   pointer-events: none;
   white-space: nowrap;
 }
-/* Close button shown while open. */
+/* Close button shown while open - same vertical anchor (bottom: 14px) as the
+   "Tap to open" hint above, so toggling between states doesn't visually jump
+   the control up or down. Padding matched/enlarged to a comfortable tap
+   target (44px recommended minimum touch height). */
 .vg-deck-close {
   position: absolute;
-  bottom: 18px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 12px;
+  font-size: 12.5px;
+  font-weight: 500;
   letter-spacing: 0.03em;
   color: #fff;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  padding: 7px 18px;
+  background: rgba(255,255,255,0.09);
+  border: 1px solid rgba(255,255,255,0.16);
+  padding: 11px 22px;
   border-radius: 100px;
   cursor: pointer;
   z-index: 5;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 .vg-deck-close:active {
   transform: translateX(-50%) scale(0.96);
+  background: rgba(255,255,255,0.14);
 }
 /* Open (tapped): cards straighten and un-overlap within a SINGLE row (no
-   flex-wrap). Wrapping to a multi-row grid was the source of the jank you'd
-   see on open/close - flex-wrap changes are a layout reflow that no browser
-   can animate, so cards would visibly teleport into grid positions the
-   instant the class applied, regardless of any transition. Keeping a single
-   row means only transform + margin change, both of which are genuinely
-   animatable, so the open/close motion is smooth. If a deck has more cards
-   than fit the width once spread, the row scrolls horizontally instead of
-   wrapping (contained to the deck itself, never the page). */
+   flex-wrap, no horizontal scroll). Wrapping to a multi-row grid was the
+   source of jank on open/close - flex-wrap is a layout reflow no browser can
+   animate, so cards would visibly teleport into grid positions the instant
+   the class applied. Keeping a single row means only transform + margin
+   change, which are genuinely animatable. If a deck has more cards than fit
+   the width once spread, the extras simply run past the container edge and
+   fade out via the mask-image above, rather than requiring a swipe. */
 .vg-deck-touch.is-open {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 24px 0 64px;
+  padding: 24px 0 60px;
 }
 .vg-deck-touch.is-open .vg-deck-card {
   margin: 0 6px;

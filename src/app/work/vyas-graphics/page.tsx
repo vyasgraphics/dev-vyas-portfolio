@@ -351,7 +351,7 @@ export default function VyasGraphicsWorkPage() {
               contexts - a retro CRT boot-up, a warm gold title card, a high-contrast mono cut, and a soft script
               signature. Click any of them to play.
             </Body>
-            <GlassDeck angles={[-15, -5, 5, 15]} labels={["CRT Boot-up", "Gold Title Card", "High-Contrast Mono", "Script Signature"]}>
+            <GlassDeck className="vg-deck-plain-media" angles={[-15, -5, 5, 15]} labels={["CRT Boot-up", "Gold Title Card", "High-Contrast Mono", "Script Signature"]}>
               <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-animation.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
               <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-animation.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" duration="0:06" />
               <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-monochrome-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-monochrome-animation.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />

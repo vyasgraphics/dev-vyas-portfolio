@@ -27,6 +27,7 @@ export function GlassDeck({
   labels,
   min = "280px",
   fit = "cover",
+  className,
 }: {
   children: ReactNode;
   // Resting rotation (deg) per card, in order. When omitted, a symmetric
@@ -46,6 +47,9 @@ export function GlassDeck({
   // source is an unusually tall/narrow portrait and a shorter, uncropped
   // presentation is wanted.
   fit?: "cover" | "contain";
+  // Extra class appended to the root deck element, e.g. "vg-deck-plain-media"
+  // to opt a specific deck into the no-blur/no-veil treatment for its cards.
+  className?: string;
 }) {
   const items = Children.toArray(children).filter(isValidElement) as ReactElement[];
   const n = items.length;
@@ -72,11 +76,12 @@ export function GlassDeck({
   const computed = items.map((_, i) => Math.round((i - (n - 1) / 2) * step * 10) / 10);
   const resolved = angles ?? computed;
 
-  const className = [
+  const rootClassName = [
     "vg-deck",
     isTouch ? "vg-deck-touch" : "",
     isTouch && open ? "is-open" : "",
     fit === "contain" ? "vg-deck-fit-contain" : "",
+    className || "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -98,7 +103,7 @@ export function GlassDeck({
 
   return (
     <div
-      className={className}
+      className={rootClassName}
       style={{ ["--vg-deck-min" as string]: min, ["--vg-deck-count" as string]: n }}
       onClickCapture={isTouch && !open ? handleDeckClick : undefined}
       role={isTouch ? "button" : undefined}
