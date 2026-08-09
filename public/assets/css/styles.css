@@ -8478,68 +8478,82 @@ html, body {
   transform: rotate(0deg) scale(0.98);
 }
 
-/* ── Vyas Graphics: fanned-glass gallery treatment ──
-   Frosted-glass surface + resting fan tilt for real-work gallery cards.
-   Adapted from a fanned-deck reference into the site's own tilt-straighten
-   language (see .vg-tilt-card / .vg-brochure-tilt above): each card rests at
-   a small alternating angle so a row reads as a hand-fanned deck of prints,
-   then straightens + lifts on hover. Layered on top of .vg-card, so the
-   base shadow/lift stays intact.
+/* ── Vyas Graphics: fanned glass deck (Logo reveal) ──
+   Literal adaptation of the reference fanned-deck effect. A fixed row of
+   equal-size cards OVERLAP at rest (negative horizontal margins + a per-card
+   resting rotation supplied as --vg-deck-r), then FAN APART and straighten
+   TOGETHER when the pointer enters the group - the whole hand spreads at once,
+   not card-by-card. See GlassDeck.tsx.
 
-   The RESTING look (glass border, inner highlight, fan lean) applies on ALL
-   devices - it is the whole point of the effect and must be visible on
-   touch/mobile too, not just hover-capable pointers. Only the hover
-   INTERACTION (straighten + lift) is gated behind (hover:hover), plus a
-   matching :active tap resolve for touch. This split is deliberate: an
-   earlier version gated the resting tilt itself, which made mobile render
-   identically to the old flat cards.
+   Desktop-hover only. Below 768px the deck collapses to a normal responsive
+   grid (no overlap, no rotation, no group-hover), so a single-column stack
+   never becomes an unreadable overlapping pile and touch users get a clean,
+   tappable layout - hover doesn't exist there anyway.
 
-   The glass surface is a hairline translucent border plus a soft inner
-   highlight ring drawn with an inset box-shadow, kept in the SAME combined
-   box-shadow declaration as .vg-card's drop shadow rather than a separate
-   rule, so the transition never gets silently dropped by cascade - the
-   cascade gotcha that previously bit .vg-tilt-card / .vg-brochure-tilt. ── */
-.vg-glass {
-  /* Resting lean, in degrees, supplied per-card via --vg-fan (set on the
-     grid wrapper from the item's index - see AutoGrid). CSS nth-child can't
-     drive the fan here because each card is an only-child inside its own
-     StaggerReveal wrapper, so every card would read as child 1 and get an
-     identical angle. Defaults to 0 when unset (non-grid usages). */
-  --vg-fan: 0;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 12px 30px -14px rgba(0,0,0,0.7),
-              inset 0 1px 0 rgba(255,255,255,0.1);
-  transform: rotate(calc(var(--vg-fan) * 1deg));
-  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
-              box-shadow 0.4s ease,
-              border-color 0.4s ease;
+   The overlap intentionally clips neighbours at rest; each card lifts its own
+   stacking context on hover (z-index) so the hovered/spread state sits above
+   its siblings rather than being covered by the next card's negative margin. */
+
+/* ── Desktop: the fanned deck ── */
+@media (min-width: 768px) and (hover: hover) {
+  .vg-deck {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Room for the resting rotation to overhang without being clipped by the
+       section, and so the spread state has somewhere to expand into. */
+    padding: 40px 0;
+  }
+  .vg-deck-card {
+    --vg-deck-r: 0;
+    position: relative;
+    /* Equal, capped width so 4 cards read as one deck regardless of the
+       poster's own aspect ratio; the child image fills this box. */
+    flex: 0 0 auto;
+    width: clamp(200px, 22vw, 260px);
+    /* Pull the cards together into an overlapping stack. */
+    margin: 0 -34px;
+    transform: rotate(calc(var(--vg-deck-r) * 1deg));
+    transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
+                margin 0.55s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  /* Group hover: every card straightens AND the stack spreads apart. */
+  .vg-deck:hover .vg-deck-card {
+    transform: rotate(0deg);
+    margin: 0 12px;
+  }
+  /* The individually-hovered card lifts a touch and rises above its
+     neighbours so it is never clipped by an adjacent card's overlap. */
+  .vg-deck-card:hover {
+    z-index: 3;
+  }
+  .vg-deck:hover .vg-deck-card:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.04);
+  }
 }
-/* Gentler lean on small screens so a single-column stack reads as a light,
-   intentional tilt rather than a strong rotation eating into the margins.
+
+/* ── Mobile / no-hover: plain responsive grid, no deck behaviour ──
    !important because Sass/Turbopack bundling does not reliably preserve
-   source order across the media-query boundary. */
-@media (max-width: 640px) {
-  .vg-glass {
-    transform: rotate(calc(var(--vg-fan) * 0.7deg)) !important;
+   source order across the media-query boundary; without it the desktop
+   flex/overlap rules above can leak into the mobile layout. */
+@media (max-width: 767px), (hover: none) {
+  .vg-deck {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(var(--vg-deck-min, 280px), 1fr)) !important;
+    gap: 20px !important;
+    padding: 0 !important;
   }
-}
-@media (hover: hover) {
-  .vg-glass:hover {
-    transform: rotate(0deg) translateY(-6px) scale(1.03);
-    border-color: rgba(255, 255, 255, 0.22);
-    box-shadow: 0 22px 46px -16px rgba(0,0,0,0.72),
-                inset 0 1px 0 rgba(255,255,255,0.16);
-    z-index: 2;
-  }
-}
-/* Tap feedback: resolve to upright, matching the hover intent, instead of
-   falling through to .vg-card:active's plain scale (which would leave the
-   resting rotation unresolved). */
-.vg-glass:active {
-  transform: rotate(0deg) scale(0.97);
-}
-@media (prefers-reduced-motion: reduce) {
-  .vg-glass:active {
+  .vg-deck-card {
+    width: auto !important;
+    margin: 0 !important;
     transform: none !important;
+  }
+}
+
+/* Respect reduced-motion: keep the resting fan (it is a static layout, not
+   motion) but drop the spread transition so nothing animates on hover. */
+@media (prefers-reduced-motion: reduce) {
+  .vg-deck-card {
+    transition: none !important;
   }
 }
