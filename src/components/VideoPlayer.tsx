@@ -38,6 +38,29 @@ export function VideoPlayer({
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    // Playback is initiated by the user's click on the poster, so an explicit
+    // play() here is allowed by autoplay policies even with sound. If the
+    // browser still blocks it, fall back to muted playback so the video always
+    // starts rather than sitting frozen on the first frame.
+    const tryPlay = async () => {
+      try {
+        await v.play();
+      } catch {
+        try {
+          v.muted = true;
+          setMuted(true);
+          await v.play();
+        } catch {
+          /* give up silently; controls remain usable */
+        }
+      }
+    };
+    tryPlay();
+  }, []);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
     const onTime = () => setCurrent(v.currentTime);
     const onLoaded = () => setDuration(v.duration || 0);
     const onPlay = () => setPlaying(true);

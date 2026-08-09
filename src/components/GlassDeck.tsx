@@ -68,11 +68,26 @@ export function GlassDeck({
     .filter(Boolean)
     .join(" ");
 
+  // Touch interaction model:
+  // - When the deck is CLOSED, a tap anywhere spreads it open. We stop the tap
+  //   there so it doesn't also trigger a card's play button underneath.
+  // - When the deck is OPEN, taps pass straight through to the cards (so a
+  //   video plays / a link works). A dedicated close affordance handles
+  //   collapsing again, so an open deck behaves like a normal row of cards.
+  const handleDeckClick = (e: React.MouseEvent) => {
+    if (!isTouch) return;
+    if (!open) {
+      e.stopPropagation();
+      setOpen(true);
+    }
+    // when open: do nothing here, let the tap reach the card
+  };
+
   return (
     <div
       className={className}
       style={{ ["--vg-deck-min" as string]: min, ["--vg-deck-count" as string]: n }}
-      onClick={isTouch ? () => setOpen((o) => !o) : undefined}
+      onClickCapture={isTouch && !open ? handleDeckClick : undefined}
       role={isTouch ? "button" : undefined}
       tabIndex={isTouch ? 0 : undefined}
       aria-expanded={isTouch ? open : undefined}
@@ -97,6 +112,19 @@ export function GlassDeck({
           {labels?.[i] ? <span className="vg-deck-label">{labels[i]}</span> : null}
         </div>
       ))}
+      {isTouch && open ? (
+        <button
+          type="button"
+          className="vg-deck-close"
+          aria-label="Close deck"
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen(false);
+          }}
+        >
+          Close
+        </button>
+      ) : null}
     </div>
   );
 }

@@ -411,7 +411,7 @@ export default function VyasGraphicsWorkPage() {
               profiles, top-ranking students, campus facilities, and career pathways, laid out and print-prepared in
               InDesign.
             </Body>
-            <div style={{ display: "flex", flexDirection: "column", gap: "44px", padding: "8px 0" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "44px", padding: "8px 0", maxWidth: "980px", marginInline: "auto" }}>
               <Image
                 src={`${IMG}/rngpit-cse-department-trifold-brochure-edition-one.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition one"
@@ -484,13 +484,20 @@ export default function VyasGraphicsWorkPage() {
               </GlassDeck>
             </div>
 
+            {/* Stack: season promo video + final poster + champions poster */}
             <GlassDeck min="280px">
               <PlayableStill deck poster={`${IMG}/ipl-2026-season-promo-poster.jpg`} videoSrc={`${IMG}/ipl-2026-season-promo-animation.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
-              <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
-              <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
               <Image src={`${IMG}/ipl-2026-final-rcb-vs-gujarat-titans-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} style={{ width: "100%", height: "auto", display: "block" }} />
               <Image src={`${IMG}/rcb-ipl-2026-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} style={{ width: "100%", height: "auto", display: "block" }} />
             </GlassDeck>
+
+            {/* The two story graphics at their actual portrait size (not stacked) */}
+            <div style={{ marginTop: "36px" }}>
+              <AutoGrid min="300px">
+                <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+                <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              </AutoGrid>
+            </div>
           </section>
         </ScrollReveal>
 

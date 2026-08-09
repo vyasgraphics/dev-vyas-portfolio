@@ -8511,7 +8511,7 @@ html, body {
     --vg-deck-r: 0;
     position: relative;
     flex: 0 0 auto;
-    width: clamp(150px, calc(66vw / var(--vg-deck-count, 4)), 250px);
+    width: clamp(200px, calc(80vw / var(--vg-deck-count, 4)), 320px);
     aspect-ratio: 4 / 5;
     margin: 0 -34px;
     border-radius: 14px;
@@ -8574,8 +8574,14 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 60px 0;
-  overflow: visible;
+  padding: 40px 0;
+  position: relative;
+  /* Never let the stacked/fanned cards push page width - clip horizontal
+     overflow to the deck's own box (it is centred, so nothing useful is lost)
+     while leaving vertical room for the stack. This removes the page-wide
+     horizontal scroll the fanned cards caused. */
+  max-width: 100%;
+  overflow: hidden;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -8618,22 +8624,48 @@ html, body {
   background: rgba(255,255,255,0.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   border-top: 1px solid rgba(255,255,255,0.08);
 }
-/* A small hint chip so users know the stack is tappable. */
-.vg-deck-touch::after {
+/* Tappable hint shown only while closed. */
+.vg-deck-touch:not(.is-open)::after {
   content: "Tap to open";
   position: absolute;
-  bottom: 14px;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 11px;
   letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.5);
-  background: rgba(255,255,255,0.05);
-  padding: 4px 10px;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.06);
+  padding: 4px 12px;
   border-radius: 100px;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  white-space: nowrap;
 }
-/* Open (tapped) */
-.vg-deck-touch.is-open { flex-wrap: wrap; gap: 14px; }
+/* Close button shown while open. */
+.vg-deck-close {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  padding: 7px 18px;
+  border-radius: 100px;
+  cursor: pointer;
+  z-index: 5;
+}
+.vg-deck-close:active {
+  transform: translateX(-50%) scale(0.96);
+}
+/* Open (tapped): cards straighten, un-overlap, and wrap into a tidy centred
+   set. Transitions on margin + transform give a smooth spread. */
+.vg-deck-touch.is-open {
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 24px 0 64px;
+}
 .vg-deck-touch.is-open .vg-deck-card {
   margin: 0;
   transform: rotate(0deg);
@@ -8642,7 +8674,6 @@ html, body {
 .vg-deck-touch.is-open .vg-deck-card > *,
 .vg-deck-touch.is-open .vg-deck-card .vg-playable-deck-outer { opacity: 1; }
 .vg-deck-touch.is-open .vg-deck-card::before { opacity: 0; }
-.vg-deck-touch.is-open::after { content: "Tap to close"; }
 /* Playing video on touch: clear regardless of open state. */
 .vg-deck-touch .vg-deck-card:has(.vg-playing) {
   -webkit-backdrop-filter: blur(0px) !important; backdrop-filter: blur(0px) !important;
