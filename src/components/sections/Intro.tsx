@@ -1,8 +1,12 @@
 import { DisciplineSlider } from "@/components/DisciplineSlider";
+import { HeroDepth } from "@/components/premium/HeroDepth";
 
 export function Intro() {
     return (
         <div id="home" className="section-intro flat-spacing">
+            {/* Far parallax plane - decorative, behind all content. */}
+            <HeroDepth />
+
             <div className="intro-author effectFade fadeUp no-div">
                 <div className="author-info letter-space--05">
                     <p className="info_name text-black">Dev Vyas</p>
@@ -18,7 +22,7 @@ export function Intro() {
                 experiences
             </h1>
 
-            <div className="intro-item">
+            <div className="intro-item" data-parallax="-0.06">
                 <div className="scribble-wrap">
                     <svg className="scribble" viewBox="0 0 772 320" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>

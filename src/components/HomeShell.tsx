@@ -25,6 +25,7 @@ import { useBodyThemeClass } from "@/hooks/useBodyThemeClass";
 import { useUrlHashSync } from "@/hooks/useUrlHashSync";
 import { WorkCardPolish } from "./premium/WorkCardPolish";
 import { HeroReveal } from "./premium/HeroReveal";
+import { useHeroParallax } from "@/hooks/useHeroParallax";
 
 export function HomeShell() {
     const bodyClass = "counter-scroll";
@@ -43,6 +44,7 @@ export function HomeShell() {
     useHeadlineRotate();
     useIsakAnimations();
     useUrlHashSync();
+    useHeroParallax();
 
     return (
         <>
