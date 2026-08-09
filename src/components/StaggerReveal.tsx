@@ -7,7 +7,18 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 // bottom as the grid scrolls into view - rather than every item in a row
 // popping in simultaneously. Delay is capped so long grids (10+ items)
 // don't leave the last row waiting a full second to appear.
-export function StaggerReveal({ children, index = 0 }: { children: ReactNode; index?: number }) {
+export function StaggerReveal({
+  children,
+  index = 0,
+  fan,
+}: {
+  children: ReactNode;
+  index?: number;
+  // Optional resting fan angle (in degrees) exposed to descendants as
+  // --vg-fan, so a .vg-glass card inside can lean by a per-item amount that
+  // CSS nth-child cannot supply through this single-child wrapper.
+  fan?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -37,6 +48,7 @@ export function StaggerReveal({ children, index = 0 }: { children: ReactNode; in
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(14px)",
         transition: `opacity 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+        ...(fan !== undefined ? ({ "--vg-fan": fan } as React.CSSProperties) : {}),
       }}
     >
       {children}

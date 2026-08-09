@@ -8477,3 +8477,58 @@ html, body {
 .vg-brochure-tilt:active {
   transform: rotate(0deg) scale(0.98);
 }
+
+/* ── Vyas Graphics: fanned-glass gallery treatment ──
+   Frosted-glass surface + resting fan tilt for real-work gallery cards.
+   Adapted from a fanned-deck reference into the site's own tilt-straighten
+   language (see .vg-tilt-card / .vg-brochure-tilt above): each card rests at
+   a small alternating angle so a row reads as a hand-fanned deck of prints,
+   then straightens + lifts on hover. Layered on top of .vg-card, so the
+   base shadow/lift stays intact.
+
+   The glass surface is a hairline translucent border plus a soft inner
+   highlight ring drawn with an inset box-shadow (kept in the SAME combined
+   box-shadow declaration as .vg-card's drop shadow rather than a separate
+   rule, so the transition never gets silently dropped by cascade - the
+   cascade gotcha that previously bit .vg-tilt-card / .vg-brochure-tilt).
+
+   Desktop-hover only, guarded by (hover:hover) so touch never gets a sticky
+   tilted/tapped state; the resting fan tilt itself is also (hover:hover)-only
+   so mobile stays a clean, upright, responsive grid - untouched, matching the
+   rest of the gallery's mobile-parity approach. ── */
+@media (hover: hover) {
+  .vg-glass {
+    /* Resting lean, in degrees, supplied per-card via --vg-fan (set on the
+       grid wrapper from the item's index - see AutoGrid). CSS nth-child can't
+       drive the fan here because each card is an only-child inside its own
+       StaggerReveal wrapper, so every card would read as child 1 and get an
+       identical angle. Defaults to 0 when unset (non-grid usages). */
+    --vg-fan: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 28px -16px rgba(0,0,0,0.65),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+    transform: rotate(calc(var(--vg-fan) * 1deg));
+    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+  }
+  .vg-glass:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.03);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 22px 46px -16px rgba(0,0,0,0.72),
+                inset 0 1px 0 rgba(255,255,255,0.16);
+    z-index: 2;
+  }
+}
+/* Tap feedback: resolve to upright, matching the hover intent, instead of
+   falling through to .vg-card:active's plain scale (which would leave any
+   ambient rotation unresolved). Only relevant where the resting tilt exists
+   (hover:hover), but harmless on touch where the card sits upright anyway. */
+.vg-glass:active {
+  transform: rotate(0deg) scale(0.97);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vg-glass:active {
+    transform: none !important;
+  }
+}

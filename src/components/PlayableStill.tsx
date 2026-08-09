@@ -15,6 +15,7 @@ export function PlayableStill({
   height,
   caption,
   duration,
+  className,
 }: {
   poster: string;
   videoSrc?: string;
@@ -23,13 +24,18 @@ export function PlayableStill({
   height: number;
   caption?: string;
   duration?: string;
+  className?: string;
 }) {
   const [playing, setPlaying] = useState(false);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <div
-        className={videoSrc && !playing ? "vg-playable vg-card" : undefined}
+        className={
+          (videoSrc && !playing
+            ? ["vg-playable vg-card", className].filter(Boolean).join(" ")
+            : "") || undefined
+        }
         style={{
           position: "relative",
           width: "100%",
