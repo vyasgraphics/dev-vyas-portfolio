@@ -1,28 +1,25 @@
 "use client";
 
-import { Children, isValidElement, cloneElement, type ReactNode, type ReactElement } from "react";
+import { Children, isValidElement, useState, useEffect, type ReactNode, type ReactElement } from "react";
 
 // GlassDeck - literal "fanned glass deck" treatment.
 //
 // A small, fixed row of equal-size cards that OVERLAP at rest (pulled together
 // with negative margins + a per-card resting rotation), then FAN APART and
-// straighten together when the pointer enters the group - directly adapting
-// the reference effect (container:hover .glass { transform: rotate(0); margin }).
+// straighten together - directly adapting the reference effect
+// (container:hover .glass { transform: rotate(0); margin }).
 //
-// This is a group-hover interaction, not per-card: hovering anywhere over the
-// deck resolves every card at once, which is what makes it read as a hand of
-// cards being spread rather than a grid of independent tiles.
+// Two interaction models, chosen by input type:
+// - Pointer/hover devices (desktop): the deck fans on GROUP HOVER (CSS :hover),
+//   the whole hand spreading at once. Pure CSS, no JS state.
+// - Touch devices (mobile): hover doesn't exist, so the deck is TAP-TO-FAN -
+//   it sits stacked, tap anywhere to spread it open, tap again to close. This
+//   is driven by an `is-open` class toggled here in JS, which mirrors the same
+//   open-state styles the desktop :hover applies.
 //
-// Desktop-only flourish. Below the mobile breakpoint the whole thing collapses
-// to a normal responsive grid (no overlap, no rotation, no group-hover) so a
-// single-column stack never turns into an unreadable overlapping pile - hover
-// doesn't exist on touch anyway. The breakpoint + fan geometry live in CSS
-// (.vg-deck in styles.css) so media queries and :hover can drive them; this
-// component only assigns each child its resting angle via --vg-deck-r.
-//
-// `angles` supplies the resting rotation (deg) per card, in order. Defaults to
-// a symmetric spread. Pass exactly as many cards as angles (extra cards fall
-// back to 0deg).
+// The fan geometry lives in CSS (.vg-deck in styles.css); this component only
+// assigns each child its resting angle via --vg-deck-r and manages the
+// touch open/close state.
 
 export function GlassDeck({
   children,
@@ -39,11 +36,26 @@ export function GlassDeck({
   // reference deck's data-text label. Index-aligned with children; omit or
   // pass "" for cards that should have no bar.
   labels?: string[];
-  // Min column width for the mobile grid fallback (matches AutoGrid usage).
+  // Min column width for the mobile grid fallback base width.
   min?: string;
 }) {
   const items = Children.toArray(children).filter(isValidElement) as ReactElement[];
   const n = items.length;
+
+  // Detect a touch / no-hover environment once mounted. On such devices the
+  // deck becomes tap-to-fan; on hover devices this stays false and CSS :hover
+  // drives everything.
+  const [isTouch, setIsTouch] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(hover: none), (max-width: 767px)");
+    const update = () => setIsTouch(mq.matches);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
 
   // Symmetric fan: spread cards evenly across a total arc, centred on 0deg.
   // Tighter per-card step as the deck grows so a 7-card stack doesn't over-
@@ -52,10 +64,28 @@ export function GlassDeck({
   const computed = items.map((_, i) => Math.round((i - (n - 1) / 2) * step * 10) / 10);
   const resolved = angles ?? computed;
 
+  const className = ["vg-deck", isTouch ? "vg-deck-touch" : "", isTouch && open ? "is-open" : ""]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div
-      className="vg-deck"
+      className={className}
       style={{ ["--vg-deck-min" as string]: min, ["--vg-deck-count" as string]: n }}
+      onClick={isTouch ? () => setOpen((o) => !o) : undefined}
+      role={isTouch ? "button" : undefined}
+      tabIndex={isTouch ? 0 : undefined}
+      aria-expanded={isTouch ? open : undefined}
+      onKeyDown={
+        isTouch
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setOpen((o) => !o);
+              }
+            }
+          : undefined
+      }
     >
       {items.map((child, i) => (
         <div

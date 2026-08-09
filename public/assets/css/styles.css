@@ -8478,214 +8478,193 @@ html, body {
   transform: rotate(0deg) scale(0.98);
 }
 
-/* ── Vyas Graphics: fanned glass deck (Logo reveal) ──
+/* ── Vyas Graphics: fanned glass deck ──
    Literal adaptation of the reference fanned-deck effect. A fixed row of
-   equal-size cards OVERLAP at rest (negative horizontal margins + a per-card
-   resting rotation supplied as --vg-deck-r), then FAN APART and straighten
-   TOGETHER when the pointer enters the group - the whole hand spreads at once,
-   not card-by-card. See GlassDeck.tsx.
+   equal-size cards OVERLAP at rest (negative margins + a per-card resting
+   rotation via --vg-deck-r), then FAN APART and straighten together.
 
-   Desktop-hover only. Below 768px the deck collapses to a normal responsive
-   grid (no overlap, no rotation, no group-hover), so a single-column stack
-   never becomes an unreadable overlapping pile and touch users get a clean,
-   tappable layout - hover doesn't exist there anyway.
+   Two triggers for the open state, same result:
+   - Desktop (hover devices): group :hover on .vg-deck.
+   - Touch (.vg-deck-touch, set by GlassDeck.tsx on no-hover/small screens):
+     .is-open, toggled by tapping the deck. Tap-to-fan, since hover can't fire.
 
-   The overlap intentionally clips neighbours at rest; each card lifts its own
-   stacking context on hover (z-index) so the hovered/spread state sits above
-   its siblings rather than being covered by the next card's negative margin. */
+   The blur is a real backdrop-filter so it only affects the OVERLAP behind
+   each card: at rest cards are slightly translucent + carry a backdrop blur,
+   so an overlapped neighbour shows through blurred while empty background just
+   reads as dark glass. Open -> media returns to full opacity, blur off, cards
+   sharp and separated. ── */
 
-/* ── Desktop: the fanned deck ── */
+/* Shared card + open-state styles are written out in full for the desktop
+   (hover) and touch (tap-to-fan) layers below; they share identical geometry
+   and only differ in what triggers the open state. */
+
+/* ===== Desktop (hover) layer ===== */
 @media (min-width: 768px) and (hover: hover) {
-  .vg-deck {
+  .vg-deck:not(.vg-deck-touch) {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Generous vertical padding so the resting rotation and the hover lift
-       never get clipped at the top/bottom. Horizontal is visible overflow so
-       a wide fan is never cut off by an invisible box - the earlier overflow-x
-       auto created exactly that clipping rectangle. */
     padding: 70px 0;
     overflow: visible;
   }
-  .vg-deck-card {
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card {
     --vg-deck-r: 0;
     position: relative;
-    /* Equal, capped width so cards read as one deck regardless of each
-       poster's own aspect ratio. Cards shrink a little as the deck grows so a
-       6-7 card fan still fits the column when opened. */
     flex: 0 0 auto;
     width: clamp(150px, calc(66vw / var(--vg-deck-count, 4)), 250px);
-    /* Uniform card shape so a stack of mixed-ratio posters/videos reads as one
-       tidy deck rather than a ragged run of different heights. The media
-       inside is cropped to fill (see .vg-deck-card img / video below). */
     aspect-ratio: 4 / 5;
-    /* Pull the cards together into an overlapping stack. */
     margin: 0 -34px;
-    /* Rounded so the frosted overlay's blur is clipped to the card shape. */
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.12);
     box-shadow: 0 20px 34px -18px rgba(0,0,0,0.7);
-    transform: rotate(calc(var(--vg-deck-r) * 1deg));
-    transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
-                margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
-                border-color 0.4s ease,
-                box-shadow 0.4s ease;
-  }
-  /* Crop whatever media the card holds (Image, video poster, PlayableStill
-     inner frame) to fill the uniform card box. */
-  .vg-deck-card > * {
-    width: 100% !important;
-    height: 100% !important;
-  }
-  .vg-deck-card img,
-  .vg-deck-card video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block;
-  }
-  /* PlayableStill in deck mode: fill the card fully (its intrinsic aspect
-     ratio and caption are only for the non-deck grid layout). Desktop-only,
-     so the mobile grid fallback keeps the natural aspect ratio and caption. */
-  .vg-deck-card .vg-playable-deck-outer {
-    height: 100%;
-  }
-  .vg-deck-card .vg-playable-deck {
-    height: 100% !important;
-    aspect-ratio: auto !important;
-  }
-  /* Reference-style label bar pinned to the card bottom, above the frost so it
-     stays legible while the deck is closed. */
-  .vg-deck-label {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 3;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: #fff;
-    background: rgba(255,255,255,0.06);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-  /* ── Real glass overlap blur ──
-     The reference blurs only where cards overlap, because its cards are
-     translucent glass - backdrop-filter blurs whatever sits BEHIND each card
-     (the neighbour it overlaps), while over empty background there is just
-     dark. To get that with opaque artwork, at rest each card is made slightly
-     translucent (its media dips in opacity) and carries a backdrop-filter, so
-     the overlapping neighbour shows through blurred, and the non-overlapped
-     area just reads as dark glass. On hover the deck fans apart, the media
-     returns to full opacity, and the blur switches off - sharp, separated
-     cards. A faint translucent-white veil + top highlight gives the glass
-     surface without hiding the art. */
-  .vg-deck-card {
     background: rgba(255,255,255,0.04);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    transform: rotate(calc(var(--vg-deck-r) * 1deg));
+    transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
+                margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
+                border-color 0.4s ease, box-shadow 0.4s ease,
+                background 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
   }
-  .vg-deck-card > *,
-  .vg-deck-card .vg-playable-deck-outer {
-    opacity: 0.72;
-    transition: opacity 0.5s ease;
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card > * { width: 100% !important; height: 100% !important; }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card img,
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card video {
+    width: 100% !important; height: 100% !important; object-fit: cover !important; display: block;
   }
-  /* Thin glass veil + highlight, no blur of its own (the blur is on the card
-     so it only affects the overlap behind). */
-  .vg-deck-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    border-radius: inherit;
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card .vg-playable-deck-outer { height: 100%; }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card .vg-playable-deck { height: 100% !important; aspect-ratio: auto !important; }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card > *,
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card .vg-playable-deck-outer { opacity: 0.72; transition: opacity 0.5s ease; }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card::before {
+    content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
     background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
-    opacity: 1;
-    transition: opacity 0.5s ease;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); opacity: 1; transition: opacity 0.5s ease;
   }
-  /* Deck open: media back to full opacity, glass veil + backdrop blur off. */
-  .vg-deck:hover .vg-deck-card {
-    -webkit-backdrop-filter: blur(0px);
-    backdrop-filter: blur(0px);
-    background: transparent;
+  .vg-deck-label {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 38px;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff;
+    background: rgba(255,255,255,0.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
-  .vg-deck:hover .vg-deck-card > *,
-  .vg-deck:hover .vg-deck-card .vg-playable-deck-outer {
-    opacity: 1;
-  }
-  .vg-deck:hover .vg-deck-card::before {
-    opacity: 0;
-  }
-  /* Group hover: every card straightens AND the stack spreads apart. The
-     spread gap shrinks as the deck grows so a 6-7 card fan stays within the
-     column instead of running off-screen (the wide-fan clipping in the 7-card
-     social deck). */
-  .vg-deck:hover .vg-deck-card {
+  /* Open (hover) */
+  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card {
     transform: rotate(0deg);
     margin: 0 clamp(2px, calc(60px / var(--vg-deck-count, 4)), 12px);
     border-color: rgba(255,255,255,0.2);
+    -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); background: transparent;
   }
-  /* The individually-hovered card lifts a touch and rises above its
-     neighbours so it is never clipped by an adjacent card's overlap. */
-  .vg-deck-card:hover {
-    z-index: 3;
+  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card > *,
+  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card .vg-playable-deck-outer { opacity: 1; }
+  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card::before { opacity: 0; }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:hover { z-index: 3; }
+  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card:hover { transform: rotate(0deg) translateY(-6px) scale(1.04); }
+  /* Playing video: always clear + lifted, regardless of hover. */
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing) {
+    -webkit-backdrop-filter: blur(0px) !important; backdrop-filter: blur(0px) !important;
+    background: transparent !important; z-index: 4; transform: rotate(0deg) scale(1.02) !important;
   }
-  .vg-deck:hover .vg-deck-card:hover {
-    transform: rotate(0deg) translateY(-6px) scale(1.04);
-  }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing) > *,
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing) .vg-playable-deck-outer { opacity: 1 !important; }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing)::before { opacity: 0 !important; }
 }
 
-/* ── Mobile / no-hover: plain responsive grid, no deck behaviour ──
-   !important because Sass/Turbopack bundling does not reliably preserve
-   source order across the media-query boundary; without it the desktop
-   flex/overlap rules above can leak into the mobile layout. */
-@media (max-width: 767px), (hover: none) {
-  .vg-deck {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(var(--vg-deck-min, 280px), 1fr)) !important;
-    gap: 20px !important;
-    padding: 0 !important;
-  }
-  .vg-deck-card {
-    width: auto !important;
-    margin: 0 !important;
-    transform: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    background: transparent !important;
-  }
-  /* No hover to clear the glass on touch - show sharp, full-opacity images. */
-  .vg-deck-card::before {
-    display: none !important;
-  }
-  .vg-deck-card > *,
-  .vg-deck-card .vg-playable-deck-outer {
-    opacity: 1 !important;
-  }
+/* ===== Touch layer (tap-to-fan) ===== */
+.vg-deck-touch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 0;
+  overflow: visible;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.vg-deck-touch .vg-deck-card {
+  --vg-deck-r: 0;
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(150px, calc(70vw / var(--vg-deck-count, 4)), 230px);
+  aspect-ratio: 4 / 5;
+  margin: 0 -30px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 20px 34px -18px rgba(0,0,0,0.7);
+  background: rgba(255,255,255,0.04);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transform: rotate(calc(var(--vg-deck-r) * 1deg));
+  transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
+              margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
+              background 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+}
+.vg-deck-touch .vg-deck-card > * { width: 100% !important; height: 100% !important; }
+.vg-deck-touch .vg-deck-card img,
+.vg-deck-touch .vg-deck-card video {
+  width: 100% !important; height: 100% !important; object-fit: cover !important; display: block;
+}
+.vg-deck-touch .vg-deck-card .vg-playable-deck-outer { height: 100%; }
+.vg-deck-touch .vg-deck-card .vg-playable-deck { height: 100% !important; aspect-ratio: auto !important; }
+.vg-deck-touch .vg-deck-card > *,
+.vg-deck-touch .vg-deck-card .vg-playable-deck-outer { opacity: 0.72; transition: opacity 0.5s ease; }
+.vg-deck-touch .vg-deck-card::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); opacity: 1; transition: opacity 0.5s ease;
+}
+.vg-deck-touch .vg-deck-label {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 34px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff;
+  background: rgba(255,255,255,0.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+/* A small hint chip so users know the stack is tappable. */
+.vg-deck-touch::after {
+  content: "Tap to open";
+  position: absolute;
+  bottom: 14px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.05);
+  padding: 4px 10px;
+  border-radius: 100px;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+/* Open (tapped) */
+.vg-deck-touch.is-open { flex-wrap: wrap; gap: 14px; }
+.vg-deck-touch.is-open .vg-deck-card {
+  margin: 0;
+  transform: rotate(0deg);
+  -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); background: transparent;
+}
+.vg-deck-touch.is-open .vg-deck-card > *,
+.vg-deck-touch.is-open .vg-deck-card .vg-playable-deck-outer { opacity: 1; }
+.vg-deck-touch.is-open .vg-deck-card::before { opacity: 0; }
+.vg-deck-touch.is-open::after { content: "Tap to close"; }
+/* Playing video on touch: clear regardless of open state. */
+.vg-deck-touch .vg-deck-card:has(.vg-playing) {
+  -webkit-backdrop-filter: blur(0px) !important; backdrop-filter: blur(0px) !important;
+  background: transparent !important; z-index: 4; transform: rotate(0deg) !important;
+}
+.vg-deck-touch .vg-deck-card:has(.vg-playing) > *,
+.vg-deck-touch .vg-deck-card:has(.vg-playing) .vg-playable-deck-outer { opacity: 1 !important; }
+.vg-deck-touch .vg-deck-card:has(.vg-playing)::before { opacity: 0 !important; }
+
+/* Fallback: any .vg-deck that is neither a desktop-hover deck nor a touch deck
+   (e.g. SSR before JS resolves the input type, or an unusual environment) just
+   renders a clean responsive grid so content is never hidden. */
+.vg-deck:not(.vg-deck-touch) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--vg-deck-min, 280px), 1fr));
+  gap: 20px;
+}
+@media (min-width: 768px) and (hover: hover) {
+  .vg-deck:not(.vg-deck-touch) { display: flex; }
 }
 
-/* Respect reduced-motion: keep the resting fan (it is a static layout, not
-   motion) but drop the spread transition so nothing animates on hover. The
-   frost is also cleared at rest here - with transitions disabled it would
-   otherwise never lift, leaving images permanently blurred. */
+/* Reduced motion: no transitions, images full opacity, no blur. */
 @media (prefers-reduced-motion: reduce) {
-  .vg-deck-card {
-    transition: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    background: transparent !important;
-  }
-  .vg-deck-card::before {
-    opacity: 0 !important;
-  }
-  .vg-deck-card > *,
-  .vg-deck-card .vg-playable-deck-outer {
-    opacity: 1 !important;
-  }
+  .vg-deck-card { transition: none !important; }
 }

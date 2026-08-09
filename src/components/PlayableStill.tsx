@@ -34,7 +34,7 @@ export function PlayableStill({
   const [playing, setPlaying] = useState(false);
 
   return (
-    <div className={deck ? "vg-playable-deck-outer" : undefined} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <div className={[deck ? "vg-playable-deck-outer" : "", playing ? "vg-playing" : ""].filter(Boolean).join(" ") || undefined} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <div
         className={
           [
