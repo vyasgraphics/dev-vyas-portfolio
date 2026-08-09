@@ -174,6 +174,18 @@ const SOCIAL_GRID = [
   { src: "vyas-graphics-happy-new-year-2026-instagram-post.jpg", h: 1124, alt: "Vyas Graphics Happy New Year 2026 Instagram post" },
   { src: "vyas-graphics-design-fundamentals-instagram-post.jpg", h: 1199, alt: "Design fundamentals still matter Instagram post" },
 ];
+// Split into two smaller decks (4 + 3) rather than one 7-card stack - a
+// single deck that size fanned out too wide and had to shrink its cards
+// noticeably below the other decks in this section. Two shorter rows read
+// clearer and can share the same card size as the 3-card carousel above.
+const SOCIAL_GRID_ROW1 = SOCIAL_GRID.slice(0, 4);
+const SOCIAL_GRID_ROW2 = SOCIAL_GRID.slice(4);
+// Shared desktop card width for every deck in the Social Media Posts section,
+// so the carousel (3 cards) and the two split grids (4 + 3 cards) all render
+// their cards at the identical size - matches what a 3-card deck naturally
+// computes to, so passing it explicitly keeps the 4-card row from sizing
+// itself smaller by default.
+const SOCIAL_CARD_W = "clamp(200px, 26.7vw, 320px)";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "14px" }}>{children}</h2>;
@@ -372,7 +384,7 @@ export default function VyasGraphicsWorkPage() {
             </Body>
 
             <div style={{ marginBottom: "36px" }}>
-              <GlassDeck>
+              <GlassDeck cardWidth={SOCIAL_CARD_W}>
                 {SERVICES_CAROUSEL.map((s) => (
                   <Image
                     key={s.src}
@@ -386,8 +398,23 @@ export default function VyasGraphicsWorkPage() {
               </GlassDeck>
             </div>
 
-            <GlassDeck min="210px">
-              {SOCIAL_GRID.map(({ src, h, alt }) => (
+            <div style={{ marginBottom: "36px" }}>
+              <GlassDeck min="210px" cardWidth={SOCIAL_CARD_W}>
+                {SOCIAL_GRID_ROW1.map(({ src, h, alt }) => (
+                  <Image
+                    key={src}
+                    src={`${IMG}/${src}`}
+                    alt={alt}
+                    width={900}
+                    height={h}
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                ))}
+              </GlassDeck>
+            </div>
+
+            <GlassDeck min="210px" cardWidth={SOCIAL_CARD_W}>
+              {SOCIAL_GRID_ROW2.map(({ src, h, alt }) => (
                 <Image
                   key={src}
                   src={`${IMG}/${src}`}
@@ -514,7 +541,7 @@ export default function VyasGraphicsWorkPage() {
               the live, page-turning version.
             </Body>
 
-            <AutoGrid min="230px">
+            <AutoGrid min="380px">
               {FLIPBOOKS.map((fb) => (
                 <div key={fb.href}>
                   <Link href={fb.href} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>

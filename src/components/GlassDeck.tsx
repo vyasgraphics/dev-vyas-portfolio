@@ -28,6 +28,7 @@ export function GlassDeck({
   min = "280px",
   fit = "cover",
   className,
+  cardWidth,
 }: {
   children: ReactNode;
   // Resting rotation (deg) per card, in order. When omitted, a symmetric
@@ -50,6 +51,12 @@ export function GlassDeck({
   // Extra class appended to the root deck element, e.g. "vg-deck-plain-media"
   // to opt a specific deck into the no-blur/no-veil treatment for its cards.
   className?: string;
+  // Desktop card width (any CSS length/clamp), overriding the default
+  // count-derived formula. Pass the SAME value to multiple decks in one
+  // section so their cards render at identical size regardless of how many
+  // cards each deck holds - e.g. a 3-card deck and a 4-card deck sitting next
+  // to each other would otherwise size their cards differently.
+  cardWidth?: string;
 }) {
   const items = Children.toArray(children).filter(isValidElement) as ReactElement[];
   const n = items.length;
@@ -102,46 +109,60 @@ export function GlassDeck({
   };
 
   return (
-    <div
-      className={rootClassName}
-      style={{ ["--vg-deck-min" as string]: min, ["--vg-deck-count" as string]: n }}
-      onClickCapture={isTouch && !open ? handleDeckClick : undefined}
-      role={isTouch ? "button" : undefined}
-      tabIndex={isTouch ? 0 : undefined}
-      aria-expanded={isTouch ? open : undefined}
-      onKeyDown={
-        isTouch
-          ? (e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                setOpen((o) => !o);
+    <div>
+      <div
+        className={rootClassName}
+        style={{
+          ["--vg-deck-min" as string]: min,
+          ["--vg-deck-count" as string]: n,
+          ...(cardWidth ? { ["--vg-deck-card-w" as string]: cardWidth } : {}),
+        }}
+        onClickCapture={isTouch && !open ? handleDeckClick : undefined}
+        role={isTouch ? "button" : undefined}
+        tabIndex={isTouch ? 0 : undefined}
+        aria-expanded={isTouch ? open : undefined}
+        onKeyDown={
+          isTouch
+            ? (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setOpen((o) => !o);
+                }
               }
-            }
-          : undefined
-      }
-    >
-      {items.map((child, i) => (
-        <div
-          key={i}
-          className="vg-deck-card"
-          style={{ ["--vg-deck-r" as string]: resolved[i] ?? 0 }}
-        >
-          {child}
-          {labels?.[i] ? <span className="vg-deck-label">{labels[i]}</span> : null}
+            : undefined
+        }
+      >
+        {items.map((child, i) => (
+          <div
+            key={i}
+            className="vg-deck-card"
+            style={{ ["--vg-deck-r" as string]: resolved[i] ?? 0 }}
+          >
+            {child}
+            {labels?.[i] ? <span className="vg-deck-label">{labels[i]}</span> : null}
+          </div>
+        ))}
+      </div>
+      {/* Hint / close control lives OUTSIDE the deck box, in normal document
+          flow below it - not absolutely positioned on top of the cards. A
+          rotated stacked card can visually extend past its own bounding box,
+          so an overlay chip could sit on top of a card corner depending on
+          rotation; a real sibling element below never can. */}
+      {isTouch ? (
+        <div className="vg-deck-hint-row">
+          {open ? (
+            <button
+              type="button"
+              className="vg-deck-close"
+              aria-label="Close deck"
+              onClick={() => setOpen(false)}
+            >
+              Close
+            </button>
+          ) : (
+            <span className="vg-deck-hint">Tap to open</span>
+          )}
         </div>
-      ))}
-      {isTouch && open ? (
-        <button
-          type="button"
-          className="vg-deck-close"
-          aria-label="Close deck"
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen(false);
-          }}
-        >
-          Close
-        </button>
       ) : null}
     </div>
   );

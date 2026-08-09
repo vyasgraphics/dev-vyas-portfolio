@@ -8520,7 +8520,7 @@ html, body {
     --vg-deck-r: 0;
     position: relative;
     flex: 0 0 auto;
-    width: clamp(200px, calc(80vw / var(--vg-deck-count, 4)), 320px);
+    width: var(--vg-deck-card-w, clamp(200px, calc(80vw / var(--vg-deck-count, 4)), 320px));
     aspect-ratio: 4 / 5;
     margin: 0 -34px;
     border-radius: 14px;
@@ -8532,6 +8532,12 @@ html, body {
     transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
                 margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
                 border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  /* Plain-media decks (Logo Reveal) use the real 16:9 shape of the source
+     clips instead of the default 4:5 portrait box, so the video is never
+     cropped to fit a taller box than it actually is. */
+  .vg-deck.vg-deck-plain-media:not(.vg-deck-touch) .vg-deck-card {
+    aspect-ratio: 16 / 9;
   }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card > *:not(.vg-deck-label) { width: 100% !important; height: 100% !important; }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card img,
@@ -8606,32 +8612,32 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 0;
+  padding: 24px 0;
   position: relative;
   /* Never let the stacked/fanned cards push page width - clip horizontal
-     overflow to the deck's own box (it is centred, so nothing useful is lost)
-     while leaving vertical room for the stack. This removes the page-wide
-     horizontal scroll the fanned cards caused. */
+     overflow to the deck's own box (it is centred, so nothing useful is lost).
+     Combined with the wrap-based open layout below, cards never need to
+     extend past the container in the first place; this remains as a safety
+     net for the closed/rotated stack, whose corners can poke out slightly. */
   max-width: 100%;
   overflow: hidden;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: padding 0.5s cubic-bezier(0.2,0.8,0.2,1);
-  /* Soft fade at the left/right edges instead of a hard clip or a scrollbar:
-     any card that runs past the container edge (a wide open deck on a narrow
-     phone) gently fades into the background rather than being sharply cut
-     off or requiring a swipe to reach. Purely visual, no interaction. */
-  -webkit-mask-image: linear-gradient(to right, transparent 0, black 28px, black calc(100% - 28px), transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0, black 28px, black calc(100% - 28px), transparent 100%);
+  /* Soft fade at the very edges for the closed, rotated stack - a rotated
+     card corner poking near the container edge fades rather than being
+     sharply cut off. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 20px, black calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black 20px, black calc(100% - 20px), transparent 100%);
 }
 .vg-deck-touch .vg-deck-card {
   --vg-deck-r: 0;
   position: relative;
   flex: 0 0 auto;
-  /* Smaller floor than the desktop layer so large decks (6-7 cards) shrink
-     enough to mostly fit the row rather than relying on scroll (removed -
-     see .is-open below) or hard clipping at the container edge. */
-  width: clamp(110px, calc(72vw / var(--vg-deck-count, 4)), 230px);
+  /* A bigger floor than before - decks are now capped at a handful of cards
+     per row (large sets are split into multiple smaller decks, see the
+     Social Media Posts section), so there is room for a clearly readable
+     card size on the closed/stacked preview. */
+  width: clamp(150px, calc(58vw / var(--vg-deck-count, 4)), 210px);
   aspect-ratio: 4 / 5;
   margin: 0 -30px;
   border-radius: 14px;
@@ -8640,9 +8646,15 @@ html, body {
   box-shadow: 0 20px 34px -18px rgba(0,0,0,0.7);
   background: #111;
   transform: rotate(calc(var(--vg-deck-r) * 1deg));
-  will-change: transform, margin;
+  will-change: transform, margin, width;
   transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1),
-              margin 0.5s cubic-bezier(0.2,0.8,0.2,1);
+              margin 0.5s cubic-bezier(0.2,0.8,0.2,1),
+              width 0.5s cubic-bezier(0.2,0.8,0.2,1);
+}
+/* Plain-media decks (Logo Reveal) use the video's real 16:9 shape instead of
+   the default 4:5 portrait box, same reasoning as the desktop layer. */
+.vg-deck-touch.vg-deck-plain-media .vg-deck-card {
+  aspect-ratio: 16 / 9;
 }
 .vg-deck-touch .vg-deck-card > *:not(.vg-deck-label) { width: 100% !important; height: 100% !important; }
 .vg-deck-touch .vg-deck-card img,
@@ -8692,13 +8704,18 @@ html, body {
   background: rgba(20,20,20,0.75);
   border-top: 1px solid rgba(255,255,255,0.08);
 }
-/* Tappable hint shown only while closed. */
-.vg-deck-touch:not(.is-open)::after {
-  content: "Tap to open";
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+/* Hint / close row - a REAL element in normal document flow directly below
+   the deck (rendered by GlassDeck.tsx as a sibling, not an absolutely
+   positioned overlay). A rotated stacked card can visually extend past its
+   own box; anything overlaid on top of that area could end up sitting on a
+   card corner depending on the rotation. Sitting below in normal flow can
+   never overlap the cards, at any rotation or card count. */
+.vg-deck-hint-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+}
+.vg-deck-hint {
   font-size: 11.5px;
   letter-spacing: 0.04em;
   color: rgba(255,255,255,0.6);
@@ -8706,18 +8723,9 @@ html, body {
   border: 1px solid rgba(255,255,255,0.1);
   padding: 7px 16px;
   border-radius: 100px;
-  pointer-events: none;
   white-space: nowrap;
 }
-/* Close button shown while open - same vertical anchor (bottom: 14px) as the
-   "Tap to open" hint above, so toggling between states doesn't visually jump
-   the control up or down. Padding matched/enlarged to a comfortable tap
-   target (44px recommended minimum touch height). */
 .vg-deck-close {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 12.5px;
   font-weight: 500;
   letter-spacing: 0.03em;
@@ -8727,27 +8735,38 @@ html, body {
   padding: 11px 22px;
   border-radius: 100px;
   cursor: pointer;
-  z-index: 5;
   transition: transform 0.15s ease, background 0.15s ease;
 }
 .vg-deck-close:active {
-  transform: translateX(-50%) scale(0.96);
+  transform: scale(0.96);
   background: rgba(255,255,255,0.14);
 }
-/* Open (tapped): cards straighten and un-overlap within a SINGLE row (no
-   flex-wrap, no horizontal scroll). Wrapping to a multi-row grid was the
-   source of jank on open/close - flex-wrap is a layout reflow no browser can
-   animate, so cards would visibly teleport into grid positions the instant
-   the class applied. Keeping a single row means only transform + margin
-   change, which are genuinely animatable. If a deck has more cards than fit
-   the width once spread, the extras simply run past the container edge and
-   fade out via the mask-image above, rather than requiring a swipe. */
+/* Open (tapped): cards straighten, un-overlap, and WRAP into a two-per-row
+   grid at a clearly readable size. A single un-wrapped row was tried first,
+   but a deck of more than 2-3 cards would then either overflow the screen
+   width or have to shrink so much it read as "too small" - neither
+   acceptable. Wrapping to 2 columns guarantees every card stays within the
+   viewport (percentage-based width, not vw-times-count math that can outgrow
+   the screen) while staying large enough to actually see clearly. The
+   trade-off is that the wrap itself is a layout reflow no browser can
+   animate - unlike the rotate/margin motion, cards will snap into their
+   wrapped position rather than glide - but this is the same trade every
+   card-grid-on-open pattern makes, and here it only affects the one instant
+   the grid forms, not the whole gesture. */
 .vg-deck-touch.is-open {
-  padding: 24px 0 60px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  gap: 14px;
+  padding: 20px 16px;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 .vg-deck-touch.is-open .vg-deck-card {
-  margin: 0 6px;
+  margin: 0;
   transform: rotate(0deg);
+  width: calc(50% - 7px);
+  max-width: 220px;
 }
 .vg-deck-touch.is-open .vg-deck-card img { filter: blur(0px) brightness(1); }
 .vg-deck-touch.is-open .vg-deck-card::before { opacity: 0; }
