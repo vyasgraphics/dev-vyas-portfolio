@@ -40,6 +40,7 @@ export function FloatingTiltToggle() {
       )}
       <button
         type="button"
+        className="vg-tactile"
         aria-label={enabled ? "Turn off 3D tilt effect" : "Turn on 3D tilt effect"}
         aria-pressed={enabled}
         disabled={busy}

@@ -158,7 +158,7 @@ export function Carousel({
             <button
               type="button"
               aria-label="Previous slide"
-              className="vg-carousel-arrow vg-carousel-arrow-left"
+              className="vg-carousel-arrow vg-carousel-arrow-left vg-tactile"
               onClick={() => scrollToIndex(active - 1)}
               disabled={active === 0}
             >
@@ -167,7 +167,7 @@ export function Carousel({
             <button
               type="button"
               aria-label="Next slide"
-              className="vg-carousel-arrow vg-carousel-arrow-right"
+              className="vg-carousel-arrow vg-carousel-arrow-right vg-tactile"
               onClick={() => scrollToIndex(active + 1)}
               disabled={active === items.length - 1}
             >

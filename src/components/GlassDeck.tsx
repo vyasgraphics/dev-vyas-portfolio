@@ -153,7 +153,7 @@ export function GlassDeck({
           {open ? (
             <button
               type="button"
-              className="vg-deck-close"
+              className="vg-deck-close vg-tactile"
               aria-label="Close deck"
               onClick={() => setOpen(false)}
             >

@@ -18,6 +18,7 @@ export function BackToTop() {
   return (
     <button
       type="button"
+      className="vg-tactile"
       aria-label="Back to top"
       onClick={() => smoothScrollToTop({ duration: 1 })}
       style={{

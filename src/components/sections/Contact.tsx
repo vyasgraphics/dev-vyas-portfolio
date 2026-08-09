@@ -335,8 +335,6 @@ export function Contact() {
         .vg-send-btn:disabled { cursor: default; }
         .vg-send-btn:hover {
           transform: scale(1.02);
-          box-shadow: 0 0 1px 2px rgba(255,255,255,0.18),
-            0 15px 30px rgba(0,0,0,0.4), 0 10px 3px -3px rgba(0,0,0,0.08);
         }
         .vg-send-btn:active {
           transform: scale(1);

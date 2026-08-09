@@ -29,6 +29,7 @@ export function TiltPermissionPrompt() {
     <div style={{ marginBottom: "20px" }}>
       <button
         type="button"
+        className="vg-tactile"
         disabled={busy}
         onClick={async () => {
           setBusy(true);

@@ -68,7 +68,7 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
       {/* Mobile/tablet collapsed trigger - CSS hides this at desktop width */}
       <button
         type="button"
-        className="section-nav-trigger"
+        className="section-nav-trigger vg-tactile"
         onClick={() => setExpanded((v) => !v)}
         aria-expanded={expanded}
       >
@@ -86,7 +86,7 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
             <button
               key={s.id}
               type="button"
-              className={`section-nav-btn${isActive ? " is-active" : ""}`}
+              className={`section-nav-btn vg-tactile${isActive ? " is-active" : ""}`}
               aria-label={s.label}
               onClick={() => goTo(s.id)}
             >

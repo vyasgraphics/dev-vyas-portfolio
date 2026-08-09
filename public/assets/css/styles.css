@@ -8096,7 +8096,8 @@ textarea:focus-visible,
 .work-scroll-thumb,
 .nav-mobile-item .item-link,
 .sidebar-tools .item-link,
-.footer-back-to-top {
+.footer-back-to-top,
+.vg-tactile {
   transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease,
     background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -8105,16 +8106,17 @@ textarea:focus-visible,
   .tf-btn-action:hover,
   .tf-btn-icon:hover,
   .action-down:hover,
-  .footer-back-to-top:hover {
+  .footer-back-to-top:hover,
+  .vg-tactile:hover {
     transform: scale(1.035);
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.14), 0 12px 26px -8px rgba(0,0,0,0.45);
   }
 }
 .tf-btn:active,
 .tf-btn-action:active,
 .tf-btn-icon:active,
 .action-down:active,
-.footer-back-to-top:active {
+.footer-back-to-top:active,
+.vg-tactile:active {
   transform: scale(0.93);
   box-shadow: 0 0 0 1px rgba(255,255,255,0.22), 0 2px 8px -2px rgba(0,0,0,0.4),
     inset 0 1px 6px rgba(0,0,0,0.3);

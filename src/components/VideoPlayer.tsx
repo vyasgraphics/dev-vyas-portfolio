@@ -183,7 +183,7 @@ export function VideoPlayer({
       )}
 
       <div className="vg-vp-bar">
-        <button type="button" className="vg-vp-btn" onClick={togglePlay} aria-label={playing ? "Pause" : "Play"}>
+        <button type="button" className="vg-vp-btn vg-tactile" onClick={togglePlay} aria-label={playing ? "Pause" : "Play"}>
           {playing ? (
             <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="0" y="0" width="3.5" height="14" rx="1" fill="currentColor" /><rect x="8.5" y="0" width="3.5" height="14" rx="1" fill="currentColor" /></svg>
           ) : (
@@ -206,7 +206,7 @@ export function VideoPlayer({
 
         <span className="vg-vp-time">{formatTime(duration)}</span>
 
-        <button type="button" className="vg-vp-btn" onClick={toggleMute} aria-label={muted ? "Unmute" : "Mute"}>
+        <button type="button" className="vg-vp-btn vg-tactile" onClick={toggleMute} aria-label={muted ? "Unmute" : "Mute"}>
           {muted ? (
             <svg width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M1 5h2.2L6.5 2v10L3.2 9H1V5Z" fill="currentColor" /><path d="M9.5 4.5l4 5M13.5 4.5l-4 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" /></svg>
           ) : (
@@ -214,7 +214,7 @@ export function VideoPlayer({
           )}
         </button>
 
-        <button type="button" className="vg-vp-btn" onClick={toggleFullscreen} aria-label={fullscreen ? "Exit fullscreen" : "Fullscreen"}>
+        <button type="button" className="vg-vp-btn vg-tactile" onClick={toggleFullscreen} aria-label={fullscreen ? "Exit fullscreen" : "Fullscreen"}>
           {fullscreen ? (
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 5H5V1M13 5H9V1M1 9H5V13M13 9H9V13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
           ) : (
@@ -222,7 +222,7 @@ export function VideoPlayer({
           )}
         </button>
 
-        <button type="button" className="vg-vp-btn" onClick={onClose} aria-label="Close">
+        <button type="button" className="vg-vp-btn vg-tactile" onClick={onClose} aria-label="Close">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M1 1L12 12M12 1L1 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
         </button>
       </div>
