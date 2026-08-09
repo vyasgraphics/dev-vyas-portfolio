@@ -8,6 +8,7 @@ import { DesktopSidebar } from "./DesktopSidebar";
 import { HeaderClock } from "./HeaderClock";
 import { UserSidebar } from "./UserSidebar";
 import { Preloader } from "./Preloader";
+import { WelcomeReveal } from "./WelcomeReveal";
 import { Intro } from "./sections/Intro";
 import { About } from "./sections/About";
 import { Education } from "./sections/Education";
@@ -49,6 +50,8 @@ export function HomeShell() {
             <SettingColorMenu />
             <MobileMenu />
             <DesktopSidebar positionClass="pst-v1" />
+
+            <WelcomeReveal />
 
             <main id="wrapper">
                 <HeaderClock variant="v1" />
