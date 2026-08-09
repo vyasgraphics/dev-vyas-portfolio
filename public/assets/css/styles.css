@@ -8109,6 +8109,24 @@ textarea:focus-visible,
 .blog-card:active {
   transform: scale(0.985);
 }
+/* When the blog grid holds an odd number of posts, the 2-column layout
+   leaves the last card alone in column 1 with a dangling empty gap beside it
+   (visible with the current 3 posts, and will recur any time the count is
+   odd as more posts get added). :last-child combined with :nth-child(odd)
+   identifies exactly that situation - true only when the final item's
+   position is odd, i.e. the total count is odd - so it centres itself across
+   both columns at one column's width instead of sitting off to the left.
+   With an even count neither condition catches the last item and the grid
+   is untouched. Scoped to the same breakpoint where the 2-column layout
+   itself kicks in (.md-col-2 below is desktop-only; below that this page
+   already stacks to one column, where there is no gap to fix). */
+@media (min-width: 768px) {
+  .blog-grid.md-col-2 > .blog-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc((100% - 24px) / 2);
+    justify-self: center;
+  }
+}
 .award-item:active {
   opacity: 0.85;
 }
