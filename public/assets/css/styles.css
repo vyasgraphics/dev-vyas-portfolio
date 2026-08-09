@@ -8503,24 +8503,112 @@ html, body {
     /* Room for the resting rotation to overhang without being clipped by the
        section, and so the spread state has somewhere to expand into. */
     padding: 40px 0;
+    /* Large decks (6-7 cards) spread wider than the column when open; allow a
+       horizontal scroll rather than overflowing the page. Small decks never
+       reach this width so it stays invisible for them. */
+    overflow-x: auto;
+    scrollbar-width: none;
   }
+  .vg-deck::-webkit-scrollbar { display: none; }
   .vg-deck-card {
     --vg-deck-r: 0;
     position: relative;
-    /* Equal, capped width so 4 cards read as one deck regardless of the
-       poster's own aspect ratio; the child image fills this box. */
+    /* Equal, capped width so cards read as one deck regardless of each
+       poster's own aspect ratio. Cards shrink a little as the deck grows so a
+       6-7 card fan still fits the column when opened. */
     flex: 0 0 auto;
-    width: clamp(200px, 22vw, 260px);
+    width: clamp(160px, calc(72vw / var(--vg-deck-count, 4)), 260px);
+    /* Uniform card shape so a stack of mixed-ratio posters/videos reads as one
+       tidy deck rather than a ragged run of different heights. The media
+       inside is cropped to fill (see .vg-deck-card img / video below). */
+    aspect-ratio: 4 / 5;
     /* Pull the cards together into an overlapping stack. */
     margin: 0 -34px;
+    /* Rounded so the frosted overlay's blur is clipped to the card shape. */
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 20px 34px -18px rgba(0,0,0,0.7);
     transform: rotate(calc(var(--vg-deck-r) * 1deg));
     transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
-                margin 0.55s cubic-bezier(0.2,0.8,0.2,1);
+                margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
+                border-color 0.4s ease,
+                box-shadow 0.4s ease;
+  }
+  /* Crop whatever media the card holds (Image, video poster, PlayableStill
+     inner frame) to fill the uniform card box. */
+  .vg-deck-card > * {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .vg-deck-card img,
+  .vg-deck-card video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+  }
+  /* PlayableStill in deck mode: fill the card fully (its intrinsic aspect
+     ratio and caption are only for the non-deck grid layout). Desktop-only,
+     so the mobile grid fallback keeps the natural aspect ratio and caption. */
+  .vg-deck-card .vg-playable-deck-outer {
+    height: 100%;
+  }
+  .vg-deck-card .vg-playable-deck {
+    height: 100% !important;
+    aspect-ratio: auto !important;
+  }
+  /* Reference-style label bar pinned to the card bottom, above the frost so it
+     stays legible while the deck is closed. */
+  .vg-deck-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  /* ── Frosted glass overlay ──
+     The card content (image / video poster) is opaque, so backdrop-filter has
+     nothing behind the CARD to blur - instead this ::before sits ON TOP of the
+     content and blurs the content itself, giving a true frosted-glass panel at
+     rest that CLEARS as the deck fans open. The translucent white gradient +
+     hairline top highlight matches the reference glass fill. Pointer-events
+     none so it never blocks the play-button click underneath. */
+  .vg-deck-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.02));
+    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter: blur(9px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+    opacity: 1;
+    transition: opacity 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+  }
+  /* When the deck fans open, the frost lifts off every card together. */
+  .vg-deck:hover .vg-deck-card::before {
+    opacity: 0;
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
   }
   /* Group hover: every card straightens AND the stack spreads apart. */
   .vg-deck:hover .vg-deck-card {
     transform: rotate(0deg);
     margin: 0 12px;
+    border-color: rgba(255,255,255,0.2);
   }
   /* The individually-hovered card lifts a touch and rises above its
      neighbours so it is never clipped by an adjacent card's overlap. */
@@ -8548,12 +8636,24 @@ html, body {
     margin: 0 !important;
     transform: none !important;
   }
+  /* No hover to clear the frost on touch, so never apply it there - the grid
+     must show sharp images. */
+  .vg-deck-card::before {
+    display: none !important;
+  }
 }
 
 /* Respect reduced-motion: keep the resting fan (it is a static layout, not
-   motion) but drop the spread transition so nothing animates on hover. */
+   motion) but drop the spread transition so nothing animates on hover. The
+   frost is also cleared at rest here - with transitions disabled it would
+   otherwise never lift, leaving images permanently blurred. */
 @media (prefers-reduced-motion: reduce) {
   .vg-deck-card {
     transition: none !important;
+  }
+  .vg-deck-card::before {
+    opacity: 0 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

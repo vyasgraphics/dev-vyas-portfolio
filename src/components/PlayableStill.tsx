@@ -16,6 +16,7 @@ export function PlayableStill({
   caption,
   duration,
   className,
+  deck = false,
 }: {
   poster: string;
   videoSrc?: string;
@@ -25,22 +26,30 @@ export function PlayableStill({
   caption?: string;
   duration?: string;
   className?: string;
+  // Deck mode: fill the parent card fully and crop to cover, dropping the
+  // outer caption and intrinsic aspect ratio so the still sits flush inside a
+  // uniform GlassDeck card alongside plain images.
+  deck?: boolean;
 }) {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    <div className={deck ? "vg-playable-deck-outer" : undefined} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
       <div
         className={
-          (videoSrc && !playing
-            ? ["vg-playable vg-card", className].filter(Boolean).join(" ")
-            : "") || undefined
+          [
+            videoSrc && !playing ? "vg-playable vg-card" : "",
+            deck ? "vg-playable-deck" : "",
+            className,
+          ]
+            .filter(Boolean)
+            .join(" ") || undefined
         }
         style={{
           position: "relative",
           width: "100%",
           aspectRatio: `${width} / ${height}`,
-          borderRadius: "14px",
+          borderRadius: deck ? "0" : "14px",
           overflow: "hidden",
           background: "#000",
           cursor: videoSrc && !playing ? "pointer" : "default",
@@ -75,7 +84,7 @@ export function PlayableStill({
           </>
         )}
       </div>
-      {caption && (
+      {caption && !deck && (
         <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.55)", textAlign: "center" }}>
           {caption}
         </span>

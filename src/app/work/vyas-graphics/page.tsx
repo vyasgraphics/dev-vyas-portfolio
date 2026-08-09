@@ -352,11 +352,11 @@ export default function VyasGraphicsWorkPage() {
               contexts - a retro CRT boot-up, a warm gold title card, a high-contrast mono cut, and a soft script
               signature. Click any of them to play.
             </Body>
-            <GlassDeck angles={[-15, -5, 5, 15]}>
-              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-animation.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
-              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-animation.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" duration="0:06" />
-              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-monochrome-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-monochrome-animation.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />
-              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-script-signature-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-script-signature-animation.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" duration="0:11" />
+            <GlassDeck angles={[-15, -5, 5, 15]} labels={["CRT Boot-up", "Gold Title Card", "High-Contrast Mono", "Script Signature"]}>
+              <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-animation.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
+              <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-animation.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" duration="0:06" />
+              <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-monochrome-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-monochrome-animation.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />
+              <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-script-signature-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-script-signature-animation.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" duration="0:11" />
             </GlassDeck>
           </section>
         </ScrollReveal>
@@ -373,16 +373,21 @@ export default function VyasGraphicsWorkPage() {
             </Body>
 
             <div style={{ marginBottom: "36px" }}>
-              <Carousel
-                label="Carousel post"
-                showArrows={false}
-                showCounter={false}
-                showDots={false}
-                items={SERVICES_CAROUSEL.map((s) => ({ ...s, src: `${IMG}/${s.src}` }))}
-              />
+              <GlassDeck>
+                {SERVICES_CAROUSEL.map((s) => (
+                  <Image
+                    key={s.src}
+                    src={`${IMG}/${s.src}`}
+                    alt={s.alt}
+                    width={s.width}
+                    height={s.height}
+                    style={{ width: "100%", height: "auto", display: "block" }}
+                  />
+                ))}
+              </GlassDeck>
             </div>
 
-            <AutoGrid min="210px">
+            <GlassDeck min="210px">
               {SOCIAL_GRID.map(({ src, h, alt }) => (
                 <Image
                   key={src}
@@ -390,11 +395,10 @@ export default function VyasGraphicsWorkPage() {
                   alt={alt}
                   width={900}
                   height={h}
-                  className="vg-card"
-                  style={{ width: "100%", height: "auto", borderRadius: "12px", display: "block" }}
+                  style={{ width: "100%", height: "auto", display: "block" }}
                 />
               ))}
-            </AutoGrid>
+            </GlassDeck>
           </section>
         </ScrollReveal>
 
@@ -450,12 +454,12 @@ export default function VyasGraphicsWorkPage() {
 
             <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
-            <AutoGrid min="230px">
-              <PlayableStill poster={`${IMG}/icc-t20-world-cup-2026-tournament-promo-poster.jpg`} videoSrc={`${IMG}/icc-t20-world-cup-2026-tournament-promo-animation.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
-              <Image src={`${IMG}/icc-t20-world-cup-2026-final-instagram-poll-story.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
-            </AutoGrid>
+            <GlassDeck min="230px">
+              <PlayableStill deck poster={`${IMG}/icc-t20-world-cup-2026-tournament-promo-poster.jpg`} videoSrc={`${IMG}/icc-t20-world-cup-2026-tournament-promo-animation.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-final-instagram-poll-story.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} style={{ width: "100%", height: "auto", display: "block" }} />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
+            </GlassDeck>
 
             <h3 style={{ fontSize: "19px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
             <Body>
@@ -478,21 +482,13 @@ export default function VyasGraphicsWorkPage() {
               />
             </div>
 
-            <div style={{ marginBottom: "28px" }}>
-              <StaggerReveal>
-                <PlayableStill poster={`${IMG}/ipl-2026-season-promo-poster.jpg`} videoSrc={`${IMG}/ipl-2026-season-promo-animation.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
-              </StaggerReveal>
-            </div>
-
-            <AutoGrid min="280px">
-              <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
-            </AutoGrid>
-            <div style={{ height: "20px" }} />
-            <AutoGrid min="320px">
-              <Image src={`${IMG}/ipl-2026-final-rcb-vs-gujarat-titans-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/rcb-ipl-2026-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
-            </AutoGrid>
+            <GlassDeck min="280px">
+              <PlayableStill deck poster={`${IMG}/ipl-2026-season-promo-poster.jpg`} videoSrc={`${IMG}/ipl-2026-season-promo-animation.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
+              <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
+              <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
+              <Image src={`${IMG}/ipl-2026-final-rcb-vs-gujarat-titans-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} style={{ width: "100%", height: "auto", display: "block" }} />
+              <Image src={`${IMG}/rcb-ipl-2026-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} style={{ width: "100%", height: "auto", display: "block" }} />
+            </GlassDeck>
           </section>
         </ScrollReveal>
 
