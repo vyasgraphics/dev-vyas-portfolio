@@ -34,6 +34,7 @@ export function VideoPlayer({
   const [muted, setMuted] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -50,8 +51,13 @@ export function VideoPlayer({
           v.muted = true;
           setMuted(true);
           await v.play();
-        } catch {
-          /* give up silently; controls remain usable */
+        } catch (err2) {
+          // Both attempts failed - surface the real reason instead of a
+          // silent blank card, so a genuine playback failure (bad source,
+          // unsupported format, network error) is visible and diagnosable
+          // rather than looking identical to "nothing happened".
+          const reason = err2 instanceof Error ? err2.message : String(err2);
+          setError(`Playback blocked: ${reason}`);
         }
       }
     };
@@ -65,17 +71,32 @@ export function VideoPlayer({
     const onLoaded = () => setDuration(v.duration || 0);
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
+    const onError = () => {
+      // v.error carries the real MediaError (1=aborted, 2=network,
+      // 3=decode, 4=src not supported), which is far more useful than a
+      // silently blank player.
+      const codeMap: Record<number, string> = {
+        1: "Loading was aborted",
+        2: "Network error while loading the video",
+        3: "The video could not be decoded",
+        4: "This video format or source is not supported",
+      };
+      const code = v.error?.code;
+      setError(code ? codeMap[code] ?? `Video error (code ${code})` : "Unknown video error");
+    };
     v.addEventListener("timeupdate", onTime);
     v.addEventListener("loadedmetadata", onLoaded);
     v.addEventListener("play", onPlay);
     v.addEventListener("pause", onPause);
     v.addEventListener("ended", onPause);
+    v.addEventListener("error", onError);
     return () => {
       v.removeEventListener("timeupdate", onTime);
       v.removeEventListener("loadedmetadata", onLoaded);
       v.removeEventListener("play", onPlay);
       v.removeEventListener("pause", onPause);
       v.removeEventListener("ended", onPause);
+      v.removeEventListener("error", onError);
     };
   }, []);
 
@@ -144,6 +165,23 @@ export function VideoPlayer({
         style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "pointer", display: "block" }}
       />
 
+      {error && (
+        <div className="vg-vp-error">
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={() => {
+              setError(null);
+              videoRef.current?.load();
+              videoRef.current?.play().catch(() => {});
+            }}
+          >
+            Retry
+          </button>
+          <button type="button" onClick={onClose}>Close</button>
+        </div>
+      )}
+
       <div className="vg-vp-bar">
         <button type="button" className="vg-vp-btn" onClick={togglePlay} aria-label={playing ? "Pause" : "Play"}>
           {playing ? (
@@ -190,6 +228,35 @@ export function VideoPlayer({
       </div>
 
       <style jsx>{`
+        .vg-vp-error {
+          position: absolute;
+          inset: 0;
+          z-index: 5;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 20px;
+          text-align: center;
+          background: rgba(10, 10, 10, 0.85);
+          color: #fff;
+          font-size: 13px;
+        }
+        .vg-vp-error button {
+          font-size: 12px;
+          color: #0a0a0a;
+          background: #00de51;
+          border: none;
+          padding: 6px 16px;
+          border-radius: 100px;
+          cursor: pointer;
+          margin: 2px 4px 0;
+        }
+        .vg-vp-error button:last-child {
+          background: rgba(255, 255, 255, 0.12);
+          color: #fff;
+        }
         .vg-vp-bar {
           position: absolute;
           left: 6px;
