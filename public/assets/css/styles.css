@@ -30,13 +30,36 @@
 
  ------------------------------------------------------------------------------ */
 /* Tomorrow: used only by the homepage's welcome-reveal title/subtitle
-   (.vg-welcome-title / .vg-welcome-subtitle in WelcomeReveal.tsx) - loaded
-   here at the very top of the stylesheet, rather than inside that
-   component's own <style> block, purely so the font request starts as
-   early as possible (as soon as this stylesheet parses) instead of waiting
-   for React to mount that specific component, reducing the chance of a
-   flash of fallback text on the welcome screen. */
-@import url('https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,700;0,800&display=swap');
+   (.vg-welcome-title / .vg-welcome-subtitle in WelcomeReveal.tsx). Was
+   loaded via a runtime @import from Google Fonts' CDN - which turned out
+   not to render for the person actually using the site, almost certainly
+   because their browser (Brave, visible in their own screenshots) blocks
+   third-party font requests by default under its Shields feature. Fonts.
+   googleapis.com is a cross-origin request from their perspective, exactly
+   what that kind of privacy blocking targets - it happened to work fine in
+   this sandbox's own test browser (no such blocking there), which is why
+   the gap wasn't caught earlier.
+   Fixed by self-hosting the font instead: the two weights actually used
+   (700, 800) fetched from Google's own font-file source repository,
+   converted to woff2, and served from this site's own domain - no
+   cross-origin request at all, so nothing for a privacy blocker to catch,
+   and it also means one less external dependency generally. Files live at
+   public/assets/fonts/tomorrow/. Licensed under the SIL Open Font License,
+   which permits exactly this (self-hosting/bundling with a project). */
+@font-face {
+  font-family: "Tomorrow";
+  src: url("/assets/fonts/tomorrow/Tomorrow-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tomorrow";
+  src: url("/assets/fonts/tomorrow/Tomorrow-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 /*--------- Abstracts variable ---------- */
 :root {
   /*-- Core Color --*/

@@ -535,8 +535,17 @@ export function useIsakAnimations() {
         // Strategy: use rAF to defer getTotalLength() until after the browser
         // has laid out and painted the SVG. On mobile Safari, synchronous
         // getTotalLength() can return 0 if called before the SVG renders.
-        // The IntersectionObserver then waits for the SVG to scroll into view
-        // before adding the is-drawn class which triggers the CSS transition.
+        // The IntersectionObserver then toggles the is-drawn class as the
+        // SVG scrolls in and out of view - both directions play through the
+        // same CSS transition (stroke-dashoffset, a standard bidirectional
+        // transition, not a one-shot keyframe animation), so it draws in on
+        // entry and un-draws on exit, ready to draw in again next time the
+        // person scrolls back to it rather than only ever playing once per
+        // page load. Previously disconnected after the first trigger -
+        // fine when the hero was the first thing on the page, but once the
+        // welcome-reveal intro pushed it below a few screens of scroll, a
+        // visitor scrolling back up past it and back down again reasonably
+        // expects to see it draw in again, not sit there already-drawn.
         if (document.querySelector(".scribble-wrap")) {
             const path = document.getElementById("scribblePath") as unknown as SVGPathElement | null;
             const svg = document.querySelector(".scribble");
@@ -552,10 +561,7 @@ export function useIsakAnimations() {
                     (svg as HTMLElement).style.setProperty("--len", String(len));
                     const io = new IntersectionObserver(
                         ([entry]) => {
-                            if (entry.isIntersecting) {
-                                svg.classList.add("is-drawn");
-                                io.disconnect();
-                            }
+                            svg.classList.toggle("is-drawn", entry.isIntersecting);
                         },
                         { threshold: 0.1 },
                     );
@@ -629,20 +635,56 @@ export function useIsakAnimations() {
         });
 
         /* ---------------- Active Class for intro title spans ---------------- */
+        // Previously permanently locked once triggered (an early `if
+        // (el.classList.contains("active")) return` skipped ever
+        // re-checking) - fine when the hero was the first thing on the
+        // page and this only ever needed to fire once, but with the
+        // welcome-reveal intro now above it, someone scrolling back up
+        // past the hero and back down again reasonably expects to see the
+        // highlight sweep in again, not find it already there. Toggles now
+        // instead: adds "active" (after the same 300ms delay as before,
+        // for the same staggered feel) on entering view, removes it
+        // immediately on fully leaving - the underlying CSS transition
+        // (width, all 0.5s ease) handles the sweep smoothly in both
+        // directions on its own, no extra animation code needed here.
+        // "Leaving" uses a stricter, fully-out-of-view condition than
+        // "entering" uses (past the 80% line) so the two don't sit right
+        // next to each other - without that gap, hesitant scrolling
+        // right at the entry line would flicker the highlight rapidly.
         const introSpans = document.querySelectorAll<HTMLElement>(".intro-title span");
+        const pendingActivate = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
         const checkActive = () => {
             introSpans.forEach((el) => {
-                if (el.classList.contains("active")) return;
                 const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.8 && rect.bottom > 0) {
-                    setTimeout(() => el.classList.add("active"), 300);
+                const entering = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+                const leaving = rect.bottom <= 0 || rect.top >= window.innerHeight;
+
+                if (entering && !el.classList.contains("active") && !pendingActivate.has(el)) {
+                    const timer = setTimeout(() => {
+                        el.classList.add("active");
+                        pendingActivate.delete(el);
+                    }, 300);
+                    pendingActivate.set(el, timer);
+                } else if (leaving) {
+                    const pending = pendingActivate.get(el);
+                    if (pending) {
+                        clearTimeout(pending);
+                        pendingActivate.delete(el);
+                    }
+                    el.classList.remove("active");
                 }
             });
         };
         if (introSpans.length) {
             window.addEventListener("scroll", checkActive);
             checkActive();
-            cleanups.push(() => window.removeEventListener("scroll", checkActive));
+            cleanups.push(() => {
+                window.removeEventListener("scroll", checkActive);
+                introSpans.forEach((el) => {
+                    const pending = pendingActivate.get(el);
+                    if (pending) clearTimeout(pending);
+                });
+            });
         }
 
         /* ---------------- Wrap Active (.wrap-hover-award) ---------------- */

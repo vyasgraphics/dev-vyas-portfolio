@@ -106,15 +106,19 @@ export function WelcomeReveal({
 }) {
   const reduceMotion = useReducedMotion();
 
-  // Subtitle and scroll-cue fade in only once the title has mostly
-  // assembled, and the whole stage fades out right at the end so the
-  // handoff into the real homepage content underneath doesn't feel like an
-  // abrupt cut - HomeShell fades the site chrome in over roughly this same
-  // outgoing range so the two crossfade rather than one popping in after a
-  // gap.
+  // Subtitle fades in once the title has mostly assembled, and the whole
+  // stage fades out right at the end so the handoff into the real homepage
+  // content underneath doesn't feel like an abrupt cut - HomeShell fades
+  // the site chrome in over roughly this same outgoing range so the two
+  // crossfade rather than one popping in after a gap.
   const subtitleOpacity = useTransform(scrollYProgress, [0.45, 0.65], reduceMotion ? [1, 1] : [0, 1]);
   const subtitleY = useTransform(scrollYProgress, [0.45, 0.65], reduceMotion ? [0, 0] : [16, 0]);
-  const hintOpacity = useTransform(scrollYProgress, [0.05, 0.2, 0.8, 0.95], reduceMotion ? [1, 1, 1, 1] : [0, 1, 1, 0]);
+  // The "scroll to enter" hint is the one piece of this screen that has to
+  // be visible from the very first frame, not fade in with the rest - its
+  // whole job is telling a visitor who's just landed (progress still at 0)
+  // that there's more to see, so it can't wait until they've already
+  // started scrolling to appear.
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.8, 0.95], reduceMotion ? [1, 1, 1] : [1, 1, 0]);
   const stageOpacity = useTransform(scrollYProgress, [0.85, 1], reduceMotion ? [1, 1] : [1, 0]);
 
   // Skip non-letter characters (the space) when computing each letter's

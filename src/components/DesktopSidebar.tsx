@@ -56,8 +56,21 @@ export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps
 
   const goTop = (e: React.MouseEvent) => {
     e.preventDefault();
-    history.pushState(null, "", "#home");
-    smoothScrollToTop();
+    // On the homepage, "back to top" should land on the actual home
+    // content (#home) - since the welcome-reveal intro was added above it,
+    // the true top of the document is now the start of that 3D scroll
+    // animation, not the page itself, which isn't what "back to top"
+    // should mean here. Other pages (case studies, blog posts) have no
+    // welcome intro and no #home section at all, so there the original
+    // behaviour (scroll to the true document top) is exactly right and is
+    // preserved unchanged.
+    const home = document.querySelector("#home");
+    if (home) {
+      smoothScrollTo("#home", { pushHistory: "#home" });
+    } else {
+      history.pushState(null, "", "#home");
+      smoothScrollToTop();
+    }
   };
 
   const scrollTo = (e: React.MouseEvent, href: string) => {
