@@ -8499,17 +8499,14 @@ html, body {
   .vg-deck {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    /* Room for the resting rotation to overhang without being clipped by the
-       section, and so the spread state has somewhere to expand into. */
-    padding: 40px 0;
-    /* Large decks (6-7 cards) spread wider than the column when open; allow a
-       horizontal scroll rather than overflowing the page. Small decks never
-       reach this width so it stays invisible for them. */
-    overflow-x: auto;
-    scrollbar-width: none;
+    align-items: center;
+    /* Generous vertical padding so the resting rotation and the hover lift
+       never get clipped at the top/bottom. Horizontal is visible overflow so
+       a wide fan is never cut off by an invisible box - the earlier overflow-x
+       auto created exactly that clipping rectangle. */
+    padding: 70px 0;
+    overflow: visible;
   }
-  .vg-deck::-webkit-scrollbar { display: none; }
   .vg-deck-card {
     --vg-deck-r: 0;
     position: relative;
@@ -8517,7 +8514,7 @@ html, body {
        poster's own aspect ratio. Cards shrink a little as the deck grows so a
        6-7 card fan still fits the column when opened. */
     flex: 0 0 auto;
-    width: clamp(160px, calc(72vw / var(--vg-deck-count, 4)), 260px);
+    width: clamp(150px, calc(66vw / var(--vg-deck-count, 4)), 250px);
     /* Uniform card shape so a stack of mixed-ratio posters/videos reads as one
        tidy deck rather than a ragged run of different heights. The media
        inside is cropped to fill (see .vg-deck-card img / video below). */
@@ -8577,13 +8574,29 @@ html, body {
     backdrop-filter: blur(6px);
     border-top: 1px solid rgba(255,255,255,0.08);
   }
-  /* ── Frosted glass overlay ──
-     The card content (image / video poster) is opaque, so backdrop-filter has
-     nothing behind the CARD to blur - instead this ::before sits ON TOP of the
-     content and blurs the content itself, giving a true frosted-glass panel at
-     rest that CLEARS as the deck fans open. The translucent white gradient +
-     hairline top highlight matches the reference glass fill. Pointer-events
-     none so it never blocks the play-button click underneath. */
+  /* ── Real glass overlap blur ──
+     The reference blurs only where cards overlap, because its cards are
+     translucent glass - backdrop-filter blurs whatever sits BEHIND each card
+     (the neighbour it overlaps), while over empty background there is just
+     dark. To get that with opaque artwork, at rest each card is made slightly
+     translucent (its media dips in opacity) and carries a backdrop-filter, so
+     the overlapping neighbour shows through blurred, and the non-overlapped
+     area just reads as dark glass. On hover the deck fans apart, the media
+     returns to full opacity, and the blur switches off - sharp, separated
+     cards. A faint translucent-white veil + top highlight gives the glass
+     surface without hiding the art. */
+  .vg-deck-card {
+    background: rgba(255,255,255,0.04);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  .vg-deck-card > *,
+  .vg-deck-card .vg-playable-deck-outer {
+    opacity: 0.72;
+    transition: opacity 0.5s ease;
+  }
+  /* Thin glass veil + highlight, no blur of its own (the blur is on the card
+     so it only affects the overlap behind). */
   .vg-deck-card::before {
     content: "";
     position: absolute;
@@ -8591,23 +8604,31 @@ html, body {
     z-index: 2;
     pointer-events: none;
     border-radius: inherit;
-    background: linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.02));
-    -webkit-backdrop-filter: blur(9px);
-    backdrop-filter: blur(9px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18);
+    background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
     opacity: 1;
-    transition: opacity 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+    transition: opacity 0.5s ease;
   }
-  /* When the deck fans open, the frost lifts off every card together. */
-  .vg-deck:hover .vg-deck-card::before {
-    opacity: 0;
+  /* Deck open: media back to full opacity, glass veil + backdrop blur off. */
+  .vg-deck:hover .vg-deck-card {
     -webkit-backdrop-filter: blur(0px);
     backdrop-filter: blur(0px);
+    background: transparent;
   }
-  /* Group hover: every card straightens AND the stack spreads apart. */
+  .vg-deck:hover .vg-deck-card > *,
+  .vg-deck:hover .vg-deck-card .vg-playable-deck-outer {
+    opacity: 1;
+  }
+  .vg-deck:hover .vg-deck-card::before {
+    opacity: 0;
+  }
+  /* Group hover: every card straightens AND the stack spreads apart. The
+     spread gap shrinks as the deck grows so a 6-7 card fan stays within the
+     column instead of running off-screen (the wide-fan clipping in the 7-card
+     social deck). */
   .vg-deck:hover .vg-deck-card {
     transform: rotate(0deg);
-    margin: 0 12px;
+    margin: 0 clamp(2px, calc(60px / var(--vg-deck-count, 4)), 12px);
     border-color: rgba(255,255,255,0.2);
   }
   /* The individually-hovered card lifts a touch and rises above its
@@ -8635,11 +8656,17 @@ html, body {
     width: auto !important;
     margin: 0 !important;
     transform: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: transparent !important;
   }
-  /* No hover to clear the frost on touch, so never apply it there - the grid
-     must show sharp images. */
+  /* No hover to clear the glass on touch - show sharp, full-opacity images. */
   .vg-deck-card::before {
     display: none !important;
+  }
+  .vg-deck-card > *,
+  .vg-deck-card .vg-playable-deck-outer {
+    opacity: 1 !important;
   }
 }
 
@@ -8650,10 +8677,15 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .vg-deck-card {
     transition: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: transparent !important;
   }
   .vg-deck-card::before {
     opacity: 0 !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  }
+  .vg-deck-card > *,
+  .vg-deck-card .vg-playable-deck-outer {
+    opacity: 1 !important;
   }
 }

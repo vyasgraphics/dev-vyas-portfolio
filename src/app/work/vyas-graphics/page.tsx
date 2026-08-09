@@ -8,7 +8,6 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { LogoMarkTile } from "@/components/LogoMarkTile";
 import { PlayableStill } from "@/components/PlayableStill";
-import { Carousel } from "@/components/Carousel";
 import { GlassDeck } from "@/components/GlassDeck";
 import { SectionDivider } from "@/components/SectionDivider";
 import { StaggerReveal } from "@/components/StaggerReveal";
@@ -468,18 +467,21 @@ export default function VyasGraphicsWorkPage() {
             </Body>
 
             <div style={{ marginBottom: "32px" }}>
-              <Carousel
-                label="Visual identity case study"
-                items={Array.from({ length: 6 }, (_, i) => {
+              <GlassDeck min="230px">
+                {Array.from({ length: 6 }, (_, i) => {
                   const n = i + 1;
-                  return {
-                    src: `${IMG}/ipl-2026-visual-identity-case-study-slide-${String(n).padStart(2, "0")}.jpg`,
-                    alt: `IPL 2026 visual identity case study, slide ${n}`,
-                    width: 800,
-                    height: 1067,
-                  };
+                  return (
+                    <Image
+                      key={n}
+                      src={`${IMG}/ipl-2026-visual-identity-case-study-slide-${String(n).padStart(2, "0")}.jpg`}
+                      alt={`IPL 2026 visual identity case study, slide ${n}`}
+                      width={800}
+                      height={1067}
+                      style={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                  );
                 })}
-              />
+              </GlassDeck>
             </div>
 
             <GlassDeck min="280px">
