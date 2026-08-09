@@ -29,6 +29,14 @@
         * Footer
 
  ------------------------------------------------------------------------------ */
+/* Tomorrow: used only by the homepage's welcome-reveal title/subtitle
+   (.vg-welcome-title / .vg-welcome-subtitle in WelcomeReveal.tsx) - loaded
+   here at the very top of the stylesheet, rather than inside that
+   component's own <style> block, purely so the font request starts as
+   early as possible (as soon as this stylesheet parses) instead of waiting
+   for React to mount that specific component, reducing the chance of a
+   flash of fallback text on the welcome screen. */
+@import url('https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,700;0,800&display=swap');
 /*--------- Abstracts variable ---------- */
 :root {
   /*-- Core Color --*/
@@ -6957,10 +6965,10 @@ button.animate-btn::after,
 }
 
 .dark-v3.dark-mode .body-background {
-  background: linear-gradient(0deg, #0D1210, #0D1210), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(0deg, #0A0A0A, #0A0A0A), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 .dark-v3.dark-mode .sidebar-user .user-image {
-  background: linear-gradient(0deg, #0D1210, #0D1210), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(0deg, #0A0A0A, #0A0A0A), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 
 .dark-v4.dark-mode .body-background {
@@ -7317,7 +7325,7 @@ button.animate-btn::after,
   background: linear-gradient(0deg, #14151A, #14151A), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 .choose-item .color.type-dark-v3 {
-  background: linear-gradient(0deg, #0D1210, #0D1210), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(0deg, #0A0A0A, #0A0A0A), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 .choose-item .color::before {
   position: absolute;
@@ -7609,7 +7617,7 @@ button.animate-btn::after,
 
 /* ── 1. Lock to dark-v3 theme colours ── */
 .dark-v3.dark-mode .body-background {
-  background: linear-gradient(0deg, #0D1210, #0D1210) !important;
+  background: linear-gradient(0deg, #0A0A0A, #0A0A0A) !important;
 }
 /* Kill any pseudo-element that was animating the background */
 .body-background::before,

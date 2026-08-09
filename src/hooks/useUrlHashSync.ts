@@ -163,10 +163,20 @@ export function useUrlHashSync() {
                 // is exactly what the back button was then restoring to.
                 if (window.location.pathname !== "/") return;
 
-                const scrollY = window.scrollY + window.innerHeight / 3;
+                // Was comparing el.offsetTop (relative to the nearest
+                // positioned ancestor) against window.scrollY (always
+                // document-relative) - the same reference-frame mismatch
+                // just found and fixed in DesktopSidebar's own active-
+                // section tracking, for the identical reason: #wrapper has
+                // position:relative from the original template CSS, which
+                // only started mattering once something (the welcome-reveal
+                // intro) was added above it on the page. getBoundingClientRect()
+                // sidesteps the ambiguity entirely - always viewport-
+                // accurate regardless of what's positioned in between.
+                const threshold = window.innerHeight / 3;
                 let active = "#home";
                 for (const { href, el } of sections) {
-                    if (el.offsetTop <= scrollY) active = href;
+                    if (el.getBoundingClientRect().top <= threshold) active = href;
                 }
                 if (active !== currentHash) {
                     currentHash = active;

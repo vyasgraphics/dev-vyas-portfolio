@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "motion/react";
+import { motion, useTransform, useReducedMotion, type MotionValue } from "motion/react";
+import type { RefObject } from "react";
 
 // A scroll-driven 3D perspective character reveal, sitting before the real
 // homepage content. Adapted from a Skiper UI pattern (Skiper31): only the
@@ -15,20 +15,39 @@ import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } f
 // same technique from first principles with Framer Motion's useScroll/
 // useTransform, rather than the exact library.
 //
-// The technique itself: a tall scroll track (WelcomeReveal below) with a
-// `position: sticky` inner stage that stays pinned in the viewport while
-// the track scrolls past underneath it. Each letter gets its own 3D
-// transform (rotateX + a z-axis push via `perspective` on the parent),
-// driven by scroll progress - letters further from the centre of the word
-// start more dramatically rotated/displaced and land flat as progress
-// reaches 1, so the word assembles itself in 3D space as you scroll,
-// rather than just fading in.
+// The technique itself: a tall scroll track (rendered here, .vg-welcome-
+// track) with a `position: sticky` inner stage that stays pinned in the
+// viewport while the track scrolls past underneath it. Each letter gets its
+// own 3D transform (rotateX + a z-axis push via `perspective` on the
+// parent), driven by scroll progress - letters further from the centre of
+// the word start more dramatically rotated/displaced and land flat as
+// progress reaches 1, so the word assembles itself in 3D space as you
+// scroll, rather than just fading in.
+//
+// The scroll tracking itself (targetRef + scrollYProgress) is owned by the
+// parent (HomeShell) rather than this component, and passed in as props -
+// HomeShell also needs the exact same scrollYProgress to fade the site's
+// nav/profile chrome in as this section fades out, and sharing one motion
+// value keeps both perfectly in sync without any React re-renders during
+// scroll (a callback-based approach would have caused a state update on
+// every scroll frame).
 //
 // Colours: the reference used a light theme (#f5f4f3 bg, black text) -
-// inverted here to the site's own dark background (#0a0a0a) with white
-// text and the site's signature green (#00DE51) for the accent line/glow,
-// matching every other component built across this project rather than
-// introducing an unrelated light section at the very top of the page.
+// inverted here to the site's own dark background (#0A0A0A, matching the
+// site's actual locked theme colour exactly - see the colour-unification
+// note in styles.css) with white text and the site's signature green
+// (#00DE51) for the accent line/glow.
+//
+// Font: the title/subtitle use Google's "Tomorrow" typeface. Tried
+// next/font/google first (self-hosted at build time, no runtime request,
+// no flash of fallback text), but that requires Next.js to fetch the font
+// file from Google's servers during the build itself - unreachable in this
+// sandboxed environment's network, and the build failed outright rather
+// than just degrading. Using the runtime @import approach instead (loaded
+// via this component's own <style> block below, scoped only to the two
+// welcome-text classes, not site-wide) - the browser fetches it when a
+// real visitor loads the page, which works both here and on the actual
+// deployment (Vercel has normal internet access for that request).
 
 function Character({
   char,
@@ -78,19 +97,25 @@ function Character({
 const TITLE = "DEV VYAS";
 const TITLE_CENTER = Math.floor(TITLE.replace(/ /g, "").length / 2);
 
-export function WelcomeReveal() {
-  const targetRef = useRef<HTMLDivElement | null>(null);
+export function WelcomeReveal({
+  targetRef,
+  scrollYProgress,
+}: {
+  targetRef: RefObject<HTMLDivElement | null>;
+  scrollYProgress: MotionValue<number>;
+}) {
   const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: targetRef, offset: ["start start", "end end"] });
 
   // Subtitle and scroll-cue fade in only once the title has mostly
   // assembled, and the whole stage fades out right at the end so the
   // handoff into the real homepage content underneath doesn't feel like an
-  // abrupt cut.
+  // abrupt cut - HomeShell fades the site chrome in over roughly this same
+  // outgoing range so the two crossfade rather than one popping in after a
+  // gap.
   const subtitleOpacity = useTransform(scrollYProgress, [0.45, 0.65], reduceMotion ? [1, 1] : [0, 1]);
   const subtitleY = useTransform(scrollYProgress, [0.45, 0.65], reduceMotion ? [0, 0] : [16, 0]);
   const hintOpacity = useTransform(scrollYProgress, [0.05, 0.2, 0.8, 0.95], reduceMotion ? [1, 1, 1, 1] : [0, 1, 1, 0]);
-  const stageOpacity = useTransform(scrollYProgress, [0.88, 1], reduceMotion ? [1, 1] : [1, 0]);
+  const stageOpacity = useTransform(scrollYProgress, [0.85, 1], reduceMotion ? [1, 1] : [1, 0]);
 
   // Skip non-letter characters (the space) when computing each letter's
   // position in the word for the centre-distance maths above, but still
@@ -153,7 +178,7 @@ export function WelcomeReveal() {
         .vg-welcome-track {
           position: relative;
           height: 200vh;
-          background: #0a0a0a;
+          background: #0A0A0A;
         }
         .vg-welcome-stage {
           position: sticky;
@@ -164,16 +189,17 @@ export function WelcomeReveal() {
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          background: radial-gradient(ellipse 60% 50% at 50% 45%, rgba(0,222,81,0.08), transparent 70%), #0a0a0a;
+          background: radial-gradient(ellipse 60% 50% at 50% 45%, rgba(0,222,81,0.08), transparent 70%), #0A0A0A;
         }
         .vg-welcome-inner {
           text-align: center;
         }
         .vg-welcome-title {
           margin: 0;
+          font-family: "Tomorrow", sans-serif;
           font-size: clamp(40px, 10vw, 108px);
           font-weight: 800;
-          letter-spacing: -0.02em;
+          letter-spacing: 0.01em;
           color: #fff;
           text-transform: uppercase;
           text-shadow: 0 0 60px rgba(0,222,81,0.25);
@@ -184,8 +210,9 @@ export function WelcomeReveal() {
         }
         .vg-welcome-subtitle {
           margin: 14px 0 0;
+          font-family: "Tomorrow", sans-serif;
           font-size: clamp(14px, 2vw, 18px);
-          font-weight: 600;
+          font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
           color: #00DE51;

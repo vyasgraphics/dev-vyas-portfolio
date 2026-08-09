@@ -17,11 +17,25 @@ export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps
         el: document.querySelector(item.href) as HTMLElement | null,
     })).filter(s => s.el);
 
+    // Was comparing el.offsetTop (distance from the nearest POSITIONED
+    // ancestor, not the document root) against window.scrollY (always
+    // document-relative) - these silently stopped agreeing once anything
+    // with its own position was added above #wrapper in the page (#wrapper
+    // itself has position:relative from the original template CSS, which
+    // was harmless while #wrapper was the first thing on the page, but
+    // broke the second something - the welcome-reveal intro - was added
+    // above it). Confirmed via direct measurement: #about read
+    // offsetTop:2559 while its true page position was 4359, a 1800px gap
+    // matching the intro's own height exactly. Same class of bug already
+    // hit and fixed once before for the Work sidebar (see the reference-
+    // frame note in useIsakAnimations.ts) - same fix here: getBoundingClientRect()
+    // is always viewport-accurate regardless of any ancestor's positioning,
+    // no reference-frame ambiguity.
     const runOnScroll = () => {
-        const scrollY = window.scrollY + window.innerHeight / 3;
+        const threshold = window.innerHeight / 3;
         let current = "#home";
         for (const { href, el } of sections) {
-            if (el && el.offsetTop <= scrollY) current = href;
+            if (el && el.getBoundingClientRect().top <= threshold) current = href;
         }
         setActiveHref(current);
     };
