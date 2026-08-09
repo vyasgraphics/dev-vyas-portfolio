@@ -67,10 +67,13 @@ export function Contact() {
         setSending(false);
         setJustSent(true);
         setForm({ name: "", email: "", subject: "", message: "" });
-        // Let the button's own takeoff/checkmark animation play out (it runs
-        // just over a second end-to-end) before swapping the whole form for
-        // the full success panel.
-        setTimeout(() => setSubmitted(true), 1300);
+        // Let the button's own takeoff/checkmark/"Sent" animation play out
+        // fully - the longest piece of it (the staggered "Sent" letters) 
+        // finishes at 2.4s (1.6s max stagger delay + 0.8s duration) - before
+        // swapping the whole form for the full success panel. A small buffer
+        // on top so the finished "Sent" state is visible for a beat rather
+        // than swapping the instant the last letter settles.
+        setTimeout(() => setSubmitted(true), 2700);
         return;
       } else {
         setError("Something went wrong. Please email me directly at " + profile.email);
@@ -306,7 +309,7 @@ export function Contact() {
               its own honest, separate :focus-visible outline instead.
         */
         .vg-send-btn {
-          --primary: #00de51;
+          --primary: #f2f2f2;
           --neutral-1: #2b2e33;
           --neutral-2: #1a1c20;
           --radius: 14px;
