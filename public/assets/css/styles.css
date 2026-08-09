@@ -8486,32 +8486,44 @@ html, body {
    then straightens + lifts on hover. Layered on top of .vg-card, so the
    base shadow/lift stays intact.
 
+   The RESTING look (glass border, inner highlight, fan lean) applies on ALL
+   devices - it is the whole point of the effect and must be visible on
+   touch/mobile too, not just hover-capable pointers. Only the hover
+   INTERACTION (straighten + lift) is gated behind (hover:hover), plus a
+   matching :active tap resolve for touch. This split is deliberate: an
+   earlier version gated the resting tilt itself, which made mobile render
+   identically to the old flat cards.
+
    The glass surface is a hairline translucent border plus a soft inner
-   highlight ring drawn with an inset box-shadow (kept in the SAME combined
+   highlight ring drawn with an inset box-shadow, kept in the SAME combined
    box-shadow declaration as .vg-card's drop shadow rather than a separate
    rule, so the transition never gets silently dropped by cascade - the
-   cascade gotcha that previously bit .vg-tilt-card / .vg-brochure-tilt).
-
-   Desktop-hover only, guarded by (hover:hover) so touch never gets a sticky
-   tilted/tapped state; the resting fan tilt itself is also (hover:hover)-only
-   so mobile stays a clean, upright, responsive grid - untouched, matching the
-   rest of the gallery's mobile-parity approach. ── */
-@media (hover: hover) {
+   cascade gotcha that previously bit .vg-tilt-card / .vg-brochure-tilt. ── */
+.vg-glass {
+  /* Resting lean, in degrees, supplied per-card via --vg-fan (set on the
+     grid wrapper from the item's index - see AutoGrid). CSS nth-child can't
+     drive the fan here because each card is an only-child inside its own
+     StaggerReveal wrapper, so every card would read as child 1 and get an
+     identical angle. Defaults to 0 when unset (non-grid usages). */
+  --vg-fan: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 28px -16px rgba(0,0,0,0.65),
+              inset 0 1px 0 rgba(255,255,255,0.08);
+  transform: rotate(calc(var(--vg-fan) * 1deg));
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
+              box-shadow 0.4s ease,
+              border-color 0.4s ease;
+}
+/* Gentler lean on small screens so a single-column stack reads as a light,
+   intentional tilt rather than a strong rotation eating into the margins.
+   !important because Sass/Turbopack bundling does not reliably preserve
+   source order across the media-query boundary. */
+@media (max-width: 640px) {
   .vg-glass {
-    /* Resting lean, in degrees, supplied per-card via --vg-fan (set on the
-       grid wrapper from the item's index - see AutoGrid). CSS nth-child can't
-       drive the fan here because each card is an only-child inside its own
-       StaggerReveal wrapper, so every card would read as child 1 and get an
-       identical angle. Defaults to 0 when unset (non-grid usages). */
-    --vg-fan: 0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 28px -16px rgba(0,0,0,0.65),
-                inset 0 1px 0 rgba(255,255,255,0.08);
-    transform: rotate(calc(var(--vg-fan) * 1deg));
-    transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
-                box-shadow 0.4s ease,
-                border-color 0.4s ease;
+    transform: rotate(calc(var(--vg-fan) * 0.5deg)) !important;
   }
+}
+@media (hover: hover) {
   .vg-glass:hover {
     transform: rotate(0deg) translateY(-6px) scale(1.03);
     border-color: rgba(255, 255, 255, 0.22);
@@ -8521,9 +8533,8 @@ html, body {
   }
 }
 /* Tap feedback: resolve to upright, matching the hover intent, instead of
-   falling through to .vg-card:active's plain scale (which would leave any
-   ambient rotation unresolved). Only relevant where the resting tilt exists
-   (hover:hover), but harmless on touch where the card sits upright anyway. */
+   falling through to .vg-card:active's plain scale (which would leave the
+   resting rotation unresolved). */
 .vg-glass:active {
   transform: rotate(0deg) scale(0.97);
 }
