@@ -190,7 +190,7 @@ function Body({ children, style }: { children: React.ReactNode; style?: React.CS
 // Repeating fan angles (degrees) for the .vg-glass resting lean. Cycles every
 // 4 items so any row length reads as a gently spread deck rather than a
 // uniform tilt. Passed down through StaggerReveal as --vg-fan.
-const VG_FAN_PATTERN = [-3, -1, 1, 3];
+const VG_FAN_PATTERN = [-6, -2.5, 2.5, 6];
 
 function AutoGrid({
   min,

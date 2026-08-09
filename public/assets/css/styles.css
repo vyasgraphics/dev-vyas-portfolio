@@ -8506,17 +8506,10 @@ html, body {
      StaggerReveal wrapper, so every card would read as child 1 and get an
      identical angle. Defaults to 0 when unset (non-grid usages). */
   --vg-fan: 0;
-  /* TEMP DEBUG MARKER: a bright accent outline that is impossible to miss.
-     If this outline shows on the live gallery cards, the new CSS IS live and
-     any remaining tuning is cosmetic. If it does NOT show after a hard
-     refresh, the deploy/merge did not carry this file - a build/cache issue,
-     not a code issue. Remove this outline line once confirmed. */
-  outline: 3px solid #00de51 !important;
-  outline-offset: -3px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 28px -16px rgba(0,0,0,0.65),
-              inset 0 1px 0 rgba(255,255,255,0.08);
-  transform: rotate(calc(var(--vg-fan) * 1deg)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 30px -14px rgba(0,0,0,0.7),
+              inset 0 1px 0 rgba(255,255,255,0.1);
+  transform: rotate(calc(var(--vg-fan) * 1deg));
   transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
               box-shadow 0.4s ease,
               border-color 0.4s ease;
@@ -8527,7 +8520,7 @@ html, body {
    source order across the media-query boundary. */
 @media (max-width: 640px) {
   .vg-glass {
-    transform: rotate(calc(var(--vg-fan) * 0.5deg)) !important;
+    transform: rotate(calc(var(--vg-fan) * 0.7deg)) !important;
   }
 }
 @media (hover: hover) {
