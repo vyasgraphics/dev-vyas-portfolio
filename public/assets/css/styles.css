@@ -8488,15 +8488,24 @@ html, body {
    - Touch (.vg-deck-touch, set by GlassDeck.tsx on no-hover/small screens):
      .is-open, toggled by tapping the deck. Tap-to-fan, since hover can't fire.
 
-   The blur is a real backdrop-filter so it only affects the OVERLAP behind
-   each card: at rest cards are slightly translucent + carry a backdrop blur,
-   so an overlapped neighbour shows through blurred while empty background just
-   reads as dark glass. Open -> media returns to full opacity, blur off, cards
-   sharp and separated. ── */
+   IMPORTANT - why this does NOT use backdrop-filter:
+   An earlier version put backdrop-filter directly on .vg-deck-card so the
+   blur would only show where cards overlap. But .vg-deck-card is an ANCESTOR
+   of the <video> element once a PlayableStill starts playing, and browsers
+   have a well-known compositing bug where backdrop-filter on an ancestor (or
+   even a sibling within the same stacking context, e.g. the label bar) can
+   stop a <video> from rendering at all. That was confirmed here: video played
+   in the earlier full-card-blur build and broke the moment backdrop-filter
+   was introduced.
 
-/* Shared card + open-state styles are written out in full for the desktop
-   (hover) and touch (tap-to-fan) layers below; they share identical geometry
-   and only differ in what triggers the open state. */
+   The blur here instead uses a plain CSS `filter: blur()` applied ONLY to
+   <img> elements inside a deck card. This blurs the poster image itself
+   (matching the "full blur" look that is known to work), and critically it
+   can never touch the <video> element, because PlayableStill unmounts its
+   <img> the moment playback starts and mounts <video> in its place - the
+   blur rule's selector (img) simply no longer matches anything once a video
+   is on screen. No backdrop-filter, no compositing conflict, video always
+   renders. ── */
 
 /* ===== Desktop (hover) layer ===== */
 @media (min-width: 768px) and (hover: hover) {
@@ -8518,24 +8527,39 @@ html, body {
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.12);
     box-shadow: 0 20px 34px -18px rgba(0,0,0,0.7);
-    background: rgba(255,255,255,0.04);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background: #111;
     transform: rotate(calc(var(--vg-deck-r) * 1deg));
     transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
                 margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
-                border-color 0.4s ease, box-shadow 0.4s ease,
-                background 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+                border-color 0.4s ease, box-shadow 0.4s ease;
   }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card > * { width: 100% !important; height: 100% !important; }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card img,
   .vg-deck:not(.vg-deck-touch) .vg-deck-card video {
     width: 100% !important; height: 100% !important; object-fit: cover !important; display: block;
   }
+  .vg-deck:not(.vg-deck-touch).vg-deck-fit-contain .vg-deck-card img {
+    object-fit: contain !important;
+  }
+  /* Contain decks use a capped HEIGHT instead of a fixed aspect-ratio box, so
+     a naturally tall/narrow portrait genuinely renders shorter (a 4:5 box
+     with object-fit:contain would only add side letterboxing, not reduce
+     height - the height itself has to be the constraint). */
+  .vg-deck:not(.vg-deck-touch).vg-deck-fit-contain .vg-deck-card {
+    aspect-ratio: auto;
+    width: auto;
+    height: clamp(240px, 32vw, 380px);
+  }
+  .vg-deck:not(.vg-deck-touch).vg-deck-fit-contain .vg-deck-card img {
+    width: auto !important;
+  }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card .vg-playable-deck-outer { height: 100%; }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card .vg-playable-deck { height: 100% !important; aspect-ratio: auto !important; }
-  .vg-deck:not(.vg-deck-touch) .vg-deck-card > *,
-  .vg-deck:not(.vg-deck-touch) .vg-deck-card .vg-playable-deck-outer { opacity: 0.72; transition: opacity 0.5s ease; }
+  /* Frost: blur + dim the poster image only (never the video - see note above). */
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card img {
+    filter: blur(7px) brightness(0.8);
+    transition: filter 0.5s ease;
+  }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card::before {
     content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
     background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
@@ -8544,28 +8568,24 @@ html, body {
   .vg-deck-label {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 38px;
     display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff;
-    background: rgba(255,255,255,0.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    background: rgba(20,20,20,0.75);
     border-top: 1px solid rgba(255,255,255,0.08);
   }
-  /* Open (hover) */
+  /* Open (hover): blur clears, veil clears, cards straighten and spread. */
   .vg-deck:not(.vg-deck-touch):hover .vg-deck-card {
     transform: rotate(0deg);
     margin: 0 clamp(2px, calc(60px / var(--vg-deck-count, 4)), 12px);
     border-color: rgba(255,255,255,0.2);
-    -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); background: transparent;
   }
-  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card > *,
-  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card .vg-playable-deck-outer { opacity: 1; }
+  .vg-deck:not(.vg-deck-touch):hover .vg-deck-card img { filter: blur(0px) brightness(1); }
   .vg-deck:not(.vg-deck-touch):hover .vg-deck-card::before { opacity: 0; }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card:hover { z-index: 3; }
   .vg-deck:not(.vg-deck-touch):hover .vg-deck-card:hover { transform: rotate(0deg) translateY(-6px) scale(1.04); }
-  /* Playing video: always clear + lifted, regardless of hover. */
+  /* Playing video: always clear + lifted, regardless of hover (no filter ever
+     applies to it since the img it would target isn't in the DOM anymore). */
   .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing) {
-    -webkit-backdrop-filter: blur(0px) !important; backdrop-filter: blur(0px) !important;
-    background: transparent !important; z-index: 4; transform: rotate(0deg) scale(1.02) !important;
+    z-index: 4; transform: rotate(0deg) scale(1.02) !important;
   }
-  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing) > *,
-  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing) .vg-playable-deck-outer { opacity: 1 !important; }
   .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playing)::before { opacity: 0 !important; }
 }
 
@@ -8584,6 +8604,7 @@ html, body {
   overflow: hidden;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: padding 0.5s cubic-bezier(0.2,0.8,0.2,1);
 }
 .vg-deck-touch .vg-deck-card {
   --vg-deck-r: 0;
@@ -8596,23 +8617,36 @@ html, body {
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.12);
   box-shadow: 0 20px 34px -18px rgba(0,0,0,0.7);
-  background: rgba(255,255,255,0.04);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: #111;
   transform: rotate(calc(var(--vg-deck-r) * 1deg));
-  transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1),
-              margin 0.55s cubic-bezier(0.2,0.8,0.2,1),
-              background 0.5s ease, backdrop-filter 0.5s ease, -webkit-backdrop-filter 0.5s ease;
+  will-change: transform, margin;
+  transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1),
+              margin 0.5s cubic-bezier(0.2,0.8,0.2,1);
 }
 .vg-deck-touch .vg-deck-card > * { width: 100% !important; height: 100% !important; }
 .vg-deck-touch .vg-deck-card img,
 .vg-deck-touch .vg-deck-card video {
   width: 100% !important; height: 100% !important; object-fit: cover !important; display: block;
 }
+.vg-deck-touch.vg-deck-fit-contain .vg-deck-card img {
+  object-fit: contain !important;
+}
+.vg-deck-touch.vg-deck-fit-contain .vg-deck-card {
+  aspect-ratio: auto;
+  width: auto;
+  height: clamp(200px, 46vw, 320px);
+}
+.vg-deck-touch.vg-deck-fit-contain .vg-deck-card img {
+  width: auto !important;
+}
 .vg-deck-touch .vg-deck-card .vg-playable-deck-outer { height: 100%; }
 .vg-deck-touch .vg-deck-card .vg-playable-deck { height: 100% !important; aspect-ratio: auto !important; }
-.vg-deck-touch .vg-deck-card > *,
-.vg-deck-touch .vg-deck-card .vg-playable-deck-outer { opacity: 0.72; transition: opacity 0.5s ease; }
+/* Frost: blur + dim the poster image only, same reasoning as the desktop
+   layer above - never touches <video>. */
+.vg-deck-touch .vg-deck-card img {
+  filter: blur(7px) brightness(0.8);
+  transition: filter 0.5s ease;
+}
 .vg-deck-touch .vg-deck-card::before {
   content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
   background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
@@ -8621,7 +8655,7 @@ html, body {
 .vg-deck-touch .vg-deck-label {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 34px;
   display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff;
-  background: rgba(255,255,255,0.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  background: rgba(20,20,20,0.75);
   border-top: 1px solid rgba(255,255,255,0.08);
 }
 /* Tappable hint shown only while closed. */
@@ -8659,33 +8693,35 @@ html, body {
 .vg-deck-close:active {
   transform: translateX(-50%) scale(0.96);
 }
-/* Open (tapped): cards straighten, un-overlap, and wrap into a tidy centred
-   set. Transitions on margin + transform give a smooth spread. */
+/* Open (tapped): cards straighten and un-overlap within a SINGLE row (no
+   flex-wrap). Wrapping to a multi-row grid was the source of the jank you'd
+   see on open/close - flex-wrap changes are a layout reflow that no browser
+   can animate, so cards would visibly teleport into grid positions the
+   instant the class applied, regardless of any transition. Keeping a single
+   row means only transform + margin change, both of which are genuinely
+   animatable, so the open/close motion is smooth. If a deck has more cards
+   than fit the width once spread, the row scrolls horizontally instead of
+   wrapping (contained to the deck itself, never the page). */
 .vg-deck-touch.is-open {
-  flex-wrap: wrap;
-  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 24px 0 64px;
 }
 .vg-deck-touch.is-open .vg-deck-card {
-  margin: 0;
+  margin: 0 6px;
   transform: rotate(0deg);
-  -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); background: transparent;
 }
-.vg-deck-touch.is-open .vg-deck-card > *,
-.vg-deck-touch.is-open .vg-deck-card .vg-playable-deck-outer { opacity: 1; }
+.vg-deck-touch.is-open .vg-deck-card img { filter: blur(0px) brightness(1); }
 .vg-deck-touch.is-open .vg-deck-card::before { opacity: 0; }
 /* Playing video on touch: clear regardless of open state. */
 .vg-deck-touch .vg-deck-card:has(.vg-playing) {
-  -webkit-backdrop-filter: blur(0px) !important; backdrop-filter: blur(0px) !important;
-  background: transparent !important; z-index: 4; transform: rotate(0deg) !important;
+  z-index: 4; transform: rotate(0deg) !important;
 }
-.vg-deck-touch .vg-deck-card:has(.vg-playing) > *,
-.vg-deck-touch .vg-deck-card:has(.vg-playing) .vg-playable-deck-outer { opacity: 1 !important; }
 .vg-deck-touch .vg-deck-card:has(.vg-playing)::before { opacity: 0 !important; }
 
 /* Fallback: any .vg-deck that is neither a desktop-hover deck nor a touch deck
-   (e.g. SSR before JS resolves the input type, or an unusual environment) just
-   renders a clean responsive grid so content is never hidden. */
+   (e.g. SSR before JS resolves the input type) just renders a clean
+   responsive grid so content is never hidden. */
 .vg-deck:not(.vg-deck-touch) {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--vg-deck-min, 280px), 1fr));
@@ -8695,7 +8731,9 @@ html, body {
   .vg-deck:not(.vg-deck-touch) { display: flex; }
 }
 
-/* Reduced motion: no transitions, images full opacity, no blur. */
+/* Reduced motion: no transitions, images shown sharp and undimmed. */
 @media (prefers-reduced-motion: reduce) {
   .vg-deck-card { transition: none !important; }
+  .vg-deck-card img { filter: none !important; transition: none !important; }
+  .vg-deck-card::before { opacity: 0 !important; }
 }

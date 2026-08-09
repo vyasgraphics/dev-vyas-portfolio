@@ -491,12 +491,14 @@ export default function VyasGraphicsWorkPage() {
               <Image src={`${IMG}/rcb-ipl-2026-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} style={{ width: "100%", height: "auto", display: "block" }} />
             </GlassDeck>
 
-            {/* The two story graphics at their actual portrait size (not stacked) */}
+            {/* The two story graphics, shown shorter and centred in their own
+                small deck. "contain" fit so nothing is cropped - these are
+                text/table graphics where cropping would cut real content. */}
             <div style={{ marginTop: "36px" }}>
-              <AutoGrid min="300px">
-                <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
-                <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              </AutoGrid>
+              <GlassDeck min="220px" fit="contain">
+                <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
+                <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
+              </GlassDeck>
             </div>
           </section>
         </ScrollReveal>

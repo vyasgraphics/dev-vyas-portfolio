@@ -26,6 +26,7 @@ export function GlassDeck({
   angles,
   labels,
   min = "280px",
+  fit = "cover",
 }: {
   children: ReactNode;
   // Resting rotation (deg) per card, in order. When omitted, a symmetric
@@ -38,6 +39,13 @@ export function GlassDeck({
   labels?: string[];
   // Min column width for the mobile grid fallback base width.
   min?: string;
+  // "cover" (default) crops each card to the uniform deck aspect ratio - best
+  // for photos where a bit of cropping is fine. "contain" shows the whole
+  // image letterboxed instead - use for graphics with edge-to-edge content
+  // (tables, text) where cropping would cut something important, or when the
+  // source is an unusually tall/narrow portrait and a shorter, uncropped
+  // presentation is wanted.
+  fit?: "cover" | "contain";
 }) {
   const items = Children.toArray(children).filter(isValidElement) as ReactElement[];
   const n = items.length;
@@ -64,7 +72,12 @@ export function GlassDeck({
   const computed = items.map((_, i) => Math.round((i - (n - 1) / 2) * step * 10) / 10);
   const resolved = angles ?? computed;
 
-  const className = ["vg-deck", isTouch ? "vg-deck-touch" : "", isTouch && open ? "is-open" : ""]
+  const className = [
+    "vg-deck",
+    isTouch ? "vg-deck-touch" : "",
+    isTouch && open ? "is-open" : "",
+    fit === "contain" ? "vg-deck-fit-contain" : "",
+  ]
     .filter(Boolean)
     .join(" ");
 
