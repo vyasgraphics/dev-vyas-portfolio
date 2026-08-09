@@ -70,24 +70,31 @@ export function BeforeAfterSlider({
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={after} alt={afterLabel} draggable={false} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", inset: 0, width: `${position}%`, overflow: "hidden" }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={before}
-          alt={beforeLabel}
-          draggable={false}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            height: "100%",
-            width: `${100 / (position / 100 || 1)}%`,
-            maxWidth: "none",
-            objectFit: "cover",
-            pointerEvents: "none",
-          }}
-        />
-      </div>
+      {/* Clipped via clip-path rather than a width-resizing wrapper + a
+          compensating oversized inner image. The old approach changed
+          `width` on every pointermove during an active drag - a layout-
+          triggering property, forcing the browser to reflow on every
+          frame of the drag. clip-path is GPU-composited: the image
+          renders at its natural full size once, and only the visible
+          mask updates per frame, no layout recalculation involved. This
+          is the single most interactive, drag-heavy element on the page,
+          so it's exactly where that cost was most perceptible. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={before}
+        alt={beforeLabel}
+        draggable={false}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          pointerEvents: "none",
+          clipPath: `inset(0 ${100 - position}% 0 0)`,
+          willChange: "clip-path",
+        }}
+      />
 
       {/* labels */}
       <span style={{

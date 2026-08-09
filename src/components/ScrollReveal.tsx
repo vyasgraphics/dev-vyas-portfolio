@@ -15,6 +15,15 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 // isIntersecting never fires. A near-zero threshold plus rootMargin means
 // "as soon as any real sliver is on screen", which works regardless of how
 // tall the wrapped content is.
+//
+// Easing matches StaggerReveal's cubic-bezier(0.16,1,0.3,1) (a fast-start,
+// gentle-settle "ease-out-expo" curve) rather than plain `ease` - this
+// wraps whole sections while StaggerReveal wraps the individual images
+// inside them, and the two were using different easing curves for the
+// same fade+slide motion. A section materializing with one motion quality
+// and its own contents cascading in with a visibly different one is
+// exactly the kind of mismatch that reads as "not quite smooth," even
+// though neither curve is wrong in isolation.
 export function ScrollReveal({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -41,7 +50,7 @@ export function ScrollReveal({ children, delay = 0 }: { children: ReactNode; del
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
+        transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
       }}
     >
       {children}

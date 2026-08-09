@@ -24,6 +24,82 @@ export const metadata: Metadata = {
   },
 };
 
+const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
+const PAGE_URL = `${SITE_URL}/work/vyas-graphics`;
+const IMG_URL = `${SITE_URL}/assets/images/vyas-graphics`;
+
+// Structured data (JSON-LD). Three schema.org types doing three distinct
+// jobs, rather than one type stretched to cover everything:
+// - BreadcrumbList gives Google the Home > Work > Vyas Graphics path, which
+//   is what typically shows breadcrumbs in the SERP snippet instead of a
+//   raw URL.
+// - CreativeWork describes the case study itself (creator, representative
+//   image, date), the umbrella type since this page is both a written
+//   piece and a gallery, not cleanly just one or the other.
+// - VideoObject, one per real video, is the highest-value addition here:
+//   Google can surface these directly in video search/rich results, and
+//   duration is exact (pulled from the actual transcoded files via
+//   ffprobe when they were built, not estimated).
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Dev Vyas", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Work", item: `${SITE_URL}/#work` },
+        { "@type": "ListItem", position: 3, name: "Vyas Graphics", item: PAGE_URL },
+      ],
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": PAGE_URL,
+      name: "Vyas Graphics - Brand Identity & Sports Media",
+      description:
+        "Self-directed brand and motion work spanning logo design, animated logo reveals, social media, print, and a full sports media campaign for the ICC T20 World Cup 2026 and IPL 2026.",
+      url: PAGE_URL,
+      image: `${IMG_URL}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`,
+      creator: {
+        "@type": "Person",
+        name: "Dev Vyas",
+        url: SITE_URL,
+        jobTitle: "Product Designer",
+        sameAs: [
+          "https://www.linkedin.com/in/dev-vyas6",
+          "https://www.behance.net/devvyas_graphics",
+          "https://www.instagram.com/vyas.graphics/",
+        ],
+      },
+      keywords: [
+        "brand identity design",
+        "logo design",
+        "logo reveal animation",
+        "sports media design",
+        "ICC T20 World Cup 2026",
+        "IPL 2026",
+        "social media design",
+        "motion graphics",
+      ],
+    },
+    ...[
+      { file: "vyas-graphics-logo-reveal-crt-boot-up-animation.mp4", poster: "vyas-graphics-logo-reveal-crt-boot-up-poster.jpg", name: "Vyas Graphics Logo Reveal - CRT Boot-up", duration: "PT18S" },
+      { file: "vyas-graphics-logo-reveal-gold-title-card-animation.mp4", poster: "vyas-graphics-logo-reveal-gold-title-card-poster.jpg", name: "Vyas Graphics Logo Reveal - Gold Title Card", duration: "PT6S" },
+      { file: "vyas-graphics-logo-reveal-monochrome-animation.mp4", poster: "vyas-graphics-logo-reveal-monochrome-poster.jpg", name: "Vyas Graphics Logo Reveal - High-Contrast Mono", duration: "PT8S" },
+      { file: "vyas-graphics-logo-reveal-script-signature-animation.mp4", poster: "vyas-graphics-logo-reveal-script-signature-poster.jpg", name: "Vyas Graphics Logo Reveal - Script Signature", duration: "PT11S" },
+      { file: "icc-t20-world-cup-2026-tournament-promo-animation.mp4", poster: "icc-t20-world-cup-2026-tournament-promo-poster.jpg", name: "ICC Men's T20 World Cup 2026 Tournament Promo", duration: "PT25S" },
+      { file: "ipl-2026-season-promo-animation.mp4", poster: "ipl-2026-season-promo-poster.jpg", name: "IPL 2026 Season Promo Animation", duration: "PT20S" },
+    ].map((v) => ({
+      "@type": "VideoObject",
+      name: v.name,
+      description: `${v.name}, part of the Vyas Graphics brand and sports media case study.`,
+      thumbnailUrl: `${IMG_URL}/${v.poster}`,
+      contentUrl: `${IMG_URL}/${v.file}`,
+      uploadDate: "2026-08-08",
+      duration: v.duration,
+    })),
+  ],
+};
+
 const SECTIONS = [
   { id: "identity", label: "Brand Identity" },
   { id: "motion", label: "Motion" },
@@ -44,39 +120,39 @@ const TOOLS = [
 ];
 
 const GALLERY_IMAGES = [
-  { src: "social-01.jpg", alt: "Vyas Graphics custom design promo post", w: 900, h: 1124 },
-  { src: "icc-03-final.jpg", alt: "ICC T20 World Cup final poster", w: 800, h: 1066 },
-  { src: "social-08.jpg", alt: "Vyas Graphics portrait brand post", w: 900, h: 1199 },
-  { src: "ipl-champions-poster.jpg", alt: "RCB IPL champions poster", w: 1100, h: 1466 },
-  { src: "social-03.jpg", alt: "Vyas Graphics Instagram post", w: 900, h: 1123 },
-  { src: "icc-04-champions.jpg", alt: "India T20 World Cup champions poster", w: 800, h: 1066 },
-  { src: "social-05.jpg", alt: "Elevate your visual identity promotional post", w: 900, h: 1125 },
-  { src: "ipl-final-poster.jpg", alt: "IPL final poster, RCB vs Gujarat Titans", w: 1100, h: 1466 },
-  { src: "social-09.jpg", alt: "Vyas Graphics New Year post", w: 900, h: 1124 },
-  { src: "social-10.jpg", alt: "Vyas Graphics design fundamentals post", w: 900, h: 1199 },
+  { src: "vyas-graphics-custom-design-promo-instagram-post.jpg", alt: "Vyas Graphics custom design promo post", w: 900, h: 1124 },
+  { src: "icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg", alt: "ICC T20 World Cup final poster", w: 800, h: 1066 },
+  { src: "vyas-graphics-founder-portrait-instagram-post.jpg", alt: "Vyas Graphics portrait brand post", w: 900, h: 1199 },
+  { src: "rcb-ipl-2026-champions-poster.jpg", alt: "RCB IPL champions poster", w: 1100, h: 1466 },
+  { src: "vyas-graphics-unforgettable-post-instagram-post.jpg", alt: "Vyas Graphics Instagram post", w: 900, h: 1123 },
+  { src: "icc-t20-world-cup-2026-india-champions-poster.jpg", alt: "India T20 World Cup champions poster", w: 800, h: 1066 },
+  { src: "vyas-graphics-elevate-visual-identity-instagram-post.jpg", alt: "Elevate your visual identity promotional post", w: 900, h: 1125 },
+  { src: "ipl-2026-final-rcb-vs-gujarat-titans-poster.jpg", alt: "IPL final poster, RCB vs Gujarat Titans", w: 1100, h: 1466 },
+  { src: "vyas-graphics-happy-new-year-2026-instagram-post.jpg", alt: "Vyas Graphics New Year post", w: 900, h: 1124 },
+  { src: "vyas-graphics-design-fundamentals-instagram-post.jpg", alt: "Vyas Graphics design fundamentals post", w: 900, h: 1199 },
 ];
 
 const FLIPBOOKS = [
   {
-    src: "flipbook-v1.png",
+    src: "dev-vyas-portfolio-flipbook-v1-dark-gradient.png",
     alt: "Portfolio flipbook version one, dark gradient aesthetic",
     caption: "Version 01 - dark gradient",
     href: "https://devvyas-portfolio-sep2022.netlify.app/mobile/index.html",
   },
   {
-    src: "flipbook-v2.png",
+    src: "dev-vyas-portfolio-flipbook-v2-linkedin-upload.png",
     alt: "Portfolio flipbook version two, LinkedIn upload",
     caption: "Version 02 - LinkedIn upload",
     href: "https://dev-vyas-portfolio.netlify.app/mobile/index.html",
   },
   {
-    src: "flipbook-v3.png",
+    src: "dev-vyas-portfolio-flipbook-v3-navigable-toc.png",
     alt: "Portfolio flipbook version three, navigable table of contents",
     caption: "Version 03 - navigable TOC",
     href: "https://vyas-dev-portfolio-2024.netlify.app/mobile/index.html",
   },
   {
-    src: "flipbook-t20.png",
+    src: "team-india-road-to-final-t20-world-cup-flipbook.png",
     alt: "Team India's Road to Final flipbook, T20 World Cup editorial",
     caption: "Team India's Road to Final",
     href: "https://india-wc24.web.app/mobile/index.html",
@@ -84,14 +160,19 @@ const FLIPBOOKS = [
 ];
 
 const SERVICES_CAROUSEL = [
-  { src: "social-05.jpg", alt: "Elevate your visual identity promotional post", width: 900, height: 1125 },
-  { src: "social-06.jpg", alt: "Digital & motion, branding & media services breakdown", width: 900, height: 1125 },
-  { src: "social-07.jpg", alt: "Follow Vyas Graphics for amazing content", width: 900, height: 1125 },
+  { src: "vyas-graphics-elevate-visual-identity-instagram-post.jpg", alt: "Elevate your visual identity promotional post", width: 900, height: 1125 },
+  { src: "vyas-graphics-digital-motion-services-instagram-post.jpg", alt: "Digital & motion, branding & media services breakdown", width: 900, height: 1125 },
+  { src: "vyas-graphics-follow-us-instagram-post.jpg", alt: "Follow Vyas Graphics for amazing content", width: 900, height: 1125 },
 ];
 
 const SOCIAL_GRID = [
-  { n: 1, h: 1124 }, { n: 2, h: 1123 }, { n: 3, h: 1123 }, { n: 4, h: 1124 },
-  { n: 8, h: 1199 }, { n: 9, h: 1124 }, { n: 10, h: 1199 },
+  { src: "vyas-graphics-custom-design-promo-instagram-post.jpg", h: 1124, alt: "Vyas Graphics custom design promo Instagram post" },
+  { src: "vyas-graphics-better-content-instagram-post.jpg", h: 1123, alt: "Your brand deserves better content Instagram post" },
+  { src: "vyas-graphics-unforgettable-post-instagram-post.jpg", h: 1123, alt: "Make your post unforgettable Instagram post" },
+  { src: "vyas-graphics-brand-introduction-instagram-post.jpg", h: 1124, alt: "Vyas Graphics brand introduction Instagram post" },
+  { src: "vyas-graphics-founder-portrait-instagram-post.jpg", h: 1199, alt: "Vyas Graphics founder portrait Instagram post" },
+  { src: "vyas-graphics-happy-new-year-2026-instagram-post.jpg", h: 1124, alt: "Vyas Graphics Happy New Year 2026 Instagram post" },
+  { src: "vyas-graphics-design-fundamentals-instagram-post.jpg", h: 1199, alt: "Design fundamentals still matter Instagram post" },
 ];
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
@@ -130,6 +211,10 @@ function Caption({ children }: { children: React.ReactNode }) {
 export default function VyasGraphicsWorkPage() {
   return (
     <div id="vg-top" style={{ minHeight: "100vh", background: "#0a0a0a", color: "#fff" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+      />
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 0" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
@@ -186,11 +271,11 @@ export default function VyasGraphicsWorkPage() {
               and a dairy brand - each one drawn, not templated.
             </Body>
             <AutoGrid min="190px">
-              <LogoMarkTile src={`${IMG}/logo-vg-mark.png`} alt="Vyas Graphics VG wordmark" width={1239} height={264} label="Vyas Graphics" />
-              <LogoMarkTile src={`${IMG}/logo-raj-tailor.png`} alt="Raj Tailor visa and immigration consultancy logo" width={1311} height={395} label="Raj Tailor Consultancy" />
-              <LogoMarkTile src={`${IMG}/logo-diamond.png`} alt="Abstract diamond monogram mark" width={633} height={633} label="Diamond Monogram" />
-              <LogoMarkTile src={`${IMG}/logo-jeevan-badge.png`} alt="Jeevan Deep Sahay charitable trust badge" width={645} height={645} label="Jeevan Deep Sahay Trust" />
-              <LogoMarkTile src={`${IMG}/logo-lunara-badge.png`} alt="Lunara Dairy Co circular badge logo" width={645} height={645} label="Lunara Dairy Co." />
+              <LogoMarkTile src={`${IMG}/vyas-graphics-vg-wordmark-logo.png`} alt="Vyas Graphics VG wordmark" width={1239} height={264} label="Vyas Graphics" />
+              <LogoMarkTile src={`${IMG}/raj-tailor-immigration-consultancy-logo.png`} alt="Raj Tailor visa and immigration consultancy logo" width={1311} height={395} label="Raj Tailor Consultancy" />
+              <LogoMarkTile src={`${IMG}/abstract-diamond-monogram-logo.png`} alt="Abstract diamond monogram mark" width={633} height={633} label="Diamond Monogram" />
+              <LogoMarkTile src={`${IMG}/jeevan-deep-sahay-charitable-trust-logo.png`} alt="Jeevan Deep Sahay charitable trust badge" width={645} height={645} label="Jeevan Deep Sahay Trust" />
+              <LogoMarkTile src={`${IMG}/lunara-dairy-co-logo-badge.png`} alt="Lunara Dairy Co circular badge logo" width={645} height={645} label="Lunara Dairy Co." />
             </AutoGrid>
 
             <div style={{ marginTop: "56px" }}>
@@ -220,8 +305,8 @@ export default function VyasGraphicsWorkPage() {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "28px 24px" }}>
                 <div>
                   <BeforeAfterSlider
-                    before={`${IMG}/vectorise-northstar-before.jpg`}
-                    after={`${IMG}/vectorise-northstar-after.jpg`}
+                    before={`${IMG}/northstarwin-ai-generated-logo-reference.jpg`}
+                    after={`${IMG}/northstarwin-vector-logo-redesign.jpg`}
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
@@ -231,8 +316,8 @@ export default function VyasGraphicsWorkPage() {
                 </div>
                 <div>
                   <BeforeAfterSlider
-                    before={`${IMG}/vectorise-lakeshore-before.jpg`}
-                    after={`${IMG}/vectorise-lakeshore-after.jpg`}
+                    before={`${IMG}/lakeshore-pool-deck-ai-generated-logo-reference.jpg`}
+                    after={`${IMG}/lakeshore-pool-deck-vector-logo-redesign.jpg`}
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
@@ -242,8 +327,8 @@ export default function VyasGraphicsWorkPage() {
                 </div>
                 <div>
                   <BeforeAfterSlider
-                    before={`${IMG}/vectorise-promith-before.jpg`}
-                    after={`${IMG}/vectorise-promith-after.jpg`}
+                    before={`${IMG}/promith-ai-generated-logo-reference.jpg`}
+                    after={`${IMG}/promith-vector-logo-redesign.jpg`}
                     beforeLabel="AI Reference"
                     afterLabel="SVG · Clean Paths"
                     aspectRatio="900 / 720"
@@ -267,10 +352,10 @@ export default function VyasGraphicsWorkPage() {
               signature. Click any of them to play.
             </Body>
             <AutoGrid min="280px">
-              <PlayableStill poster={`${IMG}/reveal-01-crt.jpg`} videoSrc={`${IMG}/reveal-01-crt.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
-              <PlayableStill poster={`${IMG}/reveal-02-gold.jpg`} videoSrc={`${IMG}/reveal-02-gold.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" duration="0:06" />
-              <PlayableStill poster={`${IMG}/reveal-03-mono.jpg`} videoSrc={`${IMG}/reveal-03-mono.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />
-              <PlayableStill poster={`${IMG}/reveal-04-script.jpg`} videoSrc={`${IMG}/reveal-04-script.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" duration="0:11" />
+              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-animation.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
+              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-gold-title-card-animation.mp4`} alt="Gold title card logo reveal" width={1280} height={720} caption="Gold Title Card" duration="0:06" />
+              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-monochrome-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-monochrome-animation.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />
+              <PlayableStill poster={`${IMG}/vyas-graphics-logo-reveal-script-signature-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-script-signature-animation.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" duration="0:11" />
             </AutoGrid>
           </section>
         </ScrollReveal>
@@ -297,11 +382,11 @@ export default function VyasGraphicsWorkPage() {
             </div>
 
             <AutoGrid min="210px">
-              {SOCIAL_GRID.map(({ n, h }) => (
+              {SOCIAL_GRID.map(({ src, h, alt }) => (
                 <Image
-                  key={n}
-                  src={`${IMG}/social-${String(n).padStart(2, "0")}.jpg`}
-                  alt={`Vyas Graphics Instagram post ${n}`}
+                  key={src}
+                  src={`${IMG}/${src}`}
+                  alt={alt}
                   width={900}
                   height={h}
                   className="vg-card"
@@ -324,7 +409,7 @@ export default function VyasGraphicsWorkPage() {
             </Body>
             <div style={{ display: "flex", flexDirection: "column", gap: "44px", padding: "8px 0" }}>
               <Image
-                src={`${IMG}/brochure-v1.png`}
+                src={`${IMG}/rngpit-cse-department-trifold-brochure-edition-one.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition one"
                 width={1700}
                 height={936}
@@ -332,7 +417,7 @@ export default function VyasGraphicsWorkPage() {
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
               <Image
-                src={`${IMG}/brochure-v2.png`}
+                src={`${IMG}/rngpit-cse-department-trifold-brochure-edition-two.png`}
                 alt="R.N.G. Patel Institute of Technology CSE department trifold brochure, edition two"
                 width={1700}
                 height={936}
@@ -365,10 +450,10 @@ export default function VyasGraphicsWorkPage() {
             <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
             <AutoGrid min="230px">
-              <PlayableStill poster={`${IMG}/icc-01-promo.jpg`} videoSrc={`${IMG}/icc-01-promo.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
-              <Image src={`${IMG}/icc-02-poll.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/icc-03-final.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/icc-04-champions.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <PlayableStill poster={`${IMG}/icc-t20-world-cup-2026-tournament-promo-poster.jpg`} videoSrc={`${IMG}/icc-t20-world-cup-2026-tournament-promo-animation.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-final-instagram-poll-story.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
 
             <h3 style={{ fontSize: "19px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
@@ -383,7 +468,7 @@ export default function VyasGraphicsWorkPage() {
                 items={Array.from({ length: 6 }, (_, i) => {
                   const n = i + 1;
                   return {
-                    src: `${IMG}/ipl-identity-${String(n).padStart(2, "0")}.jpg`,
+                    src: `${IMG}/ipl-2026-visual-identity-case-study-slide-${String(n).padStart(2, "0")}.jpg`,
                     alt: `IPL 2026 visual identity case study, slide ${n}`,
                     width: 800,
                     height: 1067,
@@ -394,18 +479,18 @@ export default function VyasGraphicsWorkPage() {
 
             <div style={{ marginBottom: "28px" }}>
               <StaggerReveal>
-                <PlayableStill poster={`${IMG}/ipl-promo-wide.jpg`} videoSrc={`${IMG}/ipl-promo-wide.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
+                <PlayableStill poster={`${IMG}/ipl-2026-season-promo-poster.jpg`} videoSrc={`${IMG}/ipl-2026-season-promo-animation.mp4`} alt="IPL 2026 season promo animation" width={1280} height={670} caption="Season Promo Animation" duration="0:20" />
               </StaggerReveal>
             </div>
 
             <AutoGrid min="280px">
-              <Image src={`${IMG}/ipl-points-table.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/ipl-match-poll.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-2026-points-table-graphic.jpg`} alt="IPL 2026 points table graphic" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
             <div style={{ height: "20px" }} />
             <AutoGrid min="320px">
-              <Image src={`${IMG}/ipl-final-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
-              <Image src={`${IMG}/ipl-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/ipl-2026-final-rcb-vs-gujarat-titans-poster.jpg`} alt="IPL 2026 final poster, RCB vs Gujarat Titans" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
+              <Image src={`${IMG}/rcb-ipl-2026-champions-poster.jpg`} alt="RCB champions poster, Tata IPL 2026" width={1100} height={1466} className="vg-card" style={{ width: "100%", height: "auto" }} />
             </AutoGrid>
           </section>
         </ScrollReveal>

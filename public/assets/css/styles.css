@@ -8100,6 +8100,38 @@ textarea:focus-visible,
   opacity: 0.85;
 }
 
+/* ── Mobile tap states: companion to "Desktop hover states" above ──
+   Everything in that block only reacts on hover-capable devices
+   ((hover:hover) gated), which correctly avoids the "sticky hover"
+   problem on touch - tapping a card on a phone shouldn't leave it look
+   permanently hovered after your finger lifts. But that also meant touch
+   users got zero feedback at all on tap for several of them - no visual
+   acknowledgement that the tap registered. :active doesn't need that same
+   gate (it only ever fires for the duration of an actual press, so there's
+   no "stuck" risk), and the values below match the tap-feedback language
+   already established just above (.blog-card/.award-item:active) rather
+   than introducing a different one. ── */
+.tech-tool-pill:active {
+  transform: scale(0.96);
+}
+.section-nav-btn:active {
+  background: rgba(255,255,255,0.3);
+}
+.wg-pagination .pagination-item:active {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.link:active {
+  color: var(--primary) !important;
+}
+.link-underline:active {
+  text-decoration-color: var(--primary);
+}
+.article-blog .btn-action:active {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
 /* ── prefers-reduced-motion: respect the OS-level setting ──
    Users who've turned off animations at the OS level should get a
    calm, static experience - not orbs drifting, particles floating,
@@ -8120,7 +8152,11 @@ textarea:focus-visible,
   .tf-btn-icon:active,
   .action-down:active,
   .footer-back-to-top:active,
-  .blog-card:active {
+  .blog-card:active,
+  .tech-tool-pill:active,
+  .vg-card:active,
+  .vg-tilt-card:active,
+  .vg-brochure-tilt:active {
     transform: none !important;
   }
 }
@@ -8388,9 +8424,14 @@ html, body {
 }
 @media (hover: hover) {
   .vg-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.015);
     box-shadow: 0 20px 44px -16px rgba(0,0,0,0.7);
   }
+}
+/* Tap feedback for touch, where the hover-lift above never fires - same
+   scale used for .tech-tool-pill above, kept consistent site-wide. */
+.vg-card:active {
+  transform: scale(0.97);
 }
 
 /* ── Vyas Graphics: hero gallery strip ──
@@ -8403,21 +8444,18 @@ html, body {
 }
 .vg-tilt-card {
   transform: rotate(-4deg);
-  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1);
+  transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s ease;
 }
 @media (hover: hover) {
   .vg-tilt-card:hover {
     transform: rotate(0deg) scale(1.05);
   }
 }
-
-/* ── Vyas Graphics: gallery hover-lift + scale ──
-   Extends the existing lift with a subtle scale, consistent with the
-   tilted gallery's own hover treatment. ── */
-@media (hover: hover) {
-  .vg-card:hover {
-    transform: translateY(-5px) scale(1.015);
-  }
+/* Straightens on tap too, matching the hover intent above, rather than
+   falling through to the generic .vg-card:active scale (which would drop
+   the rotation entirely rather than resolving it the same way hover does). */
+.vg-tilt-card:active {
+  transform: rotate(0deg) scale(0.97);
 }
 
 /* ── Vyas Graphics: brochure resting tilt ──
@@ -8426,7 +8464,7 @@ html, body {
    single mechanical rotation repeated twice. Hover straightens + lifts. ── */
 .vg-brochure-tilt {
   transform: rotate(-1.4deg);
-  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1);
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.4s ease;
 }
 .vg-brochure-tilt:nth-of-type(2) {
   transform: rotate(1.1deg);
@@ -8435,4 +8473,7 @@ html, body {
   .vg-brochure-tilt:hover {
     transform: rotate(0deg) scale(1.015);
   }
+}
+.vg-brochure-tilt:active {
+  transform: rotate(0deg) scale(0.98);
 }

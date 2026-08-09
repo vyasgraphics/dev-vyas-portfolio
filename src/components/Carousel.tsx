@@ -189,7 +189,7 @@ export function Carousel({
                 width: active === i ? "22px" : "7px", height: "7px", borderRadius: "100px",
                 background: active === i ? "#00DE51" : "rgba(255,255,255,0.25)",
                 border: "none", padding: 0, cursor: "pointer",
-                transition: "all 0.25s ease",
+                transition: "width 0.25s ease, background 0.25s ease",
               }}
             />
           ))}
