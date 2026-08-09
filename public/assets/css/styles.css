@@ -7669,7 +7669,13 @@ button.animate-btn::after,
 @media (hover: hover) {
   .blog-card:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 20px 40px -20px rgba(0,222,81,0.25) !important;
+    /* Was a directional shadow (offset down + negative spread), which reads
+       as a disconnected glowing line floating below the card rather than a
+       glow that hugs its actual rounded shape. Split into two: a normal
+       symmetric lift shadow for depth, and a 0-offset ambient glow (equal in
+       every direction) that follows the card's silhouette evenly instead of
+       pooling toward one edge. */
+    box-shadow: 0 14px 30px -10px rgba(0,0,0,0.5), 0 0 22px rgba(0,222,81,0.22) !important;
   }
   /* The border used to live directly on .blog-card; it moved to the inset
      frame (.blog-card-surface) so a 2px gap around it could show the glow
