@@ -10,7 +10,7 @@ import { LogoMarkTile } from "@/components/LogoMarkTile";
 import { PlayableStill } from "@/components/PlayableStill";
 import { GlassDeck } from "@/components/GlassDeck";
 import { SectionBox } from "@/components/SectionBox";
-import { BentoIntro, type BentoTile } from "@/components/BentoIntro";
+import { NotificationStory } from "@/components/NotificationStory";
 import { StaggerReveal } from "@/components/StaggerReveal";
 import { BackToTop } from "@/components/BackToTop";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
@@ -111,37 +111,6 @@ const SECTIONS = [
 ];
 
 const IMG = "/assets/images/vyas-graphics";
-
-// Tile data for the bento grid at the top of the page - one tile per
-// section below, sized by how much that section actually holds. Reuses
-// images already shown later in their own sections (no new assets), just as
-// a thumbnail/teaser here.
-const BENTO_TILES: BentoTile[] = [
-  {
-    id: "identity", label: "Brand Identity", teaser: "5 marks, 1 voice", span: 2,
-    image: `${IMG}/northstarwin-vector-logo-redesign.jpg`, alt: "NorthstarWin Limited vector logo redesign",
-  },
-  {
-    id: "motion", label: "Motion", teaser: "Play to reveal", span: 1,
-    image: `${IMG}/vyas-graphics-logo-reveal-gold-title-card-poster.jpg`, alt: "Gold title card logo reveal",
-  },
-  {
-    id: "social", label: "Social Media", teaser: "Feed-ready craft", span: 1,
-    image: `${IMG}/vyas-graphics-elevate-visual-identity-instagram-post.jpg`, alt: "Elevate your visual identity promotional post",
-  },
-  {
-    id: "print", label: "Print", teaser: "Ink & layout", span: 1,
-    image: `${IMG}/rngpit-cse-department-trifold-brochure-edition-one.png`, alt: "R.N.G. Patel Institute CSE department trifold brochure",
-  },
-  {
-    id: "flipbooks", label: "Flipbooks", teaser: "3 years, rebuilt", span: 1,
-    image: `${IMG}/dev-vyas-portfolio-flipbook-v1-dark-gradient.png`, alt: "Portfolio flipbook, dark gradient cover",
-  },
-  {
-    id: "sports", label: "Sports Media", teaser: "Client-grade campaigns - ICC T20 World Cup & IPL 2026", span: 3,
-    image: `${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`, alt: "India T20 World Cup champions poster",
-  },
-];
 
 const TOOLS = [
   { icon: "tech-ai.svg", name: "Illustrator" },
@@ -302,8 +271,6 @@ export default function VyasGraphicsWorkPage() {
 
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 24px 100px" }}>
         <SectionNav sections={SECTIONS} />
-
-        <BentoIntro tiles={BENTO_TILES} />
 
         {/* ── Brand Identity ── */}
         <ScrollReveal>
@@ -600,23 +567,27 @@ export default function VyasGraphicsWorkPage() {
               ))}
             </AutoGrid>
 
-            <div style={{
-              marginTop: "40px", padding: "22px", borderRadius: "14px", maxWidth: "780px",
-              background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.2)",
-            }}>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "10px" }}>
+            <div style={{ marginTop: "40px", maxWidth: "900px" }}>
+              <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "12px" }}>
                 A LinkedIn comment that changed my approach
               </h3>
-              <p style={{ fontSize: "15px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "14px" }}>
-                A reader flagged that Version 02&apos;s table of contents wasn&apos;t clickable. It was a real
-                usability issue, not a nitpick - so I learned InDesign&apos;s interactive PDF export tools and
-                rebuilt it. Version 03 shipped with a fully navigable, bookmarked TOC.
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "13.5px" }}>
-                <span><strong style={{ color: "#fff" }}>Problem:</strong> <span style={{ color: "rgba(255,255,255,0.65)" }}>a static TOC made navigation frustrating.</span></span>
-                <span><strong style={{ color: "#fff" }}>Research:</strong> <span style={{ color: "rgba(255,255,255,0.65)" }}>researched and applied InDesign&apos;s interactive export tools.</span></span>
-                <span><strong style={{ color: "#fff" }}>Outcome:</strong> <span style={{ color: "rgba(255,255,255,0.65)" }}>a fully navigable Version 03, and a small case study in rapid, user-led iteration.</span></span>
-              </div>
+              <NotificationStory
+                intro="Not every fix comes from a formal usability test. This one started with a single comment on a LinkedIn post."
+                beats={[
+                  {
+                    title: "The comment",
+                    body: "A reader flagged that Version 02's table of contents wasn't clickable - a real usability issue, not a nitpick.",
+                  },
+                  {
+                    title: "The fix",
+                    body: "Researched and applied InDesign's interactive PDF export tools to rebuild the navigation properly.",
+                  },
+                  {
+                    title: "The outcome",
+                    body: "Version 03 shipped with a fully navigable, bookmarked TOC - a small case study in rapid, user-led iteration.",
+                  },
+                ]}
+              />
             </div>
           </SectionBox>
         </ScrollReveal>
