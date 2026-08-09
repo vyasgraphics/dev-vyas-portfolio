@@ -11,6 +11,7 @@ import { PlayableStill } from "@/components/PlayableStill";
 import { GlassDeck } from "@/components/GlassDeck";
 import { SectionBox } from "@/components/SectionBox";
 import { NotificationStory } from "@/components/NotificationStory";
+import { InstagramButton } from "@/components/InstagramButton";
 import { StaggerReveal } from "@/components/StaggerReveal";
 import { BackToTop } from "@/components/BackToTop";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
@@ -477,7 +478,7 @@ export default function VyasGraphicsWorkPage() {
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
             <GlassDeck min="230px">
               <PlayableStill deck poster={`${IMG}/icc-t20-world-cup-2026-tournament-promo-poster.jpg`} videoSrc={`${IMG}/icc-t20-world-cup-2026-tournament-promo-animation.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
-              <Image src={`${IMG}/icc-t20-world-cup-2026-final-instagram-poll-story.jpg`} alt="Final match story with IG poll sticker" width={800} height={1420} style={{ width: "100%", height: "auto", display: "block" }} />
+              <Image src={`${IMG}/icc-t20-world-cup-2026-final-india-new-zealand-poster.jpg`} alt="India vs New Zealand final match poster" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
               <Image src={`${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
             </GlassDeck>
 
@@ -610,36 +611,8 @@ export default function VyasGraphicsWorkPage() {
         </div>
 
         <ScrollReveal>
-          <div style={{
-            padding: "28px", borderRadius: "16px",
-            background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "18px",
-          }}>
-            <Link
-              href="https://www.instagram.com/vyas.graphics/?hl=en"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Vyas Graphics on Instagram"
-              style={{ display: "inline-flex" }}
-            >
-              <Image src="/assets/images/social/instagram.svg" alt="" width={52} height={52} />
-            </Link>
-            <Link
-              href="https://www.instagram.com/vyas.graphics/?hl=en"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block", padding: "12px 28px", borderRadius: "100px",
-                background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
-                fontSize: "14px", fontWeight: 700,
-              }}
-            >
-              Explore more on Instagram →
-            </Link>
+          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
+            <InstagramButton handle="@vyas.graphics" href="https://www.instagram.com/vyas.graphics/?hl=en" />
           </div>
         </ScrollReveal>
 

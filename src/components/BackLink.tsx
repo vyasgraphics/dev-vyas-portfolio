@@ -14,7 +14,11 @@ const style: CSSProperties = {
   textDecoration: "none",
   fontSize: "13px",
   fontWeight: 600,
-  transition: "all 0.3s ease",
+  display: "inline-block",
+  // transition deliberately not set here - vg-tactile (added below via
+  // className) supplies its own; an inline transition would win over that
+  // class's transition for the same property and silently swap out the
+  // calibrated press-feedback easing for a generic one.
 };
 
 /**
@@ -47,7 +51,7 @@ export function BackLink({ href, label }: { href: `/#${string}`; label: string }
   return (
     <Link
       href={href}
-      className="back-link-btn"
+      className="back-link-btn vg-tactile"
       style={style}
       onClick={(e) => {
         e.preventDefault();
