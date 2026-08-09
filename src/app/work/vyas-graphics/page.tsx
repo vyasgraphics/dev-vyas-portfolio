@@ -9,7 +9,8 @@ import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { LogoMarkTile } from "@/components/LogoMarkTile";
 import { PlayableStill } from "@/components/PlayableStill";
 import { GlassDeck } from "@/components/GlassDeck";
-import { SectionDivider } from "@/components/SectionDivider";
+import { SectionBox } from "@/components/SectionBox";
+import { BentoIntro, type BentoTile } from "@/components/BentoIntro";
 import { StaggerReveal } from "@/components/StaggerReveal";
 import { BackToTop } from "@/components/BackToTop";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
@@ -110,6 +111,37 @@ const SECTIONS = [
 ];
 
 const IMG = "/assets/images/vyas-graphics";
+
+// Tile data for the bento grid at the top of the page - one tile per
+// section below, sized by how much that section actually holds. Reuses
+// images already shown later in their own sections (no new assets), just as
+// a thumbnail/teaser here.
+const BENTO_TILES: BentoTile[] = [
+  {
+    id: "identity", label: "Brand Identity", teaser: "5 marks, 1 voice", span: 2,
+    image: `${IMG}/northstarwin-vector-logo-redesign.jpg`, alt: "NorthstarWin Limited vector logo redesign",
+  },
+  {
+    id: "motion", label: "Motion", teaser: "Play to reveal", span: 1,
+    image: `${IMG}/vyas-graphics-logo-reveal-gold-title-card-poster.jpg`, alt: "Gold title card logo reveal",
+  },
+  {
+    id: "social", label: "Social Media", teaser: "Feed-ready craft", span: 1,
+    image: `${IMG}/vyas-graphics-elevate-visual-identity-instagram-post.jpg`, alt: "Elevate your visual identity promotional post",
+  },
+  {
+    id: "print", label: "Print", teaser: "Ink & layout", span: 1,
+    image: `${IMG}/rngpit-cse-department-trifold-brochure-edition-one.png`, alt: "R.N.G. Patel Institute CSE department trifold brochure",
+  },
+  {
+    id: "flipbooks", label: "Flipbooks", teaser: "3 years, rebuilt", span: 1,
+    image: `${IMG}/dev-vyas-portfolio-flipbook-v1-dark-gradient.png`, alt: "Portfolio flipbook, dark gradient cover",
+  },
+  {
+    id: "sports", label: "Sports Media", teaser: "Client-grade campaigns - ICC T20 World Cup & IPL 2026", span: 3,
+    image: `${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`, alt: "India T20 World Cup champions poster",
+  },
+];
 
 const TOOLS = [
   { icon: "tech-ai.svg", name: "Illustrator" },
@@ -271,10 +303,11 @@ export default function VyasGraphicsWorkPage() {
       <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 24px 100px" }}>
         <SectionNav sections={SECTIONS} />
 
+        <BentoIntro tiles={BENTO_TILES} />
+
         {/* ── Brand Identity ── */}
         <ScrollReveal>
-          <section id="identity" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
-            <SectionDivider index="01" tag="5 marks, 1 voice" />
+          <SectionBox id="identity" tag="5 marks, 1 voice">
             <SectionHeading>Brand identity, from scratch</SectionHeading>
             <Body>
               Five marks, five different problems. A personal wordmark that needed to work as a spinning badge and a
@@ -350,13 +383,12 @@ export default function VyasGraphicsWorkPage() {
                 </div>
               </div>
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         {/* ── Motion ── */}
         <ScrollReveal>
-          <section id="motion" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
-            <SectionDivider index="02" tag="Play to reveal" />
+          <SectionBox id="motion" tag="Play to reveal">
             <SectionHeading>Logo reveal animation</SectionHeading>
             <Body>
               Four export variants of the Vyas Graphics logo reveal, built in After Effects for different placement
@@ -369,13 +401,12 @@ export default function VyasGraphicsWorkPage() {
               <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-monochrome-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-monochrome-animation.mp4`} alt="Monochrome logo reveal" width={1280} height={720} caption="High-Contrast Mono" duration="0:08" />
               <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-script-signature-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-script-signature-animation.mp4`} alt="Script signature logo reveal" width={1280} height={720} caption="Script Signature" duration="0:11" />
             </GlassDeck>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         {/* ── Social Media ── */}
         <ScrollReveal>
-          <section id="social" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
-            <SectionDivider index="03" tag="Feed-ready craft" />
+          <SectionBox id="social" tag="Feed-ready craft">
             <SectionHeading>Social media posts</SectionHeading>
             <Body>
               The Vyas Graphics self-promotion series on Instagram - promotional posts, service announcements, and
@@ -425,13 +456,12 @@ export default function VyasGraphicsWorkPage() {
                 />
               ))}
             </GlassDeck>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         {/* ── Print ── */}
         <ScrollReveal>
-          <section id="print" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
-            <SectionDivider index="04" tag="Ink & layout" />
+          <SectionBox id="print" tag="Ink & layout">
             <SectionHeading>Brochures</SectionHeading>
             <Body>
               Two-edition trifold brochures for R.N.G. Patel Institute of Technology&apos;s CSE department - faculty
@@ -456,13 +486,12 @@ export default function VyasGraphicsWorkPage() {
                 style={{ width: "100%", height: "auto", display: "block" }}
               />
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         {/* ── Sports Media ── */}
         <ScrollReveal>
-          <section id="sports" style={{ marginBottom: "72px", scrollMarginTop: "24px" }}>
-            <SectionDivider index="05" tag="Client-grade campaigns" />
+          <SectionBox id="sports" tag="Client-grade campaigns">
             <SectionHeading>Sports media graphics</SectionHeading>
             <Body>
               Self-initiated sports media campaigns run like real client accounts - tournament identity, match-day
@@ -527,13 +556,12 @@ export default function VyasGraphicsWorkPage() {
                 <Image src={`${IMG}/ipl-2026-final-instagram-poll-story.jpg`} alt="IPL 2026 final match story with poll" width={800} height={1421} style={{ width: "100%", height: "auto", display: "block" }} />
               </GlassDeck>
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         {/* ── Flipbooks ── */}
         <ScrollReveal>
-          <section id="flipbooks" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
-            <SectionDivider index="06" tag="3 years, rebuilt" />
+          <SectionBox id="flipbooks" tag="3 years, rebuilt">
             <SectionHeading>Flipbooks</SectionHeading>
             <Body>
               Three years of the same portfolio flipbook, rebuilt each time, plus a themed editorial for India&apos;s
@@ -590,7 +618,7 @@ export default function VyasGraphicsWorkPage() {
                 <span><strong style={{ color: "#fff" }}>Outcome:</strong> <span style={{ color: "rgba(255,255,255,0.65)" }}>a fully navigable Version 03, and a small case study in rapid, user-led iteration.</span></span>
               </div>
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <div className="vg-hero-in" style={{ margin: "48px 0", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
