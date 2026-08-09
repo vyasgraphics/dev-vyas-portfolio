@@ -8565,6 +8565,16 @@ html, body {
     background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); opacity: 1; transition: opacity 0.5s ease;
   }
+  /* Video cards (PlayableStill) skip the frost treatment entirely - shown
+     sharp and plain in the deck, no blur, no glass veil, at rest or open.
+     They still overlap/fan/rotate like every other card; only the frost
+     cosmetic layer is removed. */
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playable-deck) img {
+    filter: none !important;
+  }
+  .vg-deck:not(.vg-deck-touch) .vg-deck-card:has(.vg-playable-deck)::before {
+    display: none;
+  }
   .vg-deck-label {
     position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 38px;
     display: flex; align-items: center; justify-content: center; font-size: 13px; color: #fff;
@@ -8651,6 +8661,14 @@ html, body {
   content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
   background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.01));
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.16); opacity: 1; transition: opacity 0.5s ease;
+}
+/* Video cards skip the frost treatment entirely, same as desktop - sharp,
+   plain poster with no blur or glass veil, at rest or open. */
+.vg-deck-touch .vg-deck-card:has(.vg-playable-deck) img {
+  filter: none !important;
+}
+.vg-deck-touch .vg-deck-card:has(.vg-playable-deck)::before {
+  display: none;
 }
 .vg-deck-touch .vg-deck-label {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 34px;
