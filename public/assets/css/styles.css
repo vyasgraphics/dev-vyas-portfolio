@@ -8073,8 +8073,14 @@ textarea:focus-visible,
 
 /* ── Tactile press feedback (mobile taps + mouse clicks) ──
    Nothing in the base stylesheet gives any visual confirmation that a
-   tap/click registered. A subtle scale-down on :active makes every
-   button, card, and pill feel responsive. */
+   tap/click registered. Upgraded from a flat scale(0.96) snap to the same
+   "lift then settle" feel as the Send Message button: a subtle hover-lift
+   (scale up a touch, shadow grows) that then compresses back down with a
+   tightened shadow on press - so pressing reads as pushing an already-
+   slightly-raised surface back down, rather than an unrelated shrink from a
+   flat resting state. The hover-lift is gated behind (hover:hover) so touch
+   devices only ever see the press-settle half (no lift to get "stuck" on
+   after a tap lifts the finger). */
 .tf-btn,
 .tf-btn-action,
 .tf-btn-icon,
@@ -8084,7 +8090,18 @@ textarea:focus-visible,
 .nav-mobile-item .item-link,
 .sidebar-tools .item-link,
 .footer-back-to-top {
-  transition: transform 0.15s ease, opacity 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease,
+    background 0.2s ease, border-color 0.2s ease, box-shadow 0.25s ease;
+}
+@media (hover: hover) {
+  .tf-btn:hover,
+  .tf-btn-action:hover,
+  .tf-btn-icon:hover,
+  .action-down:hover,
+  .footer-back-to-top:hover {
+    transform: scale(1.015);
+    box-shadow: 0 10px 22px -8px rgba(0,0,0,0.35);
+  }
 }
 .tf-btn:active,
 .tf-btn-action:active,
@@ -8092,6 +8109,7 @@ textarea:focus-visible,
 .action-down:active,
 .footer-back-to-top:active {
   transform: scale(0.96);
+  box-shadow: 0 2px 8px -2px rgba(0,0,0,0.3), inset 0 1px 4px rgba(0,0,0,0.2);
 }
 .blog-card:active {
   transform: scale(0.985);

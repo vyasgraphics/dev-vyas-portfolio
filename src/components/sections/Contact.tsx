@@ -228,7 +228,6 @@ export function Contact() {
                 disabled={sending || justSent}
                 aria-live="polite"
               >
-                <div className="vg-send-outline" aria-hidden />
                 <div className="vg-send-state vg-send-state--default">
                   <div className="vg-send-icon">
                     <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -373,30 +372,6 @@ export function Contact() {
           z-index: 0;
         }
 
-        .vg-send-outline {
-          position: absolute;
-          border-radius: inherit;
-          overflow: hidden;
-          z-index: 1;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-          inset: -2px -3.5px;
-          pointer-events: none;
-        }
-        .vg-send-outline::before {
-          content: "";
-          position: absolute;
-          inset: -100%;
-          background: conic-gradient(from 180deg, transparent 60%, var(--primary) 80%, transparent 100%);
-          animation: vg-send-spin 2s linear infinite;
-          animation-play-state: paused;
-        }
-        @keyframes vg-send-spin {
-          to { transform: rotate(360deg); }
-        }
-        .vg-send-btn:hover .vg-send-outline { opacity: 1; }
-        .vg-send-btn:hover .vg-send-outline::before { animation-play-state: running; }
-
         .vg-send-state {
           padding-left: 27px;
           z-index: 2;
@@ -508,7 +483,7 @@ export function Contact() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .vg-send-btn, .vg-send-btn *, .vg-send-outline::before {
+          .vg-send-btn, .vg-send-btn * {
             animation: none !important;
             transition: none !important;
           }
