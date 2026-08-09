@@ -7667,7 +7667,20 @@ button.animate-btn::after,
 
 /* ── 7. Desktop hover states ── */
 @media (hover: hover) {
-  .blog-card:hover { transform: translateY(-4px) !important; border-color: rgba(0,200,83,0.35) !important; }
+  .blog-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 20px 40px -20px rgba(0,222,81,0.25) !important;
+  }
+  /* The border used to live directly on .blog-card; it moved to the inset
+     frame (.blog-card-surface) so a 2px gap around it could show the glow
+     blob peeking through underneath - see Blog.tsx for the layer order. */
+  .blog-card:hover .blog-card-surface {
+    border-color: rgba(0,222,81,0.4) !important;
+  }
+  .blog-card:hover .blog-card-glow {
+    opacity: 0.42 !important;
+    transform: scale(1.15) !important;
+  }
   .tech-tool-pill:hover {
     background: rgba(255,255,255,0.08) !important;
     border-color: rgba(0,200,83,0.4) !important;
