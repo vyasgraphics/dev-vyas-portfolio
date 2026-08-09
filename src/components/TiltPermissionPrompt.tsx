@@ -13,6 +13,7 @@ export function TiltPermissionPrompt() {
   const [visible, setVisible] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [denied, setDenied] = useState(false);
 
   useEffect(() => {
     const isTouchPrimary = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
@@ -25,66 +26,79 @@ export function TiltPermissionPrompt() {
   if (!visible) return null;
 
   return (
-    <button
-      type="button"
-      disabled={busy}
-      onClick={async () => {
-        setBusy(true);
-        await toggleDeviceTilt();
-        setBusy(false);
-      }}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "10px",
-        padding: "8px 12px 8px 14px",
-        borderRadius: "100px",
-        background: enabled ? "rgba(0,222,81,0.14)" : "rgba(0,222,81,0.06)",
-        border: `1px solid ${enabled ? "rgba(0,222,81,0.5)" : "rgba(0,222,81,0.25)"}`,
-        color: "#00DE51",
-        fontSize: "11.5px",
-        fontWeight: 600,
-        cursor: busy ? "default" : "pointer",
-        marginBottom: "20px",
-        opacity: busy ? 0.7 : 1,
-        transition: "background 0.2s ease, border-color 0.2s ease",
-        whiteSpace: "nowrap",
-      }}
-    >
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-        <rect x="7" y="2" width="10" height="20" rx="2" />
-        <path d="M11 18h2" />
-      </svg>
-      <span>{enabled ? "Tilt effect is on" : "Press here - tilt your phone for 3D cards"}</span>
-      {/* A real toggle-switch visual, matching the same component already
-          used inside the wireframe screens, so on/off reads instantly. */}
-      <span
+    <div style={{ marginBottom: "20px" }}>
+      <button
+        type="button"
+        disabled={busy}
+        onClick={async () => {
+          setBusy(true);
+          const result = await toggleDeviceTilt();
+          setDenied(result === "denied");
+          setBusy(false);
+        }}
         style={{
-          width: "34px",
-          height: "20px",
-          borderRadius: "999px",
-          background: enabled ? "#00DE51" : "rgba(255,255,255,0.18)",
-          border: `1.5px solid ${enabled ? "#00DE51" : "rgba(255,255,255,0.3)"}`,
-          position: "relative",
-          flexShrink: 0,
-          boxSizing: "border-box",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "10px",
+          padding: "8px 12px 8px 14px",
+          borderRadius: "100px",
+          background: enabled ? "rgba(0,222,81,0.14)" : "rgba(0,222,81,0.06)",
+          border: `1px solid ${enabled ? "rgba(0,222,81,0.5)" : "rgba(0,222,81,0.25)"}`,
+          color: "#00DE51",
+          fontSize: "11.5px",
+          fontWeight: 600,
+          cursor: busy ? "default" : "pointer",
+          opacity: busy ? 0.7 : 1,
           transition: "background 0.2s ease, border-color 0.2s ease",
+          whiteSpace: "nowrap",
         }}
       >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+          <rect x="7" y="2" width="10" height="20" rx="2" />
+          <path d="M11 18h2" />
+        </svg>
+        <span>{enabled ? "Tilt effect is on" : "Press here - tilt your phone for 3D cards"}</span>
+        {/* A real toggle-switch visual, matching the same component already
+            used inside the wireframe screens, so on/off reads instantly. */}
         <span
           style={{
-            position: "absolute",
-            top: "50%",
-            left: enabled ? "calc(100% - 16px)" : "2px",
-            transform: "translateY(-50%)",
-            width: "14px",
-            height: "14px",
-            borderRadius: "50%",
-            background: enabled ? "#0a0a0a" : "#fff",
-            transition: "left 0.22s cubic-bezier(0.34,1.56,0.64,1)",
+            width: "34px",
+            height: "20px",
+            borderRadius: "999px",
+            background: enabled ? "#00DE51" : "rgba(255,255,255,0.18)",
+            border: `1.5px solid ${enabled ? "#00DE51" : "rgba(255,255,255,0.3)"}`,
+            position: "relative",
+            flexShrink: 0,
+            boxSizing: "border-box",
+            transition: "background 0.2s ease, border-color 0.2s ease",
           }}
-        />
-      </span>
-    </button>
+        >
+          <span
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: enabled ? "calc(100% - 16px)" : "2px",
+              transform: "translateY(-50%)",
+              width: "14px",
+              height: "14px",
+              borderRadius: "50%",
+              background: enabled ? "#0a0a0a" : "#fff",
+              transition: "left 0.22s cubic-bezier(0.34,1.56,0.64,1)",
+            }}
+          />
+        </span>
+      </button>
+      {/* iOS gives no dialog at all on a repeat denial - the page can't
+          detect *why* permission failed, only that it did, so this can't
+          be more specific than "check Settings," but silently doing
+          nothing here would look identical to the button being broken. */}
+      {denied && (
+        <p style={{ fontSize: "11.5px", lineHeight: 1.5, color: "rgba(255,255,255,0.5)", marginTop: "8px", maxWidth: "280px" }}>
+          Motion access is off for this site. On iPhone: Settings → Safari →
+          scroll to Motion &amp; Orientation Access → turn it on, then reload
+          this page and try again.
+        </p>
+      )}
+    </div>
   );
 }

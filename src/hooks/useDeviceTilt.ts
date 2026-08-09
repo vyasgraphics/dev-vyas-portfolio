@@ -70,13 +70,21 @@ export function isDeviceTiltEnabled() {
 // The toggle button's tap handler. First tap: requests OS permission if
 // this platform needs it (iOS), otherwise just flips on. Every tap after
 // that just flips the existing on/off state - no re-prompting.
-export async function toggleDeviceTilt(): Promise<boolean> {
+//
+// Returns a reason rather than a plain boolean so the button can tell the
+// person *why* nothing happened when it fails - iOS silently rejects
+// requestPermission() with no dialog at all if it was denied in a past
+// visit (the only way to reset it is iOS Settings > Safari > Motion &
+// Orientation Access, which the page has no way to detect or open on its
+// own), and that failure mode looks identical to "the button is broken"
+// from the outside unless something explains it.
+export async function toggleDeviceTilt(): Promise<"enabled" | "disabled" | "denied"> {
   if (enabled) {
     enabled = false;
     baseline = null; // re-calibrate to wherever the phone is next time it's turned on
     listeners.forEach((l) => l(0, 0)); // snap every card back to flat, not stuck mid-tilt
     stateListeners.forEach((l) => l(false));
-    return false;
+    return "disabled";
   }
 
   if (!permissionGranted) {
@@ -84,9 +92,9 @@ export async function toggleDeviceTilt(): Promise<boolean> {
       try {
         const DOE = window.DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> };
         const result = await DOE.requestPermission();
-        if (result !== "granted") return false;
+        if (result !== "granted") return "denied";
       } catch {
-        return false;
+        return "denied";
       }
     }
     permissionGranted = true;
@@ -95,7 +103,7 @@ export async function toggleDeviceTilt(): Promise<boolean> {
   ensureListening();
   enabled = true;
   stateListeners.forEach((l) => l(true));
-  return true;
+  return "enabled";
 }
 
 export function subscribeDeviceTilt(cb: TiltListener): () => void {
