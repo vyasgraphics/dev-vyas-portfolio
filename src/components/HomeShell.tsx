@@ -23,6 +23,8 @@ import { useHeadlineRotate } from "@/hooks/useHeadlineRotate";
 import { useInfiniteSlide } from "@/hooks/useInfiniteSlide";
 import { useBodyThemeClass } from "@/hooks/useBodyThemeClass";
 import { useUrlHashSync } from "@/hooks/useUrlHashSync";
+import { WorkCardPolish } from "./premium/WorkCardPolish";
+import { HeroReveal } from "./premium/HeroReveal";
 
 export function HomeShell() {
     const bodyClass = "counter-scroll";
@@ -45,6 +47,11 @@ export function HomeShell() {
     return (
         <>
             <Preloader bgDark={true} />
+            {/* Additive premium micro-interactions. Each is self-contained,
+                pointer-only, and reduced-motion aware - see components/premium.
+                (MagneticButtons is mounted site-wide in layout.tsx.) */}
+            <WorkCardPolish />
+            <HeroReveal />
             <BodyBackground showCloudItem={false} showVideo={false} />
             <SettingColorMenu />
             <MobileMenu />

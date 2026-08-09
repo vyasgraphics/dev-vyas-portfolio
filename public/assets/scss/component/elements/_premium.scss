@@ -1,0 +1,188 @@
+/* =============================================================================
+   Premium micro-interaction & transition styles (additive)
+   -----------------------------------------------------------------------------
+   Paired with:
+     - components/premium/PageTransition.tsx   (.pt-curtain)
+     - components/premium/WorkCardPolish.tsx   (.work-image.is-spotlit)
+     - components/premium/HeroReveal.tsx        (.hero-shimmer)
+   Magnetic buttons are pure JS transforms and need no CSS here.
+
+   All motion here is gated behind (hover:hover) where it tracks a cursor, and
+   fully disabled under prefers-reduced-motion. Nothing here changes the
+   layout, spacing, or existing behaviour of any component - it only layers
+   new visuals on top.
+   ========================================================================== */
+
+/* ---- Route transition curtain ------------------------------------------- */
+.pt-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none; /* never intercepts clicks, even mid-fade */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d1512 0%, #0a0a0a 55%, #0d1512 100%);
+    /* Sweep the curtain from bottom to top using a clip so it's GPU-composited
+       rather than animating height/top. */
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+    will-change: clip-path, opacity;
+}
+
+.pt-mark {
+    font-family: var(--font-2, inherit);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--primary, #00de51);
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+}
+
+/* Cover: curtain closes up from the bottom. */
+.pt-cover {
+    animation: pt-cover 0.42s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    .pt-mark {
+        animation: pt-mark-in 0.42s ease forwards;
+    }
+}
+
+/* Reveal: curtain lifts away to the top. */
+.pt-reveal {
+    animation: pt-reveal 0.52s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    .pt-mark {
+        animation: pt-mark-out 0.32s ease forwards;
+    }
+}
+
+@keyframes pt-cover {
+    from {
+        clip-path: inset(100% 0 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+@keyframes pt-reveal {
+    from {
+        clip-path: inset(0 0 0 0);
+    }
+    to {
+        clip-path: inset(0 0 100% 0);
+    }
+}
+
+@keyframes pt-mark-in {
+    0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes pt-mark-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* ---- Work card cursor spotlight + image parallax ------------------------ */
+/* Only meaningful on pointer devices; the JS enhancer already refuses to run
+   elsewhere, but guard the paint too so touch users never get the overlay. */
+@media (hover: hover) and (pointer: fine) {
+    .wg-work .work-image {
+        --mx: 50%;
+        --my: 50%;
+        position: relative; /* the template already positions this; harmless if so */
+
+        img {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        /* The spotlight glow sits above the image but below the arrow link. */
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            background: radial-gradient(
+                220px circle at var(--mx) var(--my),
+                rgba(0, 222, 81, 0.16),
+                rgba(0, 222, 81, 0) 60%
+            );
+            mix-blend-mode: screen;
+            z-index: 2;
+        }
+
+        &.is-spotlit::after {
+            opacity: 1;
+        }
+    }
+
+    /* Keep the arrow link above the spotlight so it stays crisp & clickable. */
+    .wg-work .work-image .work-arrow-link {
+        z-index: 3;
+    }
+}
+
+/* ---- Hero accent shimmer ------------------------------------------------- */
+/* A slow, understated sheen travelling across the "functional" accent word in
+   the intro headline. Colour stays anchored to the primary so it reads as the
+   same word, just alive. */
+.hero-shimmer {
+    background: linear-gradient(
+        100deg,
+        var(--primary, #00de51) 0%,
+        color-mix(in srgb, var(--primary, #00de51) 55%, #ffffff) 45%,
+        var(--primary, #00de51) 90%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: hero-sheen 6s ease-in-out infinite;
+}
+
+@keyframes hero-sheen {
+    0%,
+    100% {
+        background-position: 140% 0;
+    }
+    50% {
+        background-position: -40% 0;
+    }
+}
+
+/* ---- Respect the OS reduced-motion setting ------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .pt-curtain {
+        display: none !important;
+    }
+    .hero-shimmer {
+        animation: none !important;
+        /* Fall back to a solid accent fill so the word stays legible. */
+        -webkit-text-fill-color: var(--primary, #00de51);
+        background: none;
+    }
+    .wg-work .work-image img {
+        transition: none !important;
+    }
+    .wg-work .work-image::after {
+        display: none !important;
+    }
+}
