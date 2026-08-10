@@ -7728,6 +7728,7 @@ button.animate-btn::after,
 /* ── 7. Desktop hover states ── */
 @media (hover: hover) {
   .blog-card:hover { transform: translateY(-4px) !important; border-color: rgba(0,200,83,0.35) !important; }
+  .blog-card:hover .blog-card-img { filter: grayscale(0%) !important; transform: scale(1.04) !important; }
   .tech-tool-pill:hover {
     background: rgba(255,255,255,0.08) !important;
     border-color: rgba(0,200,83,0.4) !important;
@@ -7948,7 +7949,7 @@ button.animate-btn::after,
 
 /* ── 9. Misc ── */
 * { -webkit-tap-highlight-color: transparent; }
-@media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr !important; } }
+@media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr !important; row-gap: 44px !important; } }
 @media (max-width: 576px) { .form-contact .field-ip input { font-size: 16px !important; } }
 @media (max-width: 991px) {
   .infiniteSlide-brand {
@@ -8192,6 +8193,9 @@ textarea:focus-visible,
 }
 .blog-card:active {
   transform: scale(0.985);
+}
+.blog-card:active .blog-card-img {
+  filter: grayscale(0%) !important;
 }
 .award-item:active {
   opacity: 0.85;

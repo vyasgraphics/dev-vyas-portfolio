@@ -38,8 +38,11 @@ export function Work() {
         <div id="work" className="section-work flat-spacing">
             <h2 className="sect-tag text-caption fw-medium">
                 <i className="icon icon-high-light" />
-                Work Highlights
+                Selected Work
             </h2>
+            <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem", maxWidth: "640px" }}>
+                Three projects, three sides of how I work: a research study that measured a real cost, a product designed end to end, and four years of brand work shipped to deadline. Start anywhere.
+            </p>
             <div className="work-list element-sticky">
                 {works.map((w, i) => (
                     <div

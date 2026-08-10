@@ -181,7 +181,7 @@ export function WelcomeReveal({
       <style>{`
         .vg-welcome-track {
           position: relative;
-          height: 200vh;
+          height: 160vh;
           background: #0A0A0A;
         }
         .vg-welcome-stage {

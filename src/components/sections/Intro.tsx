@@ -13,9 +13,9 @@ export function Intro() {
             </div>
 
             <h1 className="intro-title letter-space--2">
-                Designing ideas into{" "}
-                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>functional</span>{" "}
-                experiences
+                Designing interfaces backed by{" "}
+                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>research</span>,{" "}
+                not guesswork
             </h1>
 
             <div className="intro-item">
@@ -58,13 +58,13 @@ export function Intro() {
                     <p className="counter h1 d-flex font-2 letter-space--2">
                         <span className="number" data-speed="1000" data-to="4">0</span>+
                     </p>
-                    <p className="text text-black-56 text-body-3">Years of experience</p>
+                    <p className="text text-black-56 text-body-3">Years designing commercially</p>
                 </div>
                 <div className="wg-counter">
                     <p className="counter h1 d-flex font-2 letter-space--2">
-                        <span className="number" data-speed="1000" data-to="350">0</span>+
+                        <span className="number" data-speed="1000" data-to="25">0</span>+
                     </p>
-                    <p className="text text-black-56 text-body-3">Visual assets created</p>
+                    <p className="text text-black-56 text-body-3">Users researched &amp; tested</p>
                 </div>
             </div>
 

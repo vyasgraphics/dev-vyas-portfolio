@@ -55,10 +55,16 @@ export function Skills() {
 
     return (
         <div id="skill" className="section-skill flat-spacing">
-            <h2 className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
+            <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
                 <i className="icon icon-service" />
-                Skills
+                How I Work
+            </div>
+            <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+                Research first, pixels second
             </h2>
+            <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem", maxWidth: "620px" }}>
+                Four things I do on every project. Open one to see what it looks like in practice.
+            </p>
 
             <div id="accordion-skill">
                 {skills.map((s, idx) => {

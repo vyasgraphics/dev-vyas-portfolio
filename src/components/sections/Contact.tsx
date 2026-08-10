@@ -107,13 +107,16 @@ export function Contact() {
     <div id="contact" className="section-contact flat-spacing">
       <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
         <i className="icon icon-send" />
-        Get in Touch
+        Why I&apos;m the Fit
       </div>
       <h2 className="s-title letter-space--2 split-text effect-blur-fade">
         Open to UK and remote roles{" "}
         <br className="d-none d-lg-block" />
         from September 2026
       </h2>
+      <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ maxWidth: "600px", marginTop: "1rem", marginBottom: "0.5rem" }}>
+        A designer who researches, a researcher who ships, and someone who uses AI to move faster without letting it make the calls. If that is the shape of what you need, let&apos;s talk.
+      </p>
 
       {submitted ? (
         <div style={{

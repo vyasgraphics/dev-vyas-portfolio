@@ -23,10 +23,10 @@ export function Footer() {
             maxWidth: "720px",
           }}
         >
-          User-centred design that works,
+          Research tells me what to build.
           <br />
           <span style={{ color: "var(--primary, #00C853)" }}>
-            data-driven strategy that lasts.
+            Craft makes people want to use it.
           </span>
         </h2>
       </div>

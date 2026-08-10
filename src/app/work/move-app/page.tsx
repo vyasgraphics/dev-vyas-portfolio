@@ -99,6 +99,13 @@ export default function MoveAppWorkPage() {
           <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
             Move - University Exercise App
           </h1>
+          <p style={{
+            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
+            fontWeight: 600, maxWidth: "560px", marginBottom: "20px",
+            paddingLeft: "16px", borderLeft: "3px solid #00DE51",
+          }}>
+            The outcome: cutting choices and hiding the crowd got testers who&apos;d stalled on other apps to actually finish a session.
+          </p>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "560px", marginBottom: "24px" }}>
             Helping sedentary students actually start exercising - not by adding more options, but by removing the
             anxiety and mental effort standing between them and the ones already there.
@@ -120,7 +127,7 @@ export default function MoveAppWorkPage() {
 
         <ScrollReveal>
           <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The problem</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The problem</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
               was never a lack of choice. It was time pressure, self-consciousness, and unfamiliarity standing
@@ -162,7 +169,7 @@ export default function MoveAppWorkPage() {
 
         <ScrollReveal>
           <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The key finding</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
               the one feature built to protect anxious users was the one nobody trusted enough to touch. Renaming it
@@ -187,7 +194,7 @@ export default function MoveAppWorkPage() {
 
         <ScrollReveal>
           <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What&apos;s next</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
               the moment this moves from prototype to production.

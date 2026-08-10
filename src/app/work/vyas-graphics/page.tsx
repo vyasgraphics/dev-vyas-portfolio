@@ -201,7 +201,7 @@ const SOCIAL_GRID_ROW2 = SOCIAL_GRID.slice(4);
 const SOCIAL_CARD_W = "clamp(200px, 26.7vw, 320px)";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
-  return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "14px" }}>{children}</h2>;
+  return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "20px" }}>{children}</h2>;
 }
 
 function Body({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
@@ -247,9 +247,16 @@ export default function VyasGraphicsWorkPage() {
           <h1 style={{ fontSize: "clamp(28px, 3.4vw + 8px, 46px)", fontWeight: 700, lineHeight: 1.15, marginBottom: "16px", maxWidth: "820px" }}>
             Vyas Graphics - Brand Identity &amp; Sports Media
           </h1>
+          <p style={{
+            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
+            fontWeight: 600, maxWidth: "700px", marginBottom: "20px",
+            paddingLeft: "16px", borderLeft: "3px solid #00DE51",
+          }}>
+            The scope: 20+ brand identities, four animated logo reveals, and a full ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
+          </p>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.55, maxWidth: "700px", marginBottom: "24px" }}>
             Four years of self-directed brand and motion work - logo identities built from scratch, sports campaigns
-            run like real client accounts, and a habit of shipping in public.
+            run like real client accounts, and everything shipped to a live deadline.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "After Effects"].map((t) => (

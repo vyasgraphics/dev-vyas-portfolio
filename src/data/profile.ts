@@ -2,7 +2,7 @@ export const profile = {
   fullName: "Dev Vyas",
   shortName: "Dev",
   duty: "Product Designer",
-  introBio: "Bridging visual craft and evidence-based design - with AI woven into the process. Based in York, UK, open to UK and remote roles from September 2026.",
+  introBio: "Product designer and UX researcher who ships decisions backed by evidence, not opinion. Four years of commercial craft, an MSc in the science of how people use interfaces, and AI running through the middle of it. York, UK - open to UK and remote roles from September 2026.",
   email: "vyasdev.6303@gmail.com",
   phone: "+447799752283",
   rotatingNames: ["Dev Vyas", "Product Designer", "UX Researcher", "Graphic Designer"],
