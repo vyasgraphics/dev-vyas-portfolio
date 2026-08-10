@@ -29,6 +29,11 @@ Each case study reinforces the same arc with an outcome banner directly under it
 
 If you reword any section tag, keep the chapter logic intact - the labels are load-bearing for the story, not decorative. The sidebar navigation labels (nav.ts) are intentionally kept short and functional (Work, About, Skills, Background, Tools, Writing, Contact) and do not need to mirror the narrative tags.
 
+Two readability fixes landed alongside the narrative pass:
+
+- **Profile card greeting.** The rotating line reads "Hey, I'm ..." cycling through "Dev Vyas", "a Product Designer", "a UX Researcher", "a Graphic Designer". The articles ("a") matter: without them the roles read as "Hey, I'm Product Designer", which is ungrammatical. The rotation values live in `rotatingNames` in `profile.ts`, used only by `UserSidebar.tsx`. The greeting also carries a `text-shadow` so it stays legible over any part of the background photo at every point in the clip animation. Behind it, a dark scrim covers the bottom portion of the photo so the greeting and bio never blend into the image: on mobile via `.user-image::before` (78% height, near-solid black base), and on desktop via `.user-image .image::after` (72% height) - the desktop one was added because `.user-info` is absolutely positioned over the photo at every width, but the original scrim was mobile-only, so wide screens had text sitting straight on the image. `.user-info` carries `z-index: 2` so it always paints above the scrim. All of these are defined in both `styles.css` and `scss/component/elements/_section.scss` - edit both or the SCSS recompile silently reverts the CSS.
+- **Work section tag.** "Selected Work" is no longer `position: sticky`. It was pinned at `top: 72px` when it was the lone label above the cards, but the new connector paragraph beneath it scrolled up under the pinned pill and overlapped it. The three work cards keep their own sticky scroll behaviour; only the tag pill was un-pinned. Removed in both `styles.css` and `_section.scss`.
+
 ---
 
 # Part 1: The site at a glance

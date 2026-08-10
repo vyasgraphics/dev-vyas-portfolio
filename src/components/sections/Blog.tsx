@@ -9,8 +9,8 @@ export function Blog() {
         How I Think
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        Writing up what the <br className="d-none d-lg-block" />
-        research actually found
+        The thinking behind <br className="d-none d-lg-block" />
+        the work
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
         Three long reads on what actually happened behind the case studies - the rejected concepts, the messy data, and where AI earned its place.
