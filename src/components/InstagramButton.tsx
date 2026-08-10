@@ -1,79 +1,65 @@
 "use client";
 
-// Adapted from a reference "expanding circle" button: a circular Instagram-
-// gradient icon that widens into a pill on hover, revealing a text label
-// in place of the icon. Kept the Instagram brand gradient exactly as given
-// (orange -> red -> pink -> purple) rather than recolouring it to the
-// site's green - unlike a generic UI control, the gradient itself is what
-// visually reads as "Instagram" here, so swapping it out would work against
-// the point of using this particular reference. The reveal text uses the
-// actual handle (@vyas.graphics) rather than the reference's generic
-// "Instagram" label, so hovering tells you exactly where the link goes.
-//
-// Press feedback: layered the site's standard tactile system on top (the
-// same scale-down + dark ambient/inset shadow used everywhere else, no
-// white rim - see the button press-feedback fix elsewhere in the
-// stylesheet) rather than leaving this one control silent on tap, since it
-// coexists with the reference's own hover-driven width/shape change
-// without conflicting (transform composes cleanly with width/border-radius
-// transitions).
-export function InstagramButton({ handle, href }: { handle: string; href: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${handle} on Instagram`}
-      className="vg-ig-btn"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512" className="vg-ig-icon">
-        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
-      </svg>
-      <span className="vg-ig-text">{handle}</span>
+import { useState } from "react";
 
-      <style>{`
-        .vg-ig-btn {
-          border: none;
-          border-radius: 50%;
-          width: 45px;
-          height: 45px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition-duration: 0.4s;
-          cursor: pointer;
-          position: relative;
-          background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-          overflow: hidden;
-          text-decoration: none;
-        }
-        .vg-ig-icon { transition-duration: 0.3s; }
-        .vg-ig-icon path { fill: #fff; }
-        .vg-ig-text {
-          position: absolute;
-          color: #fff;
-          white-space: nowrap;
-          font-size: 13px;
-          font-weight: 700;
-          opacity: 0;
-          transition-duration: 0.4s;
-        }
-        @media (hover: hover) {
-          .vg-ig-btn:hover {
-            width: 168px;
-            border-radius: 30px;
-          }
-          .vg-ig-btn:hover .vg-ig-text { opacity: 1; }
-          .vg-ig-btn:hover .vg-ig-icon { opacity: 0; }
-        }
-        .vg-ig-btn:active {
-          transform: scale(0.93);
-          box-shadow: 0 2px 8px -2px rgba(0,0,0,0.4), inset 0 1px 6px rgba(0,0,0,0.3);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .vg-ig-btn, .vg-ig-icon, .vg-ig-text { transition: none !important; }
-        }
-      `}</style>
-    </a>
+/**
+ * Instagram link shown as a circular icon that fills with the Instagram
+ * gradient and raises a label above itself.
+ *
+ * Adapted from a social-icon reference that filled from the bottom up on
+ * hover and floated a tooltip above. Two things had to change:
+ *
+ * 1. It has to work on touch. The reference was hover-only, so on a phone
+ *    it sat inert: no fill, no label, nothing to indicate it was even
+ *    interactive. Here the same animation is driven by state and triggered
+ *    on tap, and - the part that actually matters - the tap does not
+ *    navigate immediately. The first tap plays the fill and reveals the
+ *    handle, and only then does it open Instagram, so the animation is
+ *    always seen through rather than cut off by the page changing. A
+ *    second tap while it is already open goes straight through.
+ *
+ * 2. Colour. The reference used a flat white circle with a coloured fill.
+ *    The resting state here is the site's own dark pill so it sits with
+ *    everything else on the page, and the Instagram gradient is what
+ *    arrives on interaction. The label reads as the actual handle rather
+ *    than "Instagram", so it says where the link goes.
+ */
+const OPEN_DELAY_MS = 620; // long enough for the fill to complete
+
+export function InstagramButton({ handle, href }: { handle: string; href: string }) {
+  const [active, setActive] = useState(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Pointer devices have already played the animation on hover, so let
+    // the click behave like a normal link.
+    const hasHover = typeof window !== "undefined"
+      && window.matchMedia("(hover: hover)").matches;
+    if (hasHover || active) return;
+
+    // Touch: hold the navigation back for one animation cycle.
+    e.preventDefault();
+    setActive(true);
+    window.setTimeout(() => {
+      window.open(href, "_blank", "noopener,noreferrer");
+    }, OPEN_DELAY_MS);
+  };
+
+  return (
+    <div className="vg-ig-wrap">
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${handle} on Instagram`}
+        className={`vg-ig-btn${active ? " is-active" : ""}`}
+        onClick={handleClick}
+      >
+        <span className="vg-ig-fill" aria-hidden="true" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className="vg-ig-icon" aria-hidden="true">
+          <path fill="currentColor" d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.4.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.35.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+        </svg>
+      </a>
+      <span className={`vg-ig-tip${active ? " is-active" : ""}`} aria-hidden="true">{handle}</span>
+    </div>
   );
 }

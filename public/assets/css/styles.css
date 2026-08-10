@@ -541,21 +541,46 @@ p {
   overflow: hidden;
 }
 
+/* Loader: a ring with opposite quarters knocked out, which flips which pair
+   of arcs is visible halfway through each rotation. The reference version
+   used reds (a solid ring plus two orange tones at the midpoint); recoloured
+   here to the site's own greens so the first thing a visitor sees is on
+   brand. The dim mid-tone at 50% is what makes the swap read as a fold in
+   the ring rather than a hard cut. */
 .spinner {
-  width: 60px;
-  height: 60px;
-  border: 3px solid transparent;
-  border-top: 3px solid var(--primary);
-  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border: 5px solid var(--primary);
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  animation: spin 1s infinite linear;
+  animation: preload-ring 1s infinite;
 }
 
+@keyframes preload-ring {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+    border-top-color: #0f6b33;
+    border-bottom-color: #00c853;
+    border-right-color: transparent;
+    border-left-color: transparent;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Kept because other parts of the stylesheet still reference it. */
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -8853,4 +8878,489 @@ html, body {
   .vg-deck-card { transition: none !important; }
   .vg-deck-card img { filter: none !important; transition: none !important; }
   .vg-deck-card::before { opacity: 0 !important; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   ILLUMINE CARDS - Tools & Tech categories
+   ══════════════════════════════════════════════════════════
+   Each tool category sits in its own card that stays dark until the
+   visitor flips its switch, at which point a slit along the top edge
+   lights up and casts a cone down over the logos, lifting them from
+   dimmed to full colour. Adapted from a portrait "luminous card"
+   reference; see IllumineCard.tsx for what changed and why. */
+
+.vg-illumine {
+  position: relative;
+  border-radius: 18px;
+  padding: 22px 22px 18px;
+  background: radial-gradient(120% 90% at 50% 0%, #1a1f1c 0%, #121513 60%, #0e100f 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease, background 0.45s ease;
+}
+.vg-illumine.is-on {
+  border-color: rgba(0, 222, 81, 0.28);
+  box-shadow: 0 0 0 1px rgba(0, 222, 81, 0.08), 0 18px 40px -24px rgba(0, 222, 81, 0.45);
+}
+
+/* ── Light layers (decorative only) ── */
+.vg-illumine-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  perspective: 500px;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+/* The slit: a thin bar just under the top edge that reads as the source
+   the rest of the light comes from. Dark and inert when off. */
+.vg-illumine-slit {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46%;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: #191d1a;
+  box-shadow: 0 0 0 0 rgba(0, 222, 81, 0);
+  transition: background 0.45s ease, box-shadow 0.45s ease, width 0.45s ease;
+}
+.vg-illumine.is-on .vg-illumine-slit {
+  width: 58%;
+  background: #00DE51;
+  box-shadow:
+    0 0 10px 1px rgba(0, 222, 81, 0.9),
+    0 0 26px 5px rgba(0, 222, 81, 0.45);
+}
+
+/* The cone. Two stacked gradients rather than the reference's three: a
+   wide soft wash for the spill, and a tighter core for the bright centre.
+   Both are rotated on X so the light reads as falling into the card
+   rather than sitting flat on it. */
+.vg-illumine-lumen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.vg-illumine.is-on .vg-illumine-lumen { opacity: 1; }
+
+.vg-illumine-lumen .lum-wide {
+  position: absolute;
+  top: -6%;
+  left: 50%;
+  transform: translateX(-50%) rotateX(38deg);
+  width: 116%;
+  height: 78%;
+  background: radial-gradient(
+    ellipse 50% 100% at 50% 0%,
+    rgba(0, 222, 81, 0.30) 0%,
+    rgba(0, 222, 81, 0.10) 42%,
+    rgba(0, 222, 81, 0) 72%
+  );
+  filter: blur(14px);
+}
+.vg-illumine-lumen .lum-core {
+  position: absolute;
+  top: -2%;
+  left: 50%;
+  transform: translateX(-50%) rotateX(30deg);
+  width: 62%;
+  height: 56%;
+  background: linear-gradient(
+    to bottom,
+    rgba(190, 255, 216, 0.34) 0%,
+    rgba(0, 222, 81, 0.14) 40%,
+    rgba(0, 222, 81, 0) 78%
+  );
+  filter: blur(10px);
+  border-radius: 100% 100% 40% 40%;
+}
+
+/* Shading down the outer edges, which is what stops the lit state reading
+   as a flat green wash: the corners staying dark is what gives the cone
+   an edge to be bounded by. */
+.vg-illumine-shade {
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  transition: opacity 0.5s ease;
+}
+.vg-illumine.is-on .vg-illumine-shade { opacity: 1; }
+.vg-illumine-shade .shade-l,
+.vg-illumine-shade .shade-r {
+  position: absolute;
+  top: 0;
+  width: 26%;
+  height: 100%;
+}
+.vg-illumine-shade .shade-l {
+  left: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+}
+.vg-illumine-shade .shade-r {
+  right: 0;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+}
+
+/* ── Content ── */
+.vg-illumine-body {
+  position: relative;
+  z-index: 1;
+}
+.vg-illumine-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Tool pills: desaturated and dimmed when the card is off, full colour
+   when lit. The dimming is deliberately held back from where it looked
+   best: at the opacity that reads most dramatically, the tool names fell
+   to roughly 3.5:1 contrast, under the 4.5:1 needed for body text. These
+   are real content, not decoration, so they have to stay readable with
+   the card off. Full desaturation carries the "off" signal instead, and
+   the colour returning is still the obvious payoff for flipping it. */
+.vg-illumine .tech-tool-pill {
+  transition: opacity 0.45s ease, filter 0.45s ease, border-color 0.45s ease,
+    background 0.45s ease, transform 0.25s ease;
+  opacity: 0.62;
+  filter: grayscale(1) brightness(0.95);
+}
+.vg-illumine.is-on .tech-tool-pill {
+  opacity: 1;
+  filter: none;
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Footer: label + switch ── */
+.vg-illumine-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+.vg-illumine-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  transition: color 0.45s ease, text-shadow 0.45s ease;
+}
+.vg-illumine.is-on .vg-illumine-label {
+  color: #00DE51;
+  text-shadow: 0 0 14px rgba(0, 222, 81, 0.5);
+}
+
+/* Switch. Deliberately plain compared with the reference's chrome-and-
+   bevel treatment, so it reads as part of this site's control set rather
+   than an import from somewhere else. Press feedback matches every other
+   button here: scale down, dark inset, no white rim. */
+.vg-illumine-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 46px;
+  height: 26px;
+  padding: 0;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: background 0.35s ease, border-color 0.35s ease,
+    box-shadow 0.2s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.vg-illumine-switch:active {
+  transform: scale(0.93);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.4), inset 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+.vg-illumine-switch:focus-visible {
+  outline: 2px solid #00DE51;
+  outline-offset: 3px;
+}
+.vg-illumine.is-on .vg-illumine-switch {
+  background: rgba(0, 222, 81, 0.22);
+  border-color: rgba(0, 222, 81, 0.55);
+}
+.vg-illumine-knob {
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
+    background 0.35s ease, box-shadow 0.35s ease;
+}
+.vg-illumine.is-on .vg-illumine-knob {
+  transform: translateX(20px);
+  background: #00DE51;
+  box-shadow: 0 0 10px 2px rgba(0, 222, 81, 0.65);
+}
+
+@media (hover: hover) {
+  .vg-illumine-switch:hover { border-color: rgba(255, 255, 255, 0.26); }
+  .vg-illumine.is-on .vg-illumine-switch:hover { border-color: rgba(0, 222, 81, 0.8); }
+}
+
+/* Narrow screens: tighter padding, and the pills are allowed to shrink so
+   a long category never forces the card wider than the viewport. */
+@media (max-width: 767px) {
+  .vg-illumine {
+    padding: 18px 16px 14px !important;
+    border-radius: 16px !important;
+  }
+  .vg-illumine-tools {
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+  .vg-illumine-foot { gap: 10px !important; }
+  .vg-illumine-label {
+    font-size: 9px !important;
+    letter-spacing: 0.09em !important;
+    line-height: 1.35 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-illumine,
+  .vg-illumine-slit,
+  .vg-illumine-lumen,
+  .vg-illumine-shade,
+  .vg-illumine .tech-tool-pill,
+  .vg-illumine-label,
+  .vg-illumine-switch,
+  .vg-illumine-knob {
+    transition: none !important;
+  }
+  .vg-illumine-switch:active { transform: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   FLIPBOOK CARDS - work/vyas-graphics
+   ══════════════════════════════════════════════════════════
+   Front cover flips to back cover, then a link out to the live
+   page-turning version. See FlipBookCard.tsx for why the flip is driven
+   by state as well as hover. */
+
+.vg-flipbook {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vg-flip-card {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 760 / 1075;   /* the covers' own A4-ish proportion */
+  padding: 0;
+  border: none;
+  background: transparent;
+  perspective: 1400px;
+  cursor: pointer;
+  display: block;
+}
+.vg-flip-card:focus-visible {
+  outline: 2px solid #00DE51;
+  outline-offset: 6px;
+  border-radius: 14px;
+}
+
+.vg-flip-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.4, 0.15, 0.2, 1);
+}
+/* Tap/click state, which is what makes this work on touch at all. */
+.vg-flip-card.is-flipped .vg-flip-inner { transform: rotateY(180deg); }
+/* Hover is layered on top for pointer devices only, so a touch device
+   never gets stuck mid-flip from a lingering hover state. */
+@media (hover: hover) {
+  .vg-flip-card:hover .vg-flip-inner { transform: rotateY(180deg); }
+  .vg-flip-card.is-flipped:hover .vg-flip-inner { transform: rotateY(360deg); }
+}
+
+.vg-flip-face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0a0a0a;
+  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.75);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.vg-flip-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vg-flip-back { transform: rotateY(180deg); }
+
+@media (hover: hover) {
+  .vg-flip-card:hover .vg-flip-face {
+    border-color: rgba(0, 222, 81, 0.35);
+    box-shadow: 0 16px 36px -14px rgba(0, 222, 81, 0.35);
+  }
+}
+
+.vg-flip-meta {
+  margin-top: 12px;
+  text-align: center;
+}
+.vg-flip-caption {
+  margin: 0;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+}
+.vg-flip-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #00DE51;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  .vg-flip-card { max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-flip-inner { transition: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   INSTAGRAM BUTTON - work/vyas-graphics
+   ══════════════════════════════════════════════════════════
+   Circular icon that fills bottom-up with the Instagram gradient and
+   raises the handle above it. Driven by :hover on pointer devices and by
+   an .is-active class on touch, so both platforms get the full animation.
+   See InstagramButton.tsx for why the tap defers navigation. */
+
+.vg-ig-wrap {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vg-ig-btn {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* The fill. Height rather than transform so it wipes upward from the
+   bottom edge, which is what the reference does and what makes it read as
+   filling rather than sliding. */
+.vg-ig-fill {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  transition: height 0.3s ease-in-out;
+}
+
+.vg-ig-icon {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+}
+
+/* Handle label, raised above the button. */
+.vg-ig-tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: linear-gradient(45deg, #f09433 0%, #dc2743 55%, #bc1888 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, bottom 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+/* Pointer devices: hover drives it. */
+@media (hover: hover) {
+  .vg-ig-btn:hover { color: #fff; border-color: transparent; box-shadow: 0 6px 22px -6px rgba(220, 39, 67, 0.7); }
+  .vg-ig-btn:hover .vg-ig-fill { height: 100%; }
+  .vg-ig-wrap:hover .vg-ig-tip { opacity: 1; visibility: visible; bottom: calc(100% + 12px); }
+}
+
+/* Touch: the same states, driven by the class React sets on tap. */
+.vg-ig-btn.is-active { color: #fff; border-color: transparent; box-shadow: 0 6px 22px -6px rgba(220, 39, 67, 0.7); }
+.vg-ig-btn.is-active .vg-ig-fill { height: 100%; }
+.vg-ig-tip.is-active { opacity: 1; visibility: visible; bottom: calc(100% + 12px); }
+
+/* Press feedback, matching every other control on the site. */
+.vg-ig-btn:active {
+  transform: scale(0.93);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.4), inset 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+.vg-ig-btn:focus-visible { outline: 2px solid #00DE51; outline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-ig-btn, .vg-ig-fill, .vg-ig-tip { transition: none !important; }
+  .vg-ig-btn:active { transform: none !important; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   SKILLS ACCORDION - mobile collision with the menu button
+   ══════════════════════════════════════════════════════════
+   The mobile menu button is position:fixed at right:16px/top:24px and is
+   40px square, so it occupies the strip 16px to 56px in from the right
+   edge for the whole height of the page. The skills accordion puts its
+   own 40px expand/collapse circle hard against the right edge of the
+   content, which lands in exactly that strip - so any time an accordion
+   header scrolled up near the top of the viewport, its circle slid under
+   the menu button and the two read as one broken control (measured: both
+   spanning x334-374 on a 390px viewport).
+
+   Insetting the circle by 52px on mobile moves it clear of that strip
+   permanently, whatever the scroll position. Desktop is untouched: the
+   sidebar there is a different shape in a different place and never
+   collided. Tapping the header text still works as it always did, since
+   the whole row is the control, not just the circle. */
+@media (max-width: 767px) {
+  .skill-accordion_item .accordion-action {
+    padding-right: 52px !important;
+  }
 }

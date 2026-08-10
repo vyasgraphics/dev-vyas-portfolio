@@ -6,7 +6,8 @@ export type TechCategory = {
 // Order follows the actual shape of the design process: designing first,
 // then the AI-augmented layer on top of both design and development, then
 // the quantitative/data side of the research work, then coding (AI-assisted
-// and full custom), then the graphics/motion work that finishes a piece.
+// and full custom), then getting the result live, then the graphics/motion
+// work that finishes a piece.
 export const techCategories: TechCategory[] = [
   {
     label: "UI / UX",
@@ -33,7 +34,7 @@ export const techCategories: TechCategory[] = [
     ],
   },
   {
-    label: "Vibe Coding",
+    label: "No-Code / Low-Code / Vibe Code",
     tools: [
       { name: "Claude Code", image: "/assets/images/section/tech-claude-code.svg" },
       { name: "Lovable",     image: "/assets/images/section/tech-lovable.svg" },
@@ -46,7 +47,22 @@ export const techCategories: TechCategory[] = [
       { name: "HTML5",       image: "/assets/images/section/tech-html.svg" },
       { name: "CSS3",        image: "/assets/images/section/tech-css.svg" },
       { name: "JavaScript",  image: "/assets/images/section/tech-js.svg" },
+      { name: "React",       image: "/assets/images/section/tech-react.svg" },
       { name: "Next.js",     image: "/assets/images/section/tech-nextjs.svg" },
+    ],
+  },
+  {
+    // Sits after Web Development on purpose: you build a thing, then you
+    // ship it. GitHub and Vercel are both drawn in white rather than their
+    // brand black, which would be invisible against this site's background
+    // (the same treatment already applied to the Next.js mark). Firebase
+    // and Netlify keep their brand colours, since those read fine on dark.
+    label: "Product / Web Deployment",
+    tools: [
+      { name: "GitHub",   image: "/assets/images/section/tech-github.svg" },
+      { name: "Vercel",   image: "/assets/images/section/tech-vercel.svg" },
+      { name: "Firebase", image: "/assets/images/section/tech-firebase.svg" },
+      { name: "Netlify",  image: "/assets/images/section/tech-netlify.svg" },
     ],
   },
   {

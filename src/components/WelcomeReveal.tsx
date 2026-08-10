@@ -202,7 +202,7 @@ export function WelcomeReveal({
           margin: 0;
           font-family: "Tomorrow", sans-serif;
           font-size: clamp(40px, 10vw, 108px);
-          font-weight: 800;
+          font-weight: 700;
           letter-spacing: 0.01em;
           color: #fff;
           text-transform: uppercase;

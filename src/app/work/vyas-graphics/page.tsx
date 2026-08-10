@@ -11,6 +11,7 @@ import { PlayableStill } from "@/components/PlayableStill";
 import { GlassDeck } from "@/components/GlassDeck";
 import { SectionBox } from "@/components/SectionBox";
 import { NotificationStory } from "@/components/NotificationStory";
+import { FlipBookCard } from "@/components/FlipBookCard";
 import { InstagramButton } from "@/components/InstagramButton";
 import { StaggerReveal } from "@/components/StaggerReveal";
 import { BackToTop } from "@/components/BackToTop";
@@ -133,30 +134,41 @@ const GALLERY_IMAGES = [
   { src: "vyas-graphics-design-fundamentals-instagram-post.jpg", alt: "Vyas Graphics design fundamentals post", w: 900, h: 1199 },
 ];
 
+// Each flipbook now carries both faces, since the cards flip to show the
+// back cover. Ordered oldest to newest, which is the point of the section:
+// the same portfolio rebuilt year on year.
 const FLIPBOOKS = [
   {
-    src: "dev-vyas-portfolio-flipbook-v1-dark-gradient.png",
-    alt: "Portfolio flipbook version one, dark gradient aesthetic",
+    cover: "dev-vyas-portfolio-flipbook-2022-cover.jpg",
+    back: "dev-vyas-portfolio-flipbook-2022-back.jpg",
+    coverAlt: "Portfolio flipbook 2022, magenta gradient cover",
+    backAlt: "Portfolio flipbook 2022, back cover with social links",
     caption: "Version 01 - dark gradient",
     href: "https://devvyas-portfolio-sep2022.netlify.app/mobile/index.html",
   },
   {
-    src: "dev-vyas-portfolio-flipbook-v2-linkedin-upload.png",
-    alt: "Portfolio flipbook version two, LinkedIn upload",
+    cover: "dev-vyas-portfolio-flipbook-linkedin-cover.jpg",
+    back: "dev-vyas-portfolio-flipbook-linkedin-back.jpg",
+    coverAlt: "Portfolio flipbook LinkedIn edition, yellow cover",
+    backAlt: "Portfolio flipbook LinkedIn edition, follow me page",
     caption: "Version 02 - LinkedIn upload",
     href: "https://dev-vyas-portfolio.netlify.app/mobile/index.html",
   },
   {
-    src: "dev-vyas-portfolio-flipbook-v3-navigable-toc.png",
-    alt: "Portfolio flipbook version three, navigable table of contents",
+    cover: "dev-vyas-portfolio-flipbook-2024-cover.jpg",
+    back: "dev-vyas-portfolio-flipbook-2024-back.jpg",
+    coverAlt: "Portfolio flipbook 2024, blue cover",
+    backAlt: "Portfolio flipbook 2024, contact page",
     caption: "Version 03 - navigable TOC",
     href: "https://vyas-dev-portfolio-2024.netlify.app/mobile/index.html",
   },
   {
-    src: "team-india-road-to-final-t20-world-cup-flipbook.png",
-    alt: "Team India's Road to Final flipbook, T20 World Cup editorial",
-    caption: "Team India's Road to Final",
-    href: "https://india-wc24.web.app/mobile/index.html",
+    cover: "dev-vyas-portfolio-flipbook-2026-cover.jpg",
+    back: "dev-vyas-portfolio-flipbook-2026-back.jpg",
+    coverAlt: "Portfolio flipbook 2026, current edition cover",
+    backAlt: "Portfolio flipbook 2026, contact page",
+    caption: "Version 04 - current, 2026",
+    href: "https://dev-vyas-portfolio-2026.netlify.app/",
   },
 ];
 
@@ -530,39 +542,21 @@ export default function VyasGraphicsWorkPage() {
           <SectionBox id="flipbooks" tag="3 years, rebuilt">
             <SectionHeading>Flipbooks</SectionHeading>
             <Body>
-              Three years of the same portfolio flipbook, rebuilt each time, plus a themed editorial for India&apos;s
-              T20 World Cup run - a small, honest record of how the work kept moving. Each cover links through to
-              the live, page-turning version.
+              Four years of the same portfolio flipbook, rebuilt each time - a small, honest record of how the
+              work kept moving. Tap or hover a cover to see its back, then flip through the live version.
             </Body>
 
-            <AutoGrid min="380px">
+            <AutoGrid min="220px">
               {FLIPBOOKS.map((fb) => (
-                <div key={fb.href}>
-                  <Link href={fb.href} target="_blank" rel="noopener noreferrer" style={{ display: "block" }}>
-                    <Image
-                      src={`${IMG}/${fb.src}`}
-                      alt={fb.alt}
-                      width={900}
-                      height={647}
-                      className="vg-card"
-                      style={{ width: "100%", height: "auto", display: "block" }}
-                    />
-                  </Link>
-                  <div style={{ marginTop: "10px", textAlign: "center" }}>
-                    <Caption>{fb.caption}</Caption>
-                    <Link
-                      href={fb.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "4px",
-                        fontSize: "12.5px", fontWeight: 600, color: "#00DE51", textDecoration: "none",
-                      }}
-                    >
-                      Flip through it ↗
-                    </Link>
-                  </div>
-                </div>
+                <FlipBookCard
+                  key={fb.href}
+                  coverSrc={`${IMG}/${fb.cover}`}
+                  backSrc={`${IMG}/${fb.back}`}
+                  coverAlt={fb.coverAlt}
+                  backAlt={fb.backAlt}
+                  caption={fb.caption}
+                  href={fb.href}
+                />
               ))}
             </AutoGrid>
 
