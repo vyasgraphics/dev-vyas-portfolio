@@ -692,40 +692,48 @@ h6 {
   letter-spacing: 0;
 }
 
+/* Heading scale, pulled down from the template's original sizes (h1 topped
+   out at 60px, h2 at 52px). Those were built for a template demo where the
+   headline was the content. Here the headings sit above real material that
+   someone is trying to scan quickly, and oversized type pushed that
+   material further down the page and made every section feel like a
+   separate landing page. Each step is roughly 20 percent smaller, which
+   keeps the same rhythm between levels while giving the content above the
+   fold more room. */
 h1,
 .h1 {
-  font-size: clamp(40px, 5vw + 8px, 60px);
-  line-height: clamp(46px, 5.5vw + 10px, 64px);
+  font-size: clamp(32px, 3.6vw + 6px, 46px);
+  line-height: clamp(38px, 4vw + 8px, 52px);
 }
 
 h2,
 .h2 {
-  font-size: clamp(34px, 4.5vw + 6px, 52px);
-  line-height: clamp(40px, 5vw + 8px, 56px);
+  font-size: clamp(26px, 2.8vw + 5px, 36px);
+  line-height: clamp(32px, 3.2vw + 6px, 43px);
 }
 
 h3,
 .h3 {
-  font-size: clamp(30px, 4vw + 5px, 44px);
-  line-height: clamp(36px, 4.5vw + 6px, 48px);
+  font-size: clamp(22px, 2.2vw + 4px, 28px);
+  line-height: clamp(28px, 2.6vw + 5px, 35px);
 }
 
 h4,
 .h4 {
-  font-size: clamp(24px, 3vw + 4px, 40px);
-  line-height: clamp(28px, 3.5vw + 5px, 44px);
+  font-size: clamp(19px, 1.6vw + 3px, 24px);
+  line-height: clamp(25px, 2vw + 4px, 31px);
 }
 
 h5,
 .h5 {
-  font-size: clamp(22px, 2.5vw + 3px, 32px);
-  line-height: clamp(26px, 3vw + 4px, 36px);
+  font-size: clamp(17px, 1.2vw + 3px, 21px);
+  line-height: clamp(23px, 1.6vw + 4px, 28px);
 }
 
 h6,
 .h6 {
-  font-size: clamp(20px, 2vw + 2px, 24px);
-  line-height: clamp(24px, 2.5vw + 3px, 32px);
+  font-size: clamp(16px, 0.8vw + 2px, 18px);
+  line-height: clamp(22px, 1.2vw + 3px, 26px);
 }
 
 /* Font custom */
@@ -5068,12 +5076,32 @@ button.animate-btn::after,
   background-color: var(--black-6);
 }
 
+/* Section headings.
+
+   Size is set here rather than inherited from the tag. When the heading
+   hierarchy was corrected for accessibility these went from h4 to h2,
+   which was right semantically but silently made every section heading a
+   step larger, because the visual scale was tied to the tag. Setting the
+   size on the class decouples the two: the markup can stay semantically
+   correct without the type scale moving with it.
+
+   The 64px gap below was also cut. It was pushing the actual content of
+   each section most of a screen further down, which on a portfolio being
+   skimmed in under a minute is space spent on nothing. */
 .s-title {
-  margin-bottom: 64px;
+  font-size: clamp(24px, 2.2vw + 5px, 32px);
+  line-height: 1.22;
+  margin-bottom: 36px;
+}
+@media (max-width: 991px) {
+  .s-title {
+    margin-bottom: 28px;
+  }
 }
 @media (max-width: 767px) {
   .s-title {
-    margin-bottom: 32px;
+    font-size: clamp(22px, 5.4vw, 26px);
+    margin-bottom: 22px;
   }
 }
 
@@ -8883,24 +8911,45 @@ html, body {
 /* ══════════════════════════════════════════════════════════
    ILLUMINE CARDS - Tools & Tech categories
    ══════════════════════════════════════════════════════════
-   Each tool category sits in its own card that stays dark until the
-   visitor flips its switch, at which point a slit along the top edge
-   lights up and casts a cone down over the logos, lifting them from
-   dimmed to full colour. Adapted from a portrait "luminous card"
-   reference; see IllumineCard.tsx for what changed and why. */
+   Categories sit inline in a wrapping grid rather than as full-width rows
+   stacked down the page. Seven full-width rows made the section roughly
+   three screens tall for what is, in substance, a list of software; as a
+   grid it is one screen and can be taken in at a glance.
+
+   Each card lights on hover, casting a cone down over its logos and
+   bringing them from desaturated to full colour. Touch devices drive the
+   same states from a tap (see IllumineCard.tsx). */
+
+.tech-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
 
 .vg-illumine {
   position: relative;
-  border-radius: 18px;
-  padding: 22px 22px 18px;
-  background: radial-gradient(120% 90% at 50% 0%, #1a1f1c 0%, #121513 60%, #0e100f 100%);
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  background: radial-gradient(120% 90% at 50% 0%, #171b19 0%, #121513 60%, #0e100f 100%);
   border: 1px solid rgba(255, 255, 255, 0.07);
   overflow: hidden;
-  transition: border-color 0.45s ease, box-shadow 0.45s ease, background 0.45s ease;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+.vg-illumine.is-touch { cursor: pointer; }
+.vg-illumine.is-touch:focus-visible { outline: 2px solid #00DE51; outline-offset: 3px; }
+
+/* Lit state. Driven by hover on pointer devices and by the class on touch,
+   kept as one rule so the two can never drift apart. */
+@media (hover: hover) {
+  .vg-illumine:hover {
+    border-color: rgba(0, 222, 81, 0.28);
+    box-shadow: 0 0 0 1px rgba(0, 222, 81, 0.08), 0 16px 34px -22px rgba(0, 222, 81, 0.5);
+    transform: translateY(-2px);
+  }
 }
 .vg-illumine.is-on {
   border-color: rgba(0, 222, 81, 0.28);
-  box-shadow: 0 0 0 1px rgba(0, 222, 81, 0.08), 0 18px 40px -24px rgba(0, 222, 81, 0.45);
+  box-shadow: 0 0 0 1px rgba(0, 222, 81, 0.08), 0 16px 34px -22px rgba(0, 222, 81, 0.5);
 }
 
 /* ── Light layers (decorative only) ── */
@@ -8913,37 +8962,38 @@ html, body {
   border-radius: inherit;
 }
 
-/* The slit: a thin bar just under the top edge that reads as the source
-   the rest of the light comes from. Dark and inert when off. */
 .vg-illumine-slit {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 46%;
+  width: 42%;
   height: 3px;
   border-radius: 0 0 4px 4px;
   background: #191d1a;
-  box-shadow: 0 0 0 0 rgba(0, 222, 81, 0);
-  transition: background 0.45s ease, box-shadow 0.45s ease, width 0.45s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease, width 0.4s ease;
+}
+@media (hover: hover) {
+  .vg-illumine:hover .vg-illumine-slit {
+    width: 58%;
+    background: #00DE51;
+    box-shadow: 0 0 10px 1px rgba(0, 222, 81, 0.9), 0 0 26px 5px rgba(0, 222, 81, 0.45);
+  }
 }
 .vg-illumine.is-on .vg-illumine-slit {
   width: 58%;
   background: #00DE51;
-  box-shadow:
-    0 0 10px 1px rgba(0, 222, 81, 0.9),
-    0 0 26px 5px rgba(0, 222, 81, 0.45);
+  box-shadow: 0 0 10px 1px rgba(0, 222, 81, 0.9), 0 0 26px 5px rgba(0, 222, 81, 0.45);
 }
 
-/* The cone. Two stacked gradients rather than the reference's three: a
-   wide soft wash for the spill, and a tighter core for the bright centre.
-   Both are rotated on X so the light reads as falling into the card
-   rather than sitting flat on it. */
 .vg-illumine-lumen {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.45s ease;
+}
+@media (hover: hover) {
+  .vg-illumine:hover .vg-illumine-lumen { opacity: 1; }
 }
 .vg-illumine.is-on .vg-illumine-lumen { opacity: 1; }
 
@@ -8953,13 +9003,9 @@ html, body {
   left: 50%;
   transform: translateX(-50%) rotateX(38deg);
   width: 116%;
-  height: 78%;
-  background: radial-gradient(
-    ellipse 50% 100% at 50% 0%,
-    rgba(0, 222, 81, 0.30) 0%,
-    rgba(0, 222, 81, 0.10) 42%,
-    rgba(0, 222, 81, 0) 72%
-  );
+  height: 82%;
+  background: radial-gradient(ellipse 50% 100% at 50% 0%,
+    rgba(0, 222, 81, 0.30) 0%, rgba(0, 222, 81, 0.10) 42%, rgba(0, 222, 81, 0) 72%);
   filter: blur(14px);
 }
 .vg-illumine-lumen .lum-core {
@@ -8967,181 +9013,89 @@ html, body {
   top: -2%;
   left: 50%;
   transform: translateX(-50%) rotateX(30deg);
-  width: 62%;
-  height: 56%;
-  background: linear-gradient(
-    to bottom,
-    rgba(190, 255, 216, 0.34) 0%,
-    rgba(0, 222, 81, 0.14) 40%,
-    rgba(0, 222, 81, 0) 78%
-  );
+  width: 60%;
+  height: 58%;
+  background: linear-gradient(to bottom,
+    rgba(190, 255, 216, 0.32) 0%, rgba(0, 222, 81, 0.13) 40%, rgba(0, 222, 81, 0) 78%);
   filter: blur(10px);
   border-radius: 100% 100% 40% 40%;
 }
 
-/* Shading down the outer edges, which is what stops the lit state reading
-   as a flat green wash: the corners staying dark is what gives the cone
-   an edge to be bounded by. */
 .vg-illumine-shade {
   position: absolute;
   inset: 0;
   opacity: 0.55;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.45s ease;
 }
+@media (hover: hover) { .vg-illumine:hover .vg-illumine-shade { opacity: 1; } }
 .vg-illumine.is-on .vg-illumine-shade { opacity: 1; }
 .vg-illumine-shade .shade-l,
-.vg-illumine-shade .shade-r {
-  position: absolute;
-  top: 0;
-  width: 26%;
-  height: 100%;
-}
-.vg-illumine-shade .shade-l {
-  left: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
-}
-.vg-illumine-shade .shade-r {
-  right: 0;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
-}
+.vg-illumine-shade .shade-r { position: absolute; top: 0; width: 26%; height: 100%; }
+.vg-illumine-shade .shade-l { left: 0; background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0)); }
+.vg-illumine-shade .shade-r { right: 0; background: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0)); }
 
 /* ── Content ── */
-.vg-illumine-body {
-  position: relative;
-  z-index: 1;
-}
-.vg-illumine-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 20px;
-}
+.vg-illumine-body { position: relative; z-index: 1; }
 
-/* Tool pills: desaturated and dimmed when the card is off, full colour
-   when lit. The dimming is deliberately held back from where it looked
-   best: at the opacity that reads most dramatically, the tool names fell
-   to roughly 3.5:1 contrast, under the 4.5:1 needed for body text. These
-   are real content, not decoration, so they have to stay readable with
-   the card off. Full desaturation carries the "off" signal instead, and
-   the colour returning is still the obvious payoff for flipping it. */
+/* Label sits above the logos now rather than under them: it names what you
+   are looking at before you look at it, which is the right order when the
+   whole point is a fast scan. */
+.vg-illumine-label {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  transition: color 0.4s ease, text-shadow 0.4s ease;
+}
+@media (hover: hover) {
+  .vg-illumine:hover .vg-illumine-label { color: #00DE51; text-shadow: 0 0 14px rgba(0, 222, 81, 0.5); }
+}
+.vg-illumine.is-on .vg-illumine-label { color: #00DE51; text-shadow: 0 0 14px rgba(0, 222, 81, 0.5); }
+
+.vg-illumine-tools { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Resting state is desaturated rather than dim. Holding the opacity up
+   keeps the tool names above the 4.5:1 contrast floor: they are real
+   content and have to stay readable without hovering. Losing the colour
+   carries the "resting" signal instead, and the colour returning is what
+   makes the hover feel like it did something. */
 .vg-illumine .tech-tool-pill {
-  transition: opacity 0.45s ease, filter 0.45s ease, border-color 0.45s ease,
-    background 0.45s ease, transform 0.25s ease;
-  opacity: 0.62;
+  transition: opacity 0.4s ease, filter 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+  opacity: 0.66;
   filter: grayscale(1) brightness(0.95);
 }
+@media (hover: hover) {
+  .vg-illumine:hover .tech-tool-pill {
+    opacity: 1; filter: none;
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
 .vg-illumine.is-on .tech-tool-pill {
-  opacity: 1;
-  filter: none;
+  opacity: 1; filter: none;
   border-color: rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── Footer: label + switch ── */
-.vg-illumine-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+/* Tablet: two columns is the natural fit; one column would waste the width
+   and three would squeeze the longer category names onto three lines. */
+@media (max-width: 991px) {
+  .tech-categories { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
-.vg-illumine-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.42);
-  transition: color 0.45s ease, text-shadow 0.45s ease;
-}
-.vg-illumine.is-on .vg-illumine-label {
-  color: #00DE51;
-  text-shadow: 0 0 14px rgba(0, 222, 81, 0.5);
-}
-
-/* Switch. Deliberately plain compared with the reference's chrome-and-
-   bevel treatment, so it reads as part of this site's control set rather
-   than an import from somewhere else. Press feedback matches every other
-   button here: scale down, dark inset, no white rim. */
-.vg-illumine-switch {
-  position: relative;
-  flex-shrink: 0;
-  width: 46px;
-  height: 26px;
-  padding: 0;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
-  cursor: pointer;
-  transition: background 0.35s ease, border-color 0.35s ease,
-    box-shadow 0.2s ease, transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.vg-illumine-switch:active {
-  transform: scale(0.93);
-  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.4), inset 0 1px 6px rgba(0, 0, 0, 0.3);
-}
-.vg-illumine-switch:focus-visible {
-  outline: 2px solid #00DE51;
-  outline-offset: 3px;
-}
-.vg-illumine.is-on .vg-illumine-switch {
-  background: rgba(0, 222, 81, 0.22);
-  border-color: rgba(0, 222, 81, 0.55);
-}
-.vg-illumine-knob {
-  position: absolute;
-  top: 50%;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  margin-top: -9px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.55);
-  transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
-    background 0.35s ease, box-shadow 0.35s ease;
-}
-.vg-illumine.is-on .vg-illumine-knob {
-  transform: translateX(20px);
-  background: #00DE51;
-  box-shadow: 0 0 10px 2px rgba(0, 222, 81, 0.65);
-}
-
-@media (hover: hover) {
-  .vg-illumine-switch:hover { border-color: rgba(255, 255, 255, 0.26); }
-  .vg-illumine.is-on .vg-illumine-switch:hover { border-color: rgba(0, 222, 81, 0.8); }
-}
-
-/* Narrow screens: tighter padding, and the pills are allowed to shrink so
-   a long category never forces the card wider than the viewport. */
-@media (max-width: 767px) {
-  .vg-illumine {
-    padding: 18px 16px 14px !important;
-    border-radius: 16px !important;
-  }
-  .vg-illumine-tools {
-    gap: 8px !important;
-    margin-bottom: 16px !important;
-  }
-  .vg-illumine-foot { gap: 10px !important; }
-  .vg-illumine-label {
-    font-size: 9px !important;
-    letter-spacing: 0.09em !important;
-    line-height: 1.35 !important;
-  }
+@media (max-width: 600px) {
+  .tech-categories { grid-template-columns: 1fr; gap: 10px; }
+  .vg-illumine { padding: 15px 14px 13px !important; border-radius: 14px !important; }
+  .vg-illumine-label { margin-bottom: 11px !important; font-size: 9.5px !important; }
+  .vg-illumine-tools { gap: 7px !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .vg-illumine,
-  .vg-illumine-slit,
-  .vg-illumine-lumen,
-  .vg-illumine-shade,
-  .vg-illumine .tech-tool-pill,
-  .vg-illumine-label,
-  .vg-illumine-switch,
-  .vg-illumine-knob {
-    transition: none !important;
-  }
-  .vg-illumine-switch:active { transform: none !important; }
+  .vg-illumine, .vg-illumine-slit, .vg-illumine-lumen, .vg-illumine-shade,
+  .vg-illumine .tech-tool-pill, .vg-illumine-label { transition: none !important; }
+  .vg-illumine:hover { transform: none !important; }
 }
 
 /* ══════════════════════════════════════════════════════════

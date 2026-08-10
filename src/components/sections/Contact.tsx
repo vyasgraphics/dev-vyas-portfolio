@@ -110,11 +110,9 @@ export function Contact() {
         Get in Touch
       </div>
       <h2 className="s-title letter-space--2 split-text effect-blur-fade">
-        Whether it&apos;s a job opportunity,{" "}
+        Open to UK and remote roles{" "}
         <br className="d-none d-lg-block" />
-        a freelance project, or just a{" "}
-        <br className="d-none d-lg-block" />
-        question - I&apos;d love to hear from you
+        from September 2026
       </h2>
 
       {submitted ? (

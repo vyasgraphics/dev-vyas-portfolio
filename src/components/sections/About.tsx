@@ -8,9 +8,9 @@ export function About() {
         About
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        Bridging visual craft <br className="d-none d-lg-block" />
-        and evidence-based design, <br className="d-none d-lg-block" />
-        one user at a time
+        Four years designing commercially, <br className="d-none d-lg-block" />
+        now researching how people <br className="d-none d-lg-block" />
+        actually use interfaces
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         Product designer with four years of commercial experience and an MSc in

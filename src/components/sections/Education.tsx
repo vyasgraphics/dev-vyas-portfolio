@@ -17,8 +17,8 @@ export function Education() {
         Education &amp; Experience
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        A mix of formal training <br className="d-none d-lg-block" />
-        and real-world commercial work
+        Where I studied <br className="d-none d-lg-block" />
+        and who I have worked for
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
         The kind of combination that means I understand both the theory behind good design

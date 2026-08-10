@@ -9,8 +9,8 @@ export function Blog() {
         Writing
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        Thoughts on design, research, <br className="d-none d-lg-block" />
-        and where AI actually helps
+        Writing up what the <br className="d-none d-lg-block" />
+        research actually found
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
         A space for longer-form notes on process, research findings, and lessons learned.
