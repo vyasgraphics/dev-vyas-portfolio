@@ -12,8 +12,17 @@ export const metadata: Metadata = {
 };
 
 export default function AiInUxResearchPage() {
+  const SECTIONS = [
+    { id: "the-question", label: "The Question" },
+    { id: "where-it-works", label: "Where It Works" },
+    { id: "where-it-fails", label: "Where It Fails" },
+    { id: "framework", label: "The Framework" },
+    { id: "faqs", label: "FAQs" },
+    { id: "takeaway", label: "Takeaway" },
+  ];
+
   return (
-    <BlogPostLayout slug="ai-in-ux-research">
+    <BlogPostLayout slug="ai-in-ux-research" sections={SECTIONS}>
       <p>
         Search &ldquo;AI UX research&rdquo; on LinkedIn and you&apos;ll find two very loud camps. One insists AI is
         about to make researchers obsolete, replaced by a chatbot that can synthesise a hundred interviews before
@@ -39,7 +48,7 @@ export default function AiInUxResearchPage() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/assets/images/blog/ai-in-ux-research/planning-notes-coffee.jpg" alt="Researcher taking notes on a laptop next to a coffee" />
 
-      <h2>The Question Isn&apos;t &ldquo;Should I Use AI?&rdquo; - It&apos;s &ldquo;Where?&rdquo;</h2>
+      <h2 id="the-question" style={{ scrollMarginTop: "24px" }}>The Question Isn&apos;t &ldquo;Should I Use AI?&rdquo; - It&apos;s &ldquo;Where?&rdquo;</h2>
       <p>
         Most of the anxiety around AI and research comes from treating it as one single decision. Either
         you&apos;re &ldquo;an AI-powered researcher&rdquo; or you&apos;re not. In reality, a UX research project has
@@ -57,7 +66,7 @@ export default function AiInUxResearchPage() {
         can&apos;t do at each one.
       </p>
 
-      <h2>Where AI Genuinely Earns Its Place</h2>
+      <h2 id="where-it-works" style={{ scrollMarginTop: "24px" }}>Where AI Genuinely Earns Its Place</h2>
 
       <h3>1. Planning and Scoping: Getting to a Sharper Question, Faster</h3>
       <p>
@@ -143,7 +152,7 @@ export default function AiInUxResearchPage() {
         of your time goes into deciding what matters rather than formatting bullet points at 9pm.
       </p>
 
-      <h2>Where AI Falls Down (And Why It Actually Matters)</h2>
+      <h2 id="where-it-fails" style={{ scrollMarginTop: "24px" }}>Where AI Falls Down (And Why It Actually Matters)</h2>
       <p>It&apos;s worth being blunt about the limits, because glossing over them is how bad research decisions get made.</p>
       <p>
         <strong>It hallucinates with total confidence.</strong> An AI summary of an interview can state something a
@@ -171,7 +180,7 @@ export default function AiInUxResearchPage() {
         skill. It&apos;s often the reason people open up enough to give you something real.
       </p>
 
-      <h2>A Practical Framework: Human In, Human Out</h2>
+      <h2 id="framework" style={{ scrollMarginTop: "24px" }}>A Practical Framework: Human In, Human Out</h2>
       <p>
         If you want a simple rule of thumb rather than a stage-by-stage checklist, try this:
       </p>
@@ -195,7 +204,7 @@ export default function AiInUxResearchPage() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/assets/images/blog/ai-in-ux-research/synthesis-presenting-findings.jpg" alt="Designer presenting research findings to a team" />
 
-      <h2>A Few Honest FAQs</h2>
+      <h2 id="faqs" style={{ scrollMarginTop: "24px" }}>A Few Honest FAQs</h2>
       <p>
         <strong>Will AI replace UX researchers?</strong><br />
         Not the good ones. It&apos;ll replace the parts of the job that were always closer to admin than insight,
@@ -214,7 +223,7 @@ export default function AiInUxResearchPage() {
         you&apos;re actively arguing with, not a conclusion.
       </p>
 
-      <h2>Where This Leaves Us</h2>
+      <h2 id="takeaway" style={{ scrollMarginTop: "24px" }}>Where This Leaves Us</h2>
       <p>
         AI hasn&apos;t changed <em>what</em> good UX research looks like. It&apos;s changed how much of the
         repetitive work gets in the way of doing it well. Used thoughtfully, it clears space for more thinking

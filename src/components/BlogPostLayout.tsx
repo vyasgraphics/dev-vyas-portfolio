@@ -3,6 +3,8 @@
 import { useEffect, type ReactNode } from "react";
 import { BackLink } from "@/components/BackLink";
 import { BackToTop } from "@/components/BackToTop";
+import { ReadingProgress } from "@/components/ReadingProgress";
+import { SectionNav } from "@/components/SectionNav";
 import { blogPosts } from "@/data/blog";
 import { smoothScrollToTop } from "@/lib/smoothScroll";
 
@@ -37,7 +39,20 @@ const ISO_DATES: Record<string, string> = {
 // fit a fixed data shape. Wrap it in the .blog-article class (typography
 // rules are in styles.css) and it'll pick up consistent spacing/sizing
 // for h2/h3/p/ul/a automatically.
-export function BlogPostLayout({ slug, children }: { slug: string; children: ReactNode }) {
+export function BlogPostLayout({
+  slug,
+  children,
+  sections,
+}: {
+  slug: string;
+  children: ReactNode;
+  // Optional in-page nav, same component and dot-rail pattern already used
+  // on the three case study pages. Renders fixed in the right margin (see
+  // .section-nav in styles.css - min-width: 1180px for the desktop rail),
+  // so it doesn't touch the reading column's width - it exists to give the
+  // wide desktop margin a job on long posts, not to widen the text.
+  sections?: { id: string; label: string }[];
+}) {
   const post = blogPosts.find((p) => p.slug === slug);
 
   // This site runs Lenis for smooth scrolling, which maintains its own
@@ -91,7 +106,7 @@ export function BlogPostLayout({ slug, children }: { slug: string; children: Rea
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <div style={{ maxWidth: "720px", margin: "0 auto", padding: "56px 24px 120px" }}>
+      <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 120px" }}>
         <BackLink href="/#blog" label="← Back to Writing" />
 
         <header style={{ marginTop: "40px", marginBottom: "40px" }}>
@@ -128,6 +143,8 @@ export function BlogPostLayout({ slug, children }: { slug: string; children: Rea
           </div>
         </header>
 
+        {sections && sections.length > 0 && <SectionNav sections={sections} />}
+
         <div className="blog-single-wrap">
           <div className="image">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -143,6 +160,7 @@ export function BlogPostLayout({ slug, children }: { slug: string; children: Rea
       </div>
 
       <BackToTop />
+      <ReadingProgress />
     </div>
   );
 }

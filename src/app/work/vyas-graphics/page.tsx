@@ -3,6 +3,7 @@ import { Children } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
+import { ReadingProgress } from "@/components/ReadingProgress";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
@@ -623,6 +624,7 @@ export default function VyasGraphicsWorkPage() {
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
+      <ReadingProgress />
 
       <style>{`
         @keyframes vg-hero-in {

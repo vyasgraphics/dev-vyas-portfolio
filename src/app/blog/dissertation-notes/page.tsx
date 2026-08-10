@@ -46,8 +46,17 @@ const ANALYSIS_STEPS = [
 ];
 
 export default function DissertationNotesPage() {
+  const SECTIONS = [
+    { id: "test-bed", label: "The Test Bed" },
+    { id: "measuring", label: "Measuring Resistance" },
+    { id: "running-it", label: "Running the Study" },
+    { id: "the-data", label: "The Data" },
+    { id: "for-design", label: "What It Means" },
+    { id: "next", label: "What's Next" },
+  ];
+
   return (
-    <BlogPostLayout slug="dissertation-notes">
+    <BlogPostLayout slug="dissertation-notes" sections={SECTIONS}>
       <FloatingTiltToggle />
       <p>
         Every website I use is busy. Sponsored boxes, trending sidebars, autoplaying recommendations - it&apos;s the
@@ -63,7 +72,7 @@ export default function DissertationNotesPage() {
         you&apos;re still taking something in, or after, while you&apos;re just trying to hold onto it?
       </p>
 
-      <h2>Building the test bed</h2>
+      <h2 id="test-bed" style={{ scrollMarginTop: "24px" }}>Building the test bed</h2>
       <p>
         Nobody had tested this against a real, busy interface before, so there wasn&apos;t an off-the-shelf task to
         borrow. I built one from scratch: a purpose-made news article search task, hosted in-browser, with five
@@ -89,7 +98,7 @@ export default function DissertationNotesPage() {
         changing what the task was actually measuring.
       </p>
 
-      <h2>Measuring distraction resistance separately</h2>
+      <h2 id="measuring" style={{ scrollMarginTop: "24px" }}>Measuring distraction resistance separately</h2>
       <p>
         The search task only tells you half the story on its own - you need an independent measure of distraction
         resistance to compare it against, or you&apos;re just describing the task, not explaining the person.
@@ -106,7 +115,7 @@ export default function DissertationNotesPage() {
 
       <BlogQuote>The interface didn&apos;t change. The distractions didn&apos;t change. Only the person did.</BlogQuote>
 
-      <h2>Running it properly</h2>
+      <h2 id="running-it" style={{ scrollMarginTop: "24px" }}>Running it properly</h2>
       <p>
         Forty-two participants completed the full study through Prolific, moving through an automated chain across
         four platforms: Prolific to Qualtrics for consent and demographics, then the working-memory test, then the
@@ -132,7 +141,7 @@ export default function DissertationNotesPage() {
         <MergePipelineDiagram sources={MERGE_SOURCES} merge={MERGE_STEPS} />
       </div>
 
-      <h2>What the data is showing so far</h2>
+      <h2 id="the-data" style={{ scrollMarginTop: "24px" }}>What the data is showing so far</h2>
       <p>
         The two outcomes I measured, search accuracy and completion time, told almost opposite stories. Accuracy
         barely moved between participants - most people scored close to perfect regardless of their
@@ -150,7 +159,7 @@ export default function DissertationNotesPage() {
         <DistractionInteractionChart />
       </div>
 
-      <h2>What it means for design</h2>
+      <h2 id="for-design" style={{ scrollMarginTop: "24px" }}>What it means for design</h2>
       <p>
         The uncomfortable part of this finding is that two users can walk away from the same interface with
         identical, accurate results, while one of them has quietly paid a lot more time for it. An ordinary
@@ -161,7 +170,7 @@ export default function DissertationNotesPage() {
         first reading something may help more than spreading a general clutter reduction evenly across a page.
       </p>
 
-      <h2>Where this goes from here</h2>
+      <h2 id="next" style={{ scrollMarginTop: "24px" }}>Where this goes from here</h2>
       <p>
         This dissertation is still being finalised, so I&apos;ve deliberately kept this write-up at the level of
         shape rather than exact numbers - once it&apos;s been submitted and marked, I&apos;ll come back and share
