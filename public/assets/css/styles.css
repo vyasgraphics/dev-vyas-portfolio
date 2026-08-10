@@ -4604,8 +4604,9 @@ button.animate-btn::after,
 }
 .sidebar-user .user-image .meta-left {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 46%;
+  top: auto;
+  transform: none;
   left: 0px;
   z-index: 2;
   display: flex;

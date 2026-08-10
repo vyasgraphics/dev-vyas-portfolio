@@ -298,8 +298,11 @@
 
         .meta-left {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            // Anchored above the text block (was top:50% centre) so the
+            // vertical Available pill never overlaps the greeting line.
+            bottom: 46%;
+            top: auto;
+            transform: none;
             left: 0px;
             z-index: 2;
             display: flex;
