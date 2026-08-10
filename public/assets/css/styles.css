@@ -2027,39 +2027,6 @@ h6,
    onMouseEnter/onMouseLeave JS handlers mutating inline styles directly,
    moved to a plain :hover rule for the same reason - one source of truth
    per property, not two fighting mechanisms. */
-/* Blog post reading-progress rail: mirrors SectionNav's right-edge dot rail
-   with a functional element on the left, so a wide viewport's spare margin
-   on both sides of the reading column does something. Hidden below 1180px
-   (same breakpoint as SectionNav's desktop rail) - narrower viewports have
-   no spare margin to give it, and the fixed track would just sit over the
-   content. */
-.vg-reading-progress {
-  display: none;
-}
-@media (min-width: 1180px) {
-  .vg-reading-progress {
-    display: block;
-    position: fixed;
-    top: 28px;
-    bottom: 28px;
-    left: 28px;
-    width: 3px;
-    border-radius: 3px;
-    background: rgba(255,255,255,0.08);
-    z-index: 40;
-    pointer-events: none;
-  }
-  .vg-reading-progress-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    border-radius: 3px;
-    background: #00de51;
-    box-shadow: 0 0 8px rgba(0,222,81,0.55);
-    transition: height 0.1s linear;
-  }
-}
 .vg-back-to-top {
   position: fixed;
   bottom: 28px;

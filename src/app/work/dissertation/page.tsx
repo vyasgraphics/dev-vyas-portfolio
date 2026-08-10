@@ -3,7 +3,6 @@ import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
-import { ReadingProgress } from "@/components/ReadingProgress";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
@@ -244,7 +243,6 @@ export default function DissertationWorkPage() {
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
-      <ReadingProgress />
       <FloatingTiltToggle />
     </div>
   );

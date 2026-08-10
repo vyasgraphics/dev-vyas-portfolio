@@ -3,7 +3,6 @@
 import { useEffect, type ReactNode } from "react";
 import { BackLink } from "@/components/BackLink";
 import { BackToTop } from "@/components/BackToTop";
-import { ReadingProgress } from "@/components/ReadingProgress";
 import { SectionNav } from "@/components/SectionNav";
 import { blogPosts } from "@/data/blog";
 import { smoothScrollToTop } from "@/lib/smoothScroll";
@@ -160,7 +159,6 @@ export function BlogPostLayout({
       </div>
 
       <BackToTop />
-      <ReadingProgress />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 **Site:** dev-vyas-portfolio.vercel.app
 **Repository:** github.com/vyasgraphics/dev-vyas-portfolio
 **Owner:** Dev Vyas, Product Designer and UX Researcher
-**Document version:** August 2026 (revision 6)
+**Document version:** August 2026 (revision 7)
 
 ---
 
@@ -29,16 +29,13 @@ Each case study reinforces the same arc with an outcome banner directly under it
 
 If you reword any section tag, keep the chapter logic intact - the labels are load-bearing for the story, not decorative. The sidebar navigation labels (nav.ts) are intentionally kept short and functional (Work, About, Skills, Background, Tools, Writing, Contact) and do not need to mirror the narrative tags.
 
-## Long-form page margins (revision 5, extended revision 6)
+## Long-form page margins (revision 5)
 
-On a wide desktop viewport, a fixed reading-width column centred in the page leaves large empty margins on both sides - visible as dead space on anything wider than about 1400px. Two additions give those margins a job without touching the reading column's width, which stays capped at 780px (matches the case study width) for line-length readability:
+On a wide desktop viewport, a fixed reading-width column centred in the page leaves large empty margins on both sides - visible as dead space on anything wider than about 1400px. The reading column stays capped at 780px (matches the case study width, unchanged from the original template) for line-length readability; the fix instead gives the right margin a job:
 
-- **`SectionNav`** on the right (`right: 28px`, desktop-only from 1180px) - the same dot-rail component the three case studies already use, now also wired into all three blog posts. Each post defines a `SECTIONS` array of `{id, label}` matched to its H2 headings (which now carry matching `id` and `scrollMarginTop` attributes), passed to `BlogPostLayout` via an optional `sections` prop.
-- **`ReadingProgress`** (`src/components/ReadingProgress.tsx`) on the left (`left: 28px`, same 1180px breakpoint) - a thin vertical track that fills with the site green as the reader scrolls, tracking `scrollY` against total scrollable height. New component, rendered unconditionally inside `BlogPostLayout` alongside `BackToTop`.
+- **`SectionNav`** on the right (`right: 28px`, desktop-only from 1180px) - the dot-rail in-page navigation component, now wired into all six long-form pages (three case studies, three blog posts). Each page defines a `SECTIONS` array of `{id, label}` matched to its H2 headings (which carry matching `id` and `scrollMarginTop` attributes). Blog posts pass their array to `BlogPostLayout` via an optional `sections` prop, which renders `SectionNav` internally; case study pages render it directly, as they always have.
 
-Both are genuinely new CSS selectors that don't exist anywhere in the original template SCSS - like `SectionNav` and `BackToTop` before them, they were added as CSS-only rules in `styles.css`, so there is nothing to mirror into the SCSS source for these three components specifically. This differs from edits to properties the template SCSS already defines (theme colours, typography scale, the profile card geometry), which do need mirroring - see "Things to be careful about" for that distinction.
-
-This fix now covers all six long-form pages - the three case studies and the three blog posts. It was initially shipped to blog posts only, out of caution about interacting with the case study pages' documented fragile scroll-position machinery (URL hash sync, cross-route back navigation). That caution turned out to be unfounded: `useUrlHashSync` only runs while the homepage is mounted (never on a case study route), `useCrossRouteBackNav` listens for `popstate`, not `scroll`, and `SectionNav` itself already runs an independent passive `scroll` listener on every case study page without incident. `ReadingProgress` does less than `SectionNav` - it only reads `scrollY`, never navigates or writes to history - so it carries no more risk than the dot rail it sits beside. `ReadingProgress` is now imported and rendered next to `BackToTop` on `app/work/dissertation/page.tsx`, `app/work/move-app/page.tsx` and `app/work/vyas-graphics/page.tsx`, the same pattern as the three blog posts.
+A matching left-margin element (`ReadingProgress`, a scroll-tracking fill) was built and shipped in revision 5/6, then removed at Dev's request in revision 7 - the general direction (functional margins on wide viewports) is still worth having, but two green vertical elements on the same page - the new rail and the site's own green-styled native scrollbar thumb (`body::-webkit-scrollbar-thumb` in styles.css, pre-existing, unrelated) - read as confusingly similar at a glance. If a left-margin element is wanted again, it should look visually distinct from the browser's own scrollbar (e.g. positioned away from the very edge, or a different visual treatment entirely) rather than another thin vertical green line.
 
 Two readability fixes landed alongside the narrative pass:
 
@@ -368,7 +365,6 @@ All three share `BlogPostLayout`, which pulls the title, date, reading time, tag
 | `UserSidebar` | Profile card |
 | `HeaderClock` | Date and time display |
 | `SectionNav` | In-page navigation - dot rail on all three case studies and all three blog posts |
-| `ReadingProgress` | Scroll-fill rail in the left margin - all three case studies and all three blog posts |
 | `BackLink` | "Back to Work" and "Back to Writing" links |
 | `BackToTop` | Floating scroll-to-top button |
 | `Preloader` | Initial load screen |
