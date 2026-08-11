@@ -109,6 +109,20 @@ export function Work() {
                                             <h3 className="w-title letter-space--2 text-white-72">
                                                 {w.title}
                                             </h3>
+                                            {w.impact && (
+                                                <p style={{
+                                                    fontSize: "12px",
+                                                    lineHeight: 1.4,
+                                                    color: "#00DE51",
+                                                    fontWeight: 500,
+                                                    marginBottom: "10px",
+                                                    paddingLeft: "10px",
+                                                    borderLeft: "2px solid #00DE51",
+                                                    opacity: 0.9,
+                                                }}>
+                                                    {w.impact}
+                                                </p>
+                                            )}
                                             <p className="w-desc text-white-56 text-body-3">
                                                 {w.description}
                                             </p>
