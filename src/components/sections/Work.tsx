@@ -84,8 +84,7 @@ export function Work() {
                                         <Link
                                             href={w.link}
                                             className="work-hover-cta"
-                                            aria-hidden
-                                            tabIndex={-1}
+                                            aria-label={`View ${w.title}`}
                                             onClick={() => {
                                                 sessionStorage.setItem("lastWorkItemSlug", w.slug);
                                             }}
@@ -93,18 +92,6 @@ export function Work() {
                                             View case study
                                         </Link>
                                     )}
-                                    {w.link && w.link !== "#" && (
-                                        <Link
-                                            href={w.link}
-                                            className="work-arrow-link"
-                                            aria-label={`View ${w.title}`}
-                                            onClick={() => {
-                                                sessionStorage.setItem("lastWorkItemSlug", w.slug);
-                                            }}
-                                        >
-                                        <i className="icon icon-arrow-right-top" />
-                                    </Link>
-                                )}
                             </div>
                             </div>
                             <div className="wrap">
