@@ -3,7 +3,7 @@ import { DisciplineSlider } from "@/components/DisciplineSlider";
 export function Intro() {
     return (
         <div id="home" className="section-intro flat-spacing">
-            <div className="intro-author effectFade fadeUp no-div">
+            <div className="intro-author">
                 <div className="author-info letter-space--05">
                     <p className="info_name text-black">Dev Vyas</p>
                     <p className="info_duty text-black-50 text-body-3">
@@ -53,7 +53,7 @@ export function Intro() {
                 </div>
             </div>
 
-            <div className="box-counter effectFade fadeUp no-div">
+            <div className="box-counter">
                 <div className="wg-counter">
                     <p className="counter h1 d-flex font-2 letter-space--2">
                         <span className="number" data-speed="1000" data-to="4">0</span>+
@@ -73,7 +73,9 @@ export function Intro() {
                 UK &nbsp;·&nbsp; Open to UK &amp; remote roles from Sep 2026
             </p>
 
-            <DisciplineSlider />
+            <div id="intro-discipline-wrap">
+                <DisciplineSlider />
+            </div>
         </div>
     );
 }

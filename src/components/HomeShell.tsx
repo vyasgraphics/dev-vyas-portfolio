@@ -19,6 +19,7 @@ import { Contact } from "./sections/Contact";
 import { Footer } from "./sections/Footer";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 import { useSectionMaterialize } from "@/hooks/useSectionMaterialize";
+import { useHeroLoadSequence } from "@/hooks/useHeroLoadSequence";
 import { useClock } from "@/hooks/useClock";
 import { useHeadlineRotate } from "@/hooks/useHeadlineRotate";
 import { useInfiniteSlide } from "@/hooks/useInfiniteSlide";
@@ -42,6 +43,7 @@ export function HomeShell() {
     useHeadlineRotate();
     useScrollAnimations();
     useSectionMaterialize();
+    useHeroLoadSequence();
     useUrlHashSync();
 
     return (

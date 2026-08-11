@@ -33,7 +33,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // HomeShell so the plugin is guaranteed registered first) rather than
 // CSS animation-timeline, so there's no new browser-support surface at
 // all - if GSAP already works on the rest of this site, this works too.
-const MATERIALIZE_SELECTOR = "#home, #organisations, #about, #education, #tech, #contact";
+// #home (the hero) is deliberately excluded - it now has its own
+// dedicated, more elaborate load sequence (see useHeroLoadSequence.ts),
+// so this generic blur/contrast treatment would be redundant there and
+// risks visually competing with the more purpose-built entrance.
+const MATERIALIZE_SELECTOR = "#organisations, #about, #education, #tech, #contact";
 
 export function useSectionMaterialize() {
     useEffect(() => {

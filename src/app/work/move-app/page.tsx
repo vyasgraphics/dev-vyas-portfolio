@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
@@ -291,28 +290,6 @@ export default function MoveAppWorkPage() {
                 </li>
               </ul>
             </div>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <div style={{
-            padding: "28px", borderRadius: "16px", maxWidth: "620px", margin: "0 auto",
-            background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
-            textAlign: "center",
-          }}>
-            <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.7)", marginBottom: "16px" }}>
-              Want the full story - the research, the rejected ideas, and the usability testing that led here?
-            </p>
-            <Link
-              href="/blog/building-move-app"
-              style={{
-                display: "inline-block", padding: "12px 28px", borderRadius: "100px",
-                background: "#00DE51", color: "#0a0a0a", textDecoration: "none",
-                fontSize: "14px", fontWeight: 700,
-              }}
-            >
-              Read the full case study →
-            </Link>
           </div>
         </ScrollReveal>
 
