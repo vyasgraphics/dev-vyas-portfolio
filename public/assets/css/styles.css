@@ -8382,6 +8382,63 @@ html, body {
   position: relative;
 }
 
+/* ── Work card hover: gentle scale + glow + underline brighten ──
+   Requested on ".wg-work" (the whole card), but that's NOT where this
+   can safely live: .wg-work is the ANCESTOR of .wrap, which is
+   position:fixed on desktop (see the min-width:992px rule above) and
+   has its own transform actively driven by GSAP for the card-swap
+   mechanic. A CSS transform on .wg-work would give .wrap a new
+   containing block, breaking its fixed positioning on every hover - and
+   even scoping the scale to .wrap directly risks fighting the inline
+   transform GSAP writes to it on scroll. So: the glow lives on .wg-work
+   itself (box-shadow doesn't create a containing-block issue, unlike
+   transform/filter), the scale lives on .work-image (a sibling of
+   .wrap, never touched by GSAP), and the "underline" is the existing
+   .br-line divider brightening to the accent colour - all three read as
+   one cohesive "the card is responding to you" moment without touching
+   anything transform- or GSAP-sensitive. */
+@media (hover: hover) {
+  .wg-work {
+    transition: box-shadow 0.4s ease;
+  }
+  .wg-work:hover {
+    box-shadow: var(--shadow-2), 0 0 0 1px rgba(0, 222, 81, 0.18), 0 24px 60px rgba(0, 222, 81, 0.1);
+  }
+  .wg-work .work-image img {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wg-work:hover .work-image img {
+    transform: scale(1.01);
+  }
+  .wg-work .br-line {
+    transition: background-color 0.4s ease;
+  }
+  .wg-work:hover .br-line {
+    background-color: rgba(0, 222, 81, 0.4);
+  }
+}
+
+/* ── Click/tap compress: "View project" and "View case study" buttons ──
+   :active covers mouse click-and-hold and touch tap-and-hold natively
+   in every browser, so this needs no JS or matchMedia touch detection -
+   unlike hover, :active is inherently the same mechanism for both input
+   types. Fast in, fast out - a spring should feel immediate, not eased. */
+.wg-work .tf-btn-action,
+.work-hover-cta {
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.wg-work .tf-btn-action:active,
+.work-hover-cta:active {
+  transform: scale(0.96);
+}
+.work-hover-cta:active {
+  /* .work-hover-cta already carries its own translate/scale for the
+     hover-reveal position (see below) - active state composes on top of
+     that rather than replacing it, so the button doesn't jump position
+     when pressed mid-reveal. */
+  transform: translateX(-50%) translateY(0) scale(0.92);
+}
+
 /* ── Work card: hover-reveal "View case study" pill over the screenshot.
    Positioned near the bottom edge, not dead-centre - centring it sat the
    pill directly on top of illustration subjects on several project
