@@ -437,6 +437,28 @@ export function useScrollAnimations() {
                 // mid-flight and immediately undo the state just set above.
                 clickScrollTimer = setTimeout(() => {
                     isClickScrolling = false;
+                    // The click handler above set the active state directly
+                    // via classList, bypassing syncSidebarToScroll entirely -
+                    // so the grace-window guard inside it (restoredAtScrollY/
+                    // restoredAtTime) was never armed for this click. Without
+                    // it, if "#work" lands at a scroll position where no card
+                    // yet strictly satisfies the top<=132 pinning threshold
+                    // (landing at the section's heading rather than inside the
+                    // pinned-card zone, for instance), this re-sync finds no
+                    // match and reverts to the profile card a moment after
+                    // correctly showing the first work card - the exact
+                    // "flashes the work card, then shows the profile card"
+                    // behaviour reported. Arming the same guard the organic
+                    // path already uses fixes it the same way that path is
+                    // already protected, rather than adding new logic: for
+                    // 6 seconds (or until a real scroll of 40px+ happens),
+                    // a "no match" result here is treated as the same
+                    // landing-artefact case the restoration path handles,
+                    // not a genuine departure from Work.
+                    if (href === "#work") {
+                        restoredAtScrollY = window.scrollY;
+                        restoredAtTime = Date.now();
+                    }
                     syncSidebarToScroll();
                 }, 1700);
             };

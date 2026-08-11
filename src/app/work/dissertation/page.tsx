@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BackLink } from "@/components/BackLink";
+import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
@@ -145,7 +146,7 @@ export default function DissertationWorkPage() {
         <SectionNav sections={SECTIONS} />
 
         <ScrollReveal>
-          <section id="question" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="question" tag="Two users, one page">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The question</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>
               Two people can sit down at the same busy news website, given the same task and the same time, and come
@@ -170,11 +171,11 @@ export default function DissertationWorkPage() {
               How might we design for the users that cluttered interfaces cost the most - and measure that cost
               accurately enough to act on it?
             </p>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="study" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="study" tag="5 rounds, 42 participants">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The study</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "32px" }}>
               To test it, I built a purpose-made news article search task from scratch: five rounds, each with a
@@ -194,11 +195,11 @@ export default function DissertationWorkPage() {
               task itself is entirely reading-driven. Here&apos;s how each trial type is put together:
             </p>
             <WireframeCirclesTest />
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="finding" tag="Time, not accuracy">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "24px" }}>
               The two outcomes told almost opposite stories. Search accuracy barely moved between participants -
@@ -210,11 +211,11 @@ export default function DissertationWorkPage() {
               <strong style={{ color: "#fff" }}>they interacted</strong>.
             </p>
             <DistractionInteractionChart />
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="implications" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="implications" tag="What changes for design">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What it means for design</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>
               Two users can walk away from the same interface with identical, accurate results, while one of them
@@ -230,11 +231,11 @@ export default function DissertationWorkPage() {
               rather than spreading a general clutter reduction evenly across the page, may do more for the people
               who need it most than an evenly-distributed tidy-up ever would.
             </p>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="next" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="next" tag="Submission still pending">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               This dissertation is still being finalised at the University of York, so I&apos;ve deliberately kept
@@ -244,7 +245,7 @@ export default function DissertationWorkPage() {
               measurable cost that cluttered interfaces impose unevenly, and a first proper test of whether a
               laboratory memory measure predicts anything on a page people would actually use.
             </p>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>

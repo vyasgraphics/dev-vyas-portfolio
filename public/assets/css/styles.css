@@ -1518,6 +1518,26 @@ h6,
   width: 1176px;
   max-width: 100%;
 }
+@media (min-width: 1600px) {
+  /* At this breakpoint the two fixed sidebars flanking the page have
+     known, stable footprints: .sidebar-user (profile card) sits at
+     left:48px with max-width:480px, reserving 528px on the left;
+     .sidebar-tools (nav rail) sits at right:48px with a narrow ~45px
+     icon column, reserving about 93px on the right. Plain margin:auto
+     centres this container on the FULL viewport width, ignoring that
+     asymmetry entirely - on wide screens that puts the container about
+     218px left of where it would need to sit to actually centre within
+     the visible gap between the two sidebars, which is what produced
+     the mismatched double-gap effect (small-ish gap on the left,
+     noticeably larger one on the right, both feeling disconnected from
+     the content between them). This shifts the centring point right by
+     that same 218px to compensate, rather than centring on a viewport
+     width that doesn't reflect what's actually reserved on either side. */
+  .container {
+    margin-left: calc((100vw - 1176px) / 2 + 218px);
+    margin-right: auto;
+  }
+}
 
 .container-full {
   position: relative;

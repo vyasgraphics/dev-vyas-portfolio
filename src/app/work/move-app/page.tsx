@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BackLink } from "@/components/BackLink";
+import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
@@ -110,7 +111,7 @@ export default function MoveAppWorkPage() {
             anxiety and mental effort standing between them and the ones already there.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
-            {["UX Researcher & Designer", "2025", "Figma", "Health & Fitness"].map((t) => (
+            {["UX Researcher & Designer", "2026", "Figma", "Health & Fitness"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
@@ -179,7 +180,7 @@ export default function MoveAppWorkPage() {
         <SectionNav sections={SECTIONS} />
 
         <ScrollReveal>
-          <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="problem" tag="Choice wasn't the barrier">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The problem</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
@@ -193,11 +194,11 @@ export default function MoveAppWorkPage() {
               How might we reduce the anxiety and decision friction that stops students from starting - not just give
               them more options?
             </p>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="personas" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="personas" tag="Two barriers, two users">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
             <TiltPermissionPrompt />
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
@@ -212,28 +213,44 @@ export default function MoveAppWorkPage() {
                 Maya needs cognitive offloading, not encouragement.
               </p>
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="screens" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The four screens that mattered</h2>
+          <SectionBox id="screens" tag="Four screens, two rejected paths">
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The four screens that mattered</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+              Two earlier concepts were built out and then explicitly rejected against the questionnaire data: a
+              leaderboard, dropped once it was clear how strongly users disliked competitive comparison, and a
+              manual planner, dropped in favour of automatic timetable syncing once it was clear manual entry was
+              exactly the kind of friction the design was meant to remove.
+            </p>
             <div className="wireframes-grid">
               <WireframeSmartInput />
               <WireframeQuietMode />
               <WireframeSeeBeforeYouGo />
               <WireframeGapFinder />
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="finding" tag="Caught before it shipped">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
-              the one feature built to protect anxious users was the one nobody trusted enough to touch. Renaming it
-              to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
+              the one feature built to protect anxious users was the one nobody trusted enough to touch. One tester
+              said it outright:
+            </p>
+            <p style={{
+              fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.9)", fontStyle: "italic",
+              padding: "16px 20px", marginBottom: "20px", borderLeft: "3px solid #00DE51",
+              background: "rgba(255,255,255,0.03)", borderRadius: "0 8px 8px 0",
+            }}>
+              &ldquo;Will this turn off my Spotify? I don&apos;t want silence, I just want to avoid people.&rdquo;
+            </p>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+              Renaming it to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
               &ldquo;Social/Solo&rdquo; control, and adding explicit confirmation feedback fixed it.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
@@ -249,17 +266,17 @@ export default function MoveAppWorkPage() {
               />
               <WireframeCrowdFilter />
             </div>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="next" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
+          <SectionBox id="next" tag="256 users, properly powered">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
               the moment this moves from prototype to production.
             </p>
-          </section>
+          </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
@@ -283,7 +300,7 @@ export default function MoveAppWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Full HCD lifecycle craft: 17 user interviews through to Figma prototyping and moderated think-aloud testing with 8 users.
+                  Full HCD lifecycle craft: a 17-response user questionnaire through to Figma prototyping and moderated think-aloud testing with 8 users.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Domain knowledge in behaviour-change and health-app design - specifically, that removing anxiety beats adding motivation for a sedentary, self-conscious user.
