@@ -69,9 +69,10 @@ export function WireframeNewsTask({
   return (
     <div>
       {showIntro && <WireframeIntro badge={badge} title={title} description={description} />}
-      <ScaleToFit width={720}>
-        <TiltCard maxTilt={4}>
-          <BrowserFrame>
+      <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+        <ScaleToFit width={720}>
+          <TiltCard maxTilt={4}>
+            <BrowserFrame>
             {/* Sticky-style header - red round label, bold query, counter/timer/submit */}
             <div style={{ padding: "18px 20px", borderBottom: "2px solid #dddddd", background: "#fff" }}>
               <div style={{ fontSize: "12px", fontWeight: 700, color: "#d32f2f", marginBottom: "6px" }}>
@@ -155,6 +156,7 @@ export function WireframeNewsTask({
           </BrowserFrame>
         </TiltCard>
       </ScaleToFit>
+      </div>
     </div>
   );
 }
