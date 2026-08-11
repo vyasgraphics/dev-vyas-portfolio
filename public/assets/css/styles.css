@@ -5806,10 +5806,10 @@ button.animate-btn::after,
 .wg-work .w-logo,
 .wg-work .w-desc,
 .wg-work .w-highlight {
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 .wg-work .w-title {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 .wg-work .w-highlight {
   display: grid;
@@ -8044,23 +8044,17 @@ button.animate-btn::after,
    All show/hide logic lives in useScrollAnimations.ts ScrollTrigger,
    using the exact class names ("active") the CSS already expects. */
 
-/* The blurred photo backdrop, even fully darkened, still let bright areas
-   of some project screenshots (white UI mockups especially) show through
-   as soft glowing patches behind the text - working against exactly the
-   readability this treatment was meant to protect, and getting worse as
-   more text (the impact quote, Context/Team/Role additions elsewhere on
-   this site) needed to sit cleanly on top of it. Replaced with a plain
-   solid panel on desktop - always legible regardless of what the
-   underlying photo looks like. Mobile is untouched: it already shows
-   this same image as a normal, un-blurred photo in its own right (see
-   the max-width:991px block above), which was never the problem. */
-@media (min-width: 992px) {
-  .wg-work .work-content .w-image {
-    display: none !important;
-  }
-  .wg-work .work-content {
-    background: #0a0a0a !important;
-  }
+/* The blurred photo backdrop is back by request - the flat solid panel
+   read as too plain. What actually needed fixing was the specific bright
+   ghosting (white UI mockups in some screenshots showing through as
+   glowing patches), not the blur effect itself. Fixed properly this
+   time: much stronger darkening (88% vs the 68% that still let light
+   through) plus a heavier blur (20px vs 12px) so bright areas spread out
+   and fade rather than staying as distinct patches. */
+.wg-work .w-image::after {
+  background: rgba(0, 0, 0, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
 }
 
 /* ── Animated text overlap fix (Hey I'm Dev/Designer/Researcher) ── */
@@ -8388,54 +8382,25 @@ html, body {
   position: relative;
 }
 
-/* ── Work card: tilted tag labels peeking from behind the screenshot,
-   and a hover-reveal "View case study" pill over it. Reference-inspired
-   card treatment. The tags are decorative signposting only (aria-hidden -
-   the same tags are already announced properly in .w-tag-list further
-   down the card). The hover pill used to be a decorative duplicate
-   alongside a separate always-visible arrow-link circle; that circle was
-   removed as redundant clutter, so the hover pill is now the only link
-   in this area and needs to be genuinely accessible - real focusable
-   link, :focus-visible reveals it for keyboard users (see below), not
-   aria-hidden. The always-visible "View project" button lower in the
-   card remains a second, fully visible path to the same href regardless.
-   Tags hidden below 768px: peeking this close to the viewport edge risks
-   crowding the fixed mobile menu button, and the desktop-style hover
-   reveal has no equivalent purpose on a touch device that's already
-   looking at a full-width, always-visible card. */
-.work-image-frame {
-  position: relative;
-}
-.work-tilt-tag {
-  position: absolute;
-  top: 38%;
-  z-index: 0;
-  padding: 7px 16px;
-  border-radius: 100px;
-  background: #0f2e1c;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-  display: none;
-}
-.work-tilt-tag--left {
-  left: -14px;
-  transform: rotate(-9deg);
-}
-.work-tilt-tag--right {
-  right: -14px;
-  transform: rotate(7deg);
-}
+/* ── Work card: hover-reveal "View case study" pill over the screenshot.
+   Positioned near the bottom edge, not dead-centre - centring it sat the
+   pill directly on top of illustration subjects on several project
+   images, reading as broken rather than revealed. A tilted-tag treatment
+   was tried here too (rotated labels peeking from behind the image,
+   reference-inspired) but at real card sizes it read as unexplained green
+   blobs rather than legible signposting - removed rather than iterated
+   on further, since the same tags are already properly shown in
+   .w-tag-list below. The hover pill is a real, focusable link (not
+   aria-hidden) since the old always-visible arrow-link circle it used to
+   sit alongside was also removed as redundant - :focus-visible reveals it
+   for keyboard users. The always-visible "View project" button lower in
+   the card remains a second, fully visible path to the same href. */
 .work-hover-cta {
   position: absolute;
-  top: 50%;
+  bottom: 20px;
   left: 50%;
   z-index: 2;
-  transform: translate(-50%, -50%) scale(0.94);
+  transform: translateX(-50%) translateY(6px) scale(0.94);
   padding: 12px 26px;
   border-radius: 100px;
   background: #fff;
@@ -8448,19 +8413,14 @@ html, body {
 }
 .work-hover-cta:focus-visible {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translateX(-50%) translateY(0) scale(1);
   outline: 2px solid #00DE51;
   outline-offset: 3px;
-}
-@media (min-width: 768px) {
-  .work-tilt-tag {
-    display: block;
-  }
 }
 @media (hover: hover) {
   .work-image:hover .work-hover-cta {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
   .work-image:hover img {
     filter: brightness(0.55);
