@@ -181,14 +181,14 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The problem</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "20px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
               was never a lack of choice. It was time pressure, self-consciousness, and unfamiliarity standing
               between students and using what was already there.
             </p>
             <p style={{
               fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
-              fontStyle: "italic", marginTop: "20px", maxWidth: "700px",
+              fontStyle: "italic", marginTop: "20px",
             }}>
               How might we reduce the anxiety and decision friction that stops students from starting - not just give
               them more options?
@@ -230,7 +230,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "20px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
               In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
               the one feature built to protect anxious users was the one nobody trusted enough to touch. Renaming it
               to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
@@ -255,7 +255,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="next" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
               the moment this moves from prototype to production.
             </p>
