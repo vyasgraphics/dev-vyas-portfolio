@@ -125,8 +125,8 @@ export default function MoveAppWorkPage() {
 
         <div style={{
           display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "24px", marginBottom: "48px", paddingBottom: "32px",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          gap: "24px", marginBottom: "64px", padding: "24px",
+          borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
         }}>
           <div>
             <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Context</p>
@@ -151,7 +151,7 @@ export default function MoveAppWorkPage() {
         </div>
 
         <div style={{
-          padding: "24px", borderRadius: "16px", marginBottom: "48px",
+          padding: "24px", borderRadius: "14px", marginBottom: "64px",
           background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
         }}>
           <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "18px" }}>Results</p>
@@ -188,9 +188,8 @@ export default function MoveAppWorkPage() {
               between students and using what was already there.
             </p>
             <p style={{
-              fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-              fontWeight: 600,
-              paddingLeft: "16px", borderLeft: "3px solid #00DE51",
+              fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
+              fontStyle: "italic", marginTop: "20px", maxWidth: "700px",
             }}>
               How might we reduce the anxiety and decision friction that stops students from starting - not just give
               them more options?
@@ -255,7 +254,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
+          <section id="next" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
               A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
@@ -267,10 +266,11 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <div style={{
             display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "24px", marginBottom: "56px",
+            gap: "24px", marginBottom: "64px", padding: "24px",
+            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
           }}>
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
+              <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Owned research and design decisions within the team - the personas, the usability testing plan, and the fix once testing found the trust problem were mine to call.
@@ -281,7 +281,7 @@ export default function MoveAppWorkPage() {
               </ul>
             </div>
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
+              <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Full HCD lifecycle craft: 17 user interviews through to Figma prototyping and moderated think-aloud testing with 8 users.

@@ -8049,7 +8049,7 @@ button.animate-btn::after,
 
 /* Slightly darker image blur backing so text stays legible (kept from our tuning) */
 .wg-work .w-image::after {
-  background: rgba(0, 0, 0, 0.55) !important;
+  background: rgba(0, 0, 0, 0.68) !important;
 }
 
 /* ── Animated text overlap fix (Hey I'm Dev/Designer/Researcher) ── */

@@ -118,8 +118,8 @@ export default function DissertationWorkPage() {
 
         <div style={{
           display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "24px", marginBottom: "48px", paddingBottom: "32px",
-          borderBottom: "1px solid rgba(255,255,255,0.08)",
+          gap: "24px", marginBottom: "64px", padding: "24px",
+          borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
         }}>
           <div>
             <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Context</p>
@@ -165,9 +165,8 @@ export default function DissertationWorkPage() {
               afterwards), actually predicts how well someone copes with a realistically cluttered interface.
             </p>
             <p style={{
-              fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-              fontWeight: 600, marginTop: "24px",
-              paddingLeft: "16px", borderLeft: "3px solid #00DE51",
+              fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
+              fontStyle: "italic", marginTop: "24px", maxWidth: "700px",
             }}>
               How might we design for the users that cluttered interfaces cost the most - and measure that cost
               accurately enough to act on it?
@@ -188,7 +187,7 @@ export default function DissertationWorkPage() {
             <TiltPermissionPrompt />
             <WireframeNewsTask />
 
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", margin: "44px 0 32px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", margin: "32px 0" }}>
               Forty-two participants, recruited through Prolific, completed the task alongside a validated
               working-memory test that separately scores two kinds of distraction resistance - one for filtering
               distraction the instant it appears, another for protecting something already held in mind once
@@ -236,7 +235,7 @@ export default function DissertationWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
+          <section id="next" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
               This dissertation is still being finalised at the University of York, so I&apos;ve deliberately kept
@@ -252,10 +251,11 @@ export default function DissertationWorkPage() {
         <ScrollReveal>
           <div style={{
             display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "24px", marginBottom: "56px",
+            gap: "24px", marginBottom: "64px", padding: "24px",
+            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
           }}>
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
+              <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Solo-owned the study end to end - research question, task design, ethics approval, recruitment, and analysis, with no team to divide the workload across.
@@ -266,7 +266,7 @@ export default function DissertationWorkPage() {
               </ul>
             </div>
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
+              <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Built a purpose-made experimental task from banner-blindness research, not an off-the-shelf instrument - grounded in the working-memory literature it tests against.

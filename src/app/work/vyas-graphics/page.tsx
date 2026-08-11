@@ -595,10 +595,11 @@ export default function VyasGraphicsWorkPage() {
         <ScrollReveal>
           <div style={{
             display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "24px", margin: "8px 0 48px",
+            gap: "24px", margin: "8px 0 48px", padding: "24px",
+            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
           }}>
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
+              <SectionHeading>Leadership</SectionHeading>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Self-directed from brief to delivery on every piece here - no client brief to follow, so the standard to hit was one I set myself and held to over six years.
@@ -609,7 +610,7 @@ export default function VyasGraphicsWorkPage() {
               </ul>
             </div>
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
+              <SectionHeading>Craft &amp; Expertise</SectionHeading>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Full brand production pipeline: identity design in Illustrator, motion in After Effects, layout in InDesign - the same craft applied consistently across five distinct identities.
