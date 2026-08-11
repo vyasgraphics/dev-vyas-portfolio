@@ -111,7 +111,7 @@ export default function MoveAppWorkPage() {
             anxiety and mental effort standing between them and the ones already there.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
-            {["UX Researcher & Designer", "2025", "Figma", "Lo-Fi Prototype"].map((t) => (
+            {["UX Researcher & Designer", "2025", "Figma", "Health & Fitness"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
@@ -121,6 +121,9 @@ export default function MoveAppWorkPage() {
               </span>
             ))}
           </div>
+          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", marginTop: "16px" }}>
+            Team: Dev Vyas (UX research &amp; design) with coursemates Haokai, Lanqing and Yechen - a four-person university module project.
+          </p>
         </header>
 
         <SectionNav sections={SECTIONS} />

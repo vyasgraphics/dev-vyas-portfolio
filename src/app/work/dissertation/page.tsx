@@ -104,7 +104,7 @@ export default function DissertationWorkPage() {
             even when it barely shows up in accuracy.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
-            {["UX Researcher · MSc Dissertation", "2026", "Python", "Prolific"].map((t) => (
+            {["UX Researcher · MSc Dissertation", "2026", "Python", "Academic Research"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
