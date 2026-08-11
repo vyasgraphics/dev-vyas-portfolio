@@ -5597,11 +5597,24 @@ button.animate-btn::after,
   }
 }
 
+.award-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 .award-list .award-item {
-  padding: 23px 0px 24px;
-  border-top: 1px solid var(--black-6);
+  height: 100%;
+  padding: 20px 22px;
+  border: 1px solid var(--black-6);
+  border-radius: 14px;
   display: flex;
-  justify-content: space-between;
+  /* Stacked (year below, muted) is the default everywhere - narrow grid
+     columns (tablet, two-up) hit the exact same cramped-run-up problem
+     the original mobile-only fix solved, just at a different breakpoint.
+     Only flip to a horizontal row once a column is wide enough to fit
+     both comfortably (see the min-width:992px override below). */
+  flex-direction: column;
+  gap: 6px;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -ms-transition: all 0.3s ease;
@@ -5610,21 +5623,8 @@ button.animate-btn::after,
   position: relative;
   cursor: pointer;
 }
-/* .left (title + inline arrow icon) and .award_year had no width rules of
-   their own, so both relied on flex's default min-width:auto - which for
-   nested flex content means "never shrink below natural content width".
-   That's invisible on desktop where the title fits on one line, but on
-   mobile the title wraps to two lines and .left still refused to shrink,
-   overflowing its column and pushing the arrow icon out to the right on
-   top of .award_year. min-width:0 + flex:1 lets .left properly shrink and
-   wrap; flex-shrink:0 + nowrap keeps the year column reliably intact. */
 .award-list .award-item .left {
   min-width: 0;
-  flex: 1;
-}
-.award-list .award-item .award_year {
-  flex-shrink: 0;
-  white-space: nowrap;
 }
 .award-list .award-item .award_name {
   margin-bottom: 8px;
@@ -5633,30 +5633,32 @@ button.animate-btn::after,
      doesn't affect the other three entries, none of which contain \n. */
   white-space: pre-line;
 }
-.award-list .award-item:last-child {
-  padding-bottom: 23px;
-  border-bottom: 1px solid var(--black-6);
+.award-list .award-item .award_year {
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--black-56);
 }
-@media (max-width: 575px) {
+@media (min-width: 992px) {
+  /* Desktop: grid columns are wide enough (roughly half the container)
+     for title and year to sit side by side without crowding. */
   .award-list .award-item {
-    padding: 20px 0px;
-    /* On mobile, longer titles (e.g. the Data Science cert) wrap across
-       3-4 lines. Kept as a row, .award_year sits stranded at the top-right
-       with a lot of disconnected empty space beneath it while the title
-       keeps wrapping on the left - reads as two unrelated columns rather
-       than one entry. Stacking the year below the publisher, and toning
-       it down to read as metadata (smaller, muted) rather than a second
-       headline competing with the title, keeps every entry reading as one
-       coherent block regardless of how long its title is. */
-    flex-direction: column;
-    gap: 6px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .award-list .award-item .left {
+    flex: 1;
   }
   .award-list .award-item .award_year {
-    font-size: 15px;
-    line-height: 1.4;
-    color: var(--black-56);
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
   }
 }
+
 
 .timeline-item {
   display: flex;
@@ -7760,9 +7762,12 @@ button.animate-btn::after,
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 24px rgba(0,200,83,0.12) !important;
   }
-  /* Certificates carry no border/background of their own to hang a hover
-     state off, so the glow on the arrow itself is what signals "this is
-     clickable" rather than a hover state on the row. */
+  /* Now a real bordered card (see the grid conversion above), so it can
+     carry its own hover state like blog-card does - the arrow glow stays
+     as a second, more specific signal on top of it. */
+  .award-item:hover {
+    border-color: rgba(0,200,83,0.35) !important;
+  }
   .award-item:hover .award-link-arrow {
     transform: translate(2px, -2px) !important;
     text-shadow: 0 0 6px rgba(0,200,83,0.9), 0 0 16px rgba(0,200,83,0.6) !important;

@@ -39,29 +39,56 @@
     }
 }
 
+// Grid card treatment lives in styles.css (see the dual-source-of-truth
+// note in the project reference) - mirrored here structurally so this
+// SCSS source can't silently win with the old bordered-row layout.
 .award-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
     .award-item {
-        padding: 23px 0px 24px;
-        border-top: 1px solid var(--black-6);
+        height: 100%;
+        padding: 20px 22px;
+        border: 1px solid var(--black-6);
+        border-radius: 14px;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 6px;
         @include transition3;
         position: relative;
         cursor: pointer;
 
         .award_name {
             margin-bottom: 8px;
+            white-space: pre-line;
         }
 
-        &:last-child {
-            padding-bottom: 23px;
-            border-bottom: 1px solid var(--black-6);
+        .award_year {
+            font-size: 15px;
+            line-height: 1.4;
+            color: var(--black-56);
         }
     }
 
-    @include res(sm) {
+    @include res(lg, min) {
         .award-item {
-            padding: 20px 0px;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+
+            .left {
+                flex: 1;
+            }
+
+            .award_year {
+                flex-shrink: 0;
+                white-space: nowrap;
+                font-size: inherit;
+                line-height: inherit;
+                color: inherit;
+            }
         }
     }
 }

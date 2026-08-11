@@ -115,7 +115,7 @@ export function Contact() {
         from September 2026
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ maxWidth: "600px", marginTop: "1rem", marginBottom: "0.5rem" }}>
-        A designer who researches, a researcher who ships, and someone who uses AI to move faster without letting it make the calls. If that is the shape of what you need, let&apos;s talk.
+        I run the research, design the solution, and deliver work that is traceable back to real user evidence. If you need someone who can lead the full HCD cycle - not just hand off screens - let&apos;s talk.
       </p>
 
       {submitted ? (

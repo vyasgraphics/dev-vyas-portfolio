@@ -116,6 +116,33 @@ export default function DissertationWorkPage() {
           </div>
         </header>
 
+        <div style={{
+          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "24px", marginBottom: "48px", paddingBottom: "32px",
+          borderBottom: "1px solid rgba(255,255,255,0.08)",
+        }}>
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Context</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.75)" }}>
+              MSc capstone dissertation, Department of Computer Science, University of York.
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Team</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.75)" }}>
+              Solo research project<br />
+              Supervised, University of York
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>My Role</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.75)" }}>
+              Study Design · Ethics Approval<br />
+              Data Collection · Statistical Analysis
+            </p>
+          </div>
+        </div>
+
         <SectionNav sections={SECTIONS} />
 
         <ScrollReveal>
@@ -136,6 +163,14 @@ export default function DissertationWorkPage() {
               University of York asks whether that trait, split into two components (filtering distraction the
               moment it appears, and protecting what&apos;s already been remembered once distraction turns up
               afterwards), actually predicts how well someone copes with a realistically cluttered interface.
+            </p>
+            <p style={{
+              fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
+              fontWeight: 600, marginTop: "24px",
+              paddingLeft: "16px", borderLeft: "3px solid #00DE51",
+            }}>
+              How might we design for the users that cluttered interfaces cost the most - and measure that cost
+              accurately enough to act on it?
             </p>
           </section>
         </ScrollReveal>
@@ -212,6 +247,36 @@ export default function DissertationWorkPage() {
               laboratory memory measure predicts anything on a page people would actually use.
             </p>
           </section>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "24px", marginBottom: "56px",
+          }}>
+            <div>
+              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
+              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Solo-owned the study end to end - research question, task design, ethics approval, recruitment, and analysis, with no team to divide the workload across.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Kept the reporting honest about what the data does and doesn&apos;t show yet, rather than overstating early findings before the dissertation is marked.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
+              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Built a purpose-made experimental task from banner-blindness research, not an off-the-shelf instrument - grounded in the working-memory literature it tests against.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Quantitative rigour: 42 participants recruited via Prolific, a validated working-memory measure, reading speed controlled for, analysed in SPSS.
+                </li>
+              </ul>
+            </div>
+          </div>
         </ScrollReveal>
 
         <ScrollReveal>

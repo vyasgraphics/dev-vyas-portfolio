@@ -10,6 +10,7 @@ import { UserSidebar } from "./UserSidebar";
 import { Preloader } from "./Preloader";
 import { WelcomeReveal } from "./WelcomeReveal";
 import { Intro } from "./sections/Intro";
+import { Organisations } from "./sections/Organisations";
 import { About } from "./sections/About";
 import { Education } from "./sections/Education";
 import { Work } from "./sections/Work";
@@ -151,6 +152,7 @@ export function HomeShell() {
                             <div className="col-lg-7 col-xl-8 ms-auto">
                                 <div className="wrap-container">
                                     <Intro />
+                                    <Organisations />
                                     <Work />
                                     <About />
                                     <Skills />
