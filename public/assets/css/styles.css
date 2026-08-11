@@ -59,6 +59,12 @@
 }
 /*--------- Abstracts variable ---------- */
 :root {
+  /*-- Micro-interaction easing (shared across hover/active states) --
+     One definition, reused everywhere below, rather than each rule
+     hand-rolling its own curve - keeps every hover/click across the
+     site feeling like the same hand designed it. */
+  --ease-hover: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-active: cubic-bezier(0.34, 1.56, 0.64, 1);
   /*-- Core Color --*/
   --white: #ffffff;
   --white-8: rgba(255, 255, 255, 0.08);
@@ -1631,6 +1637,7 @@ h6,
   gap: 6px;
   color: var(--black-72);
   padding: 8px;
+  position: relative;
 }
 .nav-mobile-item .item-link.active {
   color: var(--primary);
@@ -8331,7 +8338,81 @@ textarea:focus-visible,
   }
 }
 
-/* ── Field-level validation feedback on the contact form ── */
+/* ── Nav "underline wipe", adapted for an icon-based nav ──
+   The reference spec describes a thin underline drawing in beneath
+   hovered text links. This site's nav (both the desktop sidebar and
+   mobile menu, sharing the same navItems data) is icon-only, with no
+   text to underline in the main list - so the same idea is expressed as
+   a small indicator line beneath each icon instead: draws in from 0 to
+   full width on hover (scaleX, transform-origin left, so it wipes
+   left-to-right rather than just fading), and stays filled for the
+   active section without needing hover. */
+.sidebar-tools .item-link::after,
+.nav-mobile-item .item-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 14px;
+  height: 1.5px;
+  background: var(--primary);
+  border-radius: 2px;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s var(--ease-hover);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .sidebar-tools .item-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+}
+.sidebar-tools .item-link.active::after,
+.nav-mobile-item .item-link.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ── Custom scroll progress tracker, replacing the native scrollbar ──
+   Hidden here (not just visually covered) rather than layered over -
+   the native scrollbar still existing underneath a custom one is a
+   common source of double-scrollbar bugs on some browsers/OS scrollbar
+   settings. scrollbar-width covers Firefox, ::-webkit-scrollbar covers
+   Chrome/Safari/Edge - between them, every browser this site needs to
+   support is covered without a JS-based scrollbar-hiding library. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+.scroll-progress-track {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  z-index: 250;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+.scroll-progress-fill {
+  width: 100%;
+  height: 0%;
+  background: var(--primary);
+  transition: height 0.15s linear;
+}
+@media (max-width: 575px) {
+  /* The fixed hamburger trigger already occupies the opposite (right)
+     edge on mobile - a full-height left-edge line at this width reads
+     as a stray vertical rule rather than a progress indicator on a
+     narrow screen, so it steps back to a slim corner accent instead. */
+  .scroll-progress-track {
+    bottom: auto;
+    height: 40vh;
+  }
+}
+
+
 .form-contact .field-ip.has-error input {
   border-color: #ff5c5c !important;
 }
@@ -8556,6 +8637,14 @@ html, body {
   border-bottom-color: #00C853 !important;
   outline: none !important;
   box-shadow: none !important;
+  /* Thicken on focus without shifting layout - a real border-width change
+     would push the field's content up by a pixel; box-shadow occupies no
+     box space, so it can simulate growth with zero layout impact. */
+  transition: border-color 0.3s ease, box-shadow 0.3s var(--ease-hover) !important;
+}
+.form-contact .field-ip input:focus,
+.form-contact .field-ip textarea:focus {
+  box-shadow: 0 1px 0 0 #00C853 !important;
 }
 .form-contact .field-ip.has-error input,
 .form-contact .field-ip.has-error textarea {
