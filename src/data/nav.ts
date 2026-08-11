@@ -9,9 +9,9 @@ export const navItems: NavItem[] = [
   { href: "#home",      label: "Home",        icon: "icon-home",         separator: "after" },
   { href: "#work",      label: "Work",         icon: "icon-high-light" },
   { href: "#about",     label: "About",        icon: "icon-user-circle" },
-  { href: "#skill",   label: "Skills",       icon: "icon-service" },
+  // { href: "#skill",   label: "Skills",       icon: "icon-service" }, // "How I Work" section commented out
   { href: "#education", label: "Background",   icon: "icon-edu" },
-  { href: "#tech",      label: "Tools",        icon: "icon-tech-stack" },
-  { href: "#blog",      label: "Writing",      icon: "icon-edu",         separator: "after" },
+  { href: "#tech",      label: "Tools",        icon: "icon-tech-stack",  separator: "after" },
+  // { href: "#blog",    label: "Writing",      icon: "icon-edu",        separator: "after" }, // "How I Think" section commented out
   { href: "#contact",   label: "Contact",      icon: "icon-send" },
 ];

@@ -13,9 +13,9 @@ export function Intro() {
             </div>
 
             <h1 className="intro-title letter-space--2">
-                Designing interfaces backed by{" "}
-                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>research</span>,{" "}
-                not guesswork
+                Turning{" "}
+                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>user research</span>{" "}
+                into products people actually use
             </h1>
 
             <div className="intro-item">

@@ -106,7 +106,7 @@ export function BlogPostLayout({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 120px" }}>
-        <BackLink href="/#blog" label="← Back to Writing" />
+        <BackLink href="/#home" label="← Back to Writing" />
 
         <header style={{ marginTop: "40px", marginBottom: "40px" }}>
           <span
@@ -154,7 +154,7 @@ export function BlogPostLayout({
         </div>
 
         <div style={{ marginTop: "56px", textAlign: "center" }}>
-          <BackLink href="/#blog" label="← Back to Writing" />
+          <BackLink href="/#home" label="← Back to Writing" />
         </div>
       </div>
 

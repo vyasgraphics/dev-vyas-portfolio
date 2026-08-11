@@ -592,6 +592,37 @@ export default function VyasGraphicsWorkPage() {
           </SectionBox>
         </ScrollReveal>
 
+        <ScrollReveal>
+          <div style={{
+            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "24px", margin: "8px 0 48px", padding: "24px",
+            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+          }}>
+            <div>
+              <SectionHeading>Leadership</SectionHeading>
+              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Self-directed from brief to delivery on every piece here - no client brief to follow, so the standard to hit was one I set myself and held to over six years.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Acted on unsolicited feedback rather than defending the work - the flipbook navigation fix (see below) started from a single LinkedIn comment, not a formal review.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <SectionHeading>Craft &amp; Expertise</SectionHeading>
+              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Full brand production pipeline: identity design in Illustrator, motion in After Effects, layout in InDesign - the same craft applied consistently across five distinct identities.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Ran the ICC and IPL campaigns on real deadlines with no client to enforce them - tournament dates set the schedule, not a brief.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </ScrollReveal>
+
         <div className="vg-hero-in" style={{ margin: "48px 0", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
           <AutoRepeatMarquee direction="left" pauseOnHover={false} speed={32} gap={14} repeat={6}>
             {TOOLS.map((tool) => (
