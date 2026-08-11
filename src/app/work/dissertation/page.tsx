@@ -137,14 +137,6 @@ export default function DissertationWorkPage() {
               moment it appears, and protecting what&apos;s already been remembered once distraction turns up
               afterwards), actually predicts how well someone copes with a realistically cluttered interface.
             </p>
-            <p style={{
-              fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-              fontWeight: 600, marginTop: "24px",
-              paddingLeft: "16px", borderLeft: "3px solid #00DE51",
-            }}>
-              How might we design for the users that cluttered interfaces cost the most - and measure that cost
-              accurately enough to act on it?
-            </p>
           </section>
         </ScrollReveal>
 

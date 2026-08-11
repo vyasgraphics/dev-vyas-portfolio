@@ -8,20 +8,6 @@ export type Award = {
 
 export const awards: Award[] = [
   {
-    name: "The Award-Winning Web Developer",
-    publisher: "Zera Studio",
-    year: 2026,
-    image: "/assets/images/section/award-1.jpg",
-    link: "https://zerastudio.co",
-  },
-  {
-    name: "Product Design Portfolios",
-    publisher: "productdesignportfolios.com",
-    year: 2026,
-    image: "/assets/images/section/award-2.jpg",
-    link: "https://www.productdesignportfolios.com/",
-  },
-  {
     name: "Google UX Design Professional Certificate",
     publisher: "Coursera",
     year: 2025,
