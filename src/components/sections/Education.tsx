@@ -14,15 +14,14 @@ export function Education() {
     <div id="education" className="section-education-experience flat-spacing">
       <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
         <i className="icon icon-edu" />
-        Education &amp; Experience
+        The Path Here
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
         Where I studied <br className="d-none d-lg-block" />
         and who I have worked for
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
-        The kind of combination that means I understand both the theory behind good design
-        and what it actually takes to ship work on time.
+        Computer science to design to research - a route that means I understand the theory behind good work and what it takes to ship it on time.
       </p>
       <div className="timeline scroll-down">
         <div className="timeline-line">

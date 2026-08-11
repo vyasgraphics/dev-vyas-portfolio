@@ -26,8 +26,20 @@ export const metadata: Metadata = {
 };
 
 export default function BuildingMoveAppPage() {
+  const SECTIONS = [
+    { id: "the-problem", label: "The Problem" },
+    { id: "research", label: "The Research" },
+    { id: "scenarios", label: "Scenarios" },
+    { id: "the-screens", label: "The Screens" },
+    { id: "testing", label: "Testing" },
+    { id: "redesign", label: "The Redesign" },
+    { id: "whats-next", label: "Going Live" },
+    { id: "lessons", label: "Lessons" },
+    { id: "future", label: "The Future" },
+  ];
+
   return (
-    <BlogPostLayout slug="building-move-app">
+    <BlogPostLayout slug="building-move-app" sections={SECTIONS}>
       <p>
         Ever downloaded a fitness app, filled in your goals with the best of intentions, and then never opened it
         again? You&apos;re not alone. Most of us don&apos;t skip exercise because we don&apos;t know it&apos;s good
@@ -46,7 +58,7 @@ export default function BuildingMoveAppPage() {
         came out of it.
       </p>
 
-      <h2>The Real Problem: Why &ldquo;Just Go To The Gym&rdquo; Doesn&apos;t Work</h2>
+      <h2 id="the-problem" style={{ scrollMarginTop: "24px" }}>The Real Problem: Why &ldquo;Just Go To The Gym&rdquo; Doesn&apos;t Work</h2>
       <p>
         The brief came from the University of York itself: design a mobile app to help sedentary students start
         exercising, whether that&apos;s formal activity like gym classes and sports clubs, or informal stuff like
@@ -61,7 +73,7 @@ export default function BuildingMoveAppPage() {
       </p>
       <p>So before we sketched a single screen, we went looking for evidence.</p>
 
-      <h2>Getting Under the Skin of the Problem</h2>
+      <h2 id="research" style={{ scrollMarginTop: "24px" }}>Getting Under the Skin of the Problem</h2>
       <h3>What the Research Actually Told Us</h3>
       <p>
         We ran an online questionnaire through Qualtrics, with full ethical approval from the university&apos;s
@@ -111,7 +123,7 @@ export default function BuildingMoveAppPage() {
       </p>
       <p>Two very different people. Two very different design problems.</p>
 
-      <h2 style={{ color: "#00DE51" }}>From Data to Story: Scenario Based Design</h2>
+      <h2 id="scenarios" style={{ color: "#00DE51", scrollMarginTop: "24px" }}>From Data to Story: Scenario Based Design</h2>
       <p>
         With personas in hand, we built two scenarios to see how these barriers actually play out in real moments,
         and how the app could intervene.
@@ -165,7 +177,7 @@ export default function BuildingMoveAppPage() {
       <RejectedConceptCard concept={rejectedConcepts[0]} />
       <RejectedConceptCard concept={rejectedConcepts[1]} />
 
-      <h2>The Four Screens That Actually Mattered</h2>
+      <h2 id="the-screens" style={{ scrollMarginTop: "24px" }}>The Four Screens That Actually Mattered</h2>
       <p>
         We could have sketched dozens of features. Instead, we narrowed everything down to four components that
         directly answered the barriers we&apos;d found. This is where Tog&apos;s principles of interaction design
@@ -201,7 +213,7 @@ export default function BuildingMoveAppPage() {
         <WireframeGapFinder showIntro={false} />
       </div>
 
-      <h2>Putting It In Front of Real Humans</h2>
+      <h2 id="testing" style={{ scrollMarginTop: "24px" }}>Putting It In Front of Real Humans</h2>
       <p>This is the part of any project where your assumptions get tested, and mine certainly did.</p>
       <p>
         We ran task-based evaluations with eight sedentary York students, using the Concurrent Think-Aloud Protocol
@@ -238,7 +250,7 @@ export default function BuildingMoveAppPage() {
         base.
       </p>
 
-      <h2>The Redesign: From &ldquo;Quiet Mode&rdquo; to &ldquo;Crowd Filter&rdquo;</h2>
+      <h2 id="redesign" style={{ scrollMarginTop: "24px" }}>The Redesign: From &ldquo;Quiet Mode&rdquo; to &ldquo;Crowd Filter&rdquo;</h2>
       <p>
         Given the severity and the fact that this feature sat right at the heart of our value proposition for Liam,
         the fix wasn&apos;t optional.
@@ -267,7 +279,7 @@ export default function BuildingMoveAppPage() {
         </p>
       </div>
 
-      <h2>What&apos;s Next: Taking It Properly Live</h2>
+      <h2 id="whats-next" style={{ scrollMarginTop: "24px" }}>What&apos;s Next: Taking It Properly Live</h2>
       <p>
         A lab test with eight participants tells you a lot, but it can&apos;t tell you whether a redesign actually
         changes behaviour at scale. So the final piece of this project was proposing an online A/B study to find
@@ -291,7 +303,7 @@ export default function BuildingMoveAppPage() {
         sitting ready to go the moment this moves from prototype to production.
       </p>
 
-      <h2>What This Project Taught Me</h2>
+      <h2 id="lessons" style={{ scrollMarginTop: "24px" }}>What This Project Taught Me</h2>
       <p>A few things stuck with me well beyond the submission deadline.</p>
       <p>
         Research participants will always surprise you, and that&apos;s a good thing. The Spotify moment
@@ -310,7 +322,7 @@ export default function BuildingMoveAppPage() {
         people trusted and one they were scared to touch.
       </p>
 
-      <h2>Where This Goes From Here</h2>
+      <h2 id="future" style={{ scrollMarginTop: "24px" }}>Where This Goes From Here</h2>
       <p>
         Move App started as a module brief and turned into one of the projects I&apos;m proudest to talk through in
         detail, precisely because it didn&apos;t go smoothly the first time. The messy bit, watching a

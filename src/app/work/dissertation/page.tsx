@@ -91,13 +91,20 @@ export default function DissertationWorkPage() {
           <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
             Distraction Resistance &amp; Complex User Interfaces
           </h1>
+          <p style={{
+            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
+            fontWeight: 600, maxWidth: "580px", marginBottom: "20px",
+            paddingLeft: "16px", borderLeft: "3px solid #00DE51",
+          }}>
+            The outcome: visual clutter isn&apos;t a flat tax. It costs some users nearly half their time and barely touches others - a hit an ordinary success-rate metric never catches.
+          </p>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "580px", marginBottom: "24px" }}>
             Testing whether a hidden trait - how well someone filters out distraction - predicts who copes with a
             cluttered, ad-heavy interface and who doesn&apos;t, and finding a cost that shows up clearly in time,
             even when it barely shows up in accuracy.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
-            {["UX Researcher · MSc Dissertation", "2026", "Python", "Prolific"].map((t) => (
+            {["UX Researcher · MSc Dissertation", "2026", "Python", "Academic Research"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
@@ -113,7 +120,7 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="question" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The question</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The question</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>
               Two people can sit down at the same busy news website, given the same task and the same time, and come
               away with very different results. One finds every article they need. The other misses half of them,
@@ -135,7 +142,7 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="study" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The study</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The study</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "32px" }}>
               To test it, I built a purpose-made news article search task from scratch: five rounds, each with a
               real search query, a grid of genuine-looking headlines, and three sponsored boxes plus a trending
@@ -159,7 +166,7 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The key finding</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "24px" }}>
               The two outcomes told almost opposite stories. Search accuracy barely moved between participants -
               most people scored close to perfect regardless of their working-memory profile, which turned out to
@@ -175,7 +182,7 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="implications" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What it means for design</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What it means for design</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>
               Two users can walk away from the same interface with identical, accurate results, while one of them
               has paid a lot more time for it - a cost an ordinary success-rate metric would never catch. Visual
@@ -195,7 +202,7 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What&apos;s next</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               This dissertation is still being finalised at the University of York, so I&apos;ve deliberately kept
               the detail here high-level. Once it&apos;s been submitted and marked, I&apos;ll come back and share

@@ -4573,6 +4573,27 @@ button.animate-btn::after,
   z-index: 0;
   border-radius: 18px;
 }
+/* Desktop scrim: .user-info is absolutely positioned over the photo at every
+   width, but the dark scrim ::before below is scoped to mobile only, so on
+   desktop the greeting and bio sat directly on the image with nothing behind
+   them. This gives the same dark base on wide screens. Kept as its own rule
+   so it does not disturb the mobile ::before geometry. */
+.sidebar-user .user-image .image::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  height: 72%;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(to top,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.9) 40%,
+    rgba(0, 0, 0, 0.68) 66%,
+    transparent 100%);
+}
 .sidebar-user .user-image .image {
   position: relative;
   z-index: 1;
@@ -4583,8 +4604,9 @@ button.animate-btn::after,
 }
 .sidebar-user .user-image .meta-left {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 46%;
+  top: auto;
+  transform: none;
   left: 0px;
   z-index: 2;
   display: flex;
@@ -4603,6 +4625,7 @@ button.animate-btn::after,
   left: 38px;
   right: 38px;
   bottom: 38px;
+  z-index: 2;
 }
 .sidebar-user .user-logo {
   position: absolute;
@@ -4716,8 +4739,12 @@ button.animate-btn::after,
     left: 0;
     right: 0;
     top: auto;
-    height: 50%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 60%, transparent 100%);
+    height: 78%;
+    background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.97) 0%,
+      rgba(0, 0, 0, 0.95) 38%,
+      rgba(0, 0, 0, 0.75) 62%,
+      transparent 100%);
   }
 }
 .sidebar-user {
@@ -5033,8 +5060,6 @@ button.animate-btn::after,
 
 @media (min-width: 992px) {
   .section-work .sect-tag {
-    position: sticky;
-    top: 72px;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
@@ -7728,6 +7753,7 @@ button.animate-btn::after,
 /* ── 7. Desktop hover states ── */
 @media (hover: hover) {
   .blog-card:hover { transform: translateY(-4px) !important; border-color: rgba(0,200,83,0.35) !important; }
+  .blog-card:hover .blog-card-img { filter: grayscale(0%) !important; transform: scale(1.04) !important; }
   .tech-tool-pill:hover {
     background: rgba(255,255,255,0.08) !important;
     border-color: rgba(0,200,83,0.4) !important;
@@ -7948,7 +7974,7 @@ button.animate-btn::after,
 
 /* ── 9. Misc ── */
 * { -webkit-tap-highlight-color: transparent; }
-@media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr !important; } }
+@media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr !important; row-gap: 44px !important; } }
 @media (max-width: 576px) { .form-contact .field-ip input { font-size: 16px !important; } }
 @media (max-width: 991px) {
   .infiniteSlide-brand {
@@ -8025,6 +8051,7 @@ button.animate-btn::after,
 .sidebar-user .user-info .greeting {
   display: block !important;
   white-space: nowrap !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8) !important;
 }
 .sidebar-user .user-info .greeting .cd-words-wrapper {
   display: inline-block !important;
@@ -8192,6 +8219,9 @@ textarea:focus-visible,
 }
 .blog-card:active {
   transform: scale(0.985);
+}
+.blog-card:active .blog-card-img {
+  filter: grayscale(0%) !important;
 }
 .award-item:active {
   opacity: 0.85;

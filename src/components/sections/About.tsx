@@ -5,7 +5,7 @@ export function About() {
     <div id="about" className="section-about flat-spacing">
       <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
         <i className="icon icon-user-circle" />
-        About
+        Who I Am
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
         Four years designing commercially, <br className="d-none d-lg-block" />
@@ -17,8 +17,8 @@ export function About() {
         Human-Centred Interactive Technologies at the University of York. I work at the
         intersection of rigorous UX research and considered visual design - from
         think-aloud studies and Figma prototypes to brand identities and motion graphics.
-        AI runs through everything I do: faster ideation, sharper synthesis, every
-        decision still grounded in real user evidence.
+        AI speeds up the grind - ideation, synthesis, first drafts - so I spend my hours
+        on the judgement calls a model can&apos;t make.
       </p>
       <ul className="award-list">
         {awards.map((a, i) => (
