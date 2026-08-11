@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { useCrossRouteBackNav } from "./useCrossRouteBackNav";
 import { useResetScrollOnForwardNav } from "./useResetScrollOnForwardNav";
-import { ScrollProgressBar } from "@/components/ScrollProgressBar";
 
 // Inner component that exposes the Lenis instance for smoothScrollTo
 // (used by nav clicks and back-button restoration).
@@ -43,7 +42,6 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
             }}
         >
             <LenisExposer />
-            <ScrollProgressBar />
             {children}
         </ReactLenis>
     );
