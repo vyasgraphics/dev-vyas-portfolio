@@ -3,99 +3,125 @@
 import { motion, useTransform, useReducedMotion, type MotionValue } from "motion/react";
 import type { RefObject } from "react";
 
-// A scroll-driven 3D perspective character reveal, sitting before the real
-// homepage content. Adapted from a Skiper UI pattern (Skiper31): only the
-// DEMO usage was provided (`npx shadcn add @skiper-ui/skiper31`, then
-// `<CharacterV1 char index centerIndex scrollYProgress />`) - the actual
-// CharacterV1 implementation wasn't included, and the install command
-// itself isn't reachable from here (it fetches from Skiper UI's own
-// registry domain, which isn't on this environment's allowed network list,
-// and this project has no shadcn/Tailwind config for it to install into
-// anyway - it's a custom Bootstrap + SCSS site). So this reconstructs the
-// same technique from first principles with Framer Motion's useScroll/
-// useTransform, rather than the exact library.
+// A scroll-driven, multi-phase intro sequence, sitting before the real
+// homepage content. Adapted from a reference demo the person supplied (an
+// icon-cascade that converges and docks into an inline sentence, whose
+// words then reveal in a non-sequential order) - restructured here rather
+// than ported directly, for two reasons:
 //
-// The technique itself: a tall scroll track (rendered here, .vg-welcome-
-// track) with a `position: sticky` inner stage that stays pinned in the
-// viewport while the track scrolls past underneath it. Each letter gets its
-// own 3D transform (rotateX + a z-axis push via `perspective` on the
-// parent), driven by scroll progress - letters further from the centre of
-// the word start more dramatically rotated/displaced and land flat as
-// progress reaches 1, so the word assembles itself in 3D space as you
-// scroll, rather than just fading in.
+// 1. The reference pins its section with GSAP ScrollTrigger's `pin: true`.
+//    This site's welcome screen instead uses a `position: sticky` track
+//    driven by Framer Motion's scroll progress (see targetRef/scrollYProgress
+//    below), and HomeShell shares that exact same progress value to fade in
+//    the nav sidebar and profile card the instant this stage finishes.
+//    GSAP's pin inserts its own spacer element into the DOM to hold the
+//    pin, which would change the geometry HomeShell measures against and
+//    risks desyncing that chrome fade-in in ways that are hard to catch
+//    without live testing. Kept the existing sticky + Framer Motion
+//    foundation instead and built the staged choreography inside it.
+// 2. The reference flies cloned icon DOM nodes to computed pixel positions
+//    inside a paragraph (getBoundingClientRect deltas, recomputed per
+//    frame). That's precise but brittle across viewport sizes and text
+//    reflow - exactly the kind of thing this project has been burned by
+//    before (see the offsetTop/getBoundingClientRect notes elsewhere in
+//    this codebase). Replaced with a crossfade: the four icons cascade in
+//    as a group, then hand off to the same four icons rendered inline
+//    within the sentence from the start, each paired with its phrase and
+//    revealed together. Same narrative beat (icons become part of a
+//    sentence), no rect-chasing.
 //
-// The scroll tracking itself (targetRef + scrollYProgress) is owned by the
-// parent (HomeShell) rather than this component, and passed in as props -
-// HomeShell also needs the exact same scrollYProgress to fade the site's
-// nav/profile chrome in as this section fades out, and sharing one motion
-// value keeps both perfectly in sync without any React re-renders during
-// scroll (a callback-based approach would have caused a state update on
-// every scroll frame).
+// The random-order text reveal - the reference's most distinctive, and
+// most safely replicable, idea - is kept faithfully: segments stay in
+// natural reading order in the DOM (so screen readers get the sentence
+// correctly), but the scroll-progress window each one starts revealing in
+// follows a fixed, deliberately non-sequential order rather than a
+// runtime Math.random() shuffle - same lively effect, zero risk of an
+// SSR/client hydration mismatch.
 //
-// Colours: the reference used a light theme (#f5f4f3 bg, black text) -
-// inverted here to the site's own dark background (#0A0A0A, matching the
-// site's actual locked theme colour exactly - see the colour-unification
-// note in styles.css) with white text and the site's signature green
-// (#00DE51) for the accent line/glow.
+// Colours/theme: dark background throughout, matching this site's locked
+// theme - no light-background crossfade like the reference has, since a
+// light phase would violate that.
 //
-// Font: the title/subtitle use Google's "Tomorrow" typeface. Tried
-// next/font/google first (self-hosted at build time, no runtime request,
-// no flash of fallback text), but that requires Next.js to fetch the font
-// file from Google's servers during the build itself - unreachable in this
-// sandboxed environment's network, and the build failed outright rather
-// than just degrading. Using the runtime @import approach instead (loaded
-// via this component's own <style> block below, scoped only to the two
-// welcome-text classes, not site-wide) - the browser fetches it when a
-// real visitor loads the page, which works both here and on the actual
-// deployment (Vercel has normal internet access for that request).
+// Font: title/kicker uses Google's "Tomorrow" typeface, loaded via
+// runtime @import scoped to this component's own <style> block (see the
+// long-standing note on this - next/font/google needs to fetch from
+// Google at build time, which isn't reachable in this sandboxed build
+// environment, so it degrades to a runtime fetch instead, which works
+// fine on the actual Vercel deployment).
 
-function Character({
-  char,
+type Segment = {
+  icon: string;
+  phrase: string;
+};
+
+// The four disciplines, each paired with an icon already used for the
+// exact same concept elsewhere on this site (see data/disciplines.ts) -
+// reusing that mapping rather than inventing a new one.
+const SEGMENTS: Segment[] = [
+  { icon: "icon-service", phrase: "Four years shaping products," },
+  { icon: "icon-user-circle", phrase: "backed by real user research," },
+  { icon: "icon-high-light", phrase: "sharpened by a graphic designer's eye," },
+  { icon: "icon-edu", phrase: "and brought to life with motion." },
+];
+
+// Fixed "feels random" reveal order (positions into SEGMENTS), not a
+// runtime shuffle - see the hydration note above.
+const REVEAL_ORDER = [2, 0, 3, 1];
+
+function CascadeIcon({
+  iconClass,
   index,
-  centerIndex,
   scrollYProgress,
+  groupScale,
   reduceMotion,
 }: {
-  char: string;
+  iconClass: string;
   index: number;
-  centerIndex: number;
   scrollYProgress: MotionValue<number>;
+  groupScale: MotionValue<number>;
   reduceMotion: boolean;
 }) {
-  // Distance from the centre character, normalised - outer letters get a
-  // bigger starting displacement than inner ones, so the word visually
-  // "closes in" from both ends as you scroll rather than every letter
-  // moving by the same amount.
-  const distance = Math.abs(index - centerIndex);
-  const direction = index < centerIndex ? -1 : index > centerIndex ? 1 : 0;
-
-  // useTransform still runs even when reduceMotion is true (hooks can't be
-  // called conditionally) - but its OUTPUT range collapses to a constant
-  // when reduced motion is on, so the letter never actually moves; only its
-  // final resting values are ever produced.
-  const rotateX = useTransform(scrollYProgress, [0, 0.6], reduceMotion ? [0, 0] : [distance * -35, 0]);
-  const z = useTransform(scrollYProgress, [0, 0.6], reduceMotion ? [0, 0] : [-distance * 90, 0]);
-  const x = useTransform(scrollYProgress, [0, 0.6], reduceMotion ? [0, 0] : [direction * distance * 14, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.35], reduceMotion ? [1, 1] : [0, 1]);
+  const start = index * 0.05;
+  const opacity = useTransform(scrollYProgress, [start, start + 0.15], reduceMotion ? [1, 1] : [0, 1]);
+  const y = useTransform(scrollYProgress, [start, start + 0.15], reduceMotion ? [0, 0] : [24, 0]);
 
   return (
-    <motion.span
-      style={{
-        display: "inline-block",
-        rotateX,
-        z,
-        x,
-        opacity,
-        transformStyle: "preserve-3d",
-      }}
+    <motion.div
+      className="vg-welcome-cascade-icon"
+      style={{ opacity: reduceMotion ? 1 : opacity, y: reduceMotion ? 0 : y, scale: groupScale }}
+      aria-hidden
     >
-      {char}
-    </motion.span>
+      <i className={`icon ${iconClass}`} />
+    </motion.div>
   );
 }
 
-const TITLE = "DEV VYAS";
-const TITLE_CENTER = Math.floor(TITLE.replace(/ /g, "").length / 2);
+function TaglineSegment({
+  segment,
+  revealIndex,
+  scrollYProgress,
+  reduceMotion,
+}: {
+  segment: Segment;
+  revealIndex: number;
+  scrollYProgress: MotionValue<number>;
+  reduceMotion: boolean;
+}) {
+  const windowStart = 0.5 + revealIndex * 0.1;
+  const windowEnd = windowStart + 0.07;
+  const opacity = useTransform(scrollYProgress, [windowStart, windowEnd], reduceMotion ? [1, 1] : [0, 1]);
+  const y = useTransform(scrollYProgress, [windowStart, windowEnd], reduceMotion ? [0, 0] : [10, 0]);
+
+  return (
+    <motion.span
+      className="vg-welcome-segment"
+      style={{ opacity: reduceMotion ? 1 : opacity, y: reduceMotion ? 0 : y }}
+    >
+      <i className={`icon ${segment.icon}`} aria-hidden />
+      {segment.phrase}
+    </motion.span>
+  );
+}
 
 export function WelcomeReveal({
   targetRef,
@@ -104,36 +130,28 @@ export function WelcomeReveal({
   targetRef: RefObject<HTMLDivElement | null>;
   scrollYProgress: MotionValue<number>;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = !!useReducedMotion();
 
-  // Subtitle fades in once the title has mostly assembled, and the whole
-  // stage fades out right at the end so the handoff into the real homepage
-  // content underneath doesn't feel like an abrupt cut - HomeShell fades
-  // the site chrome in over roughly this same outgoing range so the two
-  // crossfade rather than one popping in after a gap.
-  const subtitleOpacity = useTransform(scrollYProgress, [0.45, 0.65], reduceMotion ? [1, 1] : [0, 1]);
-  const subtitleY = useTransform(scrollYProgress, [0.45, 0.65], reduceMotion ? [0, 0] : [16, 0]);
-  // The "scroll to enter" hint is the one piece of this screen that has to
-  // be visible from the very first frame, not fade in with the rest - its
-  // whole job is telling a visitor who's just landed (progress still at 0)
-  // that there's more to see, so it can't wait until they've already
-  // started scrolling to appear.
+  // Kicker label - present from the first frame, simple fade, no per-letter
+  // animation (that complexity now belongs to the icon/tagline sequence).
+  const kickerOpacity = useTransform(scrollYProgress, [0, 0.12], reduceMotion ? [1, 1] : [0, 1]);
+
+  // Cascade group: converges (scales down slightly) as it hands off to the
+  // tagline, rather than flying anywhere - see the top-of-file note.
+  const cascadeGroupOpacity = useTransform(scrollYProgress, [0.3, 0.44], reduceMotion ? [0, 0] : [1, 0]);
+  const cascadeGroupScale = useTransform(scrollYProgress, [0.3, 0.48], reduceMotion ? [1, 1] : [1, 0.72]);
+
+  // Tagline container fades in slightly before the cascade group is fully
+  // gone, so the handoff reads as a crossfade rather than a gap.
+  const taglineOpacity = useTransform(scrollYProgress, [0.36, 0.5], reduceMotion ? [1, 1] : [0, 1]);
+
   const hintOpacity = useTransform(scrollYProgress, [0, 0.8, 0.95], reduceMotion ? [1, 1, 1] : [1, 1, 0]);
   const stageOpacity = useTransform(scrollYProgress, [0.85, 1], reduceMotion ? [1, 1] : [1, 0]);
-
-  // Skip non-letter characters (the space) when computing each letter's
-  // position in the word for the centre-distance maths above, but still
-  // render the space itself for correct word spacing.
-  let letterIndex = -1;
 
   return (
     <div
       ref={targetRef}
       className="vg-welcome-track"
-      // With reduced motion, nothing here is scroll-linked any more, so the
-      // usual 200vh of scroll track + sticky pin would just be 2 empty
-      // viewports someone has to scroll past for no reason. Collapse it to
-      // a single normal-height section instead.
       style={reduceMotion ? { height: "auto" } : undefined}
     >
       <motion.div
@@ -141,32 +159,44 @@ export function WelcomeReveal({
         style={{
           opacity: stageOpacity,
           position: reduceMotion ? "relative" : "sticky",
-          height: reduceMotion ? "70vh" : "100vh",
+          height: reduceMotion ? "auto" : "100vh",
         }}
       >
-        <div className="vg-welcome-inner" style={{ perspective: "700px" }}>
-          <h1 className="vg-welcome-title" aria-label={TITLE}>
-            {TITLE.split("").map((char, i) => {
-              if (char === " ") return <span key={i} className="vg-welcome-space" aria-hidden />;
-              letterIndex += 1;
-              return (
-                <Character
-                  key={i}
-                  char={char}
-                  index={letterIndex}
-                  centerIndex={TITLE_CENTER}
-                  scrollYProgress={scrollYProgress}
-                  reduceMotion={!!reduceMotion}
-                />
-              );
-            })}
-          </h1>
+        <motion.p className="vg-welcome-kicker" style={{ opacity: reduceMotion ? 1 : kickerOpacity }}>
+          Dev Vyas
+        </motion.p>
+
+        <div className="vg-welcome-content">
+          <motion.div
+            className="vg-welcome-cascade"
+            style={{ opacity: reduceMotion ? 0 : cascadeGroupOpacity, pointerEvents: "none" }}
+            aria-hidden
+          >
+            {SEGMENTS.map((s, i) => (
+              <CascadeIcon
+                key={s.icon}
+                iconClass={s.icon}
+                index={i}
+                scrollYProgress={scrollYProgress}
+                groupScale={cascadeGroupScale}
+                reduceMotion={reduceMotion}
+              />
+            ))}
+          </motion.div>
 
           <motion.p
-            className="vg-welcome-subtitle"
-            style={{ opacity: subtitleOpacity, y: subtitleY }}
+            className="vg-welcome-tagline"
+            style={{ opacity: reduceMotion ? 1 : taglineOpacity }}
           >
-            Welcomes you
+            {SEGMENTS.map((segment, i) => (
+              <TaglineSegment
+                key={segment.icon}
+                segment={segment}
+                revealIndex={REVEAL_ORDER.indexOf(i)}
+                scrollYProgress={scrollYProgress}
+                reduceMotion={reduceMotion}
+              />
+            ))}
           </motion.p>
         </div>
 
@@ -179,9 +209,11 @@ export function WelcomeReveal({
       </motion.div>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Tomorrow:wght@700&display=swap');
+
         .vg-welcome-track {
           position: relative;
-          height: 160vh;
+          height: 180vh;
           background: #0A0A0A;
         }
         .vg-welcome-stage {
@@ -193,33 +225,75 @@ export function WelcomeReveal({
           align-items: center;
           justify-content: center;
           overflow: hidden;
+          padding: 24px;
           background: radial-gradient(ellipse 60% 50% at 50% 45%, rgba(0,222,81,0.08), transparent 70%), #0A0A0A;
         }
-        .vg-welcome-inner {
-          text-align: center;
-        }
-        .vg-welcome-title {
+        .vg-welcome-kicker {
+          position: absolute;
+          top: clamp(28px, 6vh, 56px);
+          left: 50%;
+          transform: translateX(-50%);
           margin: 0;
           font-family: "Tomorrow", sans-serif;
-          font-size: clamp(40px, 10vw, 108px);
+          font-size: clamp(13px, 1.6vw, 16px);
           font-weight: 700;
-          letter-spacing: 0.01em;
-          color: #fff;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          text-shadow: 0 0 60px rgba(0,222,81,0.25);
+          color: rgba(255,255,255,0.5);
         }
-        .vg-welcome-space {
-          display: inline-block;
-          width: 0.3em;
+        .vg-welcome-content {
+          position: relative;
+          width: 100%;
+          max-width: 900px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 220px;
         }
-        .vg-welcome-subtitle {
-          margin: 14px 0 0;
-          font-family: "Tomorrow", sans-serif;
-          font-size: clamp(14px, 2vw, 18px);
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
+        .vg-welcome-cascade {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(16px, 4vw, 40px);
+        }
+        .vg-welcome-cascade-icon {
+          width: clamp(52px, 8vw, 84px);
+          height: clamp(52px, 8vw, 84px);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0,222,81,0.08);
+          border: 1px solid rgba(0,222,81,0.25);
+        }
+        .vg-welcome-cascade-icon .icon {
+          font-size: clamp(20px, 3vw, 32px);
           color: #00DE51;
+        }
+        .vg-welcome-tagline {
+          position: relative;
+          margin: 0;
+          text-align: center;
+          max-width: 760px;
+          font-family: "Tomorrow", sans-serif;
+          font-size: clamp(20px, 3.4vw, 34px);
+          font-weight: 700;
+          line-height: 1.5;
+          color: #fff;
+        }
+        .vg-welcome-segment {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin: 0 6px;
+          white-space: normal;
+        }
+        .vg-welcome-segment .icon {
+          font-size: 0.55em;
+          color: #00DE51;
+          flex-shrink: 0;
         }
         .vg-welcome-hint {
           position: absolute;
@@ -245,7 +319,9 @@ export function WelcomeReveal({
 
         @media (prefers-reduced-motion: reduce) {
           .vg-welcome-track { height: auto; }
-          .vg-welcome-stage { position: relative; height: 70vh; }
+          .vg-welcome-stage { position: relative; height: auto; padding: 64px 24px; gap: 24px; }
+          .vg-welcome-cascade { display: none; }
+          .vg-welcome-content { min-height: 0; }
           .vg-welcome-hint svg { animation: none; }
         }
       `}</style>
