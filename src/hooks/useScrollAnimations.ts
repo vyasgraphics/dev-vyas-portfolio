@@ -596,19 +596,6 @@ export function useScrollAnimations() {
                         duration: speed / 1000,
                         ease: "power1.out",
                         onUpdate: () => { numEl.textContent = String(Math.round(obj.v)); },
-                        onComplete: () => {
-                            // Tiny scale-pop on landing so the count-up resolves
-                            // with a beat rather than just stopping. Scoped to the
-                            // .counter parent so the trailing "+" pops with the
-                            // number. transform-origin left so it grows in place
-                            // beside the left-aligned label rather than drifting.
-                            const parent = root as HTMLElement;
-                            gsap.fromTo(parent,
-                                { scale: 1 },
-                                { scale: 1.04, duration: 0.12, ease: "power2.out", transformOrigin: "left center",
-                                  yoyo: true, repeat: 1 }
-                            );
-                        },
                     });
                 });
             };

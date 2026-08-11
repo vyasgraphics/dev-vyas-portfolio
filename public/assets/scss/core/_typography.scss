@@ -34,32 +34,32 @@ h6 {
 
 h1,
 .h1 {
-    font-size: clamp(38px, 4.4vw + 8px, 56px);
-    line-height: clamp(44px, 4.8vw + 10px, 62px);
+    font-size: clamp(32px, 3.6vw + 6px, 46px);
+    line-height: clamp(38px, 4vw + 8px, 52px);
 }
 
 h2,
 .h2 {
-    font-size: clamp(30px, 3.2vw + 6px, 42px);
-    line-height: clamp(36px, 3.6vw + 7px, 49px);
+    font-size: clamp(26px, 2.8vw + 5px, 36px);
+    line-height: clamp(32px, 3.2vw + 6px, 43px);
 }
 
 h3,
 .h3 {
-    font-size: clamp(24px, 2.6vw + 5px, 32px);
-    line-height: clamp(30px, 3vw + 6px, 39px);
+    font-size: clamp(22px, 2.2vw + 4px, 28px);
+    line-height: clamp(28px, 2.6vw + 5px, 35px);
 }
 
 h4,
 .h4 {
-    font-size: clamp(20px, 1.9vw + 4px, 26px);
-    line-height: clamp(26px, 2.3vw + 5px, 33px);
+    font-size: clamp(19px, 1.6vw + 3px, 24px);
+    line-height: clamp(25px, 2vw + 4px, 31px);
 }
 
 h5,
 .h5 {
-    font-size: clamp(18px, 1.4vw + 3px, 22px);
-    line-height: clamp(24px, 1.8vw + 4px, 29px);
+    font-size: clamp(17px, 1.2vw + 3px, 21px);
+    line-height: clamp(23px, 1.6vw + 4px, 28px);
 }
 
 h6,

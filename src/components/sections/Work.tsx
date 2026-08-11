@@ -38,11 +38,8 @@ export function Work() {
         <div id="work" className="section-work flat-spacing">
             <h2 className="sect-tag text-caption fw-medium">
                 <i className="icon icon-high-light" />
-                Selected Work
+                Work Highlights
             </h2>
-            <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem", maxWidth: "640px" }}>
-                Three projects, three sides of how I work: a research study that measured a real cost, a product designed end to end, and four years of brand work shipped to deadline. Start anywhere.
-            </p>
             <div className="work-list element-sticky">
                 {works.map((w, i) => (
                     <div
@@ -52,47 +49,26 @@ export function Work() {
                         ref={(el) => { itemRefs.current[i] = el; }}
                     >
                         <div className="wg-work">
-                            {/* Frame wraps just the image (not the text content below it) -
-                                needed so the tags' percentage-based vertical position
-                                below is measured against the image's own height, not the
-                                whole card's. Two short tags, rotated and peeking out from
-                                behind the screenshot - reference-inspired signposting,
-                                sourced from the same real tags already used in the tag
-                                list further down the card, not invented content. Tags are
-                                siblings of .work-image (not children) because that element
-                                clips overflow to crop the photo - these need to render
-                                outside that clip to actually peek out from its edges.
-                                Coming before .work-image in the DOM means the image
-                                naturally paints over each tag's centre, leaving only the
-                                overhanging ends visible. */}
-                            <div className="work-image-frame">
-                                <span className="work-tilt-tag work-tilt-tag--left" aria-hidden>
-                                    {w.tags[0]}
-                                </span>
-                                <span className="work-tilt-tag work-tilt-tag--right" aria-hidden>
-                                    {w.tags[1]}
-                                </span>
-                                <div className="work-image">
-                                    <Image
-                                        width={700}
-                                        height={427}
-                                        src={w.image}
-                                        alt={w.title}
-                                        priority={i === 0}
-                                    />
-                                    {w.link && w.link !== "#" && (
-                                        <Link
-                                            href={w.link}
-                                            className="work-hover-cta"
-                                            aria-label={`View ${w.title}`}
-                                            onClick={() => {
-                                                sessionStorage.setItem("lastWorkItemSlug", w.slug);
-                                            }}
-                                        >
-                                            View case study
-                                        </Link>
-                                    )}
-                            </div>
+                            <div className="work-image">
+                                <Image
+                                    width={700}
+                                    height={427}
+                                    src={w.image}
+                                    alt={w.title}
+                                    priority={i === 0}
+                                />
+                                {w.link && w.link !== "#" && (
+                                    <Link
+                                        href={w.link}
+                                        className="work-arrow-link"
+                                        aria-label={`View ${w.title}`}
+                                        onClick={() => {
+                                            sessionStorage.setItem("lastWorkItemSlug", w.slug);
+                                        }}
+                                    >
+                                        <i className="icon icon-arrow-right-top" />
+                                    </Link>
+                                )}
                             </div>
                             <div className="wrap">
                                 <div className="work-content">
@@ -130,20 +106,6 @@ export function Work() {
                                             <h3 className="w-title letter-space--2 text-white-72">
                                                 {w.title}
                                             </h3>
-                                            {w.impact && (
-                                                <p style={{
-                                                    fontSize: "12px",
-                                                    lineHeight: 1.4,
-                                                    color: "#00DE51",
-                                                    fontWeight: 500,
-                                                    marginBottom: "10px",
-                                                    paddingLeft: "10px",
-                                                    borderLeft: "2px solid #00DE51",
-                                                    opacity: 0.9,
-                                                }}>
-                                                    {w.impact}
-                                                </p>
-                                            )}
                                             <p className="w-desc text-white-56 text-body-3">
                                                 {w.description}
                                             </p>

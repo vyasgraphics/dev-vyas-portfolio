@@ -84,27 +84,20 @@ export default function DissertationWorkPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
       />
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px 100px" }}>
+      <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 100px" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>
-          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px", maxWidth: "820px" }}>
+          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
             Distraction Resistance &amp; Complex User Interfaces
           </h1>
-          <p style={{
-            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-            fontWeight: 600, maxWidth: "580px", marginBottom: "20px",
-            paddingLeft: "16px", borderLeft: "3px solid #00DE51",
-          }}>
-            The outcome: visual clutter isn&apos;t a flat tax. It costs some users nearly half their time and barely touches others - a hit an ordinary success-rate metric never catches.
-          </p>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "580px", marginBottom: "24px" }}>
             Testing whether a hidden trait - how well someone filters out distraction - predicts who copes with a
             cluttered, ad-heavy interface and who doesn&apos;t, and finding a cost that shows up clearly in time,
             even when it barely shows up in accuracy.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
-            {["UX Researcher · MSc Dissertation", "2026", "Python", "Academic Research"].map((t) => (
+            {["UX Researcher · MSc Dissertation", "2026", "Python", "Prolific"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
@@ -116,46 +109,19 @@ export default function DissertationWorkPage() {
           </div>
         </header>
 
-        <div style={{
-          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "24px", marginBottom: "64px", padding: "24px",
-          borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-        }}>
-          <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Context</p>
-            <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.75)" }}>
-              MSc capstone dissertation, Department of Computer Science, University of York.
-            </p>
-          </div>
-          <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Team</p>
-            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.75)" }}>
-              Solo research project<br />
-              Supervised, University of York
-            </p>
-          </div>
-          <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>My Role</p>
-            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.75)" }}>
-              Study Design · Ethics Approval<br />
-              Data Collection · Statistical Analysis
-            </p>
-          </div>
-        </div>
-
         <SectionNav sections={SECTIONS} />
 
         <ScrollReveal>
           <section id="question" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The question</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "16px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The question</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>
               Two people can sit down at the same busy news website, given the same task and the same time, and come
               away with very different results. One finds every article they need. The other misses half of them,
               pulled off course by a sponsored box or an animated ad that has nothing to do with what they came for.
               The page hasn&apos;t changed between them. The distractions on screen are identical. Something about
               the person accounts for the difference.
             </p>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               Interface design already accounts for differences in eyesight, motor control and reaction speed. It
               rarely accounts for a person&apos;s ability to hold what they&apos;re looking for in mind while
               ignoring everything else competing for attention - something psychologists call{" "}
@@ -164,20 +130,13 @@ export default function DissertationWorkPage() {
               moment it appears, and protecting what&apos;s already been remembered once distraction turns up
               afterwards), actually predicts how well someone copes with a realistically cluttered interface.
             </p>
-            <p style={{
-              fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
-              fontStyle: "italic", marginTop: "24px", maxWidth: "700px",
-            }}>
-              How might we design for the users that cluttered interfaces cost the most - and measure that cost
-              accurately enough to act on it?
-            </p>
           </section>
         </ScrollReveal>
 
         <ScrollReveal>
           <section id="study" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The study</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "32px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The study</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "32px" }}>
               To test it, I built a purpose-made news article search task from scratch: five rounds, each with a
               real search query, a grid of genuine-looking headlines, and three sponsored boxes plus a trending
               sidebar competing for attention throughout. In every round, one correct article sits sandwiched
@@ -187,7 +146,7 @@ export default function DissertationWorkPage() {
             <TiltPermissionPrompt />
             <WireframeNewsTask />
 
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", margin: "32px 0" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", margin: "44px 0 32px" }}>
               Forty-two participants, recruited through Prolific, completed the task alongside a validated
               working-memory test that separately scores two kinds of distraction resistance - one for filtering
               distraction the instant it appears, another for protecting something already held in mind once
@@ -200,8 +159,8 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "24px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>The key finding</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "24px" }}>
               The two outcomes told almost opposite stories. Search accuracy barely moved between participants -
               most people scored close to perfect regardless of their working-memory profile, which turned out to
               be a ceiling effect in the task itself rather than a genuine absence of difference. Completion time
@@ -216,8 +175,8 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <section id="implications" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What it means for design</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "16px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What it means for design</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "16px" }}>
               Two users can walk away from the same interface with identical, accurate results, while one of them
               has paid a lot more time for it - a cost an ordinary success-rate metric would never catch. Visual
               clutter isn&apos;t a flat tax that costs everyone the same amount. Sponsored content, animated promos
@@ -225,7 +184,7 @@ export default function DissertationWorkPage() {
               others a great deal, depending on a cognitive trait the user can&apos;t control and the designer
               usually can&apos;t see.
             </p>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               The more specific implication is that encoding-stage and delay-stage filtering trade off rather than
               simply add up. An interface that reduces how much a user has to filter while first reading something,
               rather than spreading a general clutter reduction evenly across the page, may do more for the people
@@ -235,9 +194,9 @@ export default function DissertationWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <section id="next" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
+          <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>What&apos;s next</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
               This dissertation is still being finalised at the University of York, so I&apos;ve deliberately kept
               the detail here high-level. Once it&apos;s been submitted and marked, I&apos;ll come back and share
               the fuller analysis - exactly how the two components of distraction resistance interact, and what
@@ -250,38 +209,7 @@ export default function DissertationWorkPage() {
 
         <ScrollReveal>
           <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "24px", marginBottom: "64px", padding: "24px",
-            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-          }}>
-            <div>
-              <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
-              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Solo-owned the study end to end - research question, task design, ethics approval, recruitment, and analysis, with no team to divide the workload across.
-                </li>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Kept the reporting honest about what the data does and doesn&apos;t show yet, rather than overstating early findings before the dissertation is marked.
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
-              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Built a purpose-made experimental task from banner-blindness research, not an off-the-shelf instrument - grounded in the working-memory literature it tests against.
-                </li>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Quantitative rigour: 42 participants recruited via Prolific, a validated working-memory measure, reading speed controlled for, analysed in SPSS.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <div style={{
-            padding: "28px", borderRadius: "16px", maxWidth: "620px", margin: "0 auto",
+            padding: "28px", borderRadius: "16px",
             background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
             textAlign: "center",
           }}>

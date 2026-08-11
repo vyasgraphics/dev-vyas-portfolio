@@ -5,22 +5,22 @@ export function About() {
     <div id="about" className="section-about flat-spacing">
       <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
         <i className="icon icon-user-circle" />
-        Who I Am
+        About
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        Four years shipping design, <br className="d-none d-lg-block" />
-        now building the research skills <br className="d-none d-lg-block" />
-        to make better calls
+        Four years designing commercially, <br className="d-none d-lg-block" />
+        now researching how people <br className="d-none d-lg-block" />
+        actually use interfaces
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop">
-        Product designer and UX researcher with four years of commercial experience and
-        an MSc in Human-Centred Interactive Technologies at the University of York.
-        I run studies, build prototypes, and ship design decisions that are traceable to
-        real user evidence - from think-aloud sessions and Figma prototypes to brand
-        identities and motion graphics. AI handles the repetition; I handle the judgement
-        calls it cannot make.
+        Product designer with four years of commercial experience and an MSc in
+        Human-Centred Interactive Technologies at the University of York. I work at the
+        intersection of rigorous UX research and considered visual design - from
+        think-aloud studies and Figma prototypes to brand identities and motion graphics.
+        AI runs through everything I do: faster ideation, sharper synthesis, every
+        decision still grounded in real user evidence.
       </p>
-      <ul className="award-list tf-grid-layout md-col-2">
+      <ul className="award-list">
         {awards.map((a, i) => (
           <li key={a.name + a.year} className="scrolling-effect effectBottom" data-delay={i * 0.08}>
             <a

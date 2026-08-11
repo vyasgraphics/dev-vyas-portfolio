@@ -6,14 +6,14 @@ export function Blog() {
     <div id="blog" className="section-blog flat-spacing">
       <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
         <i className="icon icon-edu" />
-        How I Think
+        Writing
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        The thinking behind <br className="d-none d-lg-block" />
-        the work
+        Writing up what the <br className="d-none d-lg-block" />
+        research actually found
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
-        Three long reads on what actually happened behind the case studies - the rejected concepts, the messy data, and where AI earned its place.
+        A space for longer-form notes on process, research findings, and lessons learned.
       </p>
 
       <div className="tf-grid-layout md-col-2 blog-grid">
@@ -42,8 +42,7 @@ export function Blog() {
                 src={post.image}
                 alt={post.title}
                 loading="lazy"
-                className="blog-card-img"
-                style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(35%)", transition: "filter 0.4s ease, transform 0.4s ease" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(35%)" }}
               />
               <span
                 style={{

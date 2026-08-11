@@ -9,7 +9,7 @@ export function Tech() {
         <div id="tech" className="section-tech-stack flat-spacing">
             <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
                 <i className="icon icon-tech-stack" />
-                What I Build With
+                Tools &amp; Tech
             </div>
             <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
                 Design, research, code and deployment

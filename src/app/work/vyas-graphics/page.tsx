@@ -201,7 +201,7 @@ const SOCIAL_GRID_ROW2 = SOCIAL_GRID.slice(4);
 const SOCIAL_CARD_W = "clamp(200px, 26.7vw, 320px)";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
-  return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "20px" }}>{children}</h2>;
+  return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "14px" }}>{children}</h2>;
 }
 
 function Body({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
@@ -247,19 +247,12 @@ export default function VyasGraphicsWorkPage() {
           <h1 style={{ fontSize: "clamp(28px, 3.4vw + 8px, 46px)", fontWeight: 700, lineHeight: 1.15, marginBottom: "16px", maxWidth: "820px" }}>
             Vyas Graphics - Brand Identity &amp; Sports Media
           </h1>
-          <p style={{
-            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-            fontWeight: 600, maxWidth: "700px", marginBottom: "20px",
-            paddingLeft: "16px", borderLeft: "3px solid #00DE51",
-          }}>
-            The scope: 20+ brand identities, four animated logo reveals, and a full ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
-          </p>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.55, maxWidth: "700px", marginBottom: "24px" }}>
             Four years of self-directed brand and motion work - logo identities built from scratch, sports campaigns
-            run like real client accounts, and everything shipped to a live deadline.
+            run like real client accounts, and a habit of shipping in public.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
-            {["Brand & Motion Designer", "2020-2026", "Illustrator", "Sports Media"].map((t) => (
+            {["Brand & Motion Designer", "2020-2026", "Illustrator", "After Effects"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
@@ -590,37 +583,6 @@ export default function VyasGraphicsWorkPage() {
               />
             </div>
           </SectionBox>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "24px", margin: "8px 0 48px", padding: "24px",
-            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-          }}>
-            <div>
-              <SectionHeading>Leadership</SectionHeading>
-              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Self-directed from brief to delivery on every piece here - no client brief to follow, so the standard to hit was one I set myself and held to over six years.
-                </li>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Acted on unsolicited feedback rather than defending the work - the flipbook navigation fix (see below) started from a single LinkedIn comment, not a formal review.
-                </li>
-              </ul>
-            </div>
-            <div>
-              <SectionHeading>Craft &amp; Expertise</SectionHeading>
-              <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Full brand production pipeline: identity design in Illustrator, motion in After Effects, layout in InDesign - the same craft applied consistently across five distinct identities.
-                </li>
-                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Ran the ICC and IPL campaigns on real deadlines with no client to enforce them - tournament dates set the schedule, not a brief.
-                </li>
-              </ul>
-            </div>
-          </div>
         </ScrollReveal>
 
         <div className="vg-hero-in" style={{ margin: "48px 0", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 0" }}>
