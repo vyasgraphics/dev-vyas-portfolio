@@ -86,7 +86,7 @@ export default function MoveAppWorkPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
       />
-      <div style={{ maxWidth: "780px", margin: "0 auto", padding: "56px 24px 100px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px 100px" }}>
         {/* Extra bottom room isn't visible under normal scrolling (it sits
             below "Back to Work") - it exists so clicking "What's Next" in
             the nav, the last section, has enough scrollable page left
@@ -96,7 +96,7 @@ export default function MoveAppWorkPage() {
         <BackLink href="/#work" label="← Back to Work" />
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>
-          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
+          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px", maxWidth: "820px" }}>
             Move - University Exercise App
           </h1>
           <p style={{
@@ -182,7 +182,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="problem" style={{ marginTop: "40px", marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The problem</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "20px" }}>
               York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
               was never a lack of choice. It was time pressure, self-consciousness, and unfamiliarity standing
               between students and using what was already there.
@@ -232,7 +232,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="finding" style={{ marginBottom: "64px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px", marginBottom: "20px" }}>
               In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
               the one feature built to protect anxious users was the one nobody trusted enough to touch. Renaming it
               to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
@@ -257,7 +257,7 @@ export default function MoveAppWorkPage() {
         <ScrollReveal>
           <section id="next" style={{ marginBottom: "56px", scrollMarginTop: "24px" }}>
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", maxWidth: "700px" }}>
               A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
               the moment this moves from prototype to production.
             </p>
@@ -296,7 +296,7 @@ export default function MoveAppWorkPage() {
 
         <ScrollReveal>
           <div style={{
-            padding: "28px", borderRadius: "16px",
+            padding: "28px", borderRadius: "16px", maxWidth: "620px", margin: "0 auto",
             background: "rgba(0,222,81,0.06)", border: "1px solid rgba(0,222,81,0.25)",
             textAlign: "center",
           }}>

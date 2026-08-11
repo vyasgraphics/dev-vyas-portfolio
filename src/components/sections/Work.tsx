@@ -52,26 +52,60 @@ export function Work() {
                         ref={(el) => { itemRefs.current[i] = el; }}
                     >
                         <div className="wg-work">
-                            <div className="work-image">
-                                <Image
-                                    width={700}
-                                    height={427}
-                                    src={w.image}
-                                    alt={w.title}
-                                    priority={i === 0}
-                                />
-                                {w.link && w.link !== "#" && (
-                                    <Link
-                                        href={w.link}
-                                        className="work-arrow-link"
-                                        aria-label={`View ${w.title}`}
-                                        onClick={() => {
-                                            sessionStorage.setItem("lastWorkItemSlug", w.slug);
-                                        }}
-                                    >
+                            {/* Frame wraps just the image (not the text content below it) -
+                                needed so the tags' percentage-based vertical position
+                                below is measured against the image's own height, not the
+                                whole card's. Two short tags, rotated and peeking out from
+                                behind the screenshot - reference-inspired signposting,
+                                sourced from the same real tags already used in the tag
+                                list further down the card, not invented content. Tags are
+                                siblings of .work-image (not children) because that element
+                                clips overflow to crop the photo - these need to render
+                                outside that clip to actually peek out from its edges.
+                                Coming before .work-image in the DOM means the image
+                                naturally paints over each tag's centre, leaving only the
+                                overhanging ends visible. */}
+                            <div className="work-image-frame">
+                                <span className="work-tilt-tag work-tilt-tag--left" aria-hidden>
+                                    {w.tags[0]}
+                                </span>
+                                <span className="work-tilt-tag work-tilt-tag--right" aria-hidden>
+                                    {w.tags[1]}
+                                </span>
+                                <div className="work-image">
+                                    <Image
+                                        width={700}
+                                        height={427}
+                                        src={w.image}
+                                        alt={w.title}
+                                        priority={i === 0}
+                                    />
+                                    {w.link && w.link !== "#" && (
+                                        <Link
+                                            href={w.link}
+                                            className="work-hover-cta"
+                                            aria-hidden
+                                            tabIndex={-1}
+                                            onClick={() => {
+                                                sessionStorage.setItem("lastWorkItemSlug", w.slug);
+                                            }}
+                                        >
+                                            View case study
+                                        </Link>
+                                    )}
+                                    {w.link && w.link !== "#" && (
+                                        <Link
+                                            href={w.link}
+                                            className="work-arrow-link"
+                                            aria-label={`View ${w.title}`}
+                                            onClick={() => {
+                                                sessionStorage.setItem("lastWorkItemSlug", w.slug);
+                                            }}
+                                        >
                                         <i className="icon icon-arrow-right-top" />
                                     </Link>
                                 )}
+                            </div>
                             </div>
                             <div className="wrap">
                                 <div className="work-content">

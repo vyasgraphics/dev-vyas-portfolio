@@ -8376,6 +8376,80 @@ html, body {
 .wg-work .work-image {
   position: relative;
 }
+
+/* ── Work card: tilted tag labels peeking from behind the screenshot,
+   and a hover-reveal "View case study" pill over it. Reference-inspired
+   card treatment. The tags are decorative signposting (aria-hidden - the
+   same tags are already announced properly in .w-tag-list further down
+   the card) and the hover pill is a bonus affordance layered on top of
+   navigation that's already fully reachable without it (.work-arrow-link
+   and the "View project" button below are neither hover-gated nor
+   aria-hidden) - so both new elements are tabIndex={-1} + aria-hidden in
+   the JSX, keeping keyboard and screen-reader navigation exactly as it
+   was. Hidden below 768px: peeking tags this close to the viewport edge
+   risk crowding the fixed mobile menu button, and the desktop-style
+   hover reveal has no equivalent purpose on a touch device that's
+   already looking at a full-width, always-visible card. */
+.work-image-frame {
+  position: relative;
+}
+.work-tilt-tag {
+  position: absolute;
+  top: 38%;
+  z-index: 0;
+  padding: 7px 16px;
+  border-radius: 100px;
+  background: #0f2e1c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  display: none;
+}
+.work-tilt-tag--left {
+  left: -14px;
+  transform: rotate(-9deg);
+}
+.work-tilt-tag--right {
+  right: -14px;
+  transform: rotate(7deg);
+}
+.work-hover-cta {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%) scale(0.94);
+  padding: 12px 26px;
+  border-radius: 100px;
+  background: #fff;
+  color: #0a0a0a;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+@media (min-width: 768px) {
+  .work-tilt-tag {
+    display: block;
+  }
+}
+@media (hover: hover) {
+  .work-image:hover .work-hover-cta {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .work-image:hover img {
+    filter: brightness(0.55);
+  }
+  .work-image img {
+    transition: filter 0.3s ease;
+  }
+}
 .wg-work .work-image .work-arrow-link {
   position: absolute;
   top: 20px;
