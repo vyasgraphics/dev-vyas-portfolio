@@ -68,6 +68,9 @@
         gap: 6px;
         color: var(--black-72);
         padding: 8px;
+        // padding alone resolved to a 32px row; these are the primary
+        // way to skip ahead on a ~14-viewport mobile page.
+        min-height: 44px;
 
         &.active {
             color: var(--primary);

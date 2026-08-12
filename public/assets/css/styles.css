@@ -1657,6 +1657,11 @@ h6,
   gap: 6px;
   color: var(--black-72);
   padding: 8px;
+  /* padding:8px alone resolved to a 32px row. These six links are the only
+     way to skip ahead on a page that runs ~14 viewports on a phone, so they
+     are the most-used touch targets on the site - sized to the 44px comfort
+     minimum rather than the 24px WCAG 2.5.8 floor they already cleared. */
+  min-height: 44px;
   position: relative;
 }
 .nav-mobile-item .item-link.active {
@@ -9640,4 +9645,37 @@ html, body {
 }
 @media (prefers-reduced-motion: reduce) {
   .vg-process-path-glow { transition: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   Mobile: hold the collapsed tools rail back until past the hero
+   Below 992px .sidebar-tools.pst-v1 hides its nav list and pins to
+   bottom:16px, leaving only the back-to-top button. Measured at 375px it
+   overlapped the hero's .info_name and .info_duty lines at scroll 0 (button
+   x319-359/y750-796 against text y749-793) - the right-edge collision the
+   project notes flag - and a "back to top" control is meaningless while
+   already at the top. DesktopSidebar adds .vg-tools-past-hero once scrollY
+   passes 0.8 viewports, the same threshold BackToTop.tsx uses on the case
+   study pages. Desktop is deliberately excluded: the full nav rail there
+   must never disappear.
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 991.98px) {
+  .sidebar-tools.pst-v1 {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  }
+  .sidebar-tools.pst-v1.vg-tools-past-hero {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
+  .sidebar-tools.pst-v1 { transition: none; transform: none; }
+  .sidebar-tools.pst-v1.vg-tools-past-hero { transform: none; }
 }

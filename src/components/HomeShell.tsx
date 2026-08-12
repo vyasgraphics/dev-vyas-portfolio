@@ -63,7 +63,16 @@ export function HomeShell() {
                 mode later. See git history for the fuller explanation;
                 this was a real, confirmed bug once, not a theoretical
                 one. */}
-            <div style={{ position: "relative", zIndex: 100 }}>
+            {/* zIndex 200, not 100. This wrapper and the #wrapper one below
+                (HeaderClock + UserSidebar) both sat at 100, so they tied -
+                and on a tie the later DOM node paints on top. That put the
+                profile card over the open mobile menu: measured at 375px,
+                elementFromPoint at the dropdown's own centre returned the
+                card's <img>, not the menu. Navigation has to outrank page
+                content, so this one is raised rather than lowering the
+                other (which would risk the fixed-element trapping the
+                comment above guards against). */}
+            <div style={{ position: "relative", zIndex: 200 }}>
                 <MobileMenu />
                 <DesktopSidebar positionClass="pst-v1" />
             </div>

@@ -10,6 +10,16 @@ type DesktopSidebarProps = {
 
 export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps = {}) {
   const [activeHref, setActiveHref] = useState("#home");
+  // Below 992px this rail collapses to just its back-to-top button, pinned
+  // bottom-right at 16px. That put it directly on top of the hero's name
+  // and specialism lines at scroll 0 - measured overlap, and exactly the
+  // right-edge collision the project notes warn about. It is also useless
+  // there: "back to top" while already at the top does nothing. Gated to
+  // appear only once the reader has actually travelled, using the same
+  // 0.8-viewport threshold BackToTop.tsx already uses on the case study
+  // pages, so the two behave identically. Desktop is untouched - the full
+  // nav rail must stay visible at all times there.
+  const [pastHeroOnMobile, setPastHeroOnMobile] = useState(false);
 
   useEffect(() => {
     const sections = navItems.map(item => ({
@@ -38,6 +48,9 @@ export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps
             if (el && el.getBoundingClientRect().top <= threshold) current = href;
         }
         setActiveHref(current);
+        // Piggy-backs on this existing rAF-throttled listener rather than
+        // adding a second scroll subscriber for one boolean.
+        setPastHeroOnMobile(window.scrollY > window.innerHeight * 0.8);
     };
     let ticking = false;
     const onScroll = () => {
@@ -79,7 +92,7 @@ export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps
   };
 
   return (
-    <div className={`sidebar-tools ${positionClass}`}>
+    <div className={`sidebar-tools ${positionClass}${pastHeroOnMobile ? " vg-tools-past-hero" : ""}`}>
       <div className="nav-top" />
       <ul className="nav-list">
         {navItems.map((item, i) => (
