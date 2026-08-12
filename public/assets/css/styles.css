@@ -5628,7 +5628,7 @@ button.animate-btn::after,
 }
 .award-list .award-item {
   height: 100%;
-  padding: 20px 22px;
+  padding: 16px 18px;
   border: 1px solid var(--black-6);
   border-radius: 14px;
   display: flex;
@@ -5651,7 +5651,13 @@ button.animate-btn::after,
   min-width: 0;
 }
 .award-list .award-item .award_name {
-  margin-bottom: 8px;
+  /* Was inheriting the bare h3 size (32px), which made a Coursera
+     certificate title render larger than the outcome line on a case
+     study card - credentials out-ranking work. Sized to the same sub
+     register used for h3s across the case study pages. */
+  font-size: 18px;
+  line-height: 1.35;
+  margin-bottom: 6px;
   /* Lets a literal \n in the award name (see awards.ts) force a manual
      line break, while still allowing normal auto-wrap everywhere else -
      doesn't affect the other three entries, none of which contain \n. */
@@ -5688,10 +5694,13 @@ button.animate-btn::after,
   display: flex;
 }
 .timeline-item:nth-child(2) {
-  padding-top: 42px;
+  padding-top: 28px;
 }
 .timeline-item:not(:last-child) {
-  padding-bottom: 88px;
+  /* Was 88px. Across six timeline entries that spent ~440px of the page
+     on empty space alone, in a section that already out-weighed the work
+     grid. 48px still reads as a clear break between roles. */
+  padding-bottom: 48px;
 }
 .timeline-item .timeline-date {
   min-width: 120px;
@@ -6345,7 +6354,11 @@ button.animate-btn::after,
   transition: all 0.3s ease;
 }
 .scribble.is-drawn {
-  opacity: 1;
+  /* Squint-tested: at full opacity this decorative flourish was the
+     brightest object above the fold, out-ranking the h1 and visually
+     swallowing the stat counters behind it. Demoted so the value
+     proposition leads. */
+  opacity: 0.4;
 }
 
 .scribble path {
@@ -8179,13 +8192,14 @@ button.animate-btn::after,
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
-  /* Year and Role are a matched pair of metadata, not two separate
-     blocks - side by side reads as one deliberate row and reclaims the
-     vertical space that the old stacked layout spent on a 16px gap. */
+  /* Four metadata fields (Industry, Platform, Year, Role) in a 2x2.
+     Side by side reads as one deliberate block rather than four stacked
+     rows. row-gap was 0 when this held a single row; it now needs real
+     separation between the two rows. */
   .wg-work .w-highlight {
     grid-template-columns: 1fr 1fr !important;
     column-gap: 32px !important;
-    row-gap: 0 !important;
+    row-gap: 18px !important;
     margin-bottom: 32px !important;
   }
   .wg-work .box-high {
@@ -8215,7 +8229,9 @@ button.animate-btn::after,
     line-height: 1.4 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.09em !important;
-    color: var(--white-40) !important;
+    /* --white-40 measured 3.77:1 here, under the 4.5:1 label floor.
+       --white-56 gives 6.4:1 and still reads as the dimmest tier. */
+    color: var(--white-56) !important;
   }
   .wg-work .box-high p.text-body-1 {
     font-size: 15px !important;
@@ -9269,7 +9285,9 @@ html, body {
   font-weight: 700;
   letter-spacing: 0.11em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  /* 0.45 measured 4.48:1, a hair under the 4.5:1 floor. 0.55 gives 6.28:1
+     without changing the resting/hover behaviour these cards rely on. */
+  color: rgba(255, 255, 255, 0.55);
   transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 @media (hover: hover) {
@@ -9554,11 +9572,11 @@ html, body {
    and the hairline rule replaces the heavier 2px bar.
    ══════════════════════════════════════════════════════════ */
 .wg-work .w-impact {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.5;
   letter-spacing: 0.09em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--primary);
   margin-bottom: 20px;
   padding-left: 14px;

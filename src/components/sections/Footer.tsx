@@ -31,6 +31,30 @@ export function Footer() {
         </h2>
       </div>
 
+      {/* The footer previously made no ask at all - slogan, copyright,
+          back-to-top. It is the last thing a reviewer sees, so it gets one
+          plain, low-friction line and a route back to the contact form. */}
+      <div
+        className="effectFade fadeUp no-div"
+        style={{ textAlign: "center", marginTop: "28px", display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}
+      >
+        <p className="text-black-56 text-body-3" style={{ margin: 0 }}>
+          Open to UK and remote roles from September 2026.
+        </p>
+        <a
+          href="#contact"
+          className="tf-btn-action"
+          onClick={(e) => {
+            e.preventDefault();
+            smoothScrollTo("#contact", { pushHistory: "#contact" });
+          }}
+        >
+          <span className="ic-wrap"><i className="icon icon-arrow-right-top" /></span>
+          <span className="text text-body-3 letter-space--05 fw-medium">Get in touch</span>
+          <span className="ic-wrap"><i className="icon icon-arrow-right-top" /></span>
+        </a>
+      </div>
+
       <div className="br-line" style={{ marginTop: "40px" }} />
 
       <div

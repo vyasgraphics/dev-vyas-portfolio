@@ -13,6 +13,53 @@ export function Contact() {
   const [submittedEmail, setSubmittedEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  // Copy-to-clipboard on the email address. A recruiter reading on a
+  // desktop almost always wants the address in their own mail client, not
+  // a mailto: handler that may not be configured.
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = async () => {
+    // Two routes, because the async Clipboard API rejects more often than
+    // you would expect: non-secure origins, embedded/automated browsers,
+    // and stricter permission policies all throw NotAllowedError. Falling
+    // back to the legacy execCommand path means the button still does
+    // something in those cases rather than silently no-opping, which is
+    // worse than having no button at all.
+    const copyViaFallback = () => {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = profile.email;
+        // Keep it off-screen and non-focusable-looking so the page does
+        // not visibly jump while the selection happens.
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-9999px";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      } catch {
+        return false;
+      }
+    };
+
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      ok = true;
+    } catch {
+      ok = copyViaFallback();
+    }
+
+    // Only confirm if something actually made it to the clipboard - a
+    // "Copied ✓" that lied would be worse than no feedback.
+    if (ok) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
   // Drives the button's own brief "plane takes off / Sent" animation right
   // after a successful submit, before the whole form swaps out for the
   // fuller "Message sent!" panel a moment later - a quick, satisfying
@@ -269,13 +316,60 @@ export function Contact() {
                 </div>
               </button>
             </div>
-            <div className="contact-links" style={{ display: "flex", flexDirection: "column", gap: "6px", alignItems: "flex-end" }}>
-              <a href={`mailto:${profile.email}`} className="text-body-1 link letter-space--2 text-black-72">
-                {profile.email}
-              </a>
+            {/* Everything a reviewer needs to act, grouped at the point of
+                conversion. Previously this was email and phone only, so
+                anyone who scrolled here still had to go back up to the
+                sidebar to find LinkedIn or the CV. */}
+            <div className="contact-links" style={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-end" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <a href={`mailto:${profile.email}`} className="text-body-1 link letter-space--2 text-black-72">
+                  {profile.email}
+                </a>
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  aria-label={copied ? "Email copied" : "Copy email address"}
+                  className="vg-copy-email"
+                  style={{
+                    background: "none",
+                    border: `1px solid ${copied ? "rgba(0,222,81,0.5)" : "var(--black-6)"}`,
+                    borderRadius: "100px",
+                    padding: "3px 10px",
+                    cursor: "pointer",
+                    fontSize: "11px",
+                    fontWeight: 600,
+                    letterSpacing: "0.04em",
+                    color: copied ? "#00DE51" : "var(--black-56)",
+                    transition: "color 0.2s ease, border-color 0.2s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {copied ? "Copied ✓" : "Copy"}
+                </button>
+              </div>
               <a href={`tel:${profile.phone}`} className="text-body-3 text-black-56" style={{ textDecoration: "none" }}>
                 {profile.phone}
               </a>
+              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginTop: "2px" }}>
+                <a
+                  href="https://www.linkedin.com/in/dev-vyas6/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-body-3 text-black-56"
+                  style={{ textDecoration: "none" }}
+                >
+                  LinkedIn ↗
+                </a>
+                <a
+                  href={profile.cvUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-body-3 text-black-56"
+                  style={{ textDecoration: "none" }}
+                >
+                  Download CV ↓
+                </a>
+              </div>
             </div>
           </div>
         </form>
@@ -320,15 +414,16 @@ export function Contact() {
           text-shadow: 0 1px 2px rgba(0,0,0,0.45);
           border: none;
           box-shadow: 0 0.5px 0.5px 1px rgba(255,255,255,0.12),
-            0 10px 20px rgba(0,0,0,0.35), 0 4px 5px 0px rgba(0,0,0,0.15);
+            0 10px 20px rgba(0,0,0,0.35), 0 4px 5px 0px rgba(0,0,0,0.15),
+            0 0 28px rgba(0,222,81,0.22);
           display: flex;
           align-items: center;
           justify-content: center;
           position: relative;
           transition: all 0.3s ease;
-          min-width: 190px;
-          padding: 16px 22px;
-          height: 58px;
+          min-width: 210px;
+          padding: 16px 26px;
+          height: 62px;
           font-size: 15px;
           font-weight: 600;
           overflow: visible;
@@ -352,8 +447,13 @@ export function Contact() {
           inset: 0;
           border-radius: var(--radius);
           border: 2.5px solid transparent;
+          /* Resting border was a faint white gradient, which made this -
+             the primary CTA at the bottom of the funnel - read as quieter
+             than the secondary sidebar button at squint distance. Green at
+             rest keeps the dark surface and the whole flying-letters
+             animation intact while letting the button claim primacy. */
           background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
-            linear-gradient(to bottom, rgba(255,255,255,0.16), rgba(255,255,255,0.02)) border-box;
+            linear-gradient(to bottom, rgba(0,222,81,0.85), rgba(0,222,81,0.28)) border-box;
           z-index: 0;
           transition: all 0.4s ease;
         }

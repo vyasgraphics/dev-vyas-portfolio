@@ -5,6 +5,10 @@ export type Work = {
   impact: string; // Short outcome line for front-loading on the work card
   year: string;
   role: string;
+  // Industry and platform are the two fields a recruiter scans for when
+  // filtering candidates, and the card previously showed neither.
+  industry: string;
+  platform: string;
   tags: string[];
   image: string;
   imagePortrait: string;
@@ -20,6 +24,8 @@ export const works: Work[] = [
     description: "Visual clutter isn't a flat tax - it costs some users nearly half their time and barely touches others. A quantitative study measuring a hidden cognitive trait against real interface performance.",
     year: "2026",
     role: "UX Researcher · MSc Dissertation",
+    industry: "Academic Research · HCI",
+    platform: "Desktop Web",
     tags: ["Academic Research", "Quantitative UX", "Prolific", "SPSS"],
     image: "/assets/images/section/work-1.jpg",
     imagePortrait: "/assets/images/section/work-1-portrait.jpg",
@@ -33,6 +39,8 @@ export const works: Work[] = [
     description: "Cutting choices and hiding the crowd got stalled test participants to finish a session. A full HCD lifecycle that found the real barrier was anxiety, not motivation.",
     year: "2025",
     role: "UX Researcher & Designer",
+    industry: "EdTech · Health & Fitness",
+    platform: "iOS Mobile",
     tags: ["UX Research", "Figma", "Health & Fitness", "iOS"],
     image: "/assets/images/section/work-2.jpg",
     imagePortrait: "/assets/images/section/work-2-portrait.jpg",
@@ -46,6 +54,8 @@ export const works: Work[] = [
     description: "Six years of self-directed brand and motion work - 20+ identities built from scratch, four animated logo reveal variants in After Effects, and a full ICC T20 World Cup 2026 sports media campaign.",
     year: "2020-2026",
     role: "Brand & Motion Designer",
+    industry: "Brand · Sports Media",
+    platform: "Print · Social · Motion",
     tags: ["Illustrator", "After Effects", "Brand Identity", "Sports Media"],
     image: "/assets/images/section/work-3.jpg",
     imagePortrait: "/assets/images/section/work-3-portrait.jpg",

@@ -30,6 +30,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const STAGGER_GROUPS: { container: string; items: string }[] = [
     { container: ".award-list", items: ".award-item" },
     { container: ".tech-categories", items: ".tech-tool-pill" },
+    // The organisations credibility band sits immediately below the hero,
+    // so it is the first grid a visitor meets. Its container already had
+    // .scrolling-effect, which faded the whole band as one block - the
+    // pills now arrive left to right instead, matching the rhythm the
+    // award and tech grids already have.
+    { container: ".org-pill-row", items: ".org-pill" },
 ];
 
 export function useStaggerReveal() {

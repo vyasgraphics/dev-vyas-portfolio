@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Children } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { BackLink } from "@/components/BackLink";
 import { SectionNav } from "@/components/SectionNav";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -110,6 +109,7 @@ const SECTIONS = [
   { id: "print", label: "Print" },
   { id: "sports", label: "Sports Media" },
   { id: "flipbooks", label: "Flipbooks" },
+  { id: "impact", label: "The Impact" },
 ];
 
 const IMG = "/assets/images/vyas-graphics";
@@ -201,12 +201,12 @@ const SOCIAL_GRID_ROW2 = SOCIAL_GRID.slice(4);
 const SOCIAL_CARD_W = "clamp(200px, 26.7vw, 320px)";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
-  return <h2 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "20px" }}>{children}</h2>;
+  return <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>{children}</h2>;
 }
 
 function Body({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px", maxWidth: "780px", ...style }}>
+    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px", maxWidth: "780px", ...style }}>
       {children}
     </p>
   );
@@ -227,7 +227,7 @@ function AutoGrid({ min, children }: { min: string; children: React.ReactNode })
 
 function Caption({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{ fontSize: "12.5px", color: "rgba(255,255,255,0.55)", textAlign: "center", display: "block" }}>
+    <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.55)", textAlign: "center", display: "block" }}>
       {children}
     </span>
   );
@@ -248,28 +248,67 @@ export default function VyasGraphicsWorkPage() {
             Vyas Graphics - Brand Identity &amp; Sports Media
           </h1>
           <p style={{
-            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-            fontWeight: 600, maxWidth: "700px", marginBottom: "20px",
+            fontSize: "16px", lineHeight: 1.55, color: "#fff",
+            fontWeight: 600, marginBottom: "20px",
             paddingLeft: "16px", borderLeft: "3px solid #00DE51",
           }}>
             The scope: 20+ brand identities, four animated logo reveals, and a full ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
           </p>
-          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.55, maxWidth: "700px", marginBottom: "24px" }}>
-            Four years of self-directed brand and motion work - logo identities built from scratch, sports campaigns
-            run like real client accounts, and everything shipped to a live deadline.
+          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
+            Vyas Graphics is my own design practice, running since 2020. Six years of self-directed brand and motion
+            work: identities built from scratch, sports campaigns run like real client accounts, and every piece
+            shipped to a deadline nobody was enforcing but me.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "Sports Media"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(255,255,255,0.7)",
+                color: "rgba(255,255,255,0.72)",
               }}>
                 {t}
               </span>
             ))}
           </div>
         </header>
+
+        <div style={{
+          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(168px, 1fr))",
+          gap: "26px 20px", marginBottom: "44px",
+        }}>
+          {[
+            ["Industry", "Brand Identity · Sports Media"],
+            ["Platform", "Print, social, broadcast-style motion"],
+            ["Role", "Founder, sole designer\nBrief to delivery on every piece"],
+            ["Timeline & Team", "2020 to 2026, solo practice\nDirect client work, no agency"],
+            ["Key Skills", "Identity · Motion · Layout\nIllustrator · After Effects · InDesign"],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>{label}</p>
+              <p style={{ fontSize: "14px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", whiteSpace: "pre-line" }}>{value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{
+          padding: "34px 30px", borderRadius: "14px", marginBottom: "44px",
+          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+        }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "18px" }}>Results</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "36px" }}>
+            {[
+              ["Identities", "20+", "Brand marks built from scratch, from personal wordmarks to full circular badge systems."],
+              ["Motion", "4", "Animated logo reveal variants in After Effects, each cut for a different placement context."],
+              ["Campaigns", "2", "Full cricket media campaigns, ICC T20 World Cup 2026 and IPL 2026, run to tournament dates."],
+            ].map(([label, stat, desc]) => (
+              <div key={label}>
+                <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>{label}</p>
+                <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>{stat}</p>
+                <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="vg-hero-in vg-tilt-gallery" style={{ marginBottom: "36px", padding: "34px 0" }}>
@@ -310,7 +349,7 @@ export default function VyasGraphicsWorkPage() {
             </AutoGrid>
 
             <div style={{ marginTop: "56px" }}>
-              <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>AI-generated logo vectorisation</h3>
+              <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>AI-generated logo vectorisation</h3>
               <Body>
                 Clients arrived with AI-generated logo concepts - on-brief, on-brand, and unusable past a business
                 card. I rebuilt each one as a clean, scalable vector in Illustrator, print-ready at any size. Drag
@@ -324,11 +363,11 @@ export default function VyasGraphicsWorkPage() {
                   ["0", "gradients or paths left unrebuilt"],
                 ].map(([stat, label]) => (
                   <div key={label} style={{
-                    flex: "1 1 190px", padding: "14px 16px", borderRadius: "12px",
-                    background: "rgba(0,222,81,0.05)", border: "1px solid rgba(0,222,81,0.18)",
+                    flex: "1 1 190px", padding: "16px 18px", borderRadius: "12px",
+                    background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
                   }}>
-                    <div style={{ fontSize: "18px", fontWeight: 700, color: "#00DE51", marginBottom: "2px" }}>{stat}</div>
-                    <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.6)" }}>{label}</div>
+                    <div style={{ fontSize: "22px", fontWeight: 800, color: "#00DE51", marginBottom: "4px" }}>{stat}</div>
+                    <div style={{ fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)" }}>{label}</div>
                   </div>
                 ))}
               </div>
@@ -487,13 +526,13 @@ export default function VyasGraphicsWorkPage() {
               padding: "14px 18px", borderRadius: "10px", marginBottom: "36px", maxWidth: "780px",
               background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
             }}>
-              <p style={{ fontSize: "12.5px", lineHeight: 1.6, color: "rgba(255,255,255,0.5)" }}>
+              <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)" }}>
                 Assets &amp; player images © ICC / BCCI / IPL / official sources. All content created for personal
                 portfolio &amp; non-commercial use only. All official marks belong to their respective owners.
               </p>
             </div>
 
-            <h3 style={{ fontSize: "19px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
+            <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>ICC Men&apos;s T20 World Cup 2026</h3>
             <Body>Tournament promo, match-day coverage, and a 15-player champions composite.</Body>
             <GlassDeck min="230px">
               <PlayableStill deck poster={`${IMG}/icc-t20-world-cup-2026-tournament-promo-poster.jpg`} videoSrc={`${IMG}/icc-t20-world-cup-2026-tournament-promo-animation.mp4`} alt="ICC T20 World Cup 2026 tournament promo" width={720} height={960} caption="Tournament Promo" duration="0:25" />
@@ -501,7 +540,7 @@ export default function VyasGraphicsWorkPage() {
               <Image src={`${IMG}/icc-t20-world-cup-2026-india-champions-poster.jpg`} alt="India champions poster, full squad composite" width={800} height={1066} style={{ width: "100%", height: "auto", display: "block" }} />
             </GlassDeck>
 
-            <h3 style={{ fontSize: "19px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
+            <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
             <Body>
               A six-slide visual identity carousel breaking down the tournament&apos;s burst motif and colour
               language through an HCI lens, followed by season coverage through to the final.
@@ -546,7 +585,7 @@ export default function VyasGraphicsWorkPage() {
 
         {/* ── Flipbooks ── */}
         <ScrollReveal>
-          <SectionBox id="flipbooks" tag="3 years, rebuilt">
+          <SectionBox id="flipbooks" tag="4 editions, rebuilt">
             <SectionHeading>Flipbooks</SectionHeading>
             <Body>
               Four years of the same portfolio flipbook, rebuilt each time - a small, honest record of how the
@@ -568,7 +607,7 @@ export default function VyasGraphicsWorkPage() {
             </AutoGrid>
 
             <div style={{ marginTop: "40px", maxWidth: "900px" }}>
-              <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "12px" }}>
+              <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "12px" }}>
                 A LinkedIn comment that changed my approach
               </h3>
               <NotificationStory
@@ -592,6 +631,63 @@ export default function VyasGraphicsWorkPage() {
           </SectionBox>
         </ScrollReveal>
 
+        {/* ── Impact ── */}
+        <ScrollReveal>
+          <SectionBox id="impact" tag="Three tiers of impact">
+            <SectionHeading>The impact</SectionHeading>
+            <Body>
+              This is a self-directed practice, not an agency with a P&amp;L, so there is no revenue line to claim
+              here. The impact splits into three honest tiers instead: what the work produced, what the process
+              enforced, and what changed because someone told me it was wrong.
+            </Body>
+            <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
+              {[
+                ["Output", [
+                  "20+ brand identities built from scratch, including two full circular badge systems drawn rather than templated.",
+                  "Four animated logo reveal variants, each cut for a different placement context rather than one export reused.",
+                  "Three AI-generated client concepts rebuilt as clean vectors, with zero gradients or paths left unrebuilt.",
+                ]],
+                ["Process", [
+                  "Two cricket campaigns run to real tournament dates, with no client to enforce a schedule I set myself.",
+                  "The same portfolio rebuilt across four editions, each one correcting what the previous version got wrong.",
+                  "One production pipeline held consistent across identity, motion and print rather than a different approach per piece.",
+                ]],
+                ["Feedback Loop", [
+                  "A single unsolicited LinkedIn comment exposed a real navigation failure in Version 02 of the flipbook.",
+                  "Version 03 shipped with a fully bookmarked, navigable table of contents, researched and rebuilt in response.",
+                  "Acting on that comment rather than defending the work is the reason the flipbook is usable at all today.",
+                ]],
+              ].map(([title, items]) => (
+                <div key={title as string} style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
+                  <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>{title as string}</h3>
+                  <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {(items as string[]).map((t) => (
+                      <li key={t} style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>{t}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </SectionBox>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div style={{
+            display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px",
+            marginBottom: "24px", padding: "20px",
+            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+          }}>
+            {["20+ identities", "4 logo reveals", "2 tournament campaigns", "4 portfolio editions", "6 years self-directed"].map((stat) => (
+              <span key={stat} style={{
+                padding: "8px 16px", borderRadius: "100px", fontSize: "13px", fontWeight: 700,
+                background: "transparent", border: "1px solid rgba(255,255,255,0.16)", color: "rgba(255,255,255,0.72)",
+              }}>
+                {stat}
+              </span>
+            ))}
+          </div>
+        </ScrollReveal>
+
         <ScrollReveal>
           <div style={{
             display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
@@ -605,7 +701,7 @@ export default function VyasGraphicsWorkPage() {
                   Self-directed from brief to delivery on every piece here - no client brief to follow, so the standard to hit was one I set myself and held to over six years.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Acted on unsolicited feedback rather than defending the work - the flipbook navigation fix (see below) started from a single LinkedIn comment, not a formal review.
+                  Acted on unsolicited feedback rather than defending the work - the flipbook navigation fix started from a single LinkedIn comment, not a formal review.
                 </li>
               </ul>
             </div>
@@ -636,7 +732,7 @@ export default function VyasGraphicsWorkPage() {
                 }}
               >
                 <Image src={`/assets/images/section/${tool.icon}`} alt="" width={16} height={16} />
-                <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.65)" }}>{tool.name}</span>
+                <span style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.72)" }}>{tool.name}</span>
               </div>
             ))}
           </AutoRepeatMarquee>

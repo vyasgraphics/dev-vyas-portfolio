@@ -12,6 +12,7 @@ import { Organisations } from "./sections/Organisations";
 import { About } from "./sections/About";
 import { Education } from "./sections/Education";
 import { Work } from "./sections/Work";
+import { WorkCta } from "./sections/WorkCta";
 // import { Skills } from "./sections/Skills"; // "How I Work" - commented out per Dev's request
 import { Tech } from "./sections/Tech";
 // import { Blog } from "./sections/Blog"; // "How I Think" - commented out per Dev's request
@@ -80,6 +81,9 @@ export function HomeShell() {
                                     <Intro />
                                     <Organisations />
                                     <Work />
+                                    {/* Conversion point right after the strongest evidence,
+                                        rather than only at 83% page depth. */}
+                                    <WorkCta />
                                     <About />
                                     {/* <Skills /> "How I Work" - commented out per Dev's request */}
                                     <Education />

@@ -33,7 +33,12 @@ export function SectionBox({
         background: "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015))",
         border: "1px solid rgba(255,255,255,0.09)",
         padding: "clamp(28px, 4vw, 48px) clamp(20px, 4.5vw, 52px) clamp(36px, 5vw, 56px)",
-        marginBottom: "28px",
+        // Must exceed this box's own inner padding, or the gap BETWEEN
+        // sections reads as tighter than the space inside one - Gestalt
+        // proximity then works against the chunking the box is there to
+        // create. Inner bottom padding tops out at 56px, so this sits above
+        // that rather than the 28px it used to be.
+        marginBottom: "64px",
         scrollMarginTop: "24px",
         // Deliberately NOT overflow:hidden. The glass decks inside these
         // boxes rotate their resting cards and lift individual cards on
@@ -69,13 +74,17 @@ export function SectionBox({
           position: "relative",
           display: "inline-block",
           fontFamily: "'JetBrains Mono', monospace",
-          fontSize: "10.5px",
+          fontSize: "11px",
           fontWeight: 700,
           letterSpacing: "0.08em",
           textTransform: "uppercase",
-          color: "#00DE51",
-          background: "rgba(0,222,81,0.08)",
-          border: "1px solid rgba(0,222,81,0.25)",
+          // Deliberately NOT brand green any more. Squint-tested at 9px
+          // blur, a green kicker was the brightest thing in its section -
+          // an eyebrow label out-ranking the h2 it introduces. Muted white
+          // keeps it legible (6.28:1) while letting the heading lead.
+          color: "rgba(255,255,255,0.55)",
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.12)",
           borderRadius: "100px",
           padding: "6px 14px",
           marginBottom: "22px",

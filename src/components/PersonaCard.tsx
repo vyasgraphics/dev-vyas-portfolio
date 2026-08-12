@@ -67,13 +67,13 @@ export function PersonaCard({ persona }: { persona: Persona }) {
             <img src={persona.avatar} alt={`${persona.name} illustrated portrait`} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
           </div>
           <div>
-            <h4 style={{ fontSize: "clamp(20px, 2vw + 10px, 26px)", fontWeight: 700, color: "#fff", marginBottom: "6px" }}>
+            <h4 style={{ fontSize: "20px", fontWeight: 700, color: "#fff", marginBottom: "6px" }}>
               {persona.name}
             </h4>
             <span
               style={{
                 display: "inline-block",
-                fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
+                fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
                 padding: "5px 12px", borderRadius: "100px",
                 background: "rgba(0,222,81,0.12)", border: "1px solid rgba(0,222,81,0.35)",
                 color: "var(--primary)",
@@ -98,13 +98,13 @@ export function PersonaCard({ persona }: { persona: Persona }) {
             borderRadius: "0 12px 12px 0",
           } as StyleWithVars}
         >
-          <p style={{ fontSize: "15px", lineHeight: 1.6, color: "rgba(255,255,255,0.85)", fontStyle: "italic", margin: 0 }}>
+          <p style={{ fontSize: "16px", lineHeight: 1.6, color: "#fff", fontStyle: "italic", margin: 0 }}>
             &ldquo;{persona.quote}&rdquo;
           </p>
         </div>
 
         {/* bio */}
-        <p style={{ fontSize: "14.5px", lineHeight: 1.7, color: "rgba(255,255,255,0.62)", marginBottom: "28px" }}>
+        <p style={{ fontSize: "14px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
           {persona.bio}
         </p>
 
@@ -112,12 +112,12 @@ export function PersonaCard({ persona }: { persona: Persona }) {
 
         {/* goals */}
         <div style={{ marginBottom: "24px" }}>
-          <h5 style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "12px" }}>
+          <h5 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
             Goals
           </h5>
           <ul style={{ display: "flex", flexDirection: "column", gap: "9px", listStyle: "none", margin: 0, padding: 0 }}>
             {persona.goals.map((g) => (
-              <li key={g} style={{ display: "flex", gap: "10px", fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.75)", marginBottom: 0 }}>
+              <li key={g} style={{ display: "flex", gap: "10px", fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)", marginBottom: 0 }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: "3px" }}>
                   <circle cx="12" cy="12" r="10" stroke="var(--primary)" strokeWidth="1.6" opacity="0.4" />
                   <path d="M8 12.5l2.5 2.5L16 9.5" stroke="var(--primary)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -133,12 +133,12 @@ export function PersonaCard({ persona }: { persona: Persona }) {
         {/* demographics + frustrations */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "24px" }}>
           <div>
-            <h5 style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "12px" }}>
+            <h5 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
               Demographics
             </h5>
             <ul style={{ display: "flex", flexDirection: "column", gap: "10px", listStyle: "none", margin: 0, padding: 0 }}>
               {persona.demographics.map((d) => (
-                <li key={d.label} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "13px", lineHeight: 1.4, color: "rgba(255,255,255,0.7)", marginBottom: 0 }}>
+                <li key={d.label} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)", marginBottom: 0 }}>
                   <DemoIcon type={d.icon} />
                   <span>{d.label}</span>
                 </li>
@@ -146,12 +146,12 @@ export function PersonaCard({ persona }: { persona: Persona }) {
             </ul>
           </div>
           <div>
-            <h5 style={{ fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "12px" }}>
+            <h5 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
               Frustrations
             </h5>
             <ul style={{ display: "flex", flexDirection: "column", gap: "10px", listStyle: "none", margin: 0, padding: 0 }}>
               {persona.frustrations.map((f) => (
-                <li key={f.label} style={{ fontSize: "13px", lineHeight: 1.5, color: "rgba(255,255,255,0.7)", marginBottom: 0 }}>
+                <li key={f.label} style={{ fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)", marginBottom: 0 }}>
                   <strong style={{ color: "#fff", fontWeight: 600 }}>{f.label}: </strong>
                   {f.text}
                 </li>
@@ -169,11 +169,11 @@ export function PersonaCard({ persona }: { persona: Persona }) {
             padding: "16px 18px",
           }}
         >
-          <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.75)", marginBottom: "10px" }}>
+          <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)", marginBottom: "10px" }}>
             <strong style={{ color: "#fff", fontWeight: 600 }}>Core needs: </strong>
             {persona.coreNeeds}
           </p>
-          <p style={{ fontSize: "12px", lineHeight: 1.6, color: "rgba(255,255,255,0.5)", margin: 0 }}>
+          <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)", margin: 0 }}>
             <strong style={{ color: "var(--primary)", fontWeight: 600 }}>Data evidence: </strong>
             {persona.dataEvidence}
           </p>

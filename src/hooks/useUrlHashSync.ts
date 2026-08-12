@@ -55,7 +55,20 @@ export function useUrlHashSync() {
         const stored = sessionStorage.getItem("lastActiveSection");
         const hash = cleanHash(stored ? `#${stored.replace(/^#/, "")}` : window.location.hash);
         if (!hash || hash === "#") return;
-        sessionStorage.removeItem("lastActiveSection");
+        // NOT consumed here. Clearing the destination before the scroll has
+        // actually happened means any failure between this line and
+        // tryScroll succeeding loses it permanently, with no way to recover
+        // - the page just stays wherever it landed.
+        //
+        // That is not hypothetical. Under React StrictMode (Next's default
+        // in development) this effect is deliberately invoked twice: the
+        // first pass consumed the key and started the rAF loop, StrictMode's
+        // cleanup then cancelled that loop, and the second pass found the
+        // key already gone and returned early - so "Back to Work" landed at
+        // the top of the homepage every time in dev, while working correctly
+        // in production. Consuming only once the target is found and the
+        // scroll is issued (see tryScroll) makes the effect idempotent, so
+        // the second pass simply redoes the same successful work.
 
         // Cover the whole landing sequence up front (retry loop waiting
         // for the target to exist, plus the eventual scroll) - not just
@@ -74,6 +87,10 @@ export function useUrlHashSync() {
         const tryScroll = () => {
             const target = document.querySelector(preferredTarget) || document.querySelector(hash);
             if (target) {
+                // Consume only now that the destination has actually been
+                // resolved and is about to be scrolled to - see the note
+                // where `stored` is read above.
+                sessionStorage.removeItem("lastActiveSection");
                 history.replaceState(null, "", hash);
                 smoothScrollTo(target as HTMLElement, { immediate: true });
 

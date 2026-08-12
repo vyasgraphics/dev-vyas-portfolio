@@ -6,8 +6,12 @@ export function Intro() {
             <div className="intro-author">
                 <div className="author-info letter-space--05">
                     <p className="info_name text-black">Dev Vyas</p>
+                    {/* Specialism + platform sit here rather than in the h1:
+                        a recruiter filtering for "mobile" or "web" needs the
+                        keyword above the fold, and the h1 is already carrying
+                        the value proposition. */}
                     <p className="info_duty text-black-50 text-body-3">
-                        Product Designer
+                        Product Designer &amp; UX Researcher &nbsp;·&nbsp; Web &amp; Mobile
                     </p>
                 </div>
             </div>
@@ -60,9 +64,13 @@ export function Intro() {
                     </p>
                     <p className="text text-black-56 text-body-3">Years designing commercially</p>
                 </div>
+                {/* 70+, not the 25 this used to claim: the dissertation alone
+                    ran 42 in the final sample (plus 2 excluded and 4 pilots),
+                    and Move added 17 questionnaire respondents and 8
+                    think-aloud testers. The old figure counted one project. */}
                 <div className="wg-counter">
                     <p className="counter h1 d-flex font-2 letter-space--2">
-                        <span className="number" data-speed="1000" data-to="25">0</span>+
+                        <span className="number" data-speed="1000" data-to="70">0</span>+
                     </p>
                     <p className="text text-black-56 text-body-3">Users researched &amp; tested</p>
                 </div>

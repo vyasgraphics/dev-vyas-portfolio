@@ -72,11 +72,118 @@ const STRUCTURED_DATA = {
 };
 
 const SECTIONS = [
-  { id: "problem", label: "The Problem" },
+  { id: "challenge", label: "The Challenge" },
   { id: "personas", label: "Who It's For" },
-  { id: "screens", label: "The Screens" },
-  { id: "finding", label: "Key Finding" },
+  { id: "process", label: "The Process" },
+  { id: "finding", label: "The Key Finding" },
+  { id: "impact", label: "The Impact" },
   { id: "next", label: "What's Next" },
+];
+
+const PROCESS_STAGES = ["Discovery", "Concepts", "Prototyping", "Usability Testing", "Iteration"];
+
+// Detailed breakdown per stage: a bold one-line summary plus scannable
+// bullets, rather than paragraph slabs. Kept as data so the stepper strip
+// above and the breakdown below cannot drift apart.
+const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[]; visual?: React.ReactNode }[] = [
+  {
+    title: "Discovery",
+    summary: "A 17-response questionnaire reframed the problem: the barrier was anxiety and logistics, not motivation.",
+    bullets: [
+      <>
+        47% were blocked by a <strong style={{ color: "#fff" }}>lack of free time</strong>, and 18% by feeling
+        self-conscious. Neither is solved by adding more exercise options.
+      </>,
+      <>
+        53% asked for short video clips of a space before committing to travel there, which became the single
+        clearest feature mandate in the whole dataset.
+      </>,
+      <>
+        71% consented to share their university timetable, which made automatic scheduling viable rather than
+        hypothetical.
+      </>,
+    ],
+  },
+  {
+    title: "Concepts",
+    summary: "Two concepts were built out and then killed against the questionnaire data, before a single screen was refined.",
+    bullets: [
+      <>
+        <strong style={{ color: "#fff" }}>Leaderboard, rejected.</strong> Users disliked competitive comparison
+        strongly enough that gamifying the app would have worked against its own audience.
+      </>,
+      <>
+        <strong style={{ color: "#fff" }}>Manual planner, rejected.</strong> Manual entry was exactly the friction
+        the design existed to remove, so it gave way to automatic timetable syncing.
+      </>,
+      <>
+        Killing both early cost two concepts and saved the build, which is the cheaper trade to make at this stage
+        of a lifecycle.
+      </>,
+    ],
+  },
+  {
+    title: "Prototyping",
+    summary: "Four screens in Figma, each one answering a specific barrier the research had named.",
+    bullets: [
+      <>
+        Smart Input and Gap Finder answer Maya&apos;s logistics paralysis by removing the mental maths of fitting a
+        session into a timetable.
+      </>,
+      <>
+        See Before You Go answers the 53% who wanted visual proof, and Quiet Mode answers the self-consciousness
+        that stops Liam leaving his room.
+      </>,
+      <>
+        Every screen traces back to a questionnaire figure rather than a hunch, which is what made the later
+        rejection calls defensible.
+      </>,
+    ],
+    visual: (
+      <div className="wireframes-grid">
+        <WireframeSmartInput />
+        <WireframeQuietMode />
+        <WireframeSeeBeforeYouGo />
+        <WireframeGapFinder />
+      </div>
+    ),
+  },
+  {
+    title: "Usability Testing",
+    summary: "Moderated think-aloud sessions with 8 users caught a trust problem in the one feature built to protect anxious users.",
+    bullets: [
+      <>
+        Participants read <strong style={{ color: "#fff" }}>&ldquo;Quiet Mode&rdquo; as a system audio
+        control</strong>, not a crowd filter, and avoided touching it.
+      </>,
+      <>
+        The failure was in the label and the control type, not the concept. The underlying need it served was the
+        best-evidenced need in the study.
+      </>,
+      <>
+        Caught at prototype stage, this cost a rename. Caught after launch, it would have cost the trust of the
+        exact users the feature existed for.
+      </>,
+    ],
+  },
+  {
+    title: "Iteration",
+    summary: "Renamed, re-controlled and given explicit feedback, the feature went from avoided to understood.",
+    bullets: [
+      <>
+        &ldquo;Quiet Mode&rdquo; became <strong style={{ color: "#fff" }}>Crowd Filter</strong>, naming what it
+        actually filters instead of describing a mood.
+      </>,
+      <>
+        The ambiguous toggle became an explicit <strong style={{ color: "#fff" }}>Social / Solo</strong> control, so
+        both states are visible rather than inferred.
+      </>,
+      <>
+        Confirmation feedback was added, so choosing a state tells you what will happen rather than leaving you to
+        guess.
+      </>,
+    ],
+  },
 ];
 
 export default function MoveAppWorkPage() {
@@ -96,26 +203,27 @@ export default function MoveAppWorkPage() {
         <BackLink href="/#work" label="← Back to Work" />
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>
-          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px", maxWidth: "820px" }}>
+          <h1 style={{ fontSize: "clamp(28px, 4vw + 8px, 44px)", fontWeight: 700, lineHeight: 1.2, marginBottom: "16px" }}>
             Move - University Exercise App
           </h1>
           <p style={{
-            fontSize: "15px", lineHeight: 1.5, color: "rgba(255,255,255,0.9)",
-            fontWeight: 600, maxWidth: "560px", marginBottom: "20px",
+            fontSize: "16px", lineHeight: 1.55, color: "#fff",
+            fontWeight: 600, marginBottom: "20px",
             paddingLeft: "16px", borderLeft: "3px solid #00DE51",
           }}>
             The outcome: cutting choices and hiding the crowd got testers who&apos;d stalled on other apps to actually finish a session.
           </p>
-          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, maxWidth: "560px", marginBottom: "24px" }}>
-            Helping sedentary students actually start exercising - not by adding more options, but by removing the
-            anxiety and mental effort standing between them and the ones already there.
+          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
+            A concept exercise app for University of York students, run through a full human-centred design
+            lifecycle. The research found the barrier was never a lack of options. It was the anxiety and mental
+            effort standing between students and the options already there.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["UX Researcher & Designer", "2026", "Figma", "Health & Fitness"].map((t) => (
               <span key={t} style={{
                 padding: "6px 14px", borderRadius: "100px",
                 background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(255,255,255,0.7)",
+                color: "rgba(255,255,255,0.72)",
               }}>
                 {t}
               </span>
@@ -124,26 +232,38 @@ export default function MoveAppWorkPage() {
         </header>
 
         <div style={{
-          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "24px", marginBottom: "64px", padding: "24px",
-          borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(168px, 1fr))",
+          gap: "26px 20px", marginBottom: "44px",
         }}>
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Context</p>
-            <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.75)" }}>
-              A human-centred design module at the University of York, run to the same lifecycle as a real product brief.
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Industry</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+              EdTech · Health &amp; Fitness
             </p>
           </div>
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>Team</p>
-            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.75)" }}>
-              Dev Vyas (UX research &amp; design)<br />
-              Haokai, Lanqing, Yechen (coursemates)
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Platform</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+              iOS mobile app, Figma prototype
             </p>
           </div>
           <div>
-            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "8px" }}>My Role</p>
-            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.75)" }}>
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Role</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.72)" }}>
+              UX Research &amp; Design<br />
+              Owned research and design calls
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Timeline &amp; Team</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.72)" }}>
+              HCD module, University of York<br />
+              With Haokai, Lanqing and Yechen
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Key Skills</p>
+            <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.72)" }}>
               User Research · Personas<br />
               Figma Prototyping · Usability Testing
             </p>
@@ -151,27 +271,30 @@ export default function MoveAppWorkPage() {
         </div>
 
         <div style={{
-          padding: "24px", borderRadius: "14px", marginBottom: "64px",
+          padding: "34px 30px", borderRadius: "14px", marginBottom: "72px",
           background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
         }}>
-          <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: "18px" }}>Results</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
+          <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "18px" }}>Results</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "36px" }}>
             <div>
-              <p style={{ fontSize: "15px", fontWeight: 700, color: "#00DE51", marginBottom: "4px" }}>Session completion</p>
-              <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)" }}>
-                Testers who had stalled on other fitness apps completed a full session once anxiety-driven friction was removed.
+              <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Research base</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>17</p>
+              <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                Questionnaire responses that reframed the problem and killed two concepts before they were built.
               </p>
             </div>
             <div>
-              <p style={{ fontSize: "15px", fontWeight: 700, color: "#00DE51", marginBottom: "4px" }}>A trust problem found early</p>
-              <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)" }}>
-                Usability testing (8 users) caught a feature nobody trusted enough to touch, before it ever shipped.
+              <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Tested with</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>8</p>
+              <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                Think-aloud testers, who caught a trust problem in the flagship feature before it ever shipped.
               </p>
             </div>
             <div>
-              <p style={{ fontSize: "15px", fontWeight: 700, color: "#00DE51", marginBottom: "4px" }}>Validation, properly powered</p>
-              <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)" }}>
-                A 256-user A/B study is scoped and ready to confirm the redesign holds up at scale.
+              <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Validation ready</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>256</p>
+              <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                Users in a scoped, properly powered A/B study, ready to confirm the redesign holds at scale.
               </p>
             </div>
           </div>
@@ -180,16 +303,21 @@ export default function MoveAppWorkPage() {
         <SectionNav sections={SECTIONS} />
 
         <ScrollReveal>
-          <SectionBox id="problem" tag="Choice wasn't the barrier">
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The problem</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
-              York already has plenty of exercise options - gyms, clubs, cycling routes, walking spaces. The problem
-              was never a lack of choice. It was time pressure, self-consciousness, and unfamiliarity standing
-              between students and using what was already there.
+          <SectionBox id="challenge" tag="Choice wasn't the barrier">
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The challenge</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
+              York already has plenty of exercise options. Gyms, clubs, cycling routes, walking spaces. Every day,
+              students walk past all of them. The problem was never a lack of choice.
+            </p>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
+              Then the questionnaire data landed, and it pointed somewhere else entirely. Time pressure,
+              self-consciousness and unfamiliarity were standing between students and facilities that were already
+              free, already nearby, and already open. Adding options to that situation makes it worse, not better.
+              The design problem was subtraction, not addition.
             </p>
             <p style={{
               fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
-              fontStyle: "italic", marginTop: "20px",
+              fontStyle: "italic", marginTop: "24px",
             }}>
               How might we reduce the anxiety and decision friction that stops students from starting - not just give
               them more options?
@@ -199,17 +327,21 @@ export default function MoveAppWorkPage() {
 
         <ScrollReveal>
           <SectionBox id="personas" tag="Two barriers, two users">
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>Who it&apos;s for</h2>
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>Who it&apos;s for</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "24px" }}>
+              The data split cleanly into two different barriers, so it produced two personas rather than one
+              averaged user. Designing for the average of these two would have served neither.
+            </p>
             <TiltPermissionPrompt />
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
               <PersonaCard persona={personas[0]} />
               <PersonaCard persona={personas[1]} />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic", textAlign: "center" }}>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", fontStyle: "italic", textAlign: "center" }}>
                 Liam needs reassurance, not motivation.
               </p>
-              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.6)", fontStyle: "italic", textAlign: "center" }}>
+              <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", fontStyle: "italic", textAlign: "center" }}>
                 Maya needs cognitive offloading, not encouragement.
               </p>
             </div>
@@ -217,46 +349,94 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="screens" tag="Four screens, two rejected paths">
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The four screens that mattered</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
-              Two earlier concepts were built out and then explicitly rejected against the questionnaire data: a
-              leaderboard, dropped once it was clear how strongly users disliked competitive comparison, and a
-              manual planner, dropped in favour of automatic timetable syncing once it was clear manual entry was
-              exactly the kind of friction the design was meant to remove.
+          <SectionBox id="process" tag="Discovery to iteration">
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The process</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
+              Because the questionnaire named the real barrier, two attractive concepts had to die. Because they
+              died early, the prototype only ever carried features the data supported. Because testing came before
+              build, the one feature that failed was caught while a rename could still fix it.
             </p>
-            <div className="wireframes-grid">
-              <WireframeSmartInput />
-              <WireframeQuietMode />
-              <WireframeSeeBeforeYouGo />
-              <WireframeGapFinder />
+
+            <div style={{
+              display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
+              gap: "8px", padding: "20px", marginBottom: "40px",
+              borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+            }}>
+              {PROCESS_STAGES.map((stage, i) => (
+                <div key={stage} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <span style={{
+                    fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.72)",
+                    padding: "8px 16px", borderRadius: "100px",
+                    background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+                    whiteSpace: "nowrap",
+                  }}>
+                    {stage}
+                  </span>
+                  {i < PROCESS_STAGES.length - 1 && (
+                    <span aria-hidden style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>→</span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
+              {PROCESS_STEPS.map((step, i) => (
+                <div key={step.title} style={{
+                  paddingLeft: "22px", borderLeft: "2px solid rgba(255,255,255,0.1)",
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
+                    <span style={{
+                      display: "inline-flex", alignItems: "center", justifyContent: "center",
+                      minWidth: "34px", height: "26px", padding: "0 8px", borderRadius: "6px",
+                      background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.14)",
+                      color: "rgba(255,255,255,0.72)", fontSize: "12px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace",
+                    }}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3 style={{ fontSize: "17px", fontWeight: 700 }}>{step.title}</h3>
+                  </div>
+                  <p style={{ fontSize: "16px", lineHeight: 1.55, color: "#fff", fontWeight: 600, marginBottom: "14px" }}>
+                    {step.summary}
+                  </p>
+                  <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    {step.bullets.map((bullet, bi) => (
+                      <li key={bi} style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                  {step.visual && <div style={{ marginTop: "22px" }}>{step.visual}</div>}
+                </div>
+              ))}
             </div>
           </SectionBox>
         </ScrollReveal>
 
         <ScrollReveal>
           <SectionBox id="finding" tag="Caught before it shipped">
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>The key finding</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
-              In testing, participants read &ldquo;Quiet Mode&rdquo; as a system audio control, not a crowd filter -
-              the one feature built to protect anxious users was the one nobody trusted enough to touch. One tester
-              said it outright:
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The key finding</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px" }}>
+              The one feature built to protect anxious users was the one nobody trusted enough to touch. In testing,
+              participants read &ldquo;Quiet Mode&rdquo; as a system audio control rather than a crowd filter. One
+              tester said it outright:
             </p>
             <p style={{
-              fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.9)", fontStyle: "italic",
+              fontSize: "16px", lineHeight: 1.6, color: "#fff", fontStyle: "italic",
               padding: "16px 20px", marginBottom: "20px", borderLeft: "3px solid #00DE51",
               background: "rgba(255,255,255,0.03)", borderRadius: "0 8px 8px 0",
             }}>
               &ldquo;Will this turn off my Spotify? I don&apos;t want silence, I just want to avoid people.&rdquo;
             </p>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)", marginBottom: "20px" }}>
-              Renaming it to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle with a
-              &ldquo;Social/Solo&rdquo; control, and adding explicit confirmation feedback fixed it.
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px" }}>
+              A feature can test as a total failure while the need behind it is the best-evidenced thing in the
+              study. Renaming it to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle
+              with an explicit Social / Solo control, and adding confirmation feedback fixed it without touching the
+              underlying idea.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
               <WireframeQuietMode
                 badge="A"
-                title={"Home - \u201cQuiet Mode\u201d (Original)"}
+                title={"Home - “Quiet Mode” (Original)"}
                 description={
                   <>
                     <strong style={{ color: "#fff" }}>The problem:</strong> in testing, this toggle got read as a
@@ -270,13 +450,95 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
+          <SectionBox id="impact" tag="Three tiers of impact">
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The impact</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
+              This is a university concept project, not a shipped product, so there is no revenue line to claim. The
+              impact splits into three honest tiers: what changed for users, what the process itself caught, and what
+              is ready to be validated.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
+              <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
+                <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>
+                  User Metrics
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    Testers who had stalled on other fitness apps completed a full session once anxiety-driven friction was removed.
+                  </li>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    The two most-cited barriers in the research, lack of time (47%) and self-consciousness (18%), each got a dedicated screen rather than a compromise.
+                  </li>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    The clearest single request in the data, video previews of a space (53%), shipped into the prototype intact.
+                  </li>
+                </ul>
+              </div>
+              <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
+                <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>
+                  Process Metrics
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    Two fully explored concepts were rejected against evidence rather than opinion, before either reached build.
+                  </li>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    A naming and trust failure in the flagship feature was caught at prototype stage, when the fix was still a rename.
+                  </li>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    Every screen traces to a specific research figure, which is what let the team argue about evidence instead of taste.
+                  </li>
+                </ul>
+              </div>
+              <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
+                <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>
+                  Validation Readiness
+                </h3>
+                <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    A 256-user A/B study is scoped and properly powered, so the redesign can be confirmed at scale rather than asserted.
+                  </li>
+                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                    71% of respondents consented to timetable sharing, so the automatic scheduling this depends on is viable rather than hypothetical.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </SectionBox>
+        </ScrollReveal>
+
+        <ScrollReveal>
           <SectionBox id="next" tag="256 users, properly powered">
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "20px" }}>What&apos;s next</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.75)" }}>
-              A proposed online A/B study (256 users, properly powered) is ready to validate the redesign at scale
-              the moment this moves from prototype to production.
+            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What&apos;s next</h2>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
+              The proposed A/B study runs the moment this moves from prototype to production. It is designed to test
+              the claim this whole project rests on: that removing friction beats adding motivation for a sedentary,
+              self-conscious user. If that holds at 256 users, it stops being a design opinion and becomes a
+              repeatable principle.
             </p>
           </SectionBox>
+        </ScrollReveal>
+
+        <ScrollReveal>
+          <div style={{
+            display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px",
+            marginBottom: "24px", padding: "20px",
+            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+          }}>
+            {[
+              "17 questionnaire responses",
+              "2 concepts rejected on evidence",
+              "8 think-aloud testers",
+              "256-user A/B study scoped",
+            ].map((stat) => (
+              <span key={stat} style={{
+                padding: "8px 16px", borderRadius: "100px", fontSize: "13px", fontWeight: 700,
+                background: "transparent", border: "1px solid rgba(255,255,255,0.16)", color: "rgba(255,255,255,0.72)",
+              }}>
+                {stat}
+              </span>
+            ))}
+          </div>
         </ScrollReveal>
 
         <ScrollReveal>
@@ -289,10 +551,13 @@ export default function MoveAppWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Owned research and design decisions within the team - the personas, the usability testing plan, and the fix once testing found the trust problem were mine to call.
+                  Owned the research and design calls within the team: the personas, the usability testing plan, and the fix once testing found the trust problem were mine to make.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Pushed the team away from adding more features toward removing friction - a harder case to make than shipping something new, and the one the data ended up supporting.
+                  Pushed the team away from adding features toward removing friction, a harder case to argue than shipping something new, and the one the data ended up supporting.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Made two rejection calls on concepts the team liked, using questionnaire evidence rather than preference to settle it.
                 </li>
               </ul>
             </div>
@@ -300,10 +565,13 @@ export default function MoveAppWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Full HCD lifecycle craft: a 17-response user questionnaire through to Figma prototyping and moderated think-aloud testing with 8 users.
+                  Full HCD lifecycle craft: a 17-response questionnaire through to Figma prototyping and moderated think-aloud testing with 8 users.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Domain knowledge in behaviour-change and health-app design - specifically, that removing anxiety beats adding motivation for a sedentary, self-conscious user.
+                  Built the four screens as one consistent pattern set rather than four isolated mockups, so a fix to one control could be applied across the system.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  Domain knowledge in behaviour-change and health-app design: specifically, that removing anxiety beats adding motivation for a sedentary, self-conscious user.
                 </li>
               </ul>
             </div>

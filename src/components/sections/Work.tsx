@@ -115,7 +115,19 @@ export function Work() {
                                             <p className="w-desc text-white-56 text-body-3">
                                                 {w.description}
                                             </p>
+                                            {/* Four fields, not two. Industry and Platform are what a
+                                                recruiter filters on ("do they do mobile? do they do
+                                                B2B?") and the card previously answered neither. Falls
+                                                into a 2x2 on desktop via the existing 1fr 1fr grid. */}
                                             <div className="w-highlight">
+                                                <div className="box-high">
+                                                    <p className="text-body-3 text-white-56">Industry</p>
+                                                    <p className="text-body-1 text-white-72">{w.industry}</p>
+                                                </div>
+                                                <div className="box-high">
+                                                    <p className="text-body-3 text-white-56">Platform</p>
+                                                    <p className="text-body-1 text-white-72">{w.platform}</p>
+                                                </div>
                                                 <div className="box-high">
                                                     <p className="text-body-3 text-white-56">Year</p>
                                                     <p className="text-body-1 text-white-72">{w.year}</p>
