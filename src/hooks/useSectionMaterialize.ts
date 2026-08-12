@@ -64,12 +64,24 @@ export function useSectionMaterialize() {
         // Work.tsx) - so adding this here would just be a second,
         // competing animation on the same elements for no benefit.
         const isDesktop = window.matchMedia("(min-width: 992px)").matches;
-        const workHeader = isDesktop
-            ? document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-desc")
-            : document.querySelectorAll<HTMLElement>("");
-        const workCards = isDesktop
-            ? document.querySelectorAll<HTMLElement>("#work .sticky-item")
-            : document.querySelectorAll<HTMLElement>("");
+        // The mobile branch needs an empty, iterable stand-in with the same
+        // shape as a NodeList (.length, .forEach) so the code below doesn't
+        // need two code paths - document.querySelectorAll("") looks like
+        // that stand-in but is not one: an empty string is not a valid
+        // selector, and per the Selectors API spec every browser throws a
+        // SyntaxError for it, synchronously, uncaught, on every single
+        // phone-width visit. That crashed hydration outright rather than
+        // just skipping the animation - confirmed via the exact stack this
+        // threw in production ("Failed to execute 'querySelectorAll' ...
+        // The provided selector is empty") and reproduced by resizing to a
+        // mobile viewport. A plain array has the same .length/.forEach
+        // shape and is a real empty collection rather than an invalid call.
+        const workHeader: HTMLElement[] = isDesktop
+            ? Array.from(document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-desc"))
+            : [];
+        const workCards: HTMLElement[] = isDesktop
+            ? Array.from(document.querySelectorAll<HTMLElement>("#work .sticky-item"))
+            : [];
         if (!sections.length && !workHeader.length && !workCards.length) return;
 
         const triggers: ScrollTrigger[] = [];
