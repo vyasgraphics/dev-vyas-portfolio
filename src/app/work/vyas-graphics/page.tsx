@@ -3,6 +3,7 @@ import { Children } from "react";
 import Image from "next/image";
 import { BackLink } from "@/components/BackLink";
 import { SectionNav } from "@/components/SectionNav";
+import { CountUpStat } from "@/components/CountUpStat";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { LogoMarkTile } from "@/components/LogoMarkTile";
@@ -303,7 +304,7 @@ export default function VyasGraphicsWorkPage() {
             ].map(([label, stat, desc]) => (
               <div key={label}>
                 <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>{label}</p>
-                <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>{stat}</p>
+                <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value={stat as string} /></p>
                 <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>{desc}</p>
               </div>
             ))}

@@ -9597,3 +9597,47 @@ html, body {
     padding-left: 10px !important;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   Case study stat count-up (CountUpStat.tsx)
+   Landing beat mirroring the homepage hero counters' scale-pop (see the
+   ".counter" block in useScrollAnimations.ts) so both read as the same
+   mechanism. transform-origin lives on the element itself, since it is
+   shared with the settled resting state.
+   ══════════════════════════════════════════════════════════ */
+@keyframes vg-count-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Process path cursor glow (ProcessPath.tsx)
+   Same green radial the persona cards use for their .tilt-glare layer,
+   driven by the same --glow-x/--glow-y convention - but without the 3D
+   tilt, which would be wrong on a wide horizontal strip. Hover-capable
+   pointers only: on touch there is no cursor to follow, and a stuck glow
+   after a tap is worse than none.
+   ══════════════════════════════════════════════════════════ */
+.vg-process-path {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  position: relative;
+  overflow: hidden;
+}
+.vg-process-path-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(0, 222, 81, 0.16), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+@media (hover: hover) {
+  .vg-process-path:hover .vg-process-path-glow { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vg-process-path-glow { transition: none; }
+}

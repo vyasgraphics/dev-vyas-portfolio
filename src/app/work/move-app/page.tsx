@@ -4,6 +4,8 @@ import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
+import { CountUpStat } from "@/components/CountUpStat";
+import { ProcessPath } from "@/components/ProcessPath";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PersonaCard } from "@/components/PersonaCard";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
@@ -278,21 +280,21 @@ export default function MoveAppWorkPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "36px" }}>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Research base</p>
-              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>17</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="17" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                 Questionnaire responses that reframed the problem and killed two concepts before they were built.
               </p>
             </div>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Tested with</p>
-              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>8</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="8" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                 Think-aloud testers, who caught a trust problem in the flagship feature before it ever shipped.
               </p>
             </div>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Validation ready</p>
-              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>256</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="256" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                 Users in a scoped, properly powered A/B study, ready to confirm the redesign holds at scale.
               </p>
@@ -357,27 +359,7 @@ export default function MoveAppWorkPage() {
               build, the one feature that failed was caught while a rename could still fix it.
             </p>
 
-            <div style={{
-              display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
-              gap: "8px", padding: "20px", marginBottom: "40px",
-              borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-            }}>
-              {PROCESS_STAGES.map((stage, i) => (
-                <div key={stage} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span style={{
-                    fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.72)",
-                    padding: "8px 16px", borderRadius: "100px",
-                    background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-                    whiteSpace: "nowrap",
-                  }}>
-                    {stage}
-                  </span>
-                  {i < PROCESS_STAGES.length - 1 && (
-                    <span aria-hidden style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>→</span>
-                  )}
-                </div>
-              ))}
-            </div>
+            <ProcessPath stages={PROCESS_STAGES} />
 
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               {PROCESS_STEPS.map((step, i) => (

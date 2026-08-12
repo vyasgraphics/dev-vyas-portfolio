@@ -4,6 +4,8 @@ import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
+import { CountUpStat } from "@/components/CountUpStat";
+import { ProcessPath } from "@/components/ProcessPath";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
 import { WireframeNewsTask } from "@/components/wireframes/WireframeNewsTask";
@@ -286,21 +288,21 @@ export default function DissertationWorkPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "36px" }}>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Outcomes</p>
-              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>2</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="2" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                 <strong style={{ color: "#fff" }}>Opposite-story outcomes.</strong>{" "}Completion time tracked distraction resistance closely; search accuracy barely moved - a ceiling effect in the task itself.
               </p>
             </div>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Participants</p>
-              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>42</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="42" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                 Recruited through Prolific, only once <strong style={{ color: "#fff" }}>4 in-person pilot rounds</strong>{" "}had shaken out the task&apos;s functional problems.
               </p>
             </div>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Cross-checked</p>
-              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}>3</p>
+              <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="3" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                 <strong style={{ color: "#fff" }}>Verified three ways.</strong>{" "}Primary analysis in Python, independently cross-checked in both SPSS and Jamovi before being trusted.
               </p>
@@ -350,27 +352,7 @@ export default function DissertationWorkPage() {
               artefact design, pilot testing, data collection, analysis.
             </p>
 
-            <div style={{
-              display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
-              gap: "8px", padding: "20px", marginBottom: "40px",
-              borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-            }}>
-              {PROCESS_STAGES.map((stage, i) => (
-                <div key={stage} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <span style={{
-                    fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.72)",
-                    padding: "8px 16px", borderRadius: "100px",
-                    background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-                    whiteSpace: "nowrap",
-                  }}>
-                    {stage}
-                  </span>
-                  {i < PROCESS_STAGES.length - 1 && (
-                    <span aria-hidden style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>→</span>
-                  )}
-                </div>
-              ))}
-            </div>
+            <ProcessPath stages={PROCESS_STAGES} />
 
             <TiltPermissionPrompt />
 
