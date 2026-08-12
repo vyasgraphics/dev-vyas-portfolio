@@ -122,7 +122,11 @@ export function useScrollAnimations() {
             const settings: gsap.TweenVars = {
                 scrollTrigger: {
                     trigger: el,
-                    scrub: 3,
+                    // Was 3 - a three-second catch-up, which reads as the
+                    // element lagging behind the scroll rather than
+                    // moving with it. 1.2 keeps the motion smoothed and
+                    // clearly scroll-tied without the drift.
+                    scrub: 1.2,
                     start: "30px bottom",
                     end: "bottom bottom",
                 },

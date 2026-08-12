@@ -8143,16 +8143,33 @@ button.animate-btn::after,
   .wg-work .work-content .content {
     overflow-y: auto !important;
   }
+  /* ── Spacing rhythm ──
+     Previous values were 24 / 14 / 24 / 22 / 16 / 6 / 22 - close enough
+     to each other (22 vs 24 vs 16) that the differences read as noise
+     rather than intent: nothing in the stack said "this is a boundary"
+     versus "these two belong together". Replaced with a deliberate 4px
+     scale where each step encodes a specific relationship strength:
+
+       8px  - bound pair (a label and its own value)
+       12px - tight qualifier (impact line belongs to the title above it)
+       20px - within-group separation
+       32px - group boundary (narrative ends, metadata begins)
+
+     Same total card height to within a few px, so this does not push
+     content into the internal scroll that overflow-y:auto guards. */
+  .wg-work .content {
+    padding: 40px !important;
+  }
   .wg-work .w-logo {
-    margin-bottom: 24px !important;
+    margin-bottom: 32px !important;
   }
   .wg-work .w-title {
     font-size: clamp(22px, 2.1vw, 28px) !important;
     line-height: 1.3 !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
   }
   .wg-work .w-desc {
-    margin-bottom: 24px !important;
+    margin-bottom: 32px !important;
     font-size: 16px !important;
     line-height: 1.6 !important;
     /* Clamp to 5 lines so every card's description takes the same space
@@ -8162,22 +8179,56 @@ button.animate-btn::after,
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
   }
+  /* Year and Role are a matched pair of metadata, not two separate
+     blocks - side by side reads as one deliberate row and reclaims the
+     vertical space that the old stacked layout spent on a 16px gap. */
   .wg-work .w-highlight {
-    margin-bottom: 22px !important;
-    gap: 16px !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: 32px !important;
+    row-gap: 0 !important;
+    margin-bottom: 32px !important;
   }
   .wg-work .box-high {
-    gap: 6px !important;
-  }
-  .wg-work .w-tag-list .tag {
-    padding: 7px 14px !important;
-  }
-  .wg-work .w-tag-list .tag span {
-    font-size: 14.5px !important;
+    gap: 8px !important;
   }
   .wg-work .br-line {
-    margin-top: 22px !important;
-    margin-bottom: 22px !important;
+    margin-top: 32px !important;
+    margin-bottom: 32px !important;
+  }
+
+  /* ── Hierarchy by scale and contrast ──
+     The clearest flaw in the original card was inverted: the Year/Role
+     VALUES used .text-body-1 (20px), making tertiary metadata the
+     second-largest type on the card - larger than the 16px project
+     description it sat beneath, and close enough to the 22-28px title to
+     compete with it. Three levels now read distinctly:
+
+       primary   - .w-title, 22-28px, brightest
+       secondary - .w-desc, 16px, mid
+       tertiary  - metadata + tags, 11-15px, dimmest
+
+     Set on the .wg-work descendants rather than by changing the utility
+     classes in the markup, so .text-body-1 keeps its meaning everywhere
+     else on the site. */
+  .wg-work .box-high p.text-body-3 {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.09em !important;
+    color: var(--white-40) !important;
+  }
+  .wg-work .box-high p.text-body-1 {
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+  }
+  .wg-work .w-tag-list {
+    gap: 10px !important;
+  }
+  .wg-work .w-tag-list .tag {
+    padding: 6px 13px !important;
+  }
+  .wg-work .w-tag-list .tag span {
+    font-size: 13px !important;
   }
 }
 
@@ -9487,5 +9538,44 @@ html, body {
 @media (max-width: 767px) {
   .skill-accordion_item .accordion-action {
     padding-right: 52px !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   WORK CARD - impact line
+   Was a block of inline styles in Work.tsx (12px, 10px margin, 10px
+   padding), which kept it outside the card's spacing scale entirely and
+   meant its values could never be tuned alongside the rest. Moved to a
+   class so it sits on the same rhythm as everything around it: 12px
+   above from .w-title, 20px below before .w-desc - tight to the title it
+   qualifies, clearly separated from the description it introduces.
+   Treated as a quiet accent rather than a highlight - uppercase
+   micro-caps at low weight read as editorial rather than as a badge,
+   and the hairline rule replaces the heavier 2px bar.
+   ══════════════════════════════════════════════════════════ */
+.wg-work .w-impact {
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 20px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(0, 222, 81, 0.45);
+}
+
+/* Mobile keeps the impact line tight. The mobile work card was
+   deliberately tuned so the whole thing fits one screen without
+   scrolling, so the 20px the desktop rhythm spends below this line is
+   exactly the kind of row that tuning was protecting. !important is
+   required here rather than stylistic - see the documented Sass/Turbopack
+   media-query source-order bundling quirk in this codebase, where an
+   earlier wider max-width block can otherwise win over a later one. */
+@media (max-width: 991px) {
+  .wg-work .w-impact {
+    font-size: 10px !important;
+    margin-bottom: 12px !important;
+    padding-left: 10px !important;
   }
 }
