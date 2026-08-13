@@ -62,8 +62,20 @@ const CONDITION_COPY: Record<Condition, { name: string; text: string }> = {
   },
 };
 
-const CELL = "clamp(20px, 5.6vw, 34px)";
-const CELL_GAP = "clamp(2px, 0.6vw, 4px)";
+// Floors and vw-coefficients tuned against the actual card content width at
+// narrow phone viewports (measured 162px at 320px wide, 217px at 375px),
+// not just against the full viewport - the old clamp() floors (20px cell,
+// 88px-ish gap on the flex row) assumed more room than the card's own
+// padding and the page's outer margins actually leave, so three panels
+// side by side needed ~270px against ~217px available and the overflow
+// past the card's overflow:hidden edge was silently clipped rather than
+// shown or wrapped. Desktop is unaffected: both the old and new formulas
+// already reach their max (34px) well before typical desktop widths
+// (old cap point ~607px viewport, new ~1133px, and this component is only
+// ever viewed inside the reading column, comfortably past both once the
+// viewport itself is any real desktop size).
+const CELL = "clamp(10px, 3vw, 34px)";
+const CELL_GAP = "clamp(1px, 0.35vw, 4px)";
 
 function MiniGrid({ target, distractor }: { target: boolean; distractor: boolean }) {
   return (
@@ -131,7 +143,7 @@ export function WireframeCirclesTest({
             boxShadow: "0 30px 60px -20px rgba(0,0,0,0.6)",
             fontFamily: "'JetBrains Mono', monospace",
             color: "#334155",
-            padding: "clamp(22px, 4vw, 32px)",
+            padding: "clamp(10px, 3vw, 32px)",
           }}
         >
           {/* Condition selector - alignItems: center keeps every tab at its
@@ -144,7 +156,25 @@ export function WireframeCirclesTest({
                 type="button"
                 onClick={() => setCondition(c.key)}
                 style={{
-                  flex: 1, padding: "9px 6px", textAlign: "center", fontSize: "12.5px", fontWeight: 700, borderRadius: "7px",
+                  flex: 1,
+                  // "Distraction" alone is 11 characters, which in this
+                  // monospace font has a fixed minimum width a flex item
+                  // won't shrink below by default (flex items don't shrink
+                  // past their own content's min-content size unless told
+                  // to) - three tabs' worth of that minimum overflowed the
+                  // card at the smallest common phone width (320px), the
+                  // same way the panels below did. minWidth:0 removes that
+                  // floor so the three tabs genuinely share the row evenly;
+                  // overflowWrap:"break-word" (not "anywhere") only then
+                  // breaks the word as a last resort if the space that
+                  // leaves is still too narrow to wrap normally - "anywhere"
+                  // was tried first and, because it also feeds into the
+                  // browser's flex-sizing math rather than just the visual
+                  // wrap, it broke "Distraction" mid-word even at 375px
+                  // where plain word-wrapping already fit fine.
+                  minWidth: 0,
+                  overflowWrap: "break-word",
+                  padding: "9px clamp(3px, 1.5vw, 6px)", textAlign: "center", fontSize: "clamp(10px, 3vw, 12.5px)", fontWeight: 700, borderRadius: "7px",
                   cursor: "pointer", transition: "all 0.2s ease",
                   display: "flex", justifyContent: "center", alignItems: "center",
                   background: condition === c.key ? "#fff" : "transparent",
@@ -159,7 +189,7 @@ export function WireframeCirclesTest({
             ))}
           </div>
 
-          <div style={{ display: "flex", justifyContent: "center", gap: "clamp(6px, 2.4vw, 20px)" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "16px", columnGap: "clamp(3px, 1.2vw, 20px)" }}>
             {panels.map((panel, i) => (
               <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <div style={{ height: "30px", display: "flex", alignItems: "flex-end", marginBottom: "10px" }}>

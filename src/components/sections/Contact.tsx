@@ -387,12 +387,19 @@ export function Contact() {
 
         /* ── Send Message button ──
            Adapted from a reference "flying letters" interactive button.
-           Two changes from the original:
+           Changes from the original:
            1. Colour: the reference is a LIGHT button (near-white surface,
               black text implied, pink accent) - inverted here to the site's
-              own dark card surface with white text, and the accent swapped
-              to the site's signature green (#00DE51) throughout (the border
-              sweep, the letter-wave colour flash, the edge highlight).
+              own dark card surface with white text. The resting border and
+              outer glow were originally tinted green (#00DE51) to give this,
+              the primary CTA, more visual weight than the secondary sidebar
+              button - reverted on request, since every other bordered
+              surface on the site (nav rail, tag pills, secondary buttons)
+              uses a neutral white/black ring at rest and only shows green as
+              an active/hover accent, so the permanent green ring here read
+              as inconsistent rather than intentional. Letter-wave flash and
+              "Sent" checkmark keep their green flash on interaction/success,
+              same as the rest of the site's green-on-interaction language.
            2. Trigger: the reference uses CSS :focus to fire the "Sent"
               checkmark + plane-takeoff animation, which is really standing
               in for "the form was submitted" rather than actual keyboard
@@ -414,8 +421,7 @@ export function Contact() {
           text-shadow: 0 1px 2px rgba(0,0,0,0.45);
           border: none;
           box-shadow: 0 0.5px 0.5px 1px rgba(255,255,255,0.12),
-            0 10px 20px rgba(0,0,0,0.35), 0 4px 5px 0px rgba(0,0,0,0.15),
-            0 0 28px rgba(0,222,81,0.22);
+            0 10px 20px rgba(0,0,0,0.35), 0 4px 5px 0px rgba(0,0,0,0.15);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -447,13 +453,11 @@ export function Contact() {
           inset: 0;
           border-radius: var(--radius);
           border: 2.5px solid transparent;
-          /* Resting border was a faint white gradient, which made this -
-             the primary CTA at the bottom of the funnel - read as quieter
-             than the secondary sidebar button at squint distance. Green at
-             rest keeps the dark surface and the whole flying-letters
-             animation intact while letting the button claim primacy. */
+          /* Neutral white bevel, matching the resting border/ring on every
+             other bordered surface on the site (nav rail, tag pills, the
+             secondary "Send another message" button). */
           background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
-            linear-gradient(to bottom, rgba(0,222,81,0.85), rgba(0,222,81,0.28)) border-box;
+            linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.08)) border-box;
           z-index: 0;
           transition: all 0.4s ease;
         }
