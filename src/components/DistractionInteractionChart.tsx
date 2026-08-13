@@ -59,7 +59,8 @@ export function DistractionInteractionChart() {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "22px" }}>
-          <h4 style={{ fontSize: "20px", fontWeight: 700, color: "#fff", marginBottom: "8px" }}>
+          {/* 16px to sit under the 17px h3 tier - see PhoneFrame.tsx */}
+          <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "8px" }}>
             Predicted time on task
           </h4>
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)" }}>

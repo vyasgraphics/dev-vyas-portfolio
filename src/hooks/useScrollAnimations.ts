@@ -471,51 +471,18 @@ export function useScrollAnimations() {
             cleanups.push(() => anchors.forEach((a) => a.removeEventListener("click", onAnchorClick)));
         }
 
-        /* ---------------- Mobile work cards fade-in (mobile only, < 992px) ---- */
-        if (window.innerWidth < 992) {
-            works.forEach((work) => {
-                const t = ScrollTrigger.create({
-                    trigger: work,
-                    start: "top 85%",
-                    once: true,
-                    onEnter: () => {
-                        // The 700ms fadeUp (see styles.css) is designed for
-                        // organic scroll-discovery - meeting a card for the
-                        // first time as you scroll down the page. A "Back
-                        // to Work" restoration is the opposite situation:
-                        // the user already knows this card, they're being
-                        // deliberately returned to it, and the button-to-
-                        // section scroll animation they just watched is
-                        // supposed to be the payoff - making them then wait
-                        // out another ~700ms slide-up-from-below on arrival
-                        // reads as extra lag stacked on top of a jump that
-                        // already felt complete. Restoration sets the same
-                        // suppression window BackLink/useUrlHashSync already
-                        // use elsewhere for "a deliberate landing is under
-                        // way" - if this card's reveal happens to fire
-                        // inside that window, skip the transition entirely
-                        // so it's just there, instantly, matching how the
-                        // scroll itself already landed. Ordinary scrolling
-                        // never sets this flag, so the fadeUp still plays
-                        // normally for every card met by exploring the page.
-                        const w = window as unknown as { __suppressHashSyncUntil?: number };
-                        const isRestoring = !!w.__suppressHashSyncUntil && Date.now() < w.__suppressHashSyncUntil;
-                        if (isRestoring) {
-                            work.classList.add("no-entrance-anim");
-                        }
-                        work.classList.add("in-view");
-                        if (isRestoring) {
-                            requestAnimationFrame(() => {
-                                requestAnimationFrame(() => {
-                                    work.classList.remove("no-entrance-anim");
-                                });
-                            });
-                        }
-                    },
-                });
-                triggers.push(t);
-            });
-        }
+        /* ---------------- Mobile work cards ----------------------------------
+           Removed. This block added .in-view once per card with `once:true`
+           and no onLeaveBack, so the mobile reveal played a single time and
+           never reversed - the only section on mobile that was not
+           scroll-linked. Work.tsx separately ran an IntersectionObserver
+           setting the same class, so two one-way mechanisms were driving one
+           animation. useSectionMaterialize now scrubs these cards exactly
+           like every other section, which is bidirectional by construction
+           and needs no back-nav restoration special-case: a scrubbed trigger
+           derives its state from scroll position, so arriving at a card from
+           "Back to Work" simply renders it at the position it belongs in
+           rather than replaying a timed entrance. */
 
         /* ---------------- Flip Animation (gsap-anime-2) ---------------- */
         const flipContainer = document.querySelector(".gsap-anime-2");

@@ -56,7 +56,14 @@ export function WireframeIntro({
         >
           {badge}
         </span>
-        <h4 style={{ fontSize: "19px", fontWeight: 700, color: "#fff" }}>{title}</h4>
+        {/* 16px, not the 19px this was: this is an h4 sitting under the 17px
+            h3 process steps, so at 19px the deeper level was the larger one.
+            16px is the only slot that works: it clears the 14.5px paragraph
+            directly below (15px was tried and left a half-pixel step, which
+            is no hierarchy at all) while staying under the 17px h3. Every h4
+            component on the case studies uses this value, so the pages read
+            on one scale: 28 / 22 / 17 / 16 / body. */}
+        <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff" }}>{title}</h4>
       </div>
       <p style={{ fontSize: "14.5px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", marginBottom: rationale ? "14px" : 0 }}>
         {description}

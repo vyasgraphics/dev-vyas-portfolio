@@ -67,7 +67,8 @@ export function PersonaCard({ persona }: { persona: Persona }) {
             <img src={persona.avatar} alt={`${persona.name} illustrated portrait`} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
           </div>
           <div>
-            <h4 style={{ fontSize: "20px", fontWeight: 700, color: "#fff", marginBottom: "6px" }}>
+            {/* 16px to sit under the 17px h3 tier - see PhoneFrame.tsx */}
+            <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "6px" }}>
               {persona.name}
             </h4>
             <span

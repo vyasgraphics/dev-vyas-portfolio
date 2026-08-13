@@ -4,7 +4,10 @@ export function ClaimsTable() {
   return (
     <div>
       <div style={{ textAlign: "center", marginBottom: "24px" }}>
-        <h4 style={{ fontSize: "22px", fontWeight: 700, color: "#00DE51", marginBottom: "8px" }}>Design Rationale: Claims Analysis</h4>
+        {/* 16px to sit under the 17px h3 tier - see PhoneFrame.tsx. This was
+          22px, exactly tied with the section h2, so the deepest heading on
+          the page was rendering as large as the section it sat inside. */}
+      <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#00DE51", marginBottom: "8px" }}>Design Rationale: Claims Analysis</h4>
         <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)", maxWidth: "520px", margin: "0 auto" }}>
           Evaluating the psychological trade-offs of our key features (Method: Carroll &amp; Rosson).
         </p>

@@ -3,42 +3,30 @@
 import { works } from "@/data/works";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
 
+// Mobile card entrances are no longer handled here. This used to run its
+// own IntersectionObserver adding .in-view once per card and never
+// removing it, which meant the reveal played a single time and did not
+// reverse on scroll-back - the one section on mobile that was not
+// scroll-linked. useSectionMaterialize now scrubs these cards the same
+// way it scrubs every other section, on both desktop and mobile, so the
+// observer here (and the duplicate `once:true` ScrollTrigger that also
+// set .in-view in useScrollAnimations) have both been removed.
 export function Work() {
-    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-    // Desktop already gets an elaborate scroll-driven card-swap animation
-    // (native to the template, CSS-scoped to min-width:992px). Mobile drops
-    // that entirely and the cards just sat there with zero motion - so give
-    // mobile its own equivalent: a simple staggered fade+slide-up as each
-    // card scrolls into view, revealed once and left alone afterwards.
-    useEffect(() => {
-        if (typeof window === "undefined" || window.innerWidth >= 992) return;
-
-        const items = itemRefs.current.filter((el): el is HTMLDivElement => el !== null);
-        if (!items.length) return;
-
-        const io = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("in-view");
-                        io.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
-        );
-        items.forEach((el) => io.observe(el));
-        return () => io.disconnect();
-    }, []);
-
     return (
         <div id="work" className="section-work flat-spacing">
-            <h2 className="sect-tag text-caption fw-medium">
+            {/* The eyebrow was marked up as the section's h2 and there was no
+                s-title at all, so the most important section on the site had
+                no descriptive heading - and the h2 it did claim rendered at
+                12px, smaller than body text. Every other section here uses
+                div.sect-tag + h2.s-title; this now matches them. */}
+            <div className="sect-tag text-caption fw-medium effectFade fadeUp no-div">
                 <i className="icon icon-high-light" />
                 Selected Work
+            </div>
+            <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
+                What I have built <br className="d-none d-lg-block" />
+                and what it changed
             </h2>
             <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem", maxWidth: "640px" }}>
                 Three projects, three sides of how I work: a research study that measured a real cost, a product designed end to end, and four years of brand work shipped to deadline. Start anywhere.
@@ -49,7 +37,6 @@ export function Work() {
                         className="sticky-item"
                         key={w.slug}
                         id={`work-item-${w.slug}`}
-                        ref={(el) => { itemRefs.current[i] = el; }}
                     >
                         <div className="wg-work">
                             <div className="work-image">

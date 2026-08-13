@@ -57,31 +57,24 @@ export function useSectionMaterialize() {
 
         const sections = document.querySelectorAll<HTMLElement>(MATERIALIZE_SELECTOR);
 
-        // Work materialize is desktop-only (matches the min-width:992px
-        // scope of .wg-work .wrap's own position:fixed rule). Below that,
-        // .wrap isn't fixed and mobile Work already has its own dedicated
-        // entrance - a single IntersectionObserver fade-up per card (see
-        // Work.tsx) - so adding this here would just be a second,
-        // competing animation on the same elements for no benefit.
-        const isDesktop = window.matchMedia("(min-width: 992px)").matches;
-        // The mobile branch needs an empty, iterable stand-in with the same
-        // shape as a NodeList (.length, .forEach) so the code below doesn't
-        // need two code paths - document.querySelectorAll("") looks like
-        // that stand-in but is not one: an empty string is not a valid
-        // selector, and per the Selectors API spec every browser throws a
-        // SyntaxError for it, synchronously, uncaught, on every single
-        // phone-width visit. That crashed hydration outright rather than
-        // just skipping the animation - confirmed via the exact stack this
-        // threw in production ("Failed to execute 'querySelectorAll' ...
-        // The provided selector is empty") and reproduced by resizing to a
-        // mobile viewport. A plain array has the same .length/.forEach
-        // shape and is a real empty collection rather than an invalid call.
-        const workHeader: HTMLElement[] = isDesktop
-            ? Array.from(document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-desc"))
-            : [];
-        const workCards: HTMLElement[] = isDesktop
-            ? Array.from(document.querySelectorAll<HTMLElement>("#work .sticky-item"))
-            : [];
+        // Work materialize now runs on mobile too. It was originally
+        // desktop-only because `filter` on an ancestor of a position:fixed
+        // element gives it a new containing block, and .wg-work .wrap is
+        // fixed - but that rule is itself scoped to min-width:992px, so
+        // below that there is no fixed element to break. Mobile previously
+        // had a separate one-way fade-up instead (an IntersectionObserver
+        // in Work.tsx plus a `once:true` ScrollTrigger in
+        // useScrollAnimations, both adding the same .in-view class); that
+        // played once, never reversed, and was the only section on mobile
+        // not scroll-linked, which is exactly what read as "not smooth,
+        // not both directions" next to every other section's scrub. Both
+        // one-way mechanisms are gone and this scrubbed one replaces them.
+        const workHeader = Array.from(
+            document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-desc")
+        );
+        const workCards = Array.from(
+            document.querySelectorAll<HTMLElement>("#work .sticky-item")
+        );
         if (!sections.length && !workHeader.length && !workCards.length) return;
 
         const triggers: ScrollTrigger[] = [];

@@ -70,7 +70,8 @@ export function ScenarioCard({ scenario }: { scenario: Scenario }) {
           {scenario.letter}
         </div>
         <div>
-          <h4 style={{ fontSize: "19px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{scenario.title}</h4>
+          {/* 16px to sit under the 17px h3 tier - see PhoneFrame.tsx */}
+          <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{scenario.title}</h4>
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>{scenario.subtitle}</p>
         </div>
       </div>

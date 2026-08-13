@@ -1,7 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { isDeviceTiltEnabled, subscribeDeviceTiltState, toggleDeviceTilt } from "@/hooks/useDeviceTilt";
+
+function subscribeNever() {
+  return () => {};
+}
+
+// Touch-primary is only known client-side (matchMedia isn't available
+// during SSR), and doesn't change over the component's lifetime, so this
+// reads it via useSyncExternalStore rather than setState-in-effect - React
+// settles the value on hydration without an extra cascading render.
+function useTouchPrimary() {
+  return useSyncExternalStore(
+    subscribeNever,
+    () => window.matchMedia("(hover: none) and (pointer: coarse)").matches,
+    () => false
+  );
+}
 
 // Same on/off control as the inline TiltPermissionPrompt banner up near
 // the first persona card, just always reachable - stacked directly above
@@ -10,18 +26,10 @@ import { isDeviceTiltEnabled, subscribeDeviceTiltState, toggleDeviceTilt } from 
 // useful the moment you land on the page, not just after scrolling away
 // from the top.
 export function FloatingTiltToggle() {
-  const [visible, setVisible] = useState(false);
-  const [enabled, setEnabled] = useState(false);
+  const visible = useTouchPrimary();
+  const enabled = useSyncExternalStore(subscribeDeviceTiltState, isDeviceTiltEnabled, () => false);
   const [busy, setBusy] = useState(false);
   const [denied, setDenied] = useState(false);
-
-  useEffect(() => {
-    const isTouchPrimary = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-    if (!isTouchPrimary) return;
-    setVisible(true);
-    setEnabled(isDeviceTiltEnabled());
-    return subscribeDeviceTiltState(setEnabled);
-  }, []);
 
   if (!visible) return null;
 

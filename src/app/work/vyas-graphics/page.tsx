@@ -256,9 +256,10 @@ export default function VyasGraphicsWorkPage() {
             The scope: 20+ brand identities, four animated logo reveals, and a full ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
-            Vyas Graphics is my own design practice, running since 2020. Six years of self-directed brand and motion
-            work: identities built from scratch, sports campaigns run like real client accounts, and every piece
-            shipped to a deadline nobody was enforcing but me.
+            Vyas Graphics is my own design practice, running since 2020, alongside the four years of commercial
+            UX work covered elsewhere on this site - different discipline, overlapping timeline. Six years of
+            self-directed brand and motion work: identities built from scratch, sports campaigns run like real
+            client accounts, and every piece shipped to a deadline nobody was enforcing but me.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "Sports Media"].map((t) => (
