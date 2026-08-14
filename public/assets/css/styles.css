@@ -26,9 +26,14 @@
         * Footer
 
  ------------------------------------------------------------------------------ */
-/* Tomorrow: used only by the homepage's welcome-reveal title/subtitle
-   (.vg-welcome-title / .vg-welcome-subtitle in WelcomeReveal.tsx). Was
-   loaded via a runtime @import from Google Fonts' CDN - which turned out
+/* Tomorrow: CURRENTLY UNUSED. It was self-hosted for the old welcome-reveal
+   title/subtitle, and that component was deleted in 49934e5; the welcome
+   screen that replaced it (.vg-welcome-*, at the end of this file) is set in
+   EB Garamond and Apfel Grotezk instead, so nothing on the site references
+   this family any more. Left in place rather than deleted because an unused
+   @font-face costs nothing at runtime - browsers only fetch a font file once
+   something actually renders in it - and the history below is worth keeping.
+   Was loaded via a runtime @import from Google Fonts' CDN - which turned out
    not to render for the person actually using the site, almost certainly
    because their browser (Brave, visible in their own screenshots) blocks
    third-party font requests by default under its Shields feature. Fonts.
@@ -10123,4 +10128,195 @@ html, body {
 @media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
   .sidebar-tools.pst-v1 { transition: none; transform: none; }
   .sidebar-tools.pst-v1.vg-tools-past-hero { transform: none; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Welcome screen (homepage only)
+   New component, so these rules live here and ONLY here - there is no
+   .vg-welcome anything in public/assets/scss/, and nothing to mirror.
+   See CLAUDE.md on why that exception exists for vg- prefixed components.
+   ══════════════════════════════════════════════════════════ */
+.vg-welcome {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 520px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Matched to .dark-v3.dark-mode .body-background rather than to --dark
+     (#0F0F0F), which is the <body> colour and half a shade lighter. The
+     theme is locked to dark-v3, and an approximate match here shows up as a
+     visible horizontal seam where this screen meets the hero. */
+  background: #0A0A0A;
+}
+
+.vg-welcome-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.vg-welcome-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* Vertical only. A radial "spotlight" behind the copy was the obvious
+     first move and looked wrong in practice: its falloff crossed the
+     terrain's own bright crests at an angle, so instead of reading as
+     lighting it read as a dark ellipse laid over the picture, with a
+     visible edge. The copy does not need it either - white at 72-100% over
+     #0A0A0A clears 4.5:1 by a wide margin, and the middle of the mesh is
+     the flattest, faintest part of it by construction (the displacement is
+     scaled by sin(x), which is zero on the centre line). This gradient is
+     doing a different job: lifting the "Scroll down" cue off the brightest
+     part of the terrain, and taking the hard edge off the top. */
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.45) 0%,
+    rgba(10, 10, 10, 0) 24%,
+    rgba(10, 10, 10, 0) 62%,
+    rgba(10, 10, 10, 0.55) 84%,
+    rgba(10, 10, 10, 0.88) 100%
+  );
+}
+
+.vg-welcome-inner {
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.vg-welcome-eyebrow {
+  margin: 0 0 clamp(16px, 2.6vw, 26px);
+  font-family: "Inter";
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.vg-welcome-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sized and weighted on the classes, never on the tags - the two lines are
+   spans inside a <p> precisely so the hero below keeps the page's only <h1>,
+   and a rule tied to a tag here would break the moment that changes. */
+.vg-welcome-title-lead {
+  font-family: "EB Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(26px, 4.6vw, 52px);
+  line-height: 1.14;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.vg-welcome-title-main {
+  font-family: "Apfel Grotezk", "Inter", sans-serif;
+  font-weight: 700;
+  font-size: clamp(32px, 6.4vw, 72px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+.vg-welcome-sub {
+  margin: clamp(18px, 2.8vw, 28px) auto 0;
+  max-width: 48ch;
+  font-family: "Inter";
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* justify-content/align-items rather than text-align: buttons are
+   display:inline-flex site-wide, where text-align is a no-op (CLAUDE.md). */
+/* Centred via auto margins against left:0/right:0, NOT translateX(-50%).
+   .vg-tactile (the sitewide press-feedback class this button opts into)
+   sets `transform: scale()` on :hover and :active, and transform is a
+   single property - the scale REPLACES the centring translate rather than
+   composing with it. The visible result was the button jumping half its own
+   width to the right the instant it was pressed, which moved it out from
+   under the cursor before mouseup: pointerdown and mousedown landed on the
+   button, mouseup landed on the section behind it, and the browser then
+   fired `click` on their common ancestor instead of the button, so nothing
+   happened. Caught by tracing the retargeted click event, not by looking -
+   the jump is too fast to see. Same failure the note at the .vg-tactile
+   definition describes: only ever one transform in play at a time. */
+.vg-welcome-scroll {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin-inline: auto;
+  bottom: clamp(22px, 4.5vh, 44px);
+  z-index: 3;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: "Inter";
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.3s var(--ease-hover);
+}
+
+.vg-welcome-scroll:hover,
+.vg-welcome-scroll:focus-visible {
+  color: var(--primary);
+}
+
+.vg-welcome-scroll-arrow {
+  display: block;
+  animation: vg-welcome-nudge 2.2s ease-in-out infinite;
+}
+
+@keyframes vg-welcome-nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.65; }
+  50% { transform: translateY(5px); opacity: 1; }
+}
+
+@media (max-width: 575.98px) {
+  .vg-welcome-inner { padding: 0 20px; }
+  .vg-welcome-sub { max-width: 34ch; }
+}
+
+/* Fixed desktop chrome (nav rail, profile card, header clock) yields the
+   first screen to the welcome copy, then fades back in as it scrolls away.
+   The two custom properties are written by useWelcomeScroll; the fallbacks
+   are what applies on every other page and with reduced motion, i.e. fully
+   visible and clickable. Desktop only - below 992px .sidebar-user is in
+   normal flow underneath this screen, so there is nothing to fade. */
+@media (min-width: 992px) {
+  .vg-chrome {
+    opacity: var(--vg-chrome-opacity, 1);
+    pointer-events: var(--vg-chrome-pe, auto);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-welcome-scroll-arrow { animation: none; }
+  .vg-chrome { opacity: 1; pointer-events: auto; }
 }

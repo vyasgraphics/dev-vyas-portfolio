@@ -7,6 +7,7 @@ import { DesktopSidebar } from "./DesktopSidebar";
 import { HeaderClock } from "./HeaderClock";
 import { UserSidebar } from "./UserSidebar";
 import { Preloader } from "./Preloader";
+import { WelcomeScreen } from "./WelcomeScreen";
 import { Intro } from "./sections/Intro";
 import { Organisations } from "./sections/Organisations";
 import { About } from "./sections/About";
@@ -20,6 +21,7 @@ import { Contact } from "./sections/Contact";
 import { Footer } from "./sections/Footer";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
 import { useSectionMaterialize } from "@/hooks/useSectionMaterialize";
+import { useWelcomeScroll } from "@/hooks/useWelcomeScroll";
 import { useStaggerReveal } from "@/hooks/useStaggerReveal";
 import { useHeroLoadSequence } from "@/hooks/useHeroLoadSequence";
 import { useClock } from "@/hooks/useClock";
@@ -45,6 +47,9 @@ export function HomeShell() {
     useHeadlineRotate();
     useScrollAnimations();
     useSectionMaterialize();
+    // Must stay after useScrollAnimations() - that is the single site where
+    // ScrollTrigger is registered, and this hook uses it without registering.
+    useWelcomeScroll();
     useStaggerReveal();
     useHeroLoadSequence();
     useUrlHashSync();
@@ -72,13 +77,19 @@ export function HomeShell() {
                 content, so this one is raised rather than lowering the
                 other (which would risk the fixed-element trapping the
                 comment above guards against). */}
-            <div style={{ position: "relative", zIndex: 200 }}>
+            {/* .vg-chrome (both wrappers): lets useWelcomeScroll fade the
+                fixed desktop chrome out while the welcome screen owns the
+                viewport, via a CSS custom property rather than an inline
+                style - see that hook for why the distinction matters here.
+                Desktop-only in CSS; below 992px these stay untouched. */}
+            <div className="vg-chrome" style={{ position: "relative", zIndex: 200 }}>
                 <MobileMenu />
                 <DesktopSidebar positionClass="pst-v1" />
             </div>
 
             <main id="wrapper">
-                <div style={{ position: "relative", zIndex: 100 }}>
+                <WelcomeScreen />
+                <div className="vg-chrome" style={{ position: "relative", zIndex: 100 }}>
                     <HeaderClock variant="v1" />
                     <UserSidebar variant="v1" />
                 </div>

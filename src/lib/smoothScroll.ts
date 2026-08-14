@@ -181,6 +181,26 @@ export function smoothScrollTo(
   }
 }
 
+// Same contract as smoothScrollTo, for the cases where the destination is a
+// scroll position rather than an element - currently the welcome screen's
+// "Scroll down" control, which aims at that screen's own bottom edge rather
+// than at any element that exists in the document. Routed through Lenis for
+// the same reason everything else in this file is: a raw window.scrollTo here
+// would put a second scroll engine on the page and produce the stutter
+// described at the top.
+export function smoothScrollToY(y: number, options?: { duration?: number }) {
+  suppressPassiveHashSync((options?.duration ?? 1.2) * 1000 + 500);
+  const lenis = getLenis();
+  if (lenis) {
+    lenis.scrollTo(y, { duration: options?.duration ?? 1.2, immediate: false });
+  } else {
+    window.scrollTo({
+      top: y,
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+    });
+  }
+}
+
 export function smoothScrollToTop(options?: { duration?: number; immediate?: boolean }) {
   suppressPassiveHashSync(options?.immediate ? 800 : (options?.duration ?? 1.2) * 1000 + 500);
   const lenis = getLenis();
