@@ -265,6 +265,7 @@ export function useScrollAnimations() {
         let clickScrollTimer: ReturnType<typeof setTimeout> | null = null;
         const sidebar = document.querySelector(".sidebar-user");
         const works = document.querySelectorAll<HTMLElement>(".sticky-item");
+        const workSection = document.querySelector<HTMLElement>(".section-work");
         if (sidebar && works.length) {
             const firstWork = works[0];
             const firstWrap = firstWork.querySelector(".wrap");
@@ -276,6 +277,24 @@ export function useScrollAnimations() {
             let restoredAtTime = 0;
 
             const syncSidebarToScroll = () => {
+                // This entire mechanism is the desktop fixed-panel swap -
+                // .sidebar-user and .wg-work .wrap only take position:fixed
+                // from res(lg, min) up, and mobile has its own always-visible
+                // card design that never needs this. styles.css already
+                // carries a comment claiming a "window.innerWidth >= 992 gate
+                // in useScrollAnimations.ts" for exactly this reason, but no
+                // such gate actually existed here - .sidebar-user.active's
+                // hide-transform is scoped to desktop only in styles.css, but
+                // unscoped in the SCSS source (_section.scss), and the SCSS
+                // compiles in after styles.css in globals.scss's @use order,
+                // so at equal specificity it's the one that actually wins.
+                // Below 992px this function toggling "active" was doing
+                // nothing useful and risking exactly the hidden-card bug the
+                // stale comment thought was already prevented. Restoring the
+                // gate here rather than touching either stylesheet - the
+                // SCSS/CSS split for this one rule is a separate, pre-existing
+                // problem this task didn't touch.
+                if (window.innerWidth < 992) return;
                 // A click already set the correct end-state immediately (see
                 // onAnchorClick below) - don't let a scroll tick mid-jump
                 // undo that before the jump has actually settled.
@@ -291,6 +310,30 @@ export function useScrollAnimations() {
                     const isLastItem = matchedIndex === works.length - 1;
                     if (!isLastItem || rects[matchedIndex].bottom >= 68) {
                         matched = works[matchedIndex].querySelector(".wrap");
+                    }
+                }
+
+                // Card 1 used to wait for the same top<=132 pin line as every
+                // other card, but that line is where the FIRST item finishes
+                // scrolling in - reaching it took a further ~370px of scroll
+                // past the section heading, all of it with the profile card
+                // still showing. That gap is very likely why reviewers never
+                // registered the work cards as a thing to look at: nothing
+                // marked the section as "entered" until they were already a
+                // full screen deep into it. Cards 2 and 3 keep the pin-based
+                // trigger untouched - by then the pattern is established and
+                // the scroll-linked handoff is the point. This only pulls
+                // card 1's reveal earlier, to when the section heading has
+                // scrolled to the vertical middle of the viewport, which is
+                // the same "you've arrived" moment the section's own
+                // materialise-in animation uses.
+                if (matched === null && workSection) {
+                    const lastRect = rects[rects.length - 1];
+                    const sectionRect = workSection.getBoundingClientRect();
+                    const sectionArrived = sectionRect.top <= window.innerHeight * 0.5;
+                    const notPastSection = lastRect.bottom > 0;
+                    if (sectionArrived && notPastSection) {
+                        matched = firstWrap;
                     }
                 }
 

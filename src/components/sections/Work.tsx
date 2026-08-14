@@ -28,8 +28,20 @@ export function Work() {
                 What I have built <br className="d-none d-lg-block" />
                 and what it changed
             </h2>
-            <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem", maxWidth: "640px" }}>
+            <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "1rem", maxWidth: "640px" }}>
                 Three projects, three sides of how I work: a research study that measured a real cost, a product designed end to end, and four years of brand work shipped to deadline. Start anywhere.
+            </p>
+            {/* Desktop-only signpost. On this breakpoint each project's write-up
+                (title, summary, industry/platform/year/role, tags, CTA) renders
+                in the fixed card pinned to the left, in the exact slot the
+                profile card occupied for the whole page above this point - so
+                readers classify that region as static chrome and never look
+                back at it, and read the section as three captionless images.
+                Hidden below lg, where the same content sits inline under each
+                image and needs no pointer. */}
+            <p className="vg-work-hint d-none d-lg-flex" style={{ marginBottom: "2.5rem" }}>
+                <i className="icon icon-arrow-caret-left" aria-hidden="true" />
+                <span>Each project&apos;s details open in the card on the left as you scroll</span>
             </p>
             <div className="work-list element-sticky">
                 {works.map((w, i) => (
@@ -82,6 +94,32 @@ export function Work() {
                                     </div>
                                     <div className="content">
                                         <div className="content-top">
+                                            {/* Position indicator, moved up here from the
+                                                bottom row. Down there it was 12px low-opacity
+                                                text below the fold of a panel that clips its
+                                                own content on any viewport under 1440px wide,
+                                                so on a 1280 or 1366 laptop it was not small,
+                                                it was invisible. At the top it survives the
+                                                clip, and the filled segment gives the card
+                                                change something that reads in peripheral
+                                                vision while the eye is on the image. */}
+                                            <div className="vg-work-progress">
+                                                <span className="visually-hidden">
+                                                    Project {i + 1} of {works.length}
+                                                </span>
+                                                <span className="vg-work-progress-count" aria-hidden="true">
+                                                    <span className="vg-work-progress-now">{String(i + 1).padStart(2, "0")}</span>
+                                                    <span className="vg-work-progress-total">/ {String(works.length).padStart(2, "0")}</span>
+                                                </span>
+                                                <span className="vg-work-progress-track" aria-hidden="true">
+                                                    {works.map((seg, j) => (
+                                                        <span
+                                                            key={seg.slug}
+                                                            className={"vg-work-progress-seg" + (j === i ? " is-active" : "")}
+                                                        />
+                                                    ))}
+                                                </span>
+                                            </div>
                                             <div className="w-logo">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
@@ -146,10 +184,6 @@ export function Work() {
                                                     <span className="text text-body-3 letter-space--05 fw-medium">View project</span>
                                                     <span className="ic-wrap"><i className="icon icon-arrow-right-top" /></span>
                                                 </Link>
-                                                <p className="text-white-40">
-                                                    <span className="text-white-72">{String(i + 1).padStart(2, "0")}</span>
-                                                    {" "}/ {String(works.length).padStart(2, "0")}
-                                                </p>
                                             </div>
                                         </div>
                                     </div>

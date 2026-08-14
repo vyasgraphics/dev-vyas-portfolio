@@ -35,7 +35,30 @@
     }
 
     @include res(lg, min) {
-        max-width: 464px;
+        // Was max-width: 464px, a template-era value from when this strip
+        // sat in a much narrower column. Against the current column (884px
+        // at 1440, 1000px at the cap) it was using barely half the width
+        // and only one pill was ever fully clear of the edge fades, with
+        // three touching the box at all. Full width puts four fully clear
+        // and six on screen. Mobile already overrode this to 100% - this
+        // just brings desktop in line.
+        max-width: 100%;
+
+        // The fade is a percentage on the base rule, so it grew with the
+        // container: 18% of 884px is a 159px ramp, about a whole pill
+        // dissolved on each side, which is why widening alone still read
+        // as only two or three legible. A fixed length keeps the ramp the
+        // same regardless of how wide the column gets.
+        -webkit-mask-image: linear-gradient(90deg,
+            transparent 0,
+            black 56px,
+            black calc(100% - 56px),
+            transparent 100%);
+        mask-image: linear-gradient(90deg,
+            transparent 0,
+            black 56px,
+            black calc(100% - 56px),
+            transparent 100%);
     }
 }
 
@@ -304,7 +327,19 @@
             top: 16px;
             left: 16px;
             bottom: 16px;
-            max-width: 400px;
+            // Same width as .sidebar-user (352/368). Both are pinned to
+            // this one fixed slot and cross-fade into each other, and the
+            // content column's left edge is set from this single shared
+            // footprint - if they differ, whichever is narrower leaves a
+            // permanent dead strip beside it, which is the asymmetric gap
+            // the band was introduced to remove.
+            //
+            // This card's content is taller than the profile card's, so
+            // it is the one that has to earn the shared width: its
+            // internal spacing is tightened at desktop (see the spacing
+            // block in styles.css) to bring it under the card's height
+            // cap rather than widening the slot for both.
+            max-width: 352px;
             width: 100%;
             overflow: hidden;
             display: flex;
@@ -335,7 +370,7 @@
 
     @include res(xxl, min) {
         .wrap {
-            max-width: 480px;
+            max-width: 368px;
         }
     }
 
@@ -385,11 +420,17 @@
         }
     }
 
+    // aspect-ratio removed. It locked the panel to the profile card's
+    // 0.5467 portrait shape, which at 400px wide capped it at 732px even
+    // where the viewport allowed 852px - the whole 120px shortfall came
+    // out of the bottom of the card, taking the CTA row with it. The two
+    // cards no longer share a silhouette anyway (the profile card is
+    // 352px wide here), and matching the shape of the chrome was never
+    // worth clipping the content. Falls through to the height/max-height
+    // pair in res(lg, min) above, i.e. the sizing xxl already used.
     @include res(lg, between, xxl) {
         .work-content {
             max-height: calc(100vh - 48px);
-            aspect-ratio: 0.546728972;
-            height: unset;
         }
     }
 }

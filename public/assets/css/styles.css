@@ -1518,24 +1518,80 @@ h6,
   width: 1176px;
   max-width: 100%;
 }
+/* Scoped to .main-content so this only moves the page's own scrolling column,
+   not any other .container. Replaces a
+   margin-left:calc((100vw - 1176px) / 2 + 218px) shift that used to sit here
+   at 1600px up. That was an earlier attempt at this same asymmetric-gap
+   problem, and its arithmetic was pinned to a .sidebar-user that was
+   max-width:480px at the time - the profile card is 352/368px now, so the
+   218px it shifted by no longer corresponds to anything on the page. It also
+   only re-centred the same fixed 1176px box rather than letting the column
+   use the space, so the gap moved but never closed. Superseded by the band
+   below; keeping both would leave two mechanisms fighting over the same
+   margin.
+
+   The gap being fixed: .container is a fixed 1176px box that re-centres
+   itself as the window grows, while .sidebar-user and .sidebar-tools are
+   position:fixed to the viewport edges and do not move with it. So the space
+   between the fixed furniture and the content grew with every extra pixel of
+   window - measured at 1920px wide, 362px spare on the left of the column and
+   334px on the right, on every section.
+
+   Replaced with an explicit band: padding-left clears the two cards that
+   share the fixed left slot (a single shared width) plus a 56px gap,
+   padding-right clears the 56px tools rail plus the same 56px gap. Because
+   both edges of the band sit 56px inside their respective rail, centring the
+   column inside the band keeps its gaps equal to the card and to the rail at
+   every width, whether or not the 1000px cap is binding. The column then
+   fills that band, capped and centred by .wrap-container.
+
+   Starts at 1200px. At 1366px there was still 177px spare on the left against
+   53px on the right, and at 1200px the column's right edge actually ran 26px
+   PAST the tools rail's left edge - the rail is fixed and paints over the
+   column, so body text was sliding under the icons. The band fixes both, and
+   costs 1200px about 44px of column width to do it. Below 1200 the column is
+   a plain percentage with its own padding-right and no overlap, so it is left
+   alone. */
+@media (min-width: 1200px) {
+  .main-content .container {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    /* 16px card inset + 352px card + 56px gap. The card steps 352 -> 368 at
+       1440 and its inset 16 -> 48 at 1600, so this padding steps with it
+       below; each tier is just cardInset + cardWidth + 56. */
+    padding-left: 424px;
+    /* 56px tools rail + 56px gap */
+    padding-right: 112px;
+  }
+  /* The column is Bootstrap's col-lg-7/col-xl-8 pushed right by ms-auto,
+     which was how the old layout carved a left margin for the profile card
+     out of a centred container. The band above now does that job, so the
+     column takes the full band and the percentage would only shrink it back
+     off-centre. */
+  .main-content .container > .row > [class*="col-"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+/* Card widens 352px -> 368px here (see .sidebar-user), so the band follows. */
+@media (min-width: 1440px) {
+  .main-content .container {
+    /* 16px card inset + 368px card + 56px gap */
+    padding-left: 440px;
+  }
+}
+/* Card inset grows 16px -> 48px at xxxl (see .sidebar-user), so the band's
+   left edge has to follow it or the gap silently widens by 32px. */
 @media (min-width: 1600px) {
-  /* At this breakpoint the two fixed sidebars flanking the page have
-     known, stable footprints: .sidebar-user (profile card) sits at
-     left:48px with max-width:480px, reserving 528px on the left;
-     .sidebar-tools (nav rail) sits at right:48px with a narrow ~45px
-     icon column, reserving about 93px on the right. Plain margin:auto
-     centres this container on the FULL viewport width, ignoring that
-     asymmetry entirely - on wide screens that puts the container about
-     218px left of where it would need to sit to actually centre within
-     the visible gap between the two sidebars, which is what produced
-     the mismatched double-gap effect (small-ish gap on the left,
-     noticeably larger one on the right, both feeling disconnected from
-     the content between them). This shifts the centring point right by
-     that same 218px to compensate, rather than centring on a viewport
-     width that doesn't reflect what's actually reserved on either side. */
-  .container {
-    margin-left: calc((100vw - 1176px) / 2 + 218px);
-    margin-right: auto;
+  .main-content .container {
+    /* 48px card inset + 368px card + 56px gap */
+    padding-left: 472px;
+    /* The tools rail moves right:16px -> right:48px at this same breakpoint,
+       so its reserve grows 56px -> 88px. Both paddings have to step together
+       or the column stops being centred between the two rails. */
+    padding-right: 144px;
   }
 }
 
@@ -4424,6 +4480,25 @@ button.animate-btn::after,
     padding: 0;
   }
 }
+/* Applies to EVERY section, not one of them - see the .container override
+   further down for why the gap exists and how the band is set. Overrides the
+   flat 708px above from 1200 up, and has to be declared after it: both are
+   (0,1,0) so the later one wins, and these two overlap between 1200 and 1599.
+
+   1000px is a deliberate ceiling, not the band width. Past roughly this the
+   column stops being a column and body copy runs to line lengths that are
+   measurably harder to read - widening Work alone to 1300px was already
+   called out as too large. Below the ceiling the column simply fills the
+   band; above it, margin-right:auto pairs with the inherited margin-left:auto
+   to centre the column in the band, so the leftover splits evenly instead of
+   pooling on one side and reading as the same lopsided gap this was meant to
+   fix. */
+@media (min-width: 1200px) {
+  .wrap-container {
+    max-width: 1000px;
+    margin-right: auto;
+  }
+}
 
 .main-content {
   pointer-events: none;
@@ -4711,18 +4786,25 @@ button.animate-btn::after,
     opacity: 0;
     visibility: hidden;
   }
+  /* Narrowed from 400/480. The card's height is derived from the portrait
+     aspect-ratio on its image, so width is the only lever on how tall it is:
+     at 400px it rendered 836px tall against a 900px viewport, i.e.
+     floor-to-ceiling, which is what made it read as a backdrop panel rather
+     than a card. 352/400 lands it around 650/730 so page background shows
+     above and below it. Keep in step with .wg-work .wrap, which shares this
+     exact fixed slot. */
   .sidebar-user {
     position: fixed;
     top: 32px;
     left: 16px;
     bottom: 32px;
     width: 100%;
-    max-width: 400px;
+    max-width: 352px;
   }
 }
 @media (min-width: 1440px) {
   .sidebar-user {
-    max-width: 480px;
+    max-width: 368px;
   }
 }
 @media (min-width: 1600px) {
@@ -5096,7 +5178,6 @@ button.animate-btn::after,
     transition: all 0.3s ease;
   }
 }
-
 .element-sticky {
   display: grid;
 }
@@ -5622,7 +5703,28 @@ button.animate-btn::after,
 }
 @media (min-width: 992px) {
   .infiniteSlide-brand {
-    max-width: 464px;
+    /* Was max-width: 464px, a template-era value from when this strip sat in
+       a much narrower column. Against the current column (884px at 1440,
+       1000px at the cap) it was using barely half the width and only one pill
+       was ever fully clear of the edge fades, with three touching the box at
+       all. Full width puts four fully clear and six on screen. Mobile already
+       overrode this to 100% - this just brings desktop in line. */
+    max-width: 100%;
+    /* The fade is a percentage on the base rule, so it grew with the
+       container: 18% of 884px is a 159px ramp, about a whole pill dissolved
+       on each side, which is why widening alone still read as only two or
+       three legible. A fixed length keeps the ramp the same regardless of how
+       wide the column gets. */
+    -webkit-mask-image: linear-gradient(90deg,
+      transparent 0,
+      black 56px,
+      black calc(100% - 56px),
+      transparent 100%);
+    mask-image: linear-gradient(90deg,
+      transparent 0,
+      black 56px,
+      black calc(100% - 56px),
+      transparent 100%);
   }
 }
 
@@ -5879,7 +5981,17 @@ button.animate-btn::after,
     top: 16px;
     left: 16px;
     bottom: 16px;
-    max-width: 400px;
+    /* Same width as .sidebar-user (352/368). Both are pinned to this one
+       fixed slot and cross-fade into each other, and the content column's
+       left edge is set from this single shared footprint - if they differ,
+       whichever is narrower leaves a permanent dead strip beside it, which is
+       the asymmetric gap the band was introduced to remove.
+
+       This card's content is taller than the profile card's, so it is the one
+       that has to earn the shared width: its internal spacing is tightened at
+       desktop (see the spacing block further down) to bring it under the
+       card's height cap rather than widening the slot for both. */
+    max-width: 352px;
     width: 100%;
     overflow: hidden;
     display: flex;
@@ -5918,7 +6030,7 @@ button.animate-btn::after,
 }
 @media (min-width: 1440px) {
   .wg-work .wrap {
-    max-width: 480px;
+    max-width: 368px;
   }
 }
 @media (min-width: 1600px) {
@@ -6013,7 +6125,13 @@ button.animate-btn::after,
     display: block !important;
     width: 100%;
     height: auto;
-    aspect-ratio: 700 / 427 !important;
+    /* 16/9 rather than the asset's native 700/427 (1.64). Costs ~16px of card
+       height for about 8px cropped off each of top and bottom - the mockups
+       are centred in frame, so nothing meaningful leaves the crop. Part of
+       getting the card back inside one screen; see the progress-row note in
+       the max-width:991px spacing block. */
+    aspect-ratio: 16 / 9 !important;
+    object-fit: cover !important;
   }
   /* The 32px section margins and the 40px Year/Role gap (inherited from
      the tablet breakpoint above) were originally sized for the desktop
@@ -6071,11 +6189,17 @@ button.animate-btn::after,
 .wg-work {
   /*-- min, between, max --*/
 }
+/* aspect-ratio removed. It locked the panel to the profile card's 0.5467
+   portrait shape, which at 400px wide capped it at 732px even where the
+   viewport allowed 852px - the whole 120px shortfall came out of the bottom
+   of the card, taking the CTA row with it. The two cards no longer share a
+   silhouette anyway (the profile card is 352px wide here), and matching the
+   shape of the chrome was never worth clipping the content. Falls through to
+   the height:calc(100vh - 48px) / max-height:860px pair defined for 992px and
+   up, i.e. the same sizing 1440px and wider already used. */
 @media (min-width: 992px) and (max-width: 1439px) {
   .wg-work .work-content {
     max-height: calc(100vh - 48px);
-    aspect-ratio: 0.546728972;
-    height: unset;
   }
 }
 
@@ -7785,16 +7909,25 @@ button.animate-btn::after,
 /* NOTE: opacity/visibility are intentionally NOT forced here -
    the .active class (toggled by ScrollTrigger in useScrollAnimations)
    controls show/hide exactly as in the original template. */
+/* max-width is !important here, so it outranks the responsive 352/400 pair
+   defined for .sidebar-user earlier in this file and again in the SCSS. That
+   made both of those a silent no-op: the card measured 400px at every
+   desktop width, and the 1440px step never applied at all. The steps are
+   restated here, at this specificity, rather than dropped from the block -
+   the surrounding declarations are forced deliberately (see note above) and
+   thinning out just one of them invites the next edit to reintroduce the
+   same trap. Any future change to the card's width has to happen here too. */
 @media (min-width: 992px) {
   .sidebar-user {
     position: fixed !important;
     top: 32px !important; left: 16px !important; bottom: 32px !important;
-    width: 100% !important; max-width: 400px !important;
+    width: 100% !important; max-width: 352px !important;
   }
   .sidebar-user .wrap { overflow: hidden !important; }
   .sidebar-user::-webkit-scrollbar { display: none !important; }
   .sidebar-user { scrollbar-width: none !important; }
 }
+@media (min-width: 1440px) { .sidebar-user { max-width: 368px !important; } }
 @media (min-width: 1600px) { .sidebar-user { left: 48px !important; } }
 
 /* ── 7. Desktop hover states ── */
@@ -8105,6 +8238,144 @@ button.animate-btn::after,
   -webkit-backdrop-filter: blur(20px) !important;
 }
 
+/* ── Work card: keep the CTA row on screen ──
+   .work-content is height-capped to the viewport (and to a 0.5467 portrait
+   ratio below 1440px), but .content is taller than that cap on every common
+   laptop size: measured at 1280x900 the inner content needs 852px against a
+   732px box, and 1366x768 is worse. .content was the scroll container, so the
+   overflow fell off the bottom - which is exactly where "View project" and
+   the position counter lived. Nobody scrolls inside a card they have not
+   registered as scrollable, so on those machines the card had no visible CTA
+   at all. Scrolling .content-top instead pins .content-bottom to the foot of
+   the panel at every viewport height. min-height:0 is required - without it a
+   flex child refuses to shrink below its content and nothing scrolls. */
+@media (min-width: 992px) {
+  .wg-work .work-content .content {
+    overflow: hidden;
+  }
+  .wg-work .work-content .content-top {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  }
+  .wg-work .work-content .content-top::-webkit-scrollbar {
+    width: 3px;
+  }
+  .wg-work .work-content .content-top::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+  }
+  .wg-work .work-content .content-bottom {
+    flex: 0 0 auto;
+    position: relative;
+  }
+  /* Fade over the last strip of the scroll area. On a short viewport the
+     content still runs past the panel, and a hard cut directly above a
+     pinned CTA reads as a layout fault rather than as "there is more here". */
+  .wg-work .work-content .content-bottom::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 30px;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  }
+}
+
+/* ── Work card: position indicator ──
+   Sits at the top of .content-top rather than in the bottom row, so it is
+   above the clip line described in the block above. The filled segment is the
+   part that does the real work: it is the one element that visibly changes
+   between one card and the next, at a size that registers while the eye is on
+   the project image to the right. */
+.vg-work-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+/* On desktop this is lifted out of the flow into the empty space to the right
+   of the logo. In flow it cost ~40px of card height, which was the entire
+   remaining overflow - the indicator meant to stop content being clipped
+   would have been the reason the rest of it still was. Anchored to .content
+   rather than .content-top, so it holds its place when the text scrolls. */
+@media (min-width: 992px) {
+  .wg-work .work-content .vg-work-progress {
+    position: absolute;
+    top: 34px;
+    right: 32px;
+    width: 150px;
+    margin-bottom: 0;
+    z-index: 3;
+  }
+}
+.vg-work-progress-count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  flex: 0 0 auto;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.vg-work-progress-now {
+  color: #ffffff;
+}
+.vg-work-progress-total {
+  color: rgba(255, 255, 255, 0.5);
+}
+.vg-work-progress-track {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+}
+.vg-work-progress-seg {
+  flex: 1 1 auto;
+  height: 3px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.18);
+}
+.vg-work-progress-seg.is-active {
+  background-color: var(--primary);
+}
+
+/* ── Work section: pointer to the left-hand card ──
+   Desktop only. Below lg the same content sits inline under each image, so
+   there is nothing to point at and Bootstrap's d-none keeps this hidden. */
+.vg-work-hint {
+  align-items: center;
+  gap: 9px;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 7px 15px 7px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.vg-work-hint .icon {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--primary);
+  animation: vgWorkHintNudge 2.6s ease-in-out infinite;
+}
+@keyframes vgWorkHintNudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vg-work-hint .icon { animation: none; }
+}
+
 /* ── Animated text overlap fix (Hey I'm Dev/Designer/Researcher) ── */
 .sidebar-user .user-info .greeting {
   display: block !important;
@@ -8176,13 +8447,21 @@ button.animate-btn::after,
        20px - within-group separation
        32px - group boundary (narrative ends, metadata begins)
 
-     Same total card height to within a few px, so this does not push
-     content into the internal scroll that overflow-y:auto guards. */
+     The 32px boundary step and the 40px padding were later pulled in to 24
+     and 32. Measured at the card's shared 368px width, the content needed
+     891px against a card capped at 860px (and 852px on a 900px-tall window),
+     so the bottom of every card - tags, divider, "View project" - sat below
+     the fold with only an internal scrollbar to reveal it. The 4px scale and
+     the relationships it encodes are unchanged; every step just moved down
+     one rung, which buys back 60px and brings the tallest card to 831px so
+     it fits outright with no scroll. Widening the card instead was the
+     alternative, but the slot is shared with .sidebar-user and widening it
+     for both is what made the profile card dominate in the first place. */
   .wg-work .content {
-    padding: 40px !important;
+    padding: 32px !important;
   }
   .wg-work .w-logo {
-    margin-bottom: 32px !important;
+    margin-bottom: 24px !important;
   }
   .wg-work .w-title {
     font-size: clamp(22px, 2.1vw, 28px) !important;
@@ -8190,7 +8469,7 @@ button.animate-btn::after,
     margin-bottom: 12px !important;
   }
   .wg-work .w-desc {
-    margin-bottom: 32px !important;
+    margin-bottom: 24px !important;
     font-size: 16px !important;
     line-height: 1.6 !important;
     /* Clamp to 5 lines so every card's description takes the same space
@@ -8207,15 +8486,15 @@ button.animate-btn::after,
   .wg-work .w-highlight {
     grid-template-columns: 1fr 1fr !important;
     column-gap: 32px !important;
-    row-gap: 18px !important;
-    margin-bottom: 32px !important;
+    row-gap: 14px !important;
+    margin-bottom: 24px !important;
   }
   .wg-work .box-high {
     gap: 8px !important;
   }
   .wg-work .br-line {
-    margin-top: 32px !important;
-    margin-bottom: 32px !important;
+    margin-top: 24px !important;
+    margin-bottom: 24px !important;
   }
 
   /* ── Hierarchy by scale and contrast ──
@@ -8256,6 +8535,41 @@ button.animate-btn::after,
   }
 }
 
+/* ── Work card on short desktop windows ──
+   The card's height is calc(100vh - 48px) capped at 860px, so on a short
+   window it is the viewport, not the card, that runs out of room: the block
+   above brings the tallest card to 831px, which clears a 900px-tall window
+   (852px available) but not a 768px-tall one (720px available). The gap is
+   111px and no amount of margin-trimming alone closes it, so the description
+   clamp does most of the work here - 5 lines to 3 is 51px on its own, and
+   trimming the same steps one more rung finds the remaining 60px.
+
+   Dropping two lines of summary is a real content cost, but the alternative
+   on these windows is the tags, divider and "View project" sitting below a
+   fold with nothing but a thin scrollbar to say so - and a CTA nobody scrolls
+   to is worse than a summary that stops two lines early. Keyed on height
+   only, so a wide-but-short window gets it and a tall narrow one does not. */
+@media (min-width: 992px) and (max-height: 880px) {
+  .wg-work .content {
+    padding: 24px !important;
+  }
+  .wg-work .w-logo {
+    margin-bottom: 16px !important;
+  }
+  .wg-work .w-desc {
+    margin-bottom: 16px !important;
+    -webkit-line-clamp: 3 !important;
+  }
+  .wg-work .w-highlight {
+    row-gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+  .wg-work .br-line {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+  }
+}
+
 /* -- Work card hierarchy on mobile --
    The min-width:992px block above fixed an inverted type hierarchy on the
    work card: the metadata VALUES used .text-body-1 (20px), which made
@@ -8287,6 +8601,22 @@ button.animate-btn::after,
    does not reliably preserve source order across media-query boundaries,
    so an unscoped base rule can otherwise win despite appearing earlier. */
 @media (max-width: 991px) {
+  /* The one-viewport fit this block describes was lost again when the
+     01/03 progress row was added to the top of .content-top: 15px of row
+     plus a 24px margin put the tallest card back to 845px against an 812px
+     screen, so no card could be read without scrolling it. The row earns its
+     place (it is the only thing that says how many projects there are), so
+     the height comes back out of spacing rather than out of the row or out
+     of any text - nothing is clamped or hidden here. This trim plus the 16/9
+     image crop above returns roughly 56px, putting the tallest card near
+     789px. Values stay on the same scale the block already uses. */
+  .wg-work .vg-work-progress {
+    margin-bottom: 10px !important;
+  }
+  .wg-work .content {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+  }
   .wg-work .w-title {
     font-size: 21px !important;
     line-height: 1.3 !important;
@@ -8298,9 +8628,9 @@ button.animate-btn::after,
     margin-bottom: 14px !important;
   }
   .wg-work .w-highlight {
-    row-gap: 14px !important;
+    row-gap: 10px !important;
     column-gap: 14px !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 10px !important;
   }
   .wg-work .box-high {
     gap: 5px !important;
@@ -8327,9 +8657,26 @@ button.animate-btn::after,
   .wg-work .w-tag-list .tag span {
     font-size: 12px !important;
   }
+  /* 12px -> 8px as part of the same one-viewport trim as the block above.
+     Changed here rather than adding a second .wg-work .br-line rule earlier
+     in this file: this one is inside the same max-width:991px query and later
+     in source order, so at equal specificity it wins, and an earlier copy
+     would have been a silent no-op. */
   .wg-work .br-line {
-    margin-top: 12px !important;
-    margin-bottom: 12px !important;
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+/* Short phones. The trim above lands the tallest card at ~783px, which fits
+   the 812-844px screens most current handsets report but not a 740px Android
+   or a 667px SE. The remaining height comes off the image rather than the
+   copy - it is the one element that can lose pixels without losing
+   information, and the mockups sit centred in frame so a wider crop keeps the
+   subject. Keyed on height, so a short window gets it whatever its width. */
+@media (max-width: 991px) and (max-height: 800px) {
+  .wg-work .work-content .w-image .w-image-mobile-crop {
+    aspect-ratio: 2.2 / 1 !important;
   }
 }
 

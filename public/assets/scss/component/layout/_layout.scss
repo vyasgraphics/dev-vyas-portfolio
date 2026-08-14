@@ -202,6 +202,76 @@
     max-width: 100%;
 }
 
+// Scoped to .main-content so this only moves the page's own scrolling
+// column, not any other .container on the page.
+//
+// The gap this fixes: .container is a fixed 1176px box that re-centres
+// itself as the window grows, while .sidebar-user and .sidebar-tools are
+// position:fixed to the viewport edges and do not move with it. So the
+// space between the fixed furniture and the content grew with every extra
+// pixel of window - measured at 1920px wide, 362px spare on the left of
+// the column and 334px on the right, on every section.
+//
+// Replaced with an explicit band: padding-left clears the work card (the
+// two cards that share the fixed left slot, now a single shared width) plus
+// a 56px gap,
+// padding-right clears the 56px tools rail plus the same 56px gap. The
+// column then fills that band, capped and centred by .wrap-container.
+// Starts at xl rather than xxl. At 1366px there was still 177px spare on
+// the left against 53px on the right, and at 1200px the column's right
+// edge actually ran 26px PAST the tools rail's left edge - the rail is
+// fixed and paints over the column, so body text was sliding under the
+// icons. The band fixes both, and costs 1200px about 44px of column width
+// to do it. Below 1200 the column is a plain percentage with its own
+// padding-right and no overlap, so it is left alone.
+@include res(xl, min) {
+    .main-content .container {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        // 16px card inset + 352px card + 56px gap. The card steps
+        // 352 -> 368 at 1440 and its inset 16 -> 48 at 1600, so this
+        // padding steps with it below; each tier is just
+        // cardInset + cardWidth + 56.
+        padding-left: 424px;
+        // 56px tools rail + 56px gap
+        padding-right: 112px;
+    }
+
+    // The column is Bootstrap's col-lg-7/col-xl-8 pushed right by ms-auto,
+    // which was how the old layout carved a left margin for the profile
+    // card out of a centred container. The band above now does that job,
+    // so the column takes the full band and the percentage would only
+    // shrink it back off-centre.
+    .main-content .container > .row > [class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+// Card widens 352px -> 368px here (see .sidebar-user), so the band follows.
+@include res(xxl, min) {
+    .main-content .container {
+        // 16px card inset + 368px card + 56px gap
+        padding-left: 440px;
+    }
+}
+
+// Card inset grows 16px -> 48px at xxxl (see .sidebar-user), so the band's
+// left edge has to follow it or the gap silently widens by 32px.
+@include res(xxxl, min) {
+    .main-content .container {
+        // 48px card inset + 368px card + 56px gap
+        padding-left: 472px;
+        // The tools rail moves right:16px -> right:48px at this same
+        // breakpoint, so its reserve grows 56px -> 88px. Both paddings
+        // have to step together or the column stops being centred
+        // between the two rails.
+        padding-right: 144px;
+    }
+}
+
 .container-full {
     position: relative;
     margin-left: auto;

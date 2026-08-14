@@ -19,6 +19,25 @@
     @include res(sm) {
         padding: 0;
     }
+
+    // Applies to EVERY section, not one of them - see the .container
+    // override in _layout.scss for why the gap exists and how the band
+    // is set. Overrides the flat 708px above from xxl up, and has to be
+    // declared after it: both are (0,1,0) so the later one wins, and
+    // these two overlap between 1440 and 1599.
+    //
+    // 1000px is a deliberate ceiling, not the band width. Past roughly
+    // this the column stops being a column and body copy runs to line
+    // lengths that are measurably harder to read - widening Work alone
+    // to 1300px was already called out as too large. Below the ceiling
+    // the column simply fills the band; above it, margin-right:auto
+    // pairs with the inherited margin-left:auto to centre the column in
+    // the band, so the leftover splits evenly instead of pooling on one
+    // side and reading as the same lopsided gap this was meant to fix.
+    @include res(xl, min) {
+        max-width: 1000px;
+        margin-right: auto;
+    }
 }
 
 .main-content {
@@ -395,17 +414,24 @@
         @include hidden;
     }
 
+    // Narrowed from 400/480. The card's height is derived from the
+    // portrait aspect-ratio below, so width is the only lever on how
+    // tall it is: at 400px it rendered 836px tall against a 900px
+    // viewport, i.e. floor-to-ceiling, which is what made it read as a
+    // backdrop panel rather than a card. 352/400 lands it around 650/730
+    // so page background shows above and below it. Keep in step with
+    // .wg-work .wrap in _widget.scss, which shares this exact slot.
     @include res(lg, min) {
         position: fixed;
         top: 32px;
         left: 16px;
         bottom: 32px;
         width: 100%;
-        max-width: 400px;
+        max-width: 352px;
     }
 
     @include res(xxl, min) {
-        max-width: 480px;
+        max-width: 368px;
     }
 
     @include res(xxxl, min) {
