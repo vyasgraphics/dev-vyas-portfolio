@@ -26,7 +26,7 @@ export const works: Work[] = [
     role: "UX Researcher · MSc Dissertation",
     industry: "Academic Research · HCI",
     platform: "Desktop Web",
-    tags: ["Academic Research", "Quantitative UX", "Prolific", "SPSS"],
+    tags: ["Academic Research", "Quantitative UX", "Prolific", "Python"],
     image: "/assets/images/section/work-1.jpg",
     imagePortrait: "/assets/images/section/work-1-portrait.jpg",
     logo: "/assets/images/logo/logo-dv.svg",

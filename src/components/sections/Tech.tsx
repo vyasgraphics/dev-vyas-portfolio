@@ -1,8 +1,14 @@
 import { techCategories } from "@/data/tech";
 import { IllumineCard } from "@/components/IllumineCard";
 
-// Tools whose SVG already contains the text label - don't repeat the name in the pill
-const ICON_ONLY_LABELS = new Set(["Gemini Notebook"]);
+// Tools whose SVG already contains the text label - don't repeat the name in the pill.
+// "Gemini Notebook" used to be here on the assumption its SVG baked the
+// wordmark in, but the asset's clip-path only exposes a 175x131 region while
+// the wordmark's path data runs out past x=1500 - it was never rendering,
+// clipped away regardless of colour. Removed rather than fixed in the SVG:
+// the pill's own text label already does the job every other tool's pill
+// relies on, with no dependency on a specific export being correct.
+const ICON_ONLY_LABELS = new Set<string>([]);
 
 export function Tech() {
     return (
