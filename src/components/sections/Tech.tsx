@@ -15,6 +15,27 @@ export function Tech() {
                 Design, research, code and deployment
             </h2>
 
+            {/* Every card here is IllumineCard: resting state is deliberately
+                desaturated (opacity 0.66, greyscale) and only comes into full
+                colour on hover/tap - see IllumineCard.tsx. Without a card
+                being obviously a control (no button chrome, no visible
+                switch), a visitor skimming the page has no reason to try
+                hovering one, so the interaction the whole section is built
+                around was easy to miss entirely. Two variants rather than one
+                detected-at-runtime string: matches how the rest of the site
+                handles desktop/mobile copy differences (plain CSS
+                d-none/d-lg-*), so this doesn't need its own client-side
+                pointer detection on top of the one IllumineCard already
+                does. */}
+            <p className="vg-hint-pill d-none d-lg-flex" style={{ marginBottom: "1.75rem" }}>
+                <i className="icon icon-light" aria-hidden="true" />
+                <span>Hover a card to bring its tools into colour</span>
+            </p>
+            <p className="vg-hint-pill d-flex d-lg-none" style={{ marginBottom: "1.75rem" }}>
+                <i className="icon icon-light" aria-hidden="true" />
+                <span>Tap a card to bring its tools into colour</span>
+            </p>
+
             {/* Layout lives in CSS (.tech-categories) rather than inline styles,
                 because it changes at two breakpoints: a fluid auto-fit grid on
                 desktop, two columns on tablet, one on phones. */}

@@ -39,7 +39,7 @@ export function Work() {
                 back at it, and read the section as three captionless images.
                 Hidden below lg, where the same content sits inline under each
                 image and needs no pointer. */}
-            <p className="vg-work-hint d-none d-lg-flex" style={{ marginBottom: "2.5rem" }}>
+            <p className="vg-hint-pill d-none d-lg-flex" style={{ marginBottom: "2.5rem" }}>
                 <i className="icon icon-arrow-caret-left" aria-hidden="true" />
                 <span>Each project&apos;s details open in the card on the left as you scroll</span>
             </p>

@@ -6126,12 +6126,24 @@ button.animate-btn::after,
     width: 100%;
     height: auto;
     /* 16/9 rather than the asset's native 700/427 (1.64). Costs ~16px of card
-       height for about 8px cropped off each of top and bottom - the mockups
-       are centred in frame, so nothing meaningful leaves the crop. Part of
-       getting the card back inside one screen; see the progress-row note in
-       the max-width:991px spacing block. */
+       height for about 8px cropped off each of top and bottom at a centred
+       object-position - fine for work-1/work-3 (laptop, 155-185px of grey
+       above it) but not for work-2 (phone, only 90px above it before the
+       bezel starts), where a centred crop was cutting into the top of the
+       phone itself. Part of getting the card back inside one screen; see the
+       progress-row note in the max-width:991px spacing block. */
     aspect-ratio: 16 / 9 !important;
     object-fit: cover !important;
+    /* Measured against all three source images (1400x854): centred crop is
+       exactly what breaks work-2 (see above), and 50/50 was never earning
+       its keep on work-1/work-3 either - in both, everything below the
+       laptop is bare rock, safe to lose, while the top margin is real
+       headroom nothing needs. Anchoring high and taking the crop mostly from
+       the bottom fixes work-2 and costs the other two nothing: even at the
+       harshest crop below (2.2/1 on short screens), this leaves 25-95px of
+       margin above every subject and never reaches the rock underneath any
+       of them. */
+    object-position: center 30%;
   }
   /* The 32px section margins and the 40px Year/Role gap (inherited from
      the tablet breakpoint above) were originally sized for the desktop
@@ -7952,6 +7964,22 @@ button.animate-btn::after,
   }
 }
 
+/* ── Tech tool pill: touch equivalent of the hover accent above ──
+   :hover has no touch equivalent - there's no "currently pointed at"
+   between taps - so IllumineCard.tsx applies this class imperatively on
+   tap, to whichever single pill was tapped, matching .tech-tool-pill:hover
+   above exactly rather than inventing a second visual language for the
+   same "this one is singled out" signal. Not gated behind (hover: hover):
+   the class is only ever added by the touch branch of that component, so
+   the query would be redundant, and gating it would only risk the rule
+   silently doing nothing on a touch-with-mouse hybrid device. */
+.tech-tool-pill.is-pill-lit {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(0,200,83,0.4) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(0,200,83,0.12) !important;
+}
+
 /* ── 8. 3D tilt cards (PersonaCard etc.) ──
    Transform is driven by a rAF loop in TiltCard.tsx that lerps toward the
    cursor-derived target each frame, setting --rx/--ry/--px/--py/--glow-x/
@@ -8346,10 +8374,16 @@ button.animate-btn::after,
   background-color: var(--primary);
 }
 
-/* ── Work section: pointer to the left-hand card ──
-   Desktop only. Below lg the same content sits inline under each image, so
-   there is nothing to point at and Bootstrap's d-none keeps this hidden. */
-.vg-work-hint {
+/* ── Discovery hint pill ──
+   Shared by the Work section (pointer to the left-hand card) and the Tech
+   section (pointer to hover/tap on the category cards) - renamed from
+   .vg-work-hint, which this same rule block was originally written for
+   only, to something that says what it is rather than where it first
+   appeared, now that a second section uses it unchanged. Nothing here is
+   Work-specific: it is a small pill with a nudging icon and a line of
+   text, and each caller supplies its own icon/copy and its own
+   d-none/d-lg-* visibility. */
+.vg-hint-pill {
   align-items: center;
   gap: 9px;
   width: -moz-fit-content;
@@ -8362,18 +8396,18 @@ button.animate-btn::after,
   font-size: 13px;
   line-height: 1.45;
 }
-.vg-work-hint .icon {
+.vg-hint-pill .icon {
   flex: 0 0 auto;
   font-size: 11px;
   color: var(--primary);
-  animation: vgWorkHintNudge 2.6s ease-in-out infinite;
+  animation: vgHintPillNudge 2.6s ease-in-out infinite;
 }
-@keyframes vgWorkHintNudge {
+@keyframes vgHintPillNudge {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(-4px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .vg-work-hint .icon { animation: none; }
+  .vg-hint-pill .icon { animation: none; }
 }
 
 /* ── Animated text overlap fix (Hey I'm Dev/Designer/Researcher) ── */
@@ -8834,6 +8868,7 @@ textarea:focus-visible,
   .footer-back-to-top:active,
   .blog-card:active,
   .tech-tool-pill:active,
+  .tech-tool-pill.is-pill-lit,
   .vg-card:active,
   .vg-tilt-card:active,
   .vg-brochure-tilt:active {

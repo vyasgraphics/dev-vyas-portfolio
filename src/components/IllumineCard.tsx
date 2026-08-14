@@ -21,6 +21,15 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  * The light layer is decorative: aria-hidden, pointer-events none, and a
  * sibling of the content rather than an ancestor, so its opacity never
  * creates a stacking context around anything that needs to sit above it.
+ *
+ * A second, finer-grained highlight sits on top of the card-wide one: on
+ * desktop, :hover on an individual .tech-tool-pill (in styles.css) gives
+ * just that pill its own lift/border/glow, on top of whatever the card-wide
+ * hover already did to every pill. :hover has no touch equivalent - there
+ * is no "currently pointed at" between taps - so that second layer needs
+ * its own explicit state here, applied imperatively as a class rather than
+ * through React, because the pills arrive as opaque `children` this
+ * component doesn't render or control individually.
  */
 export function IllumineCard({
   label,
@@ -32,6 +41,7 @@ export function IllumineCard({
   const [lit, setLit] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
+  const litPillRef = useRef<HTMLElement | null>(null);
 
   // Resolved after mount rather than during render: the server has no way
   // to know the pointer type, so deciding this during render would produce
@@ -40,13 +50,23 @@ export function IllumineCard({
     setIsTouch(!window.matchMedia("(hover: hover)").matches);
   }, []);
 
+  const clearLitPill = () => {
+    litPillRef.current?.classList.remove("is-pill-lit");
+    litPillRef.current = null;
+  };
+
   // On touch, a tap anywhere else should put the card back to rest,
   // otherwise every card a visitor prods stays lit for the rest of the
-  // visit and the effect stops meaning anything.
+  // visit and the effect stops meaning anything. Same for a single pill's
+  // extra highlight - it should not survive past the card it lives in
+  // going dark.
   useEffect(() => {
     if (!isTouch || !lit) return;
     const onDocPointer = (e: PointerEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setLit(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setLit(false);
+        clearLitPill();
+      }
     };
     document.addEventListener("pointerdown", onDocPointer);
     return () => document.removeEventListener("pointerdown", onDocPointer);
@@ -58,11 +78,43 @@ export function IllumineCard({
         tabIndex: 0,
         "aria-pressed": lit,
         "aria-label": `${label} tools`,
-        onClick: () => setLit((v) => !v),
+        onClick: (e: React.MouseEvent<HTMLDivElement>) => {
+          const pill = (e.target as HTMLElement).closest<HTMLElement>(".tech-tool-pill");
+          if (pill) {
+            // Tapping a specific tool always lights the card rather than
+            // toggling it - picking a tool while browsing shouldn't be able
+            // to darken everything else you're looking at. Tapping the same
+            // pill again just clears that pill's own accent, same as moving
+            // the mouse off one pill but staying on the card would on
+            // desktop.
+            setLit(true);
+            if (litPillRef.current === pill) {
+              clearLitPill();
+            } else {
+              clearLitPill();
+              pill.classList.add("is-pill-lit");
+              litPillRef.current = pill;
+            }
+            return;
+          }
+          // A tap on the card background (not a specific tool) toggles the
+          // whole card, as before - and drops any single-pill accent along
+          // with it, since that accent only makes sense relative to a lit
+          // card.
+          setLit((v) => {
+            const next = !v;
+            if (!next) clearLitPill();
+            return next;
+          });
+        },
         onKeyDown: (e: React.KeyboardEvent) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            setLit((v) => !v);
+            setLit((v) => {
+              const next = !v;
+              if (!next) clearLitPill();
+              return next;
+            });
           }
         },
       }
