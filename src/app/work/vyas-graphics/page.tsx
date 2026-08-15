@@ -205,9 +205,16 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   return <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>{children}</h2>;
 }
 
+// No maxWidth: paragraphs run the full width of the panel containing them, so
+// their right edge lands on the panel border. This used to cap at 780px, which
+// left every paragraph on this page stopping 387px short of the box around it
+// once the case study container widened - the same thing the other two pages
+// were doing at 900px, and visibly inconsistent with them once those were
+// fixed. Callers can still pass a narrower maxWidth through `style` where a
+// specific block genuinely wants one.
 function Body({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px", maxWidth: "780px", ...style }}>
+    <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px", ...style }}>
       {children}
     </p>
   );

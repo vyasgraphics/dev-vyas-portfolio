@@ -10543,39 +10543,22 @@ html, body {
   max-width: clamp(1100px, calc(100% - 380px), 1320px);
 }
 
-/* Running prose does NOT follow the container out to 1320px. At 1100px it
-   already ran ~132 characters per line, and at 1320 it would have reached
-   ~146-158 - roughly double the 45-75 that is comfortable to read, on the
-   pages where a recruiter has to read the most. Capping it here puts it at
-   ~112 instead, so this change widens the layout AND shortens the line
-   length, rather than trading one for the other.
+/* Prose deliberately has NO max-width here, so every paragraph runs the
+   full width of whatever contains it and its right edge lands on the panel
+   border rather than stopping short of it.
 
-   Note this partially reverses c32d055, which removed a 700px cap so text
-   would match panel width exactly. That alignment is the cost; it was
-   holding prose to whatever width the panels happened to be, which is a
-   layout decision driving a typographic one. 900px is deliberately much
-   more generous than the 700px that was removed then.
+   This was tried the other way first. Widening the container to 1320px
+   while capping paragraphs at 900px put the reading measure at a much
+   more comfortable ~113 characters per line instead of ~146, but inside
+   the bordered SectionBox panels - which is where most of the prose on
+   these pages actually lives - it left a 267px band of empty panel to the
+   right of every paragraph, which reads as broken rather than as a
+   deliberate measure. Dev reviewed it and asked for text to run to the
+   box's line, which is also what c32d055 established when it removed an
+   earlier 700px cap for the same reason.
 
-   Safe as a blanket rule on p: every paragraph already narrower than 900px
-   (the meta grid values, the results columns, image captions - 24 of the
-   44 on the dissertation page) is unaffected, since max-width only ever
-   removes width. */
-.vg-case-page p {
-  max-width: 900px;
-}
-
-/* Blockquote-style callouts and list items are prose too, and read worse
-   than paragraphs at long measures because their left edge is indented
-   away from the eye's return point. */
-.vg-case-page li {
-  max-width: 900px;
-}
-
-@media (max-width: 1023.98px) {
-  /* Below the point where 900px is reachable anyway, the cap can only
-     interfere with the pages' own responsive rules. */
-  .vg-case-page p,
-  .vg-case-page li {
-    max-width: none;
-  }
-}
+   So the reading measure on these pages is set by panel width, and the
+   only lever on it is the container ceiling above. That is the reason the
+   ceiling is 1320px and not larger: at 1320 the longest paragraphs run
+   ~146 characters, and every further 100px of container adds roughly 12
+   more. Raising it later is not a free change. */
