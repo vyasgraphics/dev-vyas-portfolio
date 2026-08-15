@@ -241,7 +241,7 @@ export default function VyasGraphicsWorkPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
       />
-      <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "56px 24px 0" }}>
+      <div className="vg-case-page" style={{ margin: "0 auto", padding: "56px 24px 0" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
         <header className="vg-hero-in" style={{ marginTop: "40px", marginBottom: "36px" }}>
@@ -329,7 +329,7 @@ export default function VyasGraphicsWorkPage() {
         </AutoRepeatMarquee>
       </div>
 
-      <div style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 24px 100px" }}>
+      <div className="vg-case-page" style={{ margin: "0 auto", padding: "0 24px 100px" }}>
         <SectionNav sections={SECTIONS} />
 
         {/* ── Brand Identity ── */}

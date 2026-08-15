@@ -195,7 +195,7 @@ export default function MoveAppWorkPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
       />
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px 100px" }}>
+      <div className="vg-case-page" style={{ margin: "0 auto", padding: "56px 24px 100px" }}>
         {/* Extra bottom room isn't visible under normal scrolling (it sits
             below "Back to Work") - it exists so clicking "What's Next" in
             the nav, the last section, has enough scrollable page left

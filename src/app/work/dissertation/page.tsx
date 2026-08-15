@@ -209,7 +209,7 @@ export default function DissertationWorkPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
       />
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "56px 24px 100px" }}>
+      <div className="vg-case-page" style={{ margin: "0 auto", padding: "56px 24px 100px" }}>
         <BackLink href="/#work" label="← Back to Work" />
 
         <header style={{ marginTop: "40px", marginBottom: "32px" }}>

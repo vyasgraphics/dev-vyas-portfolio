@@ -10506,3 +10506,76 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .vg-cta-card::before { display: none; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   Case study pages: wide container, capped reading measure
+   New component class, so these rules live here and ONLY here - there is
+   no .vg-case-page in public/assets/scss/, nothing to mirror.
+   ══════════════════════════════════════════════════════════ */
+
+/* Width is owned here rather than inline on the pages, because it has to be
+   an expression rather than a number - see the clamp below. (The pages keep
+   their own margin/padding inline; only max-width moved. An inline
+   max-width would beat this rule outright, so it had to be removed there.)
+
+   The ceiling is 1320px. At 1900px that leaves a 288px gutter instead of
+   398px, and the width goes where it actually buys something: the
+   five-column meta grid stops wrapping every column onto two or three
+   lines, the three-column results panel stops squeezing its text to ~44
+   characters, and images/charts get room.
+
+   The `100% - 380px` term is not padding - it reserves the strip that
+   SectionNav's fixed dot rail occupies on the right edge. That rail's
+   labels expand leftward and reach ~172px in from the viewport edge, and
+   measurement showed the previous 1100px width cleared them by exactly
+   2px at 1440px wide. In other words 1100 was already sitting on that
+   limit, so widening to a flat 1320 put the KEY SKILLS column straight
+   underneath the "What's Next" label. Reserving the strip on BOTH sides
+   (the container is centre-aligned, so the left gutter always matches the
+   right one) means the extra width can only ever appear on viewports with
+   room for it: unchanged at 1440, ~1220 at 1600, the full 1320 from about
+   1700 up.
+
+   The 1100px floor guarantees this can never come out NARROWER than it
+   was before on any viewport, which a bare `min()` would have done at
+   1440. max-width never forces width, so the floor is inert on mobile. */
+.vg-case-page {
+  max-width: clamp(1100px, calc(100% - 380px), 1320px);
+}
+
+/* Running prose does NOT follow the container out to 1320px. At 1100px it
+   already ran ~132 characters per line, and at 1320 it would have reached
+   ~146-158 - roughly double the 45-75 that is comfortable to read, on the
+   pages where a recruiter has to read the most. Capping it here puts it at
+   ~112 instead, so this change widens the layout AND shortens the line
+   length, rather than trading one for the other.
+
+   Note this partially reverses c32d055, which removed a 700px cap so text
+   would match panel width exactly. That alignment is the cost; it was
+   holding prose to whatever width the panels happened to be, which is a
+   layout decision driving a typographic one. 900px is deliberately much
+   more generous than the 700px that was removed then.
+
+   Safe as a blanket rule on p: every paragraph already narrower than 900px
+   (the meta grid values, the results columns, image captions - 24 of the
+   44 on the dissertation page) is unaffected, since max-width only ever
+   removes width. */
+.vg-case-page p {
+  max-width: 900px;
+}
+
+/* Blockquote-style callouts and list items are prose too, and read worse
+   than paragraphs at long measures because their left edge is indented
+   away from the eye's return point. */
+.vg-case-page li {
+  max-width: 900px;
+}
+
+@media (max-width: 1023.98px) {
+  /* Below the point where 900px is reachable anyway, the cap can only
+     interfere with the pages' own responsive rules. */
+  .vg-case-page p,
+  .vg-case-page li {
+    max-width: none;
+  }
+}
