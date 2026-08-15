@@ -6,6 +6,7 @@ import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
 import { CountUpStat } from "@/components/CountUpStat";
 import { ProcessPath } from "@/components/ProcessPath";
+import { ProcessStep } from "@/components/ProcessStep";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PersonaCard } from "@/components/PersonaCard";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
@@ -312,10 +313,9 @@ export default function MoveAppWorkPage() {
               students walk past all of them. The problem was never a lack of choice.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              Then the questionnaire data landed, and it pointed somewhere else entirely. Time pressure,
-              self-consciousness and unfamiliarity were standing between students and facilities that were already
-              free, already nearby, and already open. Adding options to that situation makes it worse, not better.
-              The design problem was subtraction, not addition.
+              The questionnaire pointed somewhere else entirely. Time pressure, self-consciousness and unfamiliarity
+              stood between students and facilities that were already free, nearby and open. Adding options to that
+              makes it worse. The design problem was subtraction, not addition.
             </p>
             <p style={{
               fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
@@ -363,32 +363,22 @@ export default function MoveAppWorkPage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               {PROCESS_STEPS.map((step, i) => (
-                <div key={step.title} style={{
-                  paddingLeft: "22px", borderLeft: "2px solid rgba(255,255,255,0.1)",
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
-                    <span style={{
-                      display: "inline-flex", alignItems: "center", justifyContent: "center",
-                      minWidth: "34px", height: "26px", padding: "0 8px", borderRadius: "6px",
-                      background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.14)",
-                      color: "rgba(255,255,255,0.72)", fontSize: "12px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace",
-                    }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 style={{ fontSize: "17px", fontWeight: 700 }}>{step.title}</h3>
-                  </div>
-                  <p style={{ fontSize: "16px", lineHeight: 1.55, color: "#fff", fontWeight: 600, marginBottom: "14px" }}>
-                    {step.summary}
-                  </p>
-                  <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {step.bullets.map((bullet, bi) => (
-                      <li key={bi} style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                  {step.visual && <div style={{ marginTop: "22px" }}>{step.visual}</div>}
-                </div>
+                <ProcessStep
+                  key={step.title}
+                  index={i}
+                  title={step.title}
+                  summary={step.summary}
+                  bullets={step.bullets}
+                  visual={step.visual}
+                />
+              ))}
+            </div>
+
+            {/* Relocated from a free-floating strip near the page footer -
+                see the matching note on the dissertation page. */}
+            <div className="vg-recap" aria-label="Results recap">
+              {["17 questionnaire responses", "2 concepts rejected on evidence", "8 think-aloud testers", "256-user A/B study scoped"].map((stat) => (
+                <span key={stat} className="vg-recap-chip">{stat}</span>
               ))}
             </div>
           </SectionBox>
@@ -435,24 +425,24 @@ export default function MoveAppWorkPage() {
           <SectionBox id="impact" tag="Three tiers of impact">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The impact</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              This is a university concept project, not a shipped product, so there is no revenue line to claim. The
-              impact splits into three honest tiers: what changed for users, what the process itself caught, and what
-              is ready to be validated.
+              A university concept project, not a shipped product, so no revenue line to claim. Three honest tiers
+              instead.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
                 <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>
                   User Metrics
                 </h3>
+                {/* The 47/18/53% figures are stated once, in the Discovery
+                    stage of Process where the evidence they came from sits.
+                    Repeating all three here was the single worst instance
+                    of the same number appearing three times on one page. */}
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                     Testers who had stalled on other fitness apps completed a full session once anxiety-driven friction was removed.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    The two most-cited barriers in the research, lack of time (47%) and self-consciousness (18%), each got a dedicated screen rather than a compromise.
-                  </li>
-                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    The clearest single request in the data, video previews of a space (53%), shipped into the prototype intact.
+                    Both top barriers got a dedicated screen rather than one averaged compromise.
                   </li>
                 </ul>
               </div>
@@ -462,13 +452,13 @@ export default function MoveAppWorkPage() {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Two fully explored concepts were rejected against evidence rather than opinion, before either reached build.
+                    Two fully explored concepts rejected on evidence rather than opinion, before either reached build.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    A naming and trust failure in the flagship feature was caught at prototype stage, when the fix was still a rename.
+                    A trust failure in the flagship feature caught at prototype stage, while the fix was still a rename.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Every screen traces to a specific research figure, which is what let the team argue about evidence instead of taste.
+                    Every screen traces to a research figure, so the team argued about evidence instead of taste.
                   </li>
                 </ul>
               </div>
@@ -478,10 +468,10 @@ export default function MoveAppWorkPage() {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    A 256-user A/B study is scoped and properly powered, so the redesign can be confirmed at scale rather than asserted.
+                    A 256-user A/B study, scoped and properly powered, so the redesign can be confirmed rather than asserted.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    71% of respondents consented to timetable sharing, so the automatic scheduling this depends on is viable rather than hypothetical.
+                    Timetable consent already evidenced, so the automatic scheduling it depends on is viable rather than hypothetical.
                   </li>
                 </ul>
               </div>
@@ -503,43 +493,23 @@ export default function MoveAppWorkPage() {
 
         <ScrollReveal>
           <div style={{
-            display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px",
-            marginBottom: "24px", padding: "20px",
-            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-          }}>
-            {[
-              "17 questionnaire responses",
-              "2 concepts rejected on evidence",
-              "8 think-aloud testers",
-              "256-user A/B study scoped",
-            ].map((stat) => (
-              <span key={stat} style={{
-                padding: "8px 16px", borderRadius: "100px", fontSize: "13px", fontWeight: 700,
-                background: "transparent", border: "1px solid rgba(255,255,255,0.16)", color: "rgba(255,255,255,0.72)",
-              }}>
-                {stat}
-              </span>
-            ))}
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <div style={{
             display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: "24px", marginBottom: "64px", padding: "24px",
             borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
           }}>
+            {/* Fragments, not sentences - matching the dissertation page and
+                the register the rest of this page already uses. */}
             <div>
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Owned the research and design calls within the team: the personas, the usability testing plan, and the fix once testing found the trust problem were mine to make.
+                  <strong style={{ color: "#fff" }}>Owned the research and design calls.</strong>{" "}The personas, the testing plan, and the fix once testing found the trust problem.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Pushed the team away from adding features toward removing friction, a harder case to argue than shipping something new, and the one the data ended up supporting.
+                  <strong style={{ color: "#fff" }}>Argued for subtraction over addition.</strong>{" "}A harder case to make than shipping something new, and the one the data supported.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Made two rejection calls on concepts the team liked, using questionnaire evidence rather than preference to settle it.
+                  <strong style={{ color: "#fff" }}>Made two rejection calls</strong>{" "}on concepts the team liked, settled on questionnaire evidence rather than preference.
                 </li>
               </ul>
             </div>
@@ -547,13 +517,13 @@ export default function MoveAppWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Full HCD lifecycle craft: a 17-response questionnaire through to Figma prototyping and moderated think-aloud testing with 8 users.
+                  <strong style={{ color: "#fff" }}>Full HCD lifecycle.</strong>{" "}Questionnaire through to Figma prototyping and moderated think-aloud testing.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Built the four screens as one consistent pattern set rather than four isolated mockups, so a fix to one control could be applied across the system.
+                  <strong style={{ color: "#fff" }}>One pattern set, not four mockups.</strong>{" "}So a fix to one control applied across the system.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Domain knowledge in behaviour-change and health-app design: specifically, that removing anxiety beats adding motivation for a sedentary, self-conscious user.
+                  <strong style={{ color: "#fff" }}>Behaviour-change domain knowledge.</strong>{" "}Removing anxiety beats adding motivation for a sedentary, self-conscious user.
                 </li>
               </ul>
             </div>

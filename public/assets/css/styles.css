@@ -10716,3 +10716,146 @@ html, body {
    ceiling is 1320px and not larger: at 1320 the longest paragraphs run
    ~146 characters, and every further 100px of container adds roughly 12
    more. Raising it later is not a free change. */
+
+/* ══════════════════════════════════════════════════════════
+   Case study process steps (ProcessStep.tsx)
+   New component, so these rules live here and ONLY here - there is no
+   .vg-step in public/assets/scss/, nothing to mirror.
+   ══════════════════════════════════════════════════════════ */
+.vg-step {
+  padding-left: 22px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.vg-step-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.vg-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--black-72);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.vg-step-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* The always-visible layer. Carries the whole section on its own when
+   every fold is shut, so it stays at full-strength white. */
+.vg-step-summary {
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+
+.vg-step-details { margin-top: 4px; }
+
+.vg-step-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  /* 44px, not the 40px the padding alone produced. This is the only new
+     tap target these pages gained, and the project has already had one
+     round of mobile tap-target fixes - no reason to reintroduce an
+     undersized one. Costs nothing visually at desktop size. */
+  min-height: 44px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--black-56);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.2s var(--ease-hover), border-color 0.2s var(--ease-hover);
+}
+/* Safari draws its own disclosure triangle via this pseudo-element and
+   ignores list-style on summary; both are needed to suppress it. */
+.vg-step-toggle::-webkit-details-marker { display: none; }
+.vg-step-toggle::marker { content: ""; }
+
+.vg-step-toggle:hover,
+.vg-step-toggle:focus-visible {
+  color: var(--black-72);
+  border-color: rgba(0, 222, 81, 0.45);
+}
+
+.vg-step-toggle-hide { display: none; }
+.vg-step-details[open] .vg-step-toggle-show { display: none; }
+.vg-step-details[open] .vg-step-toggle-hide { display: inline; }
+
+/* Quieter once open. These default to open, so without this the page gains
+   five outlined pills competing with the five stage summaries they sit
+   under - the control would be shouting louder than the content. Collapsed
+   it keeps the full pill, because then it is the only affordance saying
+   there is anything else to see. Hover/focus styling is unchanged either
+   way, so it still reads as interactive. */
+.vg-step-details[open] .vg-step-toggle {
+  padding-left: 0;
+  border-color: transparent;
+  background: transparent;
+}
+
+.vg-step-chevron { transition: transform 0.25s var(--ease-hover); }
+.vg-step-details[open] .vg-step-chevron { transform: rotate(180deg); }
+
+.vg-step-bullets {
+  margin: 16px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vg-step-bullets li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--black-72);
+}
+
+.vg-step-visual { margin-top: 22px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-step-chevron { transition: none; }
+}
+
+/* Results recap at the end of a case study's Process section. Same chips
+   as the free-floating strip these replaced, but sited where the course
+   guidance puts a repeat: immediately after the lengthy section it is
+   reinforcing, rather than adrift near the page footer duplicating the
+   Results panel at the top. */
+.vg-recap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vg-recap-chip {
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--black-72);
+  border: 1px solid rgba(0, 222, 81, 0.28);
+  background: rgba(0, 222, 81, 0.05);
+}

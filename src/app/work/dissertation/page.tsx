@@ -6,6 +6,7 @@ import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
 import { SectionNav } from "@/components/SectionNav";
 import { CountUpStat } from "@/components/CountUpStat";
 import { ProcessPath } from "@/components/ProcessPath";
+import { ProcessStep } from "@/components/ProcessStep";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
 import { WireframeNewsTask } from "@/components/wireframes/WireframeNewsTask";
@@ -76,7 +77,6 @@ const SECTIONS = [
   { id: "process", label: "The Process" },
   { id: "finding", label: "The Key Finding" },
   { id: "impact", label: "The Impact" },
-  { id: "implications", label: "What It Means" },
   { id: "next", label: "What's Next" },
 ];
 
@@ -323,14 +323,11 @@ export default function DissertationWorkPage() {
               been designed for.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              Two people can sit down at the same busy news website, given the same task and the same time, and walk
-              away with very different results. One finds every article they need. The other misses half of them,
-              pulled off course by a sponsored box that has nothing to do with what they came for. The page
-              hasn&apos;t changed. The distractions are identical. Something about the person accounts for the
-              difference - and until this dissertation, nobody had tested what.{" "}
-              Distraction resistance splits into two components: filtering distraction the moment it appears, and
-              protecting what&apos;s already been remembered once distraction turns up afterwards. It&apos;s well studied on its own in the lab. Interface clutter is well studied on its own too.
-              Nobody had put the two together and tested one against the other directly.
+              Two people sit down at the same busy news website, same task, same time. One finds every article they
+              need. The other misses half, pulled off course by a sponsored box. The page hasn&apos;t changed and the
+              distractions are identical, so something about the person accounts for the difference. The trait is
+              well studied in the lab. Interface clutter is well studied on its own. Nobody had tested one against
+              the other directly.
             </p>
             <p style={{
               fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
@@ -358,50 +355,64 @@ export default function DissertationWorkPage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               {PROCESS_STEPS.map((step, i) => (
-                <div key={step.title} style={{
-                  paddingLeft: "22px", borderLeft: "2px solid rgba(255,255,255,0.1)",
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
-                    <span style={{
-                      display: "inline-flex", alignItems: "center", justifyContent: "center",
-                      minWidth: "34px", height: "26px", padding: "0 8px", borderRadius: "6px",
-                      background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.14)",
-                      color: "rgba(255,255,255,0.72)", fontSize: "12px", fontWeight: 700, fontFamily: "'JetBrains Mono', monospace",
-                    }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 style={{ fontSize: "17px", fontWeight: 700 }}>{step.title}</h3>
-                  </div>
-                  <p style={{ fontSize: "16px", lineHeight: 1.55, color: "#fff", fontWeight: 600, marginBottom: "14px" }}>
-                    {step.summary}
-                  </p>
-                  <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {step.bullets.map((bullet, bi) => (
-                      <li key={bi} style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                  {step.visual && <div style={{ marginTop: "22px" }}>{step.visual}</div>}
-                </div>
+                <ProcessStep
+                  key={step.title}
+                  index={i}
+                  title={step.title}
+                  summary={step.summary}
+                  bullets={step.bullets}
+                  visual={step.visual}
+                />
+              ))}
+            </div>
+
+            {/* Results restated at the end of Process, which is where the
+                course guidance actually puts a repeat ("consider repeating
+                the results again at the end of this section, especially if
+                it is lengthy"). These four ran as a free-floating strip
+                near the bottom of the page before, several sections after
+                the Process they were meant to reinforce and directly
+                duplicating the Results panel at the top - so this is a
+                relocation rather than a deletion. */}
+            <div className="vg-recap" aria-label="Results recap">
+              {["2 opposite-story outcomes", "42 participants", "4 pilot rounds", "3-way cross-checked"].map((stat) => (
+                <span key={stat} className="vg-recap-chip">{stat}</span>
               ))}
             </div>
           </SectionBox>
         </ScrollReveal>
 
+        {/* "What it means for design" used to be its own section here. It
+            restated the finding above in different words, then added one
+            genuinely new idea (the encoding/delay trade-off). Merged: the
+            finding, the chart that evidences it, and the design conclusion
+            drawn from it now sit together, which is also the order a reader
+            needs them in. The nav entry went with it. */}
         <ScrollReveal>
           <SectionBox id="finding" tag="Time, not accuracy">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "24px" }}>
-              The two outcomes told almost opposite stories. Search accuracy barely moved between participants -
-              most people scored close to perfect regardless of their working-memory profile, which turned out to
-              be a ceiling effect in the task itself rather than a genuine absence of difference. Completion time
-              was a different matter: how long someone took was strongly tied to their distraction-resistance
-              profile, accounting for close to half of the difference between participants. And the two components
-              of distraction resistance didn&apos;t act independently -{" "}
+              The two outcomes told almost opposite stories. Accuracy barely moved: nearly everyone scored close to
+              perfect, which turned out to be a ceiling effect in the task rather than a real absence of difference.
+              Time was another matter. How long someone took tracked their distraction-resistance profile closely,
+              accounting for close to half the difference between participants. And the two components of that
+              profile didn&apos;t act independently -{" "}
               <strong style={{ color: "#fff" }}>they interacted</strong>.
             </p>
             <DistractionInteractionChart />
+
+            <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "34px 0 12px" }}>What it means for design</h3>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
+              Two users can leave the same interface with identical, accurate results, and one of them pays far more
+              time for it. An ordinary success-rate metric never catches that. Visual clutter isn&apos;t a flat tax:
+              it costs some users very little and others a great deal, depending on a trait the user can&apos;t
+              control and the designer usually can&apos;t see.
+            </p>
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
+              The sharper implication is that the two filtering stages trade off rather than add up. Cut what a user
+              has to filter while they are first reading something, and you help the people who need it most far
+              more than an even, page-wide tidy-up ever would.
+            </p>
           </SectionBox>
         </ScrollReveal>
 
@@ -409,9 +420,7 @@ export default function DissertationWorkPage() {
           <SectionBox id="impact" tag="Three tiers of impact">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The impact</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              This isn&apos;t a shipped product, so I&apos;m not claiming revenue or conversion wins. The impact
-              splits into three honest tiers instead: what it found about users, what it proves about the research
-              process itself, and what it contributes to the field.
+              Not a shipped product, so no revenue or conversion wins to claim. Three honest tiers instead.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               <div style={{
@@ -435,15 +444,15 @@ export default function DissertationWorkPage() {
                 <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>
                   Research Process Metrics
                 </h3>
+                {/* The pilot-rounds line that used to sit here is already
+                    made twice over: once in the Results panel and once as
+                    its own Process stage. */}
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Zero data-integrity issues reached analysis: identifier checks caught every mismatch, including one live concurrency bug, before it could corrupt a result.
+                    Zero data-integrity issues reached analysis. Identifier checks caught every mismatch, including one live concurrency bug.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Every coefficient reproduced exactly across three independent tools - Python, SPSS and Jamovi.
-                  </li>
-                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Four pilot rounds resolved every functional issue before a single paid participant was recruited.
+                    Every coefficient reproduced exactly across three independent tools.
                   </li>
                 </ul>
               </div>
@@ -467,58 +476,14 @@ export default function DissertationWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="implications" tag="What changes for design">
-            <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What it means for design</h2>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
-              Two users can walk away from the same interface with identical, accurate results. One of them pays a
-              lot more time for it - a cost an ordinary success-rate metric would never catch. Visual clutter
-              isn&apos;t a flat tax. Sponsored content, animated promos and high-salience distractors cost some users
-              very little and cost others a great deal, depending on a cognitive trait the user can&apos;t control
-              and the designer usually can&apos;t see.
-            </p>
-            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              The sharper implication: encoding-stage and delay-stage filtering trade off rather than simply add up.
-              Reduce how much a user has to filter while first reading something, rather than spreading a general
-              clutter reduction evenly across the page, and you help the people who need it most far more than an
-              even, page-wide tidy-up ever would.
-            </p>
-          </SectionBox>
-        </ScrollReveal>
-
-        <ScrollReveal>
           <SectionBox id="next" tag="Submission still pending">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              This dissertation is still being finalised at the University of York, so I&apos;ve deliberately kept
-              the detail here high-level. Once it&apos;s been submitted and marked, I&apos;ll come back and share
-              the fuller analysis - exactly how the two components of distraction resistance interact, and what
-              that means for the accuracy side of the results too. For now, this is the shape of it: a real,
-              measurable cost that cluttered interfaces impose unevenly, and a first proper test of whether a
-              laboratory memory measure predicts anything on a page people would actually use.
+              Still being finalised at York, so the detail here stays deliberately high-level. Once it&apos;s
+              submitted and marked I&apos;ll add the fuller analysis: exactly how the two components interact, and
+              what that means for accuracy as well as time.
             </p>
           </SectionBox>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <div style={{
-            display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px",
-            marginBottom: "24px", padding: "20px",
-            borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
-          }}>
-            {[
-              "2 opposite-story outcomes",
-              "42 participants",
-              "4 pilot rounds",
-              "3-way cross-checked",
-            ].map((stat) => (
-              <span key={stat} style={{
-                padding: "8px 16px", borderRadius: "100px", fontSize: "13px", fontWeight: 700,
-                background: "transparent", border: "1px solid rgba(255,255,255,0.16)", color: "rgba(255,255,255,0.72)",
-              }}>
-                {stat}
-              </span>
-            ))}
-          </div>
         </ScrollReveal>
 
         <ScrollReveal>
@@ -527,14 +492,18 @@ export default function DissertationWorkPage() {
             gap: "24px", marginBottom: "64px", padding: "24px",
             borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
           }}>
+            {/* Fragments, not sentences. Every other list on the page is
+                terse; these two sections were the only place that switched
+                into full hedged prose, which made them read as padding at
+                exactly the point a senior reviewer is looking for signal. */}
             <div>
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Solo-owned the study end to end: research question, task design, ethics approval, recruitment, analysis. No team to divide the workload across.
+                  <strong style={{ color: "#fff" }}>Solo-owned end to end.</strong>{" "}Research question, task design, ethics approval, recruitment, analysis.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Kept the reporting honest about what the data does and doesn&apos;t show yet, rather than overstating early findings before the dissertation is marked.
+                  <strong style={{ color: "#fff" }}>Held the reporting honest.</strong>{" "}Stated what the data does and doesn&apos;t yet show, rather than overselling it pre-marking.
                 </li>
               </ul>
             </div>
@@ -542,13 +511,13 @@ export default function DissertationWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Built a purpose-made experimental task from banner-blindness research, not an off-the-shelf instrument, then hardened it across four pilot rounds before real recruitment began.
+                  <strong style={{ color: "#fff" }}>Built the instrument.</strong>{" "}A purpose-made task derived from banner-blindness research, not an off-the-shelf one.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Built the data pipeline once and reused it unmodified across every recruitment batch and every independent cross-check - a system, not a one-off script.
+                  <strong style={{ color: "#fff" }}>Built a pipeline, not a script.</strong>{" "}Written once, reused unmodified across every batch and every cross-check.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Quantitative rigour: 42 participants recruited via Prolific under formal ethical approval, a validated working-memory measure, reading speed controlled for, and every result cross-checked across three separate analysis tools.
+                  <strong style={{ color: "#fff" }}>Quantitative rigour.</strong>{" "}Formal ethical approval, a validated working-memory measure, reading speed controlled for.
                 </li>
               </ul>
             </div>
