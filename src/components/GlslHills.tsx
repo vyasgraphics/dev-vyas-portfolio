@@ -40,7 +40,10 @@ const PLANE_SIZE = 256;
 // and a phone does not. 128 segments cuts it to 16,641 vertices, a 4x drop in
 // the dominant cost.
 const SEGMENTS_DESKTOP = 256;
-const SEGMENTS_MOBILE = 128;
+// 96, down from 128. See the note on the frame-rate cap being removed below:
+// the phone budget was rebalanced to buy back a smooth 60fps rather than
+// spending it on mesh density nobody can resolve on a 375px screen.
+const SEGMENTS_MOBILE = 96;
 
 const VERTEX_SHADER = `
 attribute vec3 position;
@@ -48,6 +51,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform float time;
 uniform float detailFreq;
+uniform float detailAmp;
 varying vec3 vPosition;
 
 mat4 rotateMatrixX(float radian) {
@@ -146,7 +150,19 @@ void main(void) {
   // halving this too would drop that to 1.25 samples per wavelength - under
   // Nyquist, so the detail would alias and visibly crawl as the terrain
   // drifts, which reads far worse than simply coarser detail.
-  float noise3 = cnoise(noisePosition * detailFreq);
+  //
+  // On phones detailAmp is 0 and this layer is skipped outright, taking the
+  // per-vertex cost from three cnoise evaluations to two. The branch is on a
+  // UNIFORM, so it resolves the same way for every vertex in the draw - no
+  // divergence, and the GPU genuinely skips the call rather than running it
+  // and multiplying the result away. Of the three layers this is the one
+  // worth losing: it contributes about +/-0.5 units of surface texture along
+  // the centre line against +/-16 from the other two and 40 from the ridge
+  // term, so at phone size its absence is close to invisible.
+  float noise3 = 0.0;
+  if (detailAmp > 0.0) {
+    noise3 = cnoise(noisePosition * detailFreq);
+  }
   vec3 lastPosition = updatePosition + vec3(0.0,
     noise1 * sin1 * 8.0
     + noise2 * sin1 * 8.0
@@ -276,6 +292,7 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
         const modelViewLoc = gl.getUniformLocation(program, "modelViewMatrix");
         const timeLoc = gl.getUniformLocation(program, "time");
         const detailFreqLoc = gl.getUniformLocation(program, "detailFreq");
+        const detailAmpLoc = gl.getUniformLocation(program, "detailAmp");
 
         // Rebuilt whenever the viewport crosses the phone breakpoint, rather
         // than decided once at mount. Deciding once looked reasonable - who
@@ -335,6 +352,9 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
             // Has to track the mesh density, so it is set here rather than
             // once at setup - see the note beside noise3 in the shader.
             gl.uniform1f(detailFreqLoc, 0.4 * (seg / SEGMENTS_DESKTOP));
+            // Set alongside the mesh it belongs to, so the two can never
+            // disagree about which device they are rendering for.
+            gl.uniform1f(detailAmpLoc, seg === SEGMENTS_DESKTOP ? 1 : 0);
         };
 
         const projectionMatrix = new Float32Array(16);
@@ -431,13 +451,20 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
             gl.drawElements(gl.TRIANGLES, indexCount, gl.UNSIGNED_INT, 0);
         };
 
-        // Phones redraw at 30fps rather than at display refresh rate. This is
-        // a slow-drifting decorative background, not something being aimed at
-        // or read, so halving its frame rate is close to invisible while
-        // halving everything it costs - and it leaves headroom for the scroll
-        // itself, which is what actually has to stay smooth under a finger.
-        let lastDraw = 0;
-
+        // No frame-rate cap, on any device. Phones were briefly held to 30fps
+        // to halve their cost, and that is exactly what came back reported as
+        // "a bit laggy" - which is the giveaway, because 30fps does not look
+        // like a slow animation, it looks like a stuttering one. Terrain that
+        // drifts continuously has no motion blur to hide the gap between
+        // frames, so halving the rate reads as judder rather than as economy.
+        //
+        // The budget was rebalanced instead, so 60fps is affordable rather
+        // than merely uncapped: 96 segments instead of 128 (9,409 vertices,
+        // down from 16,641) and two noise evaluations per vertex instead of
+        // three. That is ~1.13M noise evaluations/second at 60fps against
+        // ~1.50M at the capped 30fps - smoother AND about a quarter cheaper
+        // than what it replaces, so this cannot regress either reading of
+        // "laggy" (too much work, or too few frames).
         const loop = (now: number) => {
             frame = requestAnimationFrame(loop);
 
@@ -445,13 +472,8 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
             last = now;
             // A backgrounded tab or a long main-thread block can hand back a
             // huge delta on the next frame, which would jump the terrain.
-            // Time accumulates on EVERY frame, including ones that are about
-            // to be skipped below, so capping the frame rate slows the redraw
-            // without also slowing the drift down to half speed.
             time += Math.min(delta, 0.1) * speed;
 
-            if (now - lastDraw < (isMobile ? 1000 / 30 : 0)) return;
-            lastDraw = now;
             draw();
         };
 
