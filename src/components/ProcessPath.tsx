@@ -1,20 +1,34 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { Fragment, useCallback, useEffect, useRef } from "react";
 
-// The stage strip at the top of a case study's Process section, with the
-// same green cursor glow the persona cards carry.
+// The stage strip at the top of a case study's Process section: each stage as
+// a node, joined by dashed connectors with dots flowing along them, so the
+// section reads as a pipeline with something moving through it rather than as
+// a row of labels.
 //
-// Reuses the persona cards' --glow-x/--glow-y convention (see TiltCard.tsx
-// and .tilt-glare in styles.css) so both surfaces share one visual
-// language, but deliberately NOT TiltCard itself: that wraps its children
-// in a 3D transform and parallax layers, which suit a portrait card and
-// look wrong on a wide horizontal strip. All this needs is the glare.
+// Adapted from an "AI agent pipeline" reference component. Three things about
+// that reference did not survive contact with this site, all deliberately:
 //
-// Writes CSS custom properties directly on the node rather than going
-// through React state - a pointermove-driven re-render on every frame
-// would be a lot of reconciliation for a background-position change that
-// the compositor can do on its own.
+//   1. It is a fixed 620px-wide SVG with every node and path hardcoded as
+//      absolute coordinates, for one specific 6-node branching topology
+//      (trigger -> vector db -> LLM -> three parallel outputs). What this
+//      needs is a LINEAR chain of however many stages the page passes in -
+//      five today, and the two case studies do not even use the same five.
+//      Hardcoded SVG coordinates cannot express that, so the layout is flex
+//      and the connectors are CSS. That is also what makes it responsive:
+//      the same markup turns into a vertical pipeline on phones via one
+//      media query, where a fixed viewBox would have needed a second
+//      hand-drawn diagram.
+//   2. Its palette is #0052FF blue throughout; this uses --primary.
+//   3. Its header, message ticker and stats footer are invented telemetry -
+//      "4.2M tokens", "342ms latency", "1,247 workflows", rolling fake log
+//      lines. On a portfolio case study those would sit inches from real
+//      research figures and read as equally real. Numbers on these pages
+//      have to be defensible, so all of it is gone rather than reworded.
+//
+// Keeps the same single `stages` prop the pill version had, so neither case
+// study page needed changing, and keeps that version's cursor glow.
 export function ProcessPath({ stages }: { stages: string[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
@@ -56,47 +70,44 @@ export function ProcessPath({ stages }: { stages: string[] }) {
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className="vg-process-path"
-      onPointerMove={onPointerMove}
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "8px",
-        padding: "20px",
-        marginBottom: "40px",
-        borderRadius: "14px",
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
+    <div ref={ref} className="vg-process-path" onPointerMove={onPointerMove}>
       <div aria-hidden className="vg-process-path-glow" />
-      {stages.map((stage, i) => (
-        <div key={stage} style={{ display: "flex", alignItems: "center", gap: "8px", position: "relative" }}>
-          <span
-            style={{
-              fontSize: "13px",
-              fontWeight: 700,
-              color: "rgba(255,255,255,0.72)",
-              padding: "8px 16px",
-              borderRadius: "100px",
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {stage}
-          </span>
-          {i < stages.length - 1 && (
-            <span aria-hidden style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px" }}>
-              →
-            </span>
-          )}
-        </div>
-      ))}
+
+      <ol className="vg-pipe">
+        {stages.map((stage, i) => (
+          <Fragment key={stage}>
+            <li className="vg-pipe-item">
+              <div className="vg-pipe-node">
+                <span className="vg-pipe-step">Stage {String(i + 1).padStart(2, "0")}</span>
+                <span className="vg-pipe-label">{stage}</span>
+              </div>
+
+              {/* Connector belongs to the node on its left, so the last stage
+                  simply has none and nothing dangles off the end. */}
+              {i < stages.length - 1 && (
+                <span className="vg-pipe-link" aria-hidden="true">
+                  {/* Each runner spans the whole connector and is translated
+                      by 100% of ITS OWN width, which is the connector's
+                      width - that is what lets a pure-CSS transform animation
+                      cover a distance the stylesheet never has to know. The
+                      dot rides at the runner's leading edge. Staggering by
+                      index makes the flow read as travelling along the whole
+                      pipeline rather than every gap pulsing in unison. */}
+                  <span className="vg-pipe-runner" style={{ animationDelay: `${i * 0.26}s` }}>
+                    <i className="vg-pipe-dot" />
+                  </span>
+                  <span
+                    className="vg-pipe-runner vg-pipe-runner--trail"
+                    style={{ animationDelay: `${i * 0.26 + 0.32}s` }}
+                  >
+                    <i className="vg-pipe-dot" />
+                  </span>
+                </span>
+              )}
+            </li>
+          </Fragment>
+        ))}
+      </ol>
     </div>
   );
 }

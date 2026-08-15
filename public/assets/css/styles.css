@@ -10075,11 +10075,19 @@ html, body {
    pointers only: on touch there is no cursor to follow, and a stuck glow
    after a tap is worse than none.
    ══════════════════════════════════════════════════════════ */
+/* Panel shell. These four declarations were inline on the component until
+   the pill strip became a pipeline; they moved here so the node/connector
+   rules below sit with the box they belong to. */
 .vg-process-path {
   --glow-x: 50%;
   --glow-y: 50%;
   position: relative;
   overflow: hidden;
+  padding: 22px 20px;
+  margin-bottom: 40px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .vg-process-path-glow {
   position: absolute;
@@ -10095,6 +10103,152 @@ html, body {
 }
 @media (prefers-reduced-motion: reduce) {
   .vg-process-path-glow { transition: none; }
+}
+
+/* ── Pipeline: stage nodes joined by connectors with dots flowing along ──
+   Flex rather than a fixed-viewBox SVG (see ProcessPath.tsx): the two case
+   studies pass different stage lists, and the same markup has to become a
+   vertical pipeline on narrow screens. */
+.vg-pipe {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vg-pipe-item {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+/* No connector after the final stage, so it must not claim spare width. */
+.vg-pipe-item:last-child { flex: 0 0 auto; }
+
+.vg-pipe-node {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.vg-pipe-step {
+  font-family: "Inter";
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  opacity: 0.75;
+}
+
+.vg-pipe-label {
+  /* --black-72 resolves to white here: .dark-mode inverts the core palette,
+     so the token named for the light theme is the one that reads correctly
+     on this permanently-dark site. */
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--black-72);
+  white-space: nowrap;
+}
+
+.vg-pipe-link {
+  position: relative;
+  flex: 1 1 auto;
+  align-self: stretch;
+  min-width: 26px;
+}
+
+/* 3px dash / 5px gap, matching the reference's stroke-dasharray, done as a
+   background so the dash size is exact rather than browser-chosen. */
+.vg-pipe-link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+  background-image: linear-gradient(to right, rgba(0, 222, 81, 0.32) 0 3px, transparent 3px 8px);
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+}
+
+/* Spans the connector and is translated by 100% of its own width, so one
+   keyframe covers a distance that varies per stage and per viewport. */
+.vg-pipe-runner {
+  position: absolute;
+  inset: 0;
+  animation: vg-pipe-flow-x 1.7s linear infinite;
+  will-change: transform;
+}
+.vg-pipe-runner--trail { opacity: 0.55; }
+
+.vg-pipe-dot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 6px rgba(0, 222, 81, 0.55);
+}
+
+@keyframes vg-pipe-flow-x {
+  0%   { transform: translateX(0);    opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes vg-pipe-flow-y {
+  0%   { transform: translateY(0);    opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+/* Below 992px five nodes plus four connectors cannot fit across without
+   either squeezing the labels or scrolling, so the pipeline stands up and
+   flows downward instead. Same markup, same animation, rotated axis. */
+@media (max-width: 991.98px) {
+  .vg-pipe { flex-direction: column; align-items: stretch; }
+  .vg-pipe-item { flex-direction: column; align-items: stretch; }
+
+  .vg-pipe-node { align-items: center; text-align: center; }
+  .vg-pipe-label { white-space: normal; }
+
+  .vg-pipe-link { min-height: 30px; align-self: auto; }
+  .vg-pipe-link::before {
+    left: 50%;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    height: auto;
+    transform: translateX(-50%);
+    background-image: linear-gradient(to bottom, rgba(0, 222, 81, 0.32) 0 3px, transparent 3px 8px);
+    background-size: 1px 8px;
+    background-repeat: repeat-y;
+  }
+  .vg-pipe-runner { animation-name: vg-pipe-flow-y; }
+  .vg-pipe-dot { left: 50%; top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The connectors still read as a pipeline without anything moving along
+     them, so the dots simply stop rather than the whole thing being hidden. */
+  .vg-pipe-runner { animation: none; opacity: 0.85; }
 }
 
 
