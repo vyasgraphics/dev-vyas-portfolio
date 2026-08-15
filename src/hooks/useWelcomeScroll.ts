@@ -63,7 +63,20 @@ export function useWelcomeScroll() {
         const apply = (progress: number) => {
             const exit = Math.min(1, progress / 0.55);
             if (content) {
-                gsap.set(content, { opacity: 1 - exit, y: -40 * exit });
+                // Same blur/contrast materialize every other section uses, run
+                // in reverse. useSectionMaterialize settles sections FROM
+                // blur(6px) contrast(2.1) as they arrive; this takes the
+                // welcome copy back INTO that state as it leaves, so the two
+                // are the same effect seen from opposite ends rather than two
+                // different ideas sitting next to each other. Values are
+                // copied from that hook deliberately - a blur of 5 or a
+                // contrast of 1.9 here would read as "nearly the same", which
+                // is worse than either matching or clearly differing.
+                gsap.set(content, {
+                    opacity: 1 - exit,
+                    y: -40 * exit,
+                    filter: `blur(${6 * exit}px) contrast(${1 + 1.1 * exit})`,
+                });
             }
             if (cue) {
                 gsap.set(cue, { opacity: 1 - Math.min(1, progress / 0.25) });
@@ -100,7 +113,7 @@ export function useWelcomeScroll() {
             trigger.kill();
             desktop.removeEventListener("change", onBreakpointChange);
             clearChrome();
-            if (content) gsap.set(content, { opacity: 1, y: 0 });
+            if (content) gsap.set(content, { opacity: 1, y: 0, filter: "none" });
             if (cue) gsap.set(cue, { opacity: 1 });
         };
     }, []);

@@ -31,13 +31,23 @@ type Props = {
 };
 
 const PLANE_SIZE = 256;
-const SEGMENTS = 256;
+
+// Vertex count is the whole performance story here, so it is halved per axis
+// on phones: every vertex runs cnoise() three times, and cnoise is a full 3D
+// Perlin implementation (eight gradient dot products, two permute rounds, an
+// inverse-sqrt approximation). At 256 segments that is 257x257 = 66,049
+// vertices x 3 noise evaluations EVERY frame, which a desktop GPU shrugs off
+// and a phone does not. 128 segments cuts it to 16,641 vertices, a 4x drop in
+// the dominant cost.
+const SEGMENTS_DESKTOP = 256;
+const SEGMENTS_MOBILE = 128;
 
 const VERTEX_SHADER = `
 attribute vec3 position;
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;
 uniform float time;
+uniform float detailFreq;
 varying vec3 vPosition;
 
 mat4 rotateMatrixX(float radian) {
@@ -129,7 +139,14 @@ void main(void) {
   vec3 noisePosition = updatePosition + vec3(0.0, 0.0, time * -30.0);
   float noise1 = cnoise(noisePosition * 0.08);
   float noise2 = cnoise(noisePosition * 0.06);
-  float noise3 = cnoise(noisePosition * 0.4);
+  // detailFreq is the reference's 0.4, scaled with the mesh density rather
+  // than left fixed. It is the finest of the three noise layers: at 0.4 its
+  // wavelength is 2.5 world units, which the desktop mesh (1 unit per quad)
+  // samples 2.5 times per wavelength. Halving the segment count without
+  // halving this too would drop that to 1.25 samples per wavelength - under
+  // Nyquist, so the detail would alias and visibly crawl as the terrain
+  // drifts, which reads far worse than simply coarser detail.
+  float noise3 = cnoise(noisePosition * detailFreq);
   vec3 lastPosition = updatePosition + vec3(0.0,
     noise1 * sin1 * 8.0
     + noise2 * sin1 * 8.0
@@ -252,48 +269,73 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
         }
         gl.useProgram(program);
 
-        // Geometry, in three.js PlaneGeometry order - see the note at the top
-        // of this file for why the row order matters.
-        const g = SEGMENTS + 1;
-        const half = PLANE_SIZE / 2;
-        const step = PLANE_SIZE / SEGMENTS;
-        const positions = new Float32Array(g * g * 3);
-        let p = 0;
-        for (let iy = 0; iy < g; iy++) {
-            const y = iy * step - half;
-            for (let ix = 0; ix < g; ix++) {
-                positions[p++] = ix * step - half;
-                positions[p++] = -y;
-                positions[p++] = 0;
-            }
-        }
-        const indices = new Uint32Array(SEGMENTS * SEGMENTS * 6);
-        let i = 0;
-        for (let iy = 0; iy < SEGMENTS; iy++) {
-            for (let ix = 0; ix < SEGMENTS; ix++) {
-                const a = ix + g * iy;
-                const b = ix + g * (iy + 1);
-                const c = ix + 1 + g * (iy + 1);
-                const d = ix + 1 + g * iy;
-                indices[i++] = a; indices[i++] = b; indices[i++] = d;
-                indices[i++] = b; indices[i++] = c; indices[i++] = d;
-            }
-        }
-
         const positionBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-        const positionLoc = gl.getAttribLocation(program, "position");
-        gl.enableVertexAttribArray(positionLoc);
-        gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
-
         const indexBuffer = gl.createBuffer();
-        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-
+        const positionLoc = gl.getAttribLocation(program, "position");
         const projectionLoc = gl.getUniformLocation(program, "projectionMatrix");
         const modelViewLoc = gl.getUniformLocation(program, "modelViewMatrix");
         const timeLoc = gl.getUniformLocation(program, "time");
+        const detailFreqLoc = gl.getUniformLocation(program, "detailFreq");
+
+        // Rebuilt whenever the viewport crosses the phone breakpoint, rather
+        // than decided once at mount. Deciding once looked reasonable - who
+        // resizes across 768px mid-visit? - but it quietly assumes
+        // window.innerWidth is already correct on the very first frame, and
+        // that assumption does not hold: a 1280px-wide browser was measured
+        // building the 128-segment phone mesh and keeping it for the whole
+        // session, because the window had not settled at the moment the
+        // effect ran. Rebuilding on demand removes the dependency on that
+        // timing entirely, and handles phone rotation for free. The equality
+        // guard means an ordinary resize that stays on one side of the
+        // breakpoint costs nothing.
+        let segments = 0;
+        let indexCount = 0;
+
+        const buildGeometry = (seg: number) => {
+            if (seg === segments) return;
+            segments = seg;
+
+            // Geometry, in three.js PlaneGeometry order - see the note at the
+            // top of this file for why the row order matters.
+            const g = seg + 1;
+            const half = PLANE_SIZE / 2;
+            const step = PLANE_SIZE / seg;
+            const positions = new Float32Array(g * g * 3);
+            let p = 0;
+            for (let iy = 0; iy < g; iy++) {
+                const y = iy * step - half;
+                for (let ix = 0; ix < g; ix++) {
+                    positions[p++] = ix * step - half;
+                    positions[p++] = -y;
+                    positions[p++] = 0;
+                }
+            }
+            const indices = new Uint32Array(seg * seg * 6);
+            let i = 0;
+            for (let iy = 0; iy < seg; iy++) {
+                for (let ix = 0; ix < seg; ix++) {
+                    const a = ix + g * iy;
+                    const b = ix + g * (iy + 1);
+                    const c = ix + 1 + g * (iy + 1);
+                    const d = ix + 1 + g * iy;
+                    indices[i++] = a; indices[i++] = b; indices[i++] = d;
+                    indices[i++] = b; indices[i++] = c; indices[i++] = d;
+                }
+            }
+            indexCount = indices.length;
+
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+            gl.enableVertexAttribArray(positionLoc);
+            gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+            gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
+
+            // Has to track the mesh density, so it is set here rather than
+            // once at setup - see the note beside noise3 in the shader.
+            gl.uniform1f(detailFreqLoc, 0.4 * (seg / SEGMENTS_DESKTOP));
+        };
 
         const projectionMatrix = new Float32Array(16);
         const modelViewMatrix = new Float32Array(16);
@@ -303,15 +345,35 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
+        // One definition of "is this a phone", read live rather than cached,
+        // so the mesh density, the pixel-ratio cap and the frame-rate cap can
+        // never disagree with each other about which device they are on.
+        let isMobile = false;
+
         const resize = () => {
+            const w = canvas.clientWidth || window.innerWidth;
+            const h = canvas.clientHeight || window.innerHeight;
+
+            // Decide nothing from a zero-sized viewport. A hidden or
+            // not-yet-laid-out page reports 0x0, which would otherwise read as
+            // "narrower than 768px" and build the phone mesh on a desktop -
+            // measured happening for real, and it stuck for the whole session
+            // back when the mesh was chosen once at mount. It also keeps a
+            // 0/0 aspect ratio out of the projection and lookAt maths, which
+            // would poison both matrices with NaN. A real resize event
+            // follows as soon as the page has a size, and everything below
+            // runs then.
+            if (!w || !h) return;
+
+            isMobile = w < 768;
+            buildGeometry(isMobile ? SEGMENTS_MOBILE : SEGMENTS_DESKTOP);
+
             // The reference rendered at a flat DPR of 1. Retina displays make
             // that visibly soft, but the mesh is heavily overdrawn translucent
             // geometry so fill rate is the real cost - 1.5 is the compromise,
             // and phones stay at 1 where the pixel budget is tightest.
-            const cap = window.innerWidth < 768 ? 1 : 1.5;
+            const cap = isMobile ? 1 : 1.5;
             const dpr = Math.min(window.devicePixelRatio || 1, cap);
-            const w = canvas.clientWidth || window.innerWidth;
-            const h = canvas.clientHeight || window.innerHeight;
             canvas.width = Math.round(w * dpr);
             canvas.height = Math.round(h * dpr);
             gl.viewport(0, 0, canvas.width, canvas.height);
@@ -366,17 +428,31 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
         const draw = () => {
             gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
             gl.uniform1f(timeLoc, time);
-            gl.drawElements(gl.TRIANGLES, indices.length, gl.UNSIGNED_INT, 0);
+            gl.drawElements(gl.TRIANGLES, indexCount, gl.UNSIGNED_INT, 0);
         };
 
+        // Phones redraw at 30fps rather than at display refresh rate. This is
+        // a slow-drifting decorative background, not something being aimed at
+        // or read, so halving its frame rate is close to invisible while
+        // halving everything it costs - and it leaves headroom for the scroll
+        // itself, which is what actually has to stay smooth under a finger.
+        let lastDraw = 0;
+
         const loop = (now: number) => {
+            frame = requestAnimationFrame(loop);
+
             const delta = last ? (now - last) / 1000 : 0;
             last = now;
             // A backgrounded tab or a long main-thread block can hand back a
             // huge delta on the next frame, which would jump the terrain.
+            // Time accumulates on EVERY frame, including ones that are about
+            // to be skipped below, so capping the frame rate slows the redraw
+            // without also slowing the drift down to half speed.
             time += Math.min(delta, 0.1) * speed;
+
+            if (now - lastDraw < (isMobile ? 1000 / 30 : 0)) return;
+            lastDraw = now;
             draw();
-            frame = requestAnimationFrame(loop);
         };
 
         const start = () => {
@@ -417,7 +493,17 @@ export function GlslHills({ className, cameraZ = 125, speed = 0.5 }: Props) {
 
         const onResize = () => {
             resize();
-            if (reduceMotion) draw();
+            // Assigning canvas.width/height empties the drawing buffer, so any
+            // resize that lands while the loop is not running leaves a blank
+            // canvas behind until something restarts it. That covers three
+            // real cases: reduced motion (there is no loop at all, just the
+            // single frame drawn at setup), a tab that is currently
+            // backgrounded, and the section being scrolled out of view. One
+            // frame here keeps whatever is on screen correct at all times.
+            // Observed for real: rotating to a narrower viewport rebuilt the
+            // mesh correctly and still showed nothing, because the redraw was
+            // waiting on a loop that was stopped.
+            if (!running) draw();
         };
         window.addEventListener("resize", onResize);
 
