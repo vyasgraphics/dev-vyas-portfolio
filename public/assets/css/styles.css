@@ -8041,21 +8041,19 @@ button.animate-btn::after,
   left: 20px;
   z-index: 30;
 }
+/* Surface comes from the .vg-glass token at the end of this file - this
+   control is where that token was derived FROM, so its original fill,
+   border, blur and shadow values are preserved there as its per-instance
+   overrides rather than being changed. */
 .section-nav-trigger {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  border-radius: 100px;
-  background: rgba(20,22,26,0.85);
-  border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   color: #fff;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   white-space: nowrap;
 }
 .section-nav-trigger-dot {
@@ -8992,17 +8990,21 @@ html, body {
 .work-hover-cta {
   transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.wg-work .tf-btn-action:active,
-.work-hover-cta:active {
+/* .work-hover-cta deliberately dropped from this grouped selector. It set
+   a bare scale(0.96) with no translateY, which would have knocked the pill
+   out of its revealed position had it ever won the cascade - and it left
+   two contradictory press rules for the same element in one file, which is
+   how the original bug went unnoticed. Its press state now lives in exactly
+   one place, beside the reveal rule further down. */
+.wg-work .tf-btn-action:active {
   transform: scale(0.96);
 }
-.work-hover-cta:active {
-  /* .work-hover-cta already carries its own translateY/scale for the
-     hover-reveal position (see below) - active state composes on top of
-     that rather than replacing it, so the button doesn't jump position
-     when pressed mid-reveal. */
-  transform: translateY(0) scale(0.92);
-}
+/* .work-hover-cta's press state is NOT declared here - it lives with the
+   reveal rule further down, because it has to out-specify it to apply at
+   all. See the note there. It also cannot simply be given .vg-tactile:
+   that class sets its own `transform: scale()`, which would replace this
+   button's reveal transform and make the pill jump on hover - the same
+   collision that broke the welcome screen's scroll button. */
 
 /* ── Work card: hover-reveal "View case study" pill over the screenshot.
    Top-right corner, not bottom-centre or dead-centre. Bottom-centre sat
@@ -9034,7 +9036,17 @@ html, body {
   font-weight: 700;
   text-decoration: none;
   opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  /* transform gets the tactile group's fast spring, NOT the 0.25s ease the
+     reveal uses. Both were declared: the spring earlier in this file (with
+     .wg-work .tf-btn-action), the reveal easing here - and this one is
+     later, so it silently won and every press animated over 250ms of plain
+     ease. A press that takes a quarter of a second does not read as a
+     press, which is why this button felt dead next to every other one.
+     Opacity keeps the slower curve; it is a reveal, not a response. */
+  transition:
+    opacity 0.25s ease,
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.12s ease;
 }
 .work-hover-cta:focus-visible {
   opacity: 1;
@@ -9047,12 +9059,42 @@ html, body {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
+  /* Hover lift on the pill ITSELF, matching the scale(1.035) every other
+     button on the site uses. It has to be written as
+     `.work-image:hover .work-hover-cta:hover` rather than the obvious
+     `.work-hover-cta:hover`, because the reveal rule directly above scores
+     (0,3,0) and a bare `.work-hover-cta:hover` only scores (0,2,0) - the
+     reveal would win and the lift would silently never apply. Hovering the
+     pill necessarily means hovering the image it sits in, so both
+     conditions are always true together. */
+  .work-image:hover .work-hover-cta:hover {
+    transform: translateY(0) scale(1.04);
+  }
+
   .work-image:hover img {
     filter: brightness(0.55);
   }
   .work-image img {
     transition: filter 0.3s ease;
   }
+}
+
+/* Press state, re-declared at a specificity that can actually beat the
+   reveal rule above.
+   This is why the button felt dead: `.work-hover-cta:active` (0,2,0) was
+   losing to `.work-image:hover .work-hover-cta` (0,3,0) on BOTH counts -
+   lower specificity and earlier in the file - and since the pill is only
+   ever visible while the card is hovered, that reveal rule was always
+   active at exactly the moment someone pressed it. The scale-down had
+   therefore never once applied. The box-shadow did (the reveal rule does
+   not set one), which is why there was a faint hint of feedback but no
+   movement. Left outside the hover media query so a stylus or a hybrid
+   device that reports no hover still gets the press feedback. */
+.work-image:hover .work-hover-cta:active,
+.work-hover-cta:active {
+  transform: translateY(0) scale(0.92);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.4), inset 0 1px 6px rgba(0, 0, 0, 0.3);
 }
 
 /* ── Contact form: left-align typed text in all input fields ──
@@ -10419,14 +10461,17 @@ html, body {
   margin-inline: auto;
   bottom: clamp(22px, 4.5vh, 44px);
   z-index: 3;
+  /* Row, not column. Stacking the label above the arrow was fine when this
+     was bare text, but once it took the glass surface the stack made it a
+     148x82 lozenge - far too tall to read as a pill, and the odd one out
+     against every other pill on the site. Side by side it lands at pill
+     proportions and matches the chip family. */
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: none;
-  border: 0;
+  gap: 10px;
+  padding: 12px 22px;
   cursor: pointer;
   font-family: "Inter";
   font-size: 11px;
@@ -10434,7 +10479,10 @@ html, body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.72);
-  transition: color 0.3s var(--ease-hover);
+  /* Background, border, blur and transition come from the .vg-glass token
+     at the end of this file. This one sits over the animated terrain, so
+     it is the single place on the site where the backdrop blur has real
+     texture behind it to work with. */
 }
 
 .vg-welcome-scroll:hover,
@@ -10554,9 +10602,6 @@ html, body {
 .vg-cta-skill {
   position: absolute;
   padding: 6px 12px;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
   font-size: 12px;
   font-weight: 500;
   line-height: 1.4;
@@ -10767,6 +10812,9 @@ html, body {
 
 .vg-step-details { margin-top: 4px; }
 
+/* Surface (background/border/blur/shadow/hover) comes from the .vg-glass
+   token block at the end of this file - only the geometry and type live
+   here now. */
 .vg-step-toggle {
   display: inline-flex;
   align-items: center;
@@ -10777,25 +10825,22 @@ html, body {
      round of mobile tap-target fixes - no reason to reintroduce an
      undersized one. Costs nothing visually at desktop size. */
   min-height: 44px;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.04);
   color: var(--black-56);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
   list-style: none;
-  transition: color 0.2s var(--ease-hover), border-color 0.2s var(--ease-hover);
 }
 /* Safari draws its own disclosure triangle via this pseudo-element and
    ignores list-style on summary; both are needed to suppress it. */
 .vg-step-toggle::-webkit-details-marker { display: none; }
 .vg-step-toggle::marker { content: ""; }
 
+/* Border colour on hover comes from the .vg-glass token; only the text
+   colour is specific to this control. */
 .vg-step-toggle:hover,
 .vg-step-toggle:focus-visible {
   color: var(--black-72);
-  border-color: rgba(0, 222, 81, 0.45);
 }
 
 .vg-step-toggle-hide { display: none; }
@@ -10850,12 +10895,132 @@ html, body {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Fill, border and rim come from the .vg-glass token at the end of this
+   file; its green tint is set there as this chip's own override. */
 .vg-recap-chip {
   padding: 8px 16px;
-  border-radius: 100px;
   font-size: 13px;
   font-weight: 700;
   color: var(--black-72);
-  border: 1px solid rgba(0, 222, 81, 0.28);
-  background: rgba(0, 222, 81, 0.05);
+}
+
+/* ══════════════════════════════════════════════════════════
+   Glass surface token (.vg-glass)
+   ══════════════════════════════════════════════════════════
+   One shared treatment for the site's SECONDARY button tier, derived from
+   .section-nav-trigger - which was already a glass button (translucent
+   fill, hairline border, backdrop blur, lifted shadow) and the only one.
+   The others had each grown their own near-miss version: .vg-step-toggle
+   at rgba(255,255,255,0.04)/0.14, .vg-cta-skill at 0.04/0.1, .vg-pipe-node
+   at 0.05/0.1, .vg-welcome-scroll with no surface at all. Same idea, four
+   different sets of numbers, no way to change them together.
+
+   The PRIMARY tier (.tf-btn-action) is deliberately excluded and stays
+   solid --primary green. Glass on an opaque button is a contradiction -
+   there is nothing to see through - and the one control that must never
+   be ambiguous is the one asking for the job.
+
+   Why this reads as glass even on a flat #0A0A0A background, where there
+   is nothing behind to refract: the effect is carried by the EDGE, not the
+   blur. A hairline border plus an inset top highlight is what the eye
+   reads as a lit glass rim, and both work against a flat fill. The
+   backdrop blur is then a bonus that only genuinely shows on the handful
+   of surfaces with texture behind them (the welcome terrain, work
+   imagery), rather than the thing the whole effect depends on.
+
+   Intensity is per-instance via custom properties, because a floating
+   control that must stay legible over arbitrary page content needs a much
+   more opaque fill than a pill sitting inside a panel. */
+.vg-glass,
+.vg-step-toggle,
+.vg-welcome-scroll,
+.section-nav-trigger,
+.vg-recap-chip,
+.vg-cta-skill,
+.vg-chip {
+  background: var(--vg-glass-bg, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--vg-glass-border, rgba(255, 255, 255, 0.14));
+  border-radius: 100px;
+  -webkit-backdrop-filter: blur(var(--vg-glass-blur, 10px));
+  backdrop-filter: blur(var(--vg-glass-blur, 10px));
+  /* The lit rim. Top inner highlight + soft ambient lift. */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 2px 10px -4px rgba(0, 0, 0, 0.5);
+  transition:
+    background 0.25s var(--ease-hover),
+    border-color 0.25s var(--ease-hover),
+    color 0.25s var(--ease-hover);
+}
+
+.vg-glass:hover,
+.vg-step-toggle:hover,
+.vg-welcome-scroll:hover,
+.section-nav-trigger:hover,
+.vg-glass:focus-visible,
+.vg-step-toggle:focus-visible,
+.vg-welcome-scroll:focus-visible,
+.section-nav-trigger:focus-visible {
+  background: var(--vg-glass-bg-hover, rgba(255, 255, 255, 0.09));
+  border-color: var(--vg-glass-border-hover, rgba(0, 222, 81, 0.45));
+}
+
+/* Floating over arbitrary page content, so it needs a near-opaque fill and
+   a stronger blur to stay legible - these are its original values, kept. */
+.section-nav-trigger {
+  --vg-glass-bg: rgba(20, 22, 26, 0.85);
+  --vg-glass-bg-hover: rgba(26, 30, 34, 0.9);
+  --vg-glass-border: rgba(255, 255, 255, 0.12);
+  --vg-glass-blur: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Sits over the animated terrain, which is the one place on the site where
+   the backdrop blur has real texture to work with - so it gets the most
+   transparent fill of the three, letting the mesh show through it. */
+.vg-welcome-scroll {
+  --vg-glass-bg: rgba(255, 255, 255, 0.04);
+  --vg-glass-bg-hover: rgba(255, 255, 255, 0.1);
+  --vg-glass-blur: 12px;
+}
+
+/* Reduced motion keeps the surface, drops only the transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .vg-glass,
+  .vg-step-toggle,
+  .vg-welcome-scroll,
+  .section-nav-trigger { transition: none; }
+}
+
+/* Static pills: the site's chip family (results recap, CTA skill labels,
+   case study tags). These take the token's EDGE - hairline border and lit
+   inner rim - but explicitly no backdrop blur.
+   Two reasons. Cost: there are a dozen or more per page and they are small,
+   so a blur each buys nothing visible and adds real compositing work on a
+   phone, which this site has already had two rounds of fixing. And effect:
+   the blur only ever shows where there is texture behind, which for a chip
+   sitting on a flat panel there never is - the rim is doing all the work
+   regardless. They are labels, not controls, so they also get no hover. */
+.vg-recap-chip,
+.vg-cta-skill,
+.vg-chip {
+  --vg-glass-blur: 0px;
+}
+
+/* Results chips keep their green tint - they report outcomes, and that
+   colour is the signal. Only the rim and geometry come from the token. */
+.vg-recap-chip {
+  --vg-glass-bg: rgba(0, 222, 81, 0.05);
+  --vg-glass-border: rgba(0, 222, 81, 0.28);
+}
+
+/* Case study header tags (industry / year / tooling / discipline). */
+.vg-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--black-72);
 }

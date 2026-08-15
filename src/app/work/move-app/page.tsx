@@ -222,14 +222,9 @@ export default function MoveAppWorkPage() {
             effort standing between students and the options already there.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
+            {/* Shared .vg-chip - see the matching note on the dissertation page. */}
             {["UX Researcher & Designer", "2026", "Figma", "Health & Fitness"].map((t) => (
-              <span key={t} style={{
-                padding: "6px 14px", borderRadius: "100px",
-                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
-                color: "rgba(255,255,255,0.72)",
-              }}>
-                {t}
-              </span>
+              <span key={t} className="vg-chip">{t}</span>
             ))}
           </div>
         </header>
