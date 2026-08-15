@@ -10320,3 +10320,189 @@ html, body {
   .vg-welcome-scroll-arrow { animation: none; }
   .vg-chrome { opacity: 1; pointer-events: auto; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   Work CTA card (homepage, directly after Selected Work)
+   New component, so these rules live here and ONLY here - there is no
+   .vg-cta anything in public/assets/scss/, nothing to mirror.
+   Ported from a Tailwind reference; the buttons inside it are the site's
+   existing .tf-btn-action / .action-down and are untouched, so the ask
+   stays the same size and green as every other ask on the page.
+   ══════════════════════════════════════════════════════════ */
+.vg-cta-card {
+  position: relative;
+  overflow: hidden;
+  /* 18px and --black-6 carried over from the flat band this replaced, rather
+     than the reference's rounded-3xl (24px), so it matches the other panels
+     on the page instead of introducing a second corner radius. */
+  border-radius: 18px;
+  border: 1px solid var(--black-6);
+  background: rgba(0, 222, 81, 0.04);
+}
+
+/* Cursor-following glow. Sized and offset so the element's own centre sits
+   under the pointer, which is what --mouse-x/--mouse-y are measured to. */
+.vg-cta-card::before {
+  content: "";
+  position: absolute;
+  top: -180px;
+  left: -180px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0;
+  filter: blur(80px);
+  transform: translate(var(--mouse-x, 0px), var(--mouse-y, 0px));
+  transition: opacity 0.5s var(--ease-hover);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Hover-capable pointers only. A blurred 360px circle is a genuinely
+   expensive thing to composite, and on touch there is no hovering cursor for
+   it to follow in the first place. */
+@media (hover: hover) {
+  /* 0.09, down from 0.18 (and from the reference's 0.2). At those the green
+     read as a wash across the card rather than a light source following the
+     cursor, and it fought the green in the CTA button sitting inside it. */
+  .vg-cta-card:hover::before { opacity: 0.09; }
+}
+
+.vg-cta-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.vg-cta-inner {
+  position: relative;
+  z-index: 2;
+}
+
+.vg-cta-grid {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 28px 30px;
+}
+
+/* ── Skill pill stage ── */
+.vg-cta-stage {
+  position: relative;
+  flex: 0 0 300px;
+  height: 250px;
+}
+
+/* Percentages, not pixels: the pointer's path is measured from these at
+   runtime (see WorkCta.tsx), so the two can never disagree. */
+.vg-cta-skill {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  /* --black-72, NOT --white-72, despite this text being white on screen.
+     The .dark-mode block redefines the whole core palette to its own
+     opposite: --white-72 resolves to rgba(0,0,0,0.72) and --black-72 to
+     rgba(255,255,255,0.72). The names describe the LIGHT theme, and this
+     site is permanently dark, so every token here reads inverted. Using the
+     one that sounds right produced black text on a near-black pill - present
+     in the DOM, correct opacity, completely invisible. */
+  color: var(--black-72);
+  opacity: 0.66;
+}
+
+.vg-cta-skill--a { left: 2%;  top: 26%; }
+.vg-cta-skill--b { right: 4%; top: 8%; }
+.vg-cta-skill--c { left: 10%; bottom: 16%; }
+.vg-cta-skill--d { right: 0;  bottom: 34%; }
+
+.vg-cta-pointer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Sits BELOW the arrow tip, not level with it. Level (the reference's
+   top:-4px) put the label alongside the pill it was pointing at and covered
+   the end of the longer labels. */
+.vg-cta-pointer-label {
+  position: relative;
+  top: 4px;
+  left: 4px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--primary);
+  color: #04120A;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ── Copy and actions ── */
+.vg-cta-content { flex: 1 1 auto; min-width: 0; }
+
+.vg-cta-title {
+  margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--black-72);
+}
+
+.vg-cta-desc {
+  margin: 0 0 20px;
+  color: var(--black-56);
+}
+
+.vg-cta-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.vg-cta-actions .action-down {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tablet: the 300px stage plus the copy no longer both fit across. */
+@media (max-width: 991.98px) {
+  .vg-cta-grid {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 24px;
+  }
+  .vg-cta-stage {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 320px;
+    height: 210px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .vg-cta-grid { padding: 20px; }
+  .vg-cta-stage { height: 190px; }
+  .vg-cta-skill { font-size: 11px; padding: 5px 10px; }
+  .vg-cta-title { font-size: 18px; }
+  .vg-cta-actions { gap: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-cta-card::before { display: none; }
+}
