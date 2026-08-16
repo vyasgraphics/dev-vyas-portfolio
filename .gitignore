@@ -1,3 +1,35 @@
-.DS_Store
+# Environment / secrets
+# This repo is PUBLIC and the contact form uses a Resend API key. Nothing has
+# ever been committed (full history was scanned on 16 Aug 2026 and is clean),
+# but without these lines a single local .env.local would be published on the
+# next `git add .`. The key lives in Vercel's environment variables only.
+.env
+.env.*
+!.env.example
+
+# Build output / caches
 .next/
+out/
+build/
+.vercel/
+*.tsbuildinfo
+
+# Dependencies
 node_modules/
+.pnp
+.pnp.js
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Testing / coverage
+coverage/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
