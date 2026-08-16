@@ -107,8 +107,10 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
         clutter degrades performance unevenly, but rarely measured cognitive ability directly.
       </>,
       <>
-        Nobody had connected the two - the gap this study set out to close, and where its{" "}
-        <strong style={{ color: "#fff" }}>three research questions</strong>{" "}came from.
+        Nobody had connected the two, which set the study three questions:{" "}
+        <strong style={{ color: "#fff" }}>does the trait predict performance</strong> on a real interface at all,{" "}
+        <strong style={{ color: "#fff" }}>does it still predict it</strong> once age and reading speed are ruled
+        out, and <strong style={{ color: "#fff" }}>do its two components act alone or together</strong>.
       </>,
     ],
   },
@@ -122,8 +124,9 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
       </>,
       <>
         One correct article always sits{" "}
-        <strong style={{ color: "#fff" }}>sandwiched between two sponsored boxes</strong>{" "}- a construction based on
-        banner-blindness research showing placement alone can cost real search time.
+        <strong style={{ color: "#fff" }}>sandwiched between two sponsored boxes</strong>{" "}- extending banner-blindness
+        research rather than replicating it, since the original effect was found with flashing-text banners, not the
+        calmer, commercial-style boxes used here.
       </>,
       <>
         Card position, query order and promo placement all{" "}
@@ -509,7 +512,10 @@ export default function DissertationWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Built the instrument.</strong>{" "}A purpose-made task derived from banner-blindness research, not an off-the-shelf one.
+                  <strong style={{ color: "#fff" }}>Built the instrument.</strong>{" "}A purpose-made task synthesising banner-blindness, retrieval-scoring and online-timing literatures, not an off-the-shelf one.
+                </li>
+                <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
+                  <strong style={{ color: "#fff" }}>Chose the measure deliberately.</strong>{" "}Rejected a standard usability questionnaire for a direct behavioural one - task success and self-reported ease correlate weakly in the literature, so only one could actually answer the question.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   <strong style={{ color: "#fff" }}>Built a pipeline, not a script.</strong>{" "}Written once, reused unmodified across every batch and every cross-check.
