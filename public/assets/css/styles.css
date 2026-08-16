@@ -11061,13 +11061,35 @@ html, body {
    The credential line is green and sits directly under the title on
    purpose. It is the only part of the card that is a checkable fact, so
    it gets the accent colour rather than the heading does. */
+/* Three cards, so the layout is THREE ACROSS OR ONE DOWN - never two.
+   Two columns always orphans the third card on a row of its own, which is
+   what a real 430px iPhone was showing: the container is 398px there, and
+   `repeat(auto-fit, minmax(190px, 1fr))` fits exactly two 193px tracks
+   (2*190 + 12 gap = 392 <= 398), so 01 and 02 sat side by side with 03
+   stranded below. auto-fit cannot express "3 or 1" - as the container grows
+   it must pass through 2 - so the count is set explicitly per breakpoint
+   instead. Stacked is the default and three across is opted into only where
+   the column is genuinely wide enough. */
 .vg-pillars {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
   margin: 2.25rem 0 0;
   padding: 0;
   list-style: none;
+}
+
+/* Widths are the Bootstrap column this renders inside, not the viewport:
+   full width below 992px, then col-lg-7 (about 530px) and col-xl-8 (about
+   730px at 1200, 850px at 1400+). 768-991px is full width and comfortably
+   fits three; 992-1199px is the narrow col-lg-7 and deliberately stays
+   stacked rather than squeezing three 167px columns of running text. */
+@media (min-width: 768px) and (max-width: 991px) {
+  .vg-pillars { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .vg-pillars { grid-template-columns: repeat(3, 1fr); }
 }
 
 .vg-pillar {
@@ -11141,8 +11163,16 @@ html, body {
      Interactive Technologies") wraps to two lines and pushes its own
      description a line below the other two - three descriptions starting
      at three different heights across one row. Reserving the space fixes
-     the baseline for all three. */
+     the baseline for all three.
+     Only meaningful when the cards ARE in a row - it is released at every
+     stacked breakpoint below, where it would just open a gap under the
+     credentials that fit on one line. */
   min-height: calc(12px * 1.45 * 2);
+}
+
+/* Stacked here (see the grid rules above), so nothing to line up across. */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .vg-pillar-credential { min-height: 0; }
 }
 
 .vg-pillar-desc {
