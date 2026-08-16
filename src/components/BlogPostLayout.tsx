@@ -85,7 +85,7 @@ export function BlogPostLayout({
       "@type": "Person",
       name: "Dev Vyas",
       url: SITE_URL,
-      jobTitle: "Product Designer",
+      jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
     },
     publisher: {
       "@type": "Person",

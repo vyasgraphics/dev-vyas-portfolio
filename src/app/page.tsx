@@ -21,10 +21,14 @@ const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
 // person with a job, a location and verified profiles rather than to a page
 // that merely mentions the name a lot.
 //
-// `jobTitle` stays the single canonical "Product Designer" rather than the
-// three-discipline string used in the visible title. Structured data is
-// machine-readable and wants one job title; the breadth lives in
-// `knowsAbout`, which is the field designed for it.
+// `jobTitle` lists all three titles rather than one canonical string. This
+// reversed an earlier decision, on recruitment grounds: schema.org allows an
+// array here, all three are true, and they are the actual terms roles get
+// advertised under - so an entity match on any one of them should resolve to
+// this person. A single "Product Designer" was tidier but silently opted out
+// of the other two. Ordered to match the visible identity, UI/UX first.
+// `knowsAbout` below still carries the skills, which is a different question
+// from what job he is applying for.
 const STRUCTURED_DATA = {
   "@context": "https://schema.org",
   "@graph": [
@@ -33,7 +37,7 @@ const STRUCTURED_DATA = {
       "@id": `${SITE_URL}/#person`,
       name: "Dev Vyas",
       url: SITE_URL,
-      jobTitle: "Product Designer",
+      jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
       description:
         "UI/UX, product and graphic designer combining human-centred research, visual craft and a computer science background.",
       image: `${SITE_URL}/opengraph-image`,

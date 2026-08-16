@@ -52,7 +52,7 @@ const STRUCTURED_DATA = {
         "@type": "Person",
         name: "Dev Vyas",
         url: SITE_URL,
-        jobTitle: "Product Designer",
+        jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
         sameAs: [
           "https://www.linkedin.com/in/dev-vyas6",
           "https://www.behance.net/devvyas_graphics",
