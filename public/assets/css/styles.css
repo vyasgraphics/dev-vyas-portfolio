@@ -5820,7 +5820,6 @@ button.animate-btn::after,
   }
 }
 
-
 .timeline-item {
   display: flex;
 }
@@ -8438,7 +8437,10 @@ button.animate-btn::after,
   .vg-hint-pill .icon { animation: none; }
 }
 
-/* ── Animated text overlap fix (Hey I'm Dev/Designer/Researcher) ── */
+/* ── Profile card greeting: "I'm " + rotating name/title ──
+   The prefix and the rotating word share ONE nowrap line, so the prefix is a
+   fixed tax on the width left for the longest title. It reads "I'm", not
+   "Hey, I'm", for that reason as much as tone - see UserSidebar.tsx. */
 .sidebar-user .user-info .greeting {
   /* Pinned, not inherited. This element was an <h5> and took its weight from
      Bootstrap Reboot's heading default (500); it is now a <p> so the page
@@ -8482,31 +8484,6 @@ button.animate-btn::after,
    tightest tier and scales fine at the wider 480px tier too. */
 @media (min-width: 992px) {
   .sidebar-user .user-info .greeting { font-size: 26px !important; }
-}
-
-/* Second greeting line: the rotating job title, under the static name.
-   Deliberately a step smaller than the name above it - the name is the
-   identity and the title is the qualifier, so the hierarchy should say so,
-   and the smaller size also guarantees the longest title ("a Product
-   Designer") clears the card's right edge at every tier. That overflow is
-   exactly what splitting this onto its own line was meant to fix, so it is
-   not left to chance. */
-.sidebar-user .user-info .greeting-roles {
-  margin-top: 2px;
-  /* One step down from the name at EVERY tier, not just desktop. Without a
-     base value this inherited the name's size on mid-range screens and the
-     two lines rendered identically, losing the hierarchy the split was for. */
-  font-size: 15px;
-  color: var(--white-72);
-}
-.sidebar-user .user-info .greeting.greeting-roles { padding-bottom: 20px; }
-.sidebar-user .user-info .greeting:not(.greeting-roles) { padding-bottom: 0; }
-
-@media (max-width: 380px) {
-  .sidebar-user .user-info .greeting-roles { font-size: 15px !important; }
-}
-@media (min-width: 992px) {
-  .sidebar-user .user-info .greeting-roles { font-size: 20px !important; }
 }
 
 /* ── Slogan: EB Garamond serif ── */
@@ -8997,8 +8974,6 @@ textarea:focus-visible,
 html, body {
   overscroll-behavior-y: none;
 }
-
-
 
 /* ── Work card: arrow link in the bottom-right corner of the right-side
    image panel, so visitors can jump to the project without needing to
@@ -10157,7 +10132,6 @@ html, body {
   }
 }
 
-
 /* ══════════════════════════════════════════════════════════
    Case study stat count-up (CountUpStat.tsx)
    Landing beat mirroring the homepage hero counters' scale-pop (see the
@@ -10354,7 +10328,6 @@ html, body {
      them, so the dots simply stop rather than the whole thing being hidden. */
   .vg-pipe-runner { animation: none; opacity: 0.85; }
 }
-
 
 /* ══════════════════════════════════════════════════════════
    Mobile: hold the collapsed tools rail back until past the hero

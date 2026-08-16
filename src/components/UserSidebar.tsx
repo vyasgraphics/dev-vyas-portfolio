@@ -106,30 +106,29 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                         <span className="dot" />
                         <span>Available Sep 2026</span>
                     </p>
-                    {/* Two lines, not one. The name used to be the first item
-                        in the SAME rotator as the job titles, so the card read
-                        "Hey, I'm [Dev Vyas | a Product Designer | ...]" - which
-                        meant the "Hey, I'm " prefix and the longest title had
-                        to share a single nowrap line, and that line ran off the
-                        card's right edge. Reducing the font size had already
-                        been tried and did not hold. Splitting the static name
-                        onto its own line removes the competition entirely.
+                    {/* One line: a static "I'm " followed by the rotator, which
+                        cycles the name and then the three titles.
 
-                        Both are <p>, not the <h5> this used to be: as an h5 it
-                        was the FIRST heading in the document, so the outline
-                        opened at level 5 before the h1, and anyone navigating
-                        by heading landed on text that rewrites itself every few
-                        seconds. Only the second line carries .animationtext,
-                        which is what useHeadlineRotate binds to. */}
-                    <p className="greeting letter-space--2 text-white">
-                        Hey, I&apos;m Dev Vyas
-                    </p>
-                    <p className="greeting greeting-roles letter-space--2 text-white animationtext clip">
+                        The prefix is deliberately "I'm" rather than "Hey, I'm".
+                        Both share a single nowrap line with the rotating word,
+                        so the prefix directly eats the width available to the
+                        longest title - at 26px "Hey, I'm " costs about 130px
+                        and pushed "a Product Designer" off the card's right
+                        edge, which is the overflow this replaced. Shrinking the
+                        font had been tried first and did not hold it.
+
+                        A <p>, not the <h5> this used to be: as an h5 it was the
+                        FIRST heading in the document, so the outline opened at
+                        level 5 before the h1, and anyone navigating by heading
+                        landed on text that rewrites itself every few seconds.
+                        Its font-size and weight are pinned in CSS because a <p>
+                        does not inherit the heading defaults it used to. */}
+                    <p className="greeting letter-space--2 text-white animationtext clip">
                         I&apos;m{" "}
                         <span className="cd-words-wrapper">
-                            {profile.rotatingRoles.map((role, i) => (
-                                <span key={role} className={`item-text ${i === 0 ? "is-visible" : "is-hidden"}`}>
-                                    {role}
+                            {profile.rotatingNames.map((name, i) => (
+                                <span key={name} className={`item-text ${i === 0 ? "is-visible" : "is-hidden"}`}>
+                                    {name}
                                 </span>
                             ))}
                         </span>
