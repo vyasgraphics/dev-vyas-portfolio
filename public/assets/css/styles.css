@@ -8446,6 +8446,12 @@ button.animate-btn::after,
      400 - so without this the greeting silently rendered a step lighter.
      Mirrored in scss/component/elements/_section.scss. */
   font-weight: 500;
+  /* Size pinned for the same reason as the weight. As an <h5> this inherited
+     18px from the heading scale between 381px and 991px, where neither of the
+     two media queries below applies; as a <p> it silently fell to the 16px
+     body default. Desktop hid the regression because the min-width:992px rule
+     pins 26px regardless. Measured both before and after. */
+  font-size: 18px;
   display: block !important;
   white-space: nowrap !important;
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8) !important;
@@ -8476,6 +8482,31 @@ button.animate-btn::after,
    tightest tier and scales fine at the wider 480px tier too. */
 @media (min-width: 992px) {
   .sidebar-user .user-info .greeting { font-size: 26px !important; }
+}
+
+/* Second greeting line: the rotating job title, under the static name.
+   Deliberately a step smaller than the name above it - the name is the
+   identity and the title is the qualifier, so the hierarchy should say so,
+   and the smaller size also guarantees the longest title ("a Product
+   Designer") clears the card's right edge at every tier. That overflow is
+   exactly what splitting this onto its own line was meant to fix, so it is
+   not left to chance. */
+.sidebar-user .user-info .greeting-roles {
+  margin-top: 2px;
+  /* One step down from the name at EVERY tier, not just desktop. Without a
+     base value this inherited the name's size on mid-range screens and the
+     two lines rendered identically, losing the hierarchy the split was for. */
+  font-size: 15px;
+  color: var(--white-72);
+}
+.sidebar-user .user-info .greeting.greeting-roles { padding-bottom: 20px; }
+.sidebar-user .user-info .greeting:not(.greeting-roles) { padding-bottom: 0; }
+
+@media (max-width: 380px) {
+  .sidebar-user .user-info .greeting-roles { font-size: 15px !important; }
+}
+@media (min-width: 992px) {
+  .sidebar-user .user-info .greeting-roles { font-size: 20px !important; }
 }
 
 /* ── Slogan: EB Garamond serif ── */

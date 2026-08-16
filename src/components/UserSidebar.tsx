@@ -106,20 +106,30 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                         <span className="dot" />
                         <span>Available Sep 2026</span>
                     </p>
-                    {/* A <p>, not the <h5> this used to be. It is a greeting,
-                        not a section heading: as an h5 it was the FIRST
-                        heading in the document, so the page outline opened at
-                        level 5 before reaching the h1, and anyone navigating
-                        by heading landed on rotating text that rewrites
-                        itself every few seconds. Styling is unaffected -
-                        .greeting is targeted by class everywhere, never by
-                        tag, and its font-size is set explicitly. */}
-                    <p className="greeting letter-space--2 text-white animationtext clip">
-                        Hey, I&apos;m{" "}
+                    {/* Two lines, not one. The name used to be the first item
+                        in the SAME rotator as the job titles, so the card read
+                        "Hey, I'm [Dev Vyas | a Product Designer | ...]" - which
+                        meant the "Hey, I'm " prefix and the longest title had
+                        to share a single nowrap line, and that line ran off the
+                        card's right edge. Reducing the font size had already
+                        been tried and did not hold. Splitting the static name
+                        onto its own line removes the competition entirely.
+
+                        Both are <p>, not the <h5> this used to be: as an h5 it
+                        was the FIRST heading in the document, so the outline
+                        opened at level 5 before the h1, and anyone navigating
+                        by heading landed on text that rewrites itself every few
+                        seconds. Only the second line carries .animationtext,
+                        which is what useHeadlineRotate binds to. */}
+                    <p className="greeting letter-space--2 text-white">
+                        Hey, I&apos;m Dev Vyas
+                    </p>
+                    <p className="greeting greeting-roles letter-space--2 text-white animationtext clip">
+                        I&apos;m{" "}
                         <span className="cd-words-wrapper">
-                            {profile.rotatingNames.map((name, i) => (
-                                <span key={name} className={`item-text ${i === 0 ? "is-visible" : "is-hidden"}`}>
-                                    {name}
+                            {profile.rotatingRoles.map((role, i) => (
+                                <span key={role} className={`item-text ${i === 0 ? "is-visible" : "is-hidden"}`}>
+                                    {role}
                                 </span>
                             ))}
                         </span>

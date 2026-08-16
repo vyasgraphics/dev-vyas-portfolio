@@ -71,7 +71,7 @@ export default function OpengraphImage() {
             </div>
             <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "rgba(255,255,255,0.3)" }} />
             <div style={{ fontSize: "32px", color: "rgba(255,255,255,0.55)" }}>
-              York, UK
+              United Kingdom
             </div>
           </div>
           <div
