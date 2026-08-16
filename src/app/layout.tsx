@@ -16,7 +16,7 @@ export const metadata: Metadata = {
         default: "Dev Vyas - UI/UX, Product & Graphic Designer",
         template: "%s - Dev Vyas",
     },
-    description: "Dev Vyas - Product Designer and UX Researcher. Human-centred research, visual craft, and a computer science grounding. Based in the United Kingdom.",
+    description: "Dev Vyas - UI/UX, Product & Graphic Designer. Human-centred research, visual craft, and a computer science grounding. Based in the United Kingdom.",
     authors: [{ name: "Dev Vyas" }],
     openGraph: {
         title: "Dev Vyas - UI/UX, Product & Graphic Designer",

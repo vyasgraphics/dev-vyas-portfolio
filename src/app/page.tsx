@@ -35,7 +35,7 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       jobTitle: "Product Designer",
       description:
-        "Product designer and UX researcher combining human-centred research, visual craft and a computer science background.",
+        "UI/UX, product and graphic designer combining human-centred research, visual craft and a computer science background.",
       image: `${SITE_URL}/opengraph-image`,
       // No addressLocality: schema.org expects a CITY there, and the site
       // now states the location as the United Kingdom rather than a city.
