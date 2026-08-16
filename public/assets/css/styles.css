@@ -4020,8 +4020,15 @@ select option {
   color: var(--white-64);
 }
 
+/* 48px, not the template's 64px. The fields sit on a 32px rhythm, and 64px
+   was tuned when the last field was a 49px single-line input. The message
+   field is now a 150px textarea, so that gap measured 79px against a 32px
+   rhythm and left the Send button visually detached from the form it
+   submits. 48px is 1.5x the field rhythm - enough that the button reads as
+   a separate action group rather than a fifth field, without the drift.
+   Mirrored in scss/component/elements/_form.scss. */
 .form-contact .form-content {
-  margin-bottom: 64px;
+  margin-bottom: 48px;
 }
 .form-contact .form-action {
   display: flex;
