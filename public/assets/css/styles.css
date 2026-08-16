@@ -4912,33 +4912,45 @@ button.animate-btn::after,
   }
 }
 
+/* The headline highlight pill.
+   Painted as the span's OWN background with box-decoration-break: clone,
+   rather than as an absolutely positioned ::after.
+
+   An ::after is positioned against the span's single bounding BOX, and an
+   inline element that wraps has one box spanning every line it touches. So
+   as soon as the highlighted phrase wrapped - which it does on mobile, where
+   "code, craft and research" splits over two lines - the pill became a single
+   302x90 lozenge floating across both lines AND the empty gutter left of
+   line one and right of line two, rather than hugging the words. It only
+   looked right while the phrase was short enough to stay on one line, which
+   the original "user research" always was.
+
+   `clone` gives every line fragment its own background, padding and rounding,
+   which is the only way to get a per-line highlight. The reveal animates
+   background-size instead of width for the same reason: it resolves against
+   each fragment. Mirrored in scss/component/elements/_section.scss. */
 .intro-title span {
   position: relative;
   color: var(--primary);
-}
-.intro-title span::after {
-  position: absolute;
-  content: "";
-  top: 57%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 85%;
-  width: 0%;
-  background-color: var(--white);
-  z-index: -1;
   border-radius: 999px;
-  box-shadow: var(--shadow);
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -ms-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  /* Negative margin cancels the padding so adding breathing room around the
+     highlight does not shift the text or change where the line wraps. */
+  padding: 0 9px;
+  margin: 0 -9px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background-image: linear-gradient(var(--white), var(--white));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0% 84%;
+  -webkit-transition: background-size 0.5s ease;
+  transition: background-size 0.5s ease;
 }
-.intro-title span.type-2::after {
-  background-color: var(--black);
+.intro-title span.type-2 {
+  background-image: linear-gradient(var(--black), var(--black));
 }
-.intro-title span.active::after {
-  width: calc(100% + 20px);
+.intro-title span.active {
+  background-size: 100% 84%;
 }
 
 /* Centre the whole hero block vertically in the viewport instead of just
@@ -7322,11 +7334,15 @@ button.animate-btn::after,
 .dark-mode .section-intro .intro-title span:not(.type-2) {
   color: var(--white);
 }
-.dark-mode .section-intro .intro-title span::after {
-  background: linear-gradient(180deg, #00DE51 0%, rgba(0, 222, 81, 0.4) 100%);
+/* Moved from ::after onto the span itself - see the box-decoration-break
+   note on .intro-title span. Keep the .type-2 rule below this one: the
+   generic dark-mode selector outranks the base .intro-title span.type-2
+   rule, so without it the white-tinted pill would lose to the green one. */
+.dark-mode .section-intro .intro-title span {
+  background-image: linear-gradient(180deg, #00DE51 0%, rgba(0, 222, 81, 0.4) 100%);
 }
-.dark-mode .section-intro .intro-title span.type-2::after {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
+.dark-mode .section-intro .intro-title span.type-2 {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
 }
 .dark-mode .sidebar-tools .tf-btn-icon,
 .dark-mode .sidebar-tools .item-link {
@@ -7864,14 +7880,16 @@ button.animate-btn::after,
   }
 }
 
-.main-landing .intro-title span::after {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
+/* .main-landing is an unused template layout - no element in src/ carries
+   the class. Converted anyway so it does not sit here contradicting the
+   box-decoration-break mechanism on .intro-title span and read as the live
+   rule to whoever finds it next. Mirrored in scss/component/landing/_landing.scss. */
+.main-landing .intro-title span {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
 }
 .main-landing .intro-title span.type-2 {
   color: var(--white);
-}
-.main-landing .intro-title span.type-2::after {
-  background: linear-gradient(180deg, #00DE51 0%, rgba(0, 222, 81, 0.4) 100%);
+  background-image: linear-gradient(180deg, #00DE51 0%, rgba(0, 222, 81, 0.4) 100%);
 }
 
 /*# sourceMappingURL=styles.css.map */

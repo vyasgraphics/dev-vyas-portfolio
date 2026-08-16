@@ -250,16 +250,11 @@
 .main-landing {
     .intro-title {
         span {
-            &::after {
-                background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
-            }
+            background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.04) 100%);
 
             &.type-2 {
                 color: var(--white);
-
-                &::after {
-                    background: linear-gradient(180deg, #00DE51 0%, rgba(0, 222, 81, 0.4) 100%);
-                }
+                background-image: linear-gradient(180deg, #00DE51 0%, rgba(0, 222, 81, 0.4) 100%);
             }
         }
     }

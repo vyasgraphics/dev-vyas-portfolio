@@ -556,31 +556,30 @@
         border-radius: 999px;
         overflow: hidden;
 
-        &::after {
-            position: absolute;
-            content: "";
-            top: 57%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 85%;
-            width: 0%;
-            background-color: var(--white);
-            z-index: -1;
-            border-radius: 999px;
-            box-shadow: var(--shadow);
-            @include transition5;
-        }
+        // Highlight is the span's OWN background with box-decoration-break:
+        // clone, not an absolutely positioned ::after. An ::after resolves
+        // against the span's single bounding box, and a wrapped inline element
+        // has one box covering every line it touches - so once the phrase
+        // wrapped (mobile, "code, craft and research" over two lines) the pill
+        // became one lozenge across both lines and the empty gutters either
+        // side. clone gives each line fragment its own background and rounding.
+        // Mirrored in css/styles.css.
+        padding: 0 9px;
+        margin: 0 -9px;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        background-image: linear-gradient(var(--white), var(--white));
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 0% 84%;
+        transition: background-size 0.5s ease;
 
         &.type-2 {
-            &::after {
-                background-color: var(--black);
-            }
+            background-image: linear-gradient(var(--black), var(--black));
         }
 
         &.active {
-            &::after {
-                width: calc(100% + 20px);
-            }
+            background-size: 100% 84%;
         }
     }
 }
