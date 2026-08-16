@@ -7,15 +7,20 @@ import "./globals.scss";
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://dev-vyas-portfolio.vercel.app"),
+    // Three disciplines sharing the noun once, rather than "UI/UX Designer -
+    // Product Designer - Graphic Designer". That spelling runs to 63
+    // characters, past the ~60 Google renders before truncating, and reads
+    // as a list rather than an identity. This is 44 and fits every surface:
+    // browser tab, search result, and the LinkedIn preview card.
     title: {
-        default: "Dev Vyas - Product Designer",
+        default: "Dev Vyas - Product, UI/UX & Graphic Designer",
         template: "%s - Dev Vyas",
     },
-    description: "Dev Vyas - Product Designer. Bridging visual craft and evidence-based design. Based in York, UK.",
+    description: "Dev Vyas - Product Designer and UX Researcher. A computer science grounding, visual craft, and research into how people really behave. Based in York, UK.",
     authors: [{ name: "Dev Vyas" }],
     openGraph: {
-        title: "Dev Vyas - Product Designer",
-        description: "Bridging visual craft and evidence-based design, one user at a time. Based in York, UK.",
+        title: "Dev Vyas - Product, UI/UX & Graphic Designer",
+        description: "Turning code, craft and research into products people actually use. Based in York, UK.",
         url: "https://dev-vyas-portfolio.vercel.app",
         siteName: "Dev Vyas",
         locale: "en_GB",
@@ -23,8 +28,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Dev Vyas - Product Designer",
-        description: "Bridging visual craft and evidence-based design, one user at a time. Based in York, UK.",
+        title: "Dev Vyas - Product, UI/UX & Graphic Designer",
+        description: "Turning code, craft and research into products people actually use. Based in York, UK.",
     },
     robots: {
         index: true,

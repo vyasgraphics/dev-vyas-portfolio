@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Dev Vyas - Product Designer";
+export const alt = "Dev Vyas - Product, UI/UX & Graphic Designer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -67,7 +67,7 @@ export default function OpengraphImage() {
                 fontWeight: 600,
               }}
             >
-              Product Designer
+              Product, UI/UX &amp; Graphic Designer
             </div>
             <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "rgba(255,255,255,0.3)" }} />
             <div style={{ fontSize: "32px", color: "rgba(255,255,255,0.55)" }}>
@@ -83,7 +83,7 @@ export default function OpengraphImage() {
               lineHeight: 1.5,
             }}
           >
-            Bridging visual craft and evidence-based design, one user at a time.
+            Turning code, craft and research into products people actually use.
           </div>
         </div>
       </div>

@@ -13,16 +13,29 @@ export function Footer() {
         <h2
           className="text-black-72"
           style={{
-            fontSize: "clamp(28px, 4.5vw, 56px)",
+            // Retuned when the slogan went from two lines to three. At the
+            // old clamp/measure (56px in 720px) every one of the three
+            // sentences wrapped, so a three-line statement rendered as six
+            // ragged ones. Smaller type in a wider column gives each
+            // sentence its own line again, which is the whole point of the
+            // parallel structure.
+            // Lower bound is set by the longest of the three sentences
+            // ("Craft makes people want to use it.") fitting a 375px screen
+            // on one line. At 24px it wrapped and left "it." alone on a
+            // fourth line, which is exactly the widow the parallel
+            // structure is meant to avoid.
+            fontSize: "clamp(20px, 3.6vw, 44px)",
             fontFamily: "'EB Garamond', Georgia, serif",
             fontWeight: 400,
             fontStyle: "italic",
-            lineHeight: 1.25,
+            lineHeight: 1.3,
             letterSpacing: "-0.01em",
             margin: "0 auto",
-            maxWidth: "720px",
+            maxWidth: "880px",
           }}
         >
+          Code tells me what is possible.
+          <br />
           Research tells me what to build.
           <br />
           <span style={{ color: "var(--primary, #00C853)" }}>

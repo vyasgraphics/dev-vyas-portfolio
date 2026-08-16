@@ -8,17 +8,22 @@ export function About() {
         Who I Am
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        Four years shipping design, <br className="d-none d-lg-block" />
-        now building the research skills <br className="d-none d-lg-block" />
-        to make better calls
+        An engineer&apos;s grounding, <br className="d-none d-lg-block" />
+        a designer&apos;s eye, <br className="d-none d-lg-block" />
+        a researcher&apos;s habits
       </h2>
+      {/* Deliberately does NOT re-list the three qualifications - the pillar
+          band directly under the hero already states each one with its
+          credential. This paragraph's job is the join: what having all three
+          at once actually buys, which is the part a list cannot say. */}
       <p className="s-desc text-black-56 scrolling-effect effectTop">
-        Product designer and UX researcher with four years of commercial experience and
-        an MSc in Human-Centred Interactive Technologies at the University of York.
-        I run studies, build prototypes, and ship design decisions that are traceable to
-        real user evidence - from think-aloud sessions and Figma prototypes to brand
-        identities and motion graphics. AI handles the repetition; I handle the judgement
-        calls it cannot make.
+        Product designer and UX researcher with four years of commercial experience,
+        now finishing an MSc in Human-Centred Interactive Technologies at the
+        University of York. The three strands feed each other: computer science means
+        I know what a design costs to build, animation training means I care about the
+        last two pixels, and research means I can show the decision was the right one.
+        AI runs across all of it, taking the repetition so the time goes on the
+        judgement calls it cannot make.
       </p>
       <ul className="award-list tf-grid-layout md-col-2">
         {awards.map((a, i) => (

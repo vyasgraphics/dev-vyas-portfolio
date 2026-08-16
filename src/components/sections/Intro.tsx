@@ -11,14 +11,14 @@ export function Intro() {
                         keyword above the fold, and the h1 is already carrying
                         the value proposition. */}
                     <p className="info_duty text-black-50 text-body-3">
-                        Product Designer &amp; UX Researcher &nbsp;·&nbsp; Web &amp; Mobile
+                        Product, UI/UX &amp; Graphic Designer &nbsp;·&nbsp; Web &amp; Mobile
                     </p>
                 </div>
             </div>
 
             <h1 className="intro-title letter-space--2">
                 Turning{" "}
-                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>user research</span>{" "}
+                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>code, craft and research</span>{" "}
                 into products people actually use
             </h1>
 

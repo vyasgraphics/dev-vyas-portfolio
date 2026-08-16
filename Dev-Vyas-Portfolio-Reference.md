@@ -17,6 +17,52 @@ Where a decision was unusual or hard-won, the reasoning is recorded rather than 
 
 ---
 
+## The three-pillar repositioning (revision 8)
+
+Revision 8 changed what the homepage argues, not just how it says it. Up to revision 7 the site was written research-first throughout ("Turning user research into products people actually use", "Research first, pixels second", "Research tells me what to build"). That positioning was accurate but it competed on the same ground as every other UX applicant.
+
+The site now argues from the **route** instead: computer science, then visual craft, then human-centred research, with AI as a layer over all three rather than a fourth skill. The three are backed by real qualifications, and the qualification is what does the persuading:
+
+| Pillar | Credential | What it buys |
+|---|---|---|
+| Code | BE Computer Science & Engineering | Reads the engineering constraint behind an interface instead of designing past it |
+| Creative | Specialisation in Animation & Multimedia | Pixel-perfect as a discipline; the thing that turned software into interfaces |
+| UI / UX | MSc Human-Centred Interactive Technologies (finishing September 2026) | Designing around observed behaviour rather than assumption |
+
+### The job title
+
+Decided separately from the pillars, and changed. The site now reads **"Product, UI/UX & Graphic Designer"** everywhere the identity is stated: the page title, the OG and Twitter titles, the generated OG image, the hero duty line and `profile.duty`.
+
+The recommendation on the table was to keep "Product Designer & UX Researcher" - widest UK funnel, highest ceiling, and junior UX-research posts are scarce enough here that leading with Researcher would shrink reach rather than sharpen it. Dev asked instead for the three disciplines he actually practises, spelled "UI/UX Designer - Product Designer - Graphic Designer". That spelling runs 63 characters, past the roughly 60 Google renders before truncating, and repeats the noun three times so it reads as a list rather than an identity. Sharing the noun once gives the same three disciplines in 44 characters, which fits the browser tab, the search result and the LinkedIn preview card intact.
+
+Two consequences worth remembering:
+
+- **"UX Researcher" no longer appears in the hero duty line.** The third design title took that slot. `profile.rotatingNames` on the profile card is now the only place in the identity block that says it out loud, so do not prune that array without noticing what it is carrying. The credential itself is still argued by pillar 03, the About heading and both research case studies.
+- **The JSON-LD `jobTitle` was deliberately left as plain "Product Designer"** on the three case study pages and in `BlogPostLayout`. Structured data wants one canonical machine-readable title; a stacked string there would be worse, not more accurate.
+
+Role targeting behind all of this: design roles are the funnel, research is the edge. No research-specific ATS keywords were added, because junior research openings are too scarce in the UK to justify diluting copy that currently reads cleanly.
+
+**Where it landed**, in scroll order: the welcome screen ("Where code, craft and human behaviour meet"), the hero H1 ("Turning code, craft and research into products people actually use", green span on the three nouns), the profile card bio, the new pillar band, the Work connector ("one project per pillar"), the About heading and paragraph, the Background connector, the Tools heading, the contact paragraph, the footer slogan and the site metadata.
+
+### The pillar band (`Pillars.tsx`, `pillars.ts`)
+
+A new section sitting between the hero and the organisations row, anchored `#pillars`, tagged "What I Bring" under the heading "Three disciplines, one way of working". Three cards, then a single centred line for the AI layer between two faint green rules.
+
+Four decisions worth keeping:
+
+- **It exists because the Skills accordion is commented out.** Skills ("How I Work") and Blog ("How I Think") were both removed from `HomeShell` at Dev's request, and Skills was the only place the strands were ever enumerated. Without this band a reader could go hero to case studies to timeline and never see the shape of the background.
+- **It sits above the case studies, not below them.** The claim is the differentiator, so it has to land before the evidence rather than after it. By the time a reader reaches About they have already decided whether to keep scrolling.
+- **AI is a line, not a fourth card.** An equal-weight fourth card would state that AI is a discipline alongside the other three, which is the opposite of what the copy says.
+- **`auto-fit`, not a hard three-column grid.** The band renders inside `.wrap-container`, a `col-lg-7 col-xl-8` column, so its available width is nowhere near viewport width and changes across two Bootstrap breakpoints before any media query of its own applies.
+
+Two layout details that were fixed after first render and will come back if the copy changes: `.vg-pillar-credential` carries a two-line `min-height` so all three descriptions start on the same baseline (the grid equalises card height but not the rows inside each card, and the MSc credential is the only one that wraps); that `min-height` is released below 768px, where the cards are always stacked and it would only open a gap. The CSS is in `styles.css` only, with no SCSS mirror, since `vg-`prefixed components have no counterpart in the template source.
+
+### The footer slogan
+
+Now three lines rather than two: "Code tells me what is possible. / Research tells me what to build. / Craft makes people want to use it." Adding the third sentence broke the type: at the old `clamp(28px, 4.5vw, 56px)` in a 720px measure every sentence wrapped, so a three-line statement rendered as six ragged ones. It is now `clamp(20px, 3.6vw, 44px)` in 880px. Both bounds are load-bearing - the 44px maximum keeps each sentence on one line on desktop, and the 20px minimum is set by the longest sentence fitting a 375px screen without leaving "it." alone on a fourth line.
+
+---
+
 ## The narrative arc (revision 4)
 
 As of revision 4 the homepage is written to read as a story, not a set of labelled panels. The section tags are deliberately phrased as chapters that answer three questions a recruiter is asking, in order:

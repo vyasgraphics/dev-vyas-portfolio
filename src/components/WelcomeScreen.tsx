@@ -46,12 +46,13 @@ export function WelcomeScreen() {
             <div className="vg-welcome-inner">
                 <p className="vg-welcome-eyebrow">Dev Vyas</p>
                 <p className="vg-welcome-title">
-                    <span className="vg-welcome-title-lead">Where research meets</span>
-                    <span className="vg-welcome-title-main">the craft of design</span>
+                    <span className="vg-welcome-title-lead">Where code, craft and</span>
+                    <span className="vg-welcome-title-main">human behaviour meet</span>
                 </p>
                 <p className="vg-welcome-sub">
-                    Product design and UX research for web and mobile. I study how
-                    people really behave, then design the interfaces that fit.
+                    Product design and UX research for web and mobile. I come at it
+                    from code, from visual craft, and from studying how people
+                    actually behave.
                 </p>
             </div>
 

@@ -11024,3 +11024,157 @@ html, body {
   font-size: 13px;
   color: var(--black-72);
 }
+
+/* ══════════════════════════════════════════════════════════
+   Three-pillar band (.vg-pillars) - Pillars.tsx
+   ══════════════════════════════════════════════════════════
+   Sits between the hero and the organisations row. CSS-only, no SCSS
+   mirror: this is a new custom component, so there is no template SCSS
+   rule for it to be silently reverted by on the next recompile.
+
+   auto-fit rather than a hard three-column grid. This band renders inside
+   .wrap-container, which is a col-lg-7/col-xl-8 column, so its available
+   width is nowhere near the viewport width and varies by two breakpoints
+   before any media query of its own gets involved. auto-fit with a min
+   track lets the three cards sit in a row wherever they genuinely fit and
+   fall to two, then one, on their own - which is what actually happens
+   between a 1280 laptop and a 1600 desktop.
+
+   The credential line is green and sits directly under the title on
+   purpose. It is the only part of the card that is a checkable fact, so
+   it gets the accent colour rather than the heading does. */
+.vg-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+  margin: 2.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vg-pillar {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.028);
+  /* The lit rim from the .vg-glass token's vocabulary, without the backdrop
+     blur - these are panels on a flat background, so the blur would cost
+     compositing work and show nothing. Same trade as the chip family. */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition:
+    border-color 0.28s var(--ease-hover, ease),
+    background 0.28s var(--ease-hover, ease),
+    transform 0.28s var(--ease-hover, ease);
+}
+
+.vg-pillar:hover {
+  border-color: rgba(0, 222, 81, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-3px);
+}
+
+.vg-pillar-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.vg-pillar-number {
+  /* Same face the hero counters use (.font-2), so the numbering here reads
+     as the same family of figure as "4+" and "70+" above it. There is no
+     --font-2 custom property - .font-2 sets the family directly. */
+  font-family: "Apfel Grotezk";
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: rgba(0, 222, 81, 0.32);
+}
+
+.vg-pillar-icon {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.28);
+  transition: color 0.28s var(--ease-hover, ease);
+}
+
+.vg-pillar:hover .vg-pillar-icon { color: var(--primary); }
+
+.vg-pillar-title {
+  margin: 0 0 6px;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--black-72);
+}
+
+.vg-pillar-credential {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--primary);
+  /* Two lines' worth, reserved whether or not this particular credential
+     needs them. The grid already equalises card HEIGHT, but not the rows
+     inside each card, so the longest credential ("MSc Human-Centred
+     Interactive Technologies") wraps to two lines and pushes its own
+     description a line below the other two - three descriptions starting
+     at three different heights across one row. Reserving the space fixes
+     the baseline for all three. */
+  min-height: calc(12px * 1.45 * 2);
+}
+
+.vg-pillar-desc {
+  margin: 0;
+  line-height: 1.62;
+  color: var(--black-56);
+}
+
+/* The AI layer. A centred line between two rules rather than a fourth
+   card, because a fourth card would state that AI is a discipline
+   alongside the other three, which is the opposite of what it says. */
+.vg-pillar-ai {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 1.75rem 0 0;
+}
+
+.vg-pillar-ai-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0, 222, 81, 0.34), transparent);
+}
+
+.vg-pillar-ai-text {
+  flex: 0 1 auto;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--black-56);
+}
+
+@media (max-width: 767px) {
+  .vg-pillars { gap: 12px; margin-top: 1.75rem; }
+  .vg-pillar { padding: 18px 17px 20px; }
+  /* Released below this width. The reserved second line exists purely to
+     line the three descriptions up ACROSS a row, and below 768px the cards
+     are always stacked one per row - so all it does here is open a gap
+     under the two credentials that fit on one line. */
+  .vg-pillar-credential { min-height: 0; }
+  .vg-pillar-number { font-size: 26px; }
+  .vg-pillar-title { font-size: 19px; }
+  /* The rules eat most of the row once the text wraps to three lines on a
+     narrow screen, leaving two stubs either side of a tall block. Below
+     this width the line stands on its own. */
+  .vg-pillar-ai-rule { display: none; }
+  .vg-pillar-ai { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-pillar { transition: none; }
+  .vg-pillar:hover { transform: none; }
+}

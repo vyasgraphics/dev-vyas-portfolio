@@ -21,7 +21,7 @@ export const educationItems: TimelineItem[] = [
     role: "MSc Human-Centred Interactive Technologies",
     org: "University of York, UK",
     type: "education",
-    description: "Currently studying at York's Department of Computer Science, covering Research Methods, Interaction Design & Evaluation, Human Factors, and Player Experience. My dissertation investigates whether a person's ability to resist distraction predicts their performance on complex, cluttered user interfaces.",
+    description: "Completing September 2026 at York's Department of Computer Science, covering Research Methods, Interaction Design & Evaluation, Human Factors, and Player Experience. My dissertation investigates whether a person's ability to resist distraction predicts their performance on complex, cluttered user interfaces.",
     icon: { light: "/assets/images/item/edu-2.svg", dark: "/assets/images/item/edu-2_dark.svg", width: 29, height: 32 },
   },
   {
@@ -45,7 +45,7 @@ export const educationItems: TimelineItem[] = [
     role: "B.E. Computer Science & Engineering",
     org: "Gujarat Technological University, India",
     type: "education",
-    description: "Graduated with a CGPA of 8.61, First Class with Distinction. Built a solid technical foundation that feeds directly into the way I think about UX - understanding the engineering constraints behind the interfaces I design.",
+    description: "Graduated with a CGPA of 8.61, First Class with Distinction. Four years of learning how technology actually works, which is why I can read the engineering constraints behind an interface rather than designing past them. Taken alongside a specialisation in Animation & Multimedia, which is what pulled me towards interfaces in the first place.",
     icon: { light: "/assets/images/item/edu-3.svg", dark: "/assets/images/item/edu-3_dark.svg", width: 120, height: 32 },
   },
   {

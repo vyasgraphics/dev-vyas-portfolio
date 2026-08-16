@@ -29,7 +29,7 @@ export function Work() {
                 and what it changed
             </h2>
             <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "1rem", maxWidth: "640px" }}>
-                Three projects, three sides of how I work: a research study that measured a real cost, a product designed end to end, and four years of brand work shipped to deadline. Start anywhere.
+                One project per pillar: a research study that measured a real cost, a product designed and prototyped end to end, and four years of brand and motion work shipped to deadline. Start anywhere.
             </p>
             {/* Desktop-only signpost. On this breakpoint each project's write-up
                 (title, summary, industry/platform/year/role, tags, CTA) renders

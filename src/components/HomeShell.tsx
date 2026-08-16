@@ -9,6 +9,7 @@ import { UserSidebar } from "./UserSidebar";
 import { Preloader } from "./Preloader";
 import { WelcomeScreen } from "./WelcomeScreen";
 import { Intro } from "./sections/Intro";
+import { Pillars } from "./sections/Pillars";
 import { Organisations } from "./sections/Organisations";
 import { About } from "./sections/About";
 import { Education } from "./sections/Education";
@@ -99,6 +100,13 @@ export function HomeShell() {
                             <div className="col-lg-7 col-xl-8 ms-auto">
                                 <div className="wrap-container">
                                     <Intro />
+                                    {/* The three strands the page is written
+                                        around, stated before the case studies
+                                        rather than after them - the Skills
+                                        accordion below used to be the only
+                                        place they appeared, and it is
+                                        commented out. */}
+                                    <Pillars />
                                     <Organisations />
                                     <Work />
                                     {/* Conversion point right after the strongest evidence,

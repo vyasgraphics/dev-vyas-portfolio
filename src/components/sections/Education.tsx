@@ -61,7 +61,7 @@ export function Education() {
         and who I have worked for
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
-        Computer science to design to research - a route that means I understand the theory behind good work and what it takes to ship it on time.
+        Computer science to design to research - a route that means I understand the theory behind good work, the craft that finishes it, and what it takes to ship on time.
       </p>
       <div className="timeline scroll-down">
         <div className="timeline-line">

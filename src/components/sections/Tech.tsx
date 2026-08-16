@@ -18,7 +18,8 @@ export function Tech() {
                 What I Build With
             </div>
             <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-                Design, research, code and deployment
+                Design, code, research, <br className="d-none d-lg-block" />
+                and the AI layer across all three
             </h2>
 
             {/* Every card here is IllumineCard: resting state is deliberately
