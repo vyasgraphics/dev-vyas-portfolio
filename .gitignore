@@ -33,3 +33,15 @@ coverage/
 Thumbs.db
 *.swp
 .idea/
+
+# Internal working docs - deliberately NOT public.
+# These live on the local machine only. CLAUDE.md holds the project's
+# non-negotiable rules (British English, no dashes, the SCSS/CSS
+# double-definition trap) and the reference doc holds the full architecture
+# notes. Several code comments still point at CLAUDE.md by name; that is
+# intentional, they are notes to whoever has the file.
+# WARNING: because these are untracked, a fresh clone will NOT contain them.
+# Keep a backup outside this folder before wiping or re-cloning the repo.
+CLAUDE.md
+Dev-Vyas-Portfolio-Reference.md
+Dev-Vyas-Portfolio-Reference.pdf
