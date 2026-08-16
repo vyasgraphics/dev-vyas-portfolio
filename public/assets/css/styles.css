@@ -4759,11 +4759,18 @@ button.animate-btn::after,
   margin-bottom: 32px;
   color: var(--white-72);
 }
+/* Lifts the tap target from 20px to 44px high without moving anything: the
+   padding grows the hit area, the equal negative margin cancels the layout
+   effect. Measured at 390px wide, this was the smallest touch target on the
+   page, and it is one of the two primary actions on the profile card.
+   Mirrored in scss/component/elements/_section.scss. */
 .sidebar-user .action-down {
   display: flex;
   align-items: center;
   gap: 8px;
   color: var(--white-72);
+  padding: 12px 0;
+  margin: -12px 0;
 }
 .sidebar-user .action-down:hover {
   color: var(--primary);
@@ -8433,6 +8440,12 @@ button.animate-btn::after,
 
 /* ── Animated text overlap fix (Hey I'm Dev/Designer/Researcher) ── */
 .sidebar-user .user-info .greeting {
+  /* Pinned, not inherited. This element was an <h5> and took its weight from
+     Bootstrap Reboot's heading default (500); it is now a <p> so the page
+     outline does not open at level 5 before the h1, and a <p> defaults to
+     400 - so without this the greeting silently rendered a step lighter.
+     Mirrored in scss/component/elements/_section.scss. */
+  font-weight: 500;
   display: block !important;
   white-space: nowrap !important;
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8) !important;
@@ -10439,10 +10452,13 @@ html, body {
   color: rgba(255, 255, 255, 0.82);
 }
 
+/* Ceiling trimmed from 72px so "research, craft and code" (24 characters,
+   the longest this line has carried) holds ONE line inside the ~816px
+   welcome column. At 72px it needed about 816px exactly and wrapped. */
 .vg-welcome-title-main {
   font-family: "Apfel Grotezk", "Inter", sans-serif;
   font-weight: 700;
-  font-size: clamp(32px, 6.4vw, 72px);
+  font-size: clamp(30px, 6vw, 66px);
   line-height: 1.08;
   letter-spacing: -0.02em;
   color: var(--white);
@@ -10455,6 +10471,16 @@ html, body {
   font-size: clamp(14px, 1.3vw, 16px);
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.72);
+}
+
+/* The three roles get their own line above the method sentence, rather than
+   running into it - it is the one line here a recruiter scans for. */
+.vg-welcome-roles {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 /* justify-content/align-items rather than text-align: buttons are
@@ -11175,10 +11201,37 @@ html, body {
   .vg-pillar-credential { min-height: 0; }
 }
 
-.vg-pillar-desc {
+/* Bullets replaced the running paragraph that used to sit here - see
+   Pillars.tsx. The marker is a small green dot drawn with ::before rather
+   than list-style, so its colour and optical position are controllable and
+   it matches the evidence lists used on the case study pages. */
+.vg-pillar-points {
   margin: 0;
-  line-height: 1.62;
+  padding: 0;
+  list-style: none;
+}
+
+.vg-pillar-points li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 7px;
+  font-size: 12.5px;
+  line-height: 1.5;
   color: var(--black-56);
+}
+
+.vg-pillar-points li:last-child { margin-bottom: 0; }
+
+.vg-pillar-points li::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.75;
 }
 
 /* The AI layer. A centred line between two rules rather than a fourth

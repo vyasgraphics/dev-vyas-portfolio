@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { BackLink } from "@/components/BackLink";
 import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
@@ -17,15 +18,11 @@ import { WireframeGapFinder } from "@/components/wireframes/WireframeGapFinder";
 import { WireframeCrowdFilter } from "@/components/wireframes/WireframeCrowdFilter";
 import { personas } from "@/data/personas";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Move - University Exercise App",
   description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
-  openGraph: {
-    title: "Move - University Exercise App - Dev Vyas",
-    description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
-    type: "article",
-  },
-};
+  path: "/work/move-app",
+});
 
 const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
 const PAGE_URL = `${SITE_URL}/work/move-app`;

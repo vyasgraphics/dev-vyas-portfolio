@@ -8,7 +8,9 @@ const baseUrl = "https://dev-vyas-portfolio.vercel.app";
 // recently. Blog post dates come from blog.ts (kept in sync there);
 // case study dates reflect when each one was last substantially updated.
 const LAST_MODIFIED: Record<string, string> = {
-  "": "2026-08-09",
+  // Homepage rewritten around the three-pillar positioning on 16 Aug 2026
+  // (new hero, pillar band, About, Tools, contact and footer copy).
+  "": "2026-08-16",
   "/work/dissertation": "2026-08-09",
   "/work/move-app": "2026-08-09",
   "/work/vyas-graphics": "2026-08-09",

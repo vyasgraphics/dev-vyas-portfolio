@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 import { PersonaCard } from "@/components/PersonaCard";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
@@ -15,15 +16,11 @@ import { personas } from "@/data/personas";
 import { scenarios } from "@/data/scenarios";
 import { rejectedConcepts } from "@/data/rejectedConcepts";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "From Lo-Fi to Live: Building Move App End to End",
   description: "A UX case study on Move App - from student research and personas to prototype testing, a mid-project redesign, and a proposed live A/B study.",
-  openGraph: {
-    title: "From Lo-Fi to Live: Building Move App End to End - Dev Vyas",
-    description: "A UX case study on Move App - from student research and personas to prototype testing, a mid-project redesign, and a proposed live A/B study.",
-    type: "article",
-  },
-};
+  path: "/blog/building-move-app",
+});
 
 export default function BuildingMoveAppPage() {
   const SECTIONS = [

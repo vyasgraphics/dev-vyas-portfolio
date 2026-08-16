@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 
-export const metadata: Metadata = {
-  title: "How AI Actually Fits Into a UX Research Workflow (And Where It Still Can't Replace You)",
+// Title trimmed to the form the openGraph block already used. The full
+// headline ("...And Where It Still Can't Replace You") ran to 97 characters
+// once the "- Dev Vyas" template was appended, so Google truncated it
+// mid-phrase in results. It still appears in full as the h1 on the page.
+export const metadata: Metadata = pageMetadata({
+  title: "How AI Actually Fits Into a UX Research Workflow",
   description: "AI won't replace UX researchers, but it will change how you work. Here's a practical, honest look at where AI fits into your research process.",
-  openGraph: {
-    title: "How AI Actually Fits Into a UX Research Workflow - Dev Vyas",
-    description: "AI won't replace UX researchers, but it will change how you work. Here's a practical, honest look at where AI fits into your research process.",
-    type: "article",
-  },
-};
+  path: "/blog/ai-in-ux-research",
+});
 
 export default function AiInUxResearchPage() {
   const SECTIONS = [

@@ -106,7 +106,15 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                         <span className="dot" />
                         <span>Available Sep 2026</span>
                     </p>
-                    <h5 className="greeting letter-space--2 text-white animationtext clip">
+                    {/* A <p>, not the <h5> this used to be. It is a greeting,
+                        not a section heading: as an h5 it was the FIRST
+                        heading in the document, so the page outline opened at
+                        level 5 before reaching the h1, and anyone navigating
+                        by heading landed on rotating text that rewrites
+                        itself every few seconds. Styling is unaffected -
+                        .greeting is targeted by class everywhere, never by
+                        tag, and its font-size is set explicitly. */}
+                    <p className="greeting letter-space--2 text-white animationtext clip">
                         Hey, I&apos;m{" "}
                         <span className="cd-words-wrapper">
                             {profile.rotatingNames.map((name, i) => (
@@ -115,7 +123,7 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                                 </span>
                             ))}
                         </span>
-                    </h5>
+                    </p>
                     <p className="introduce text-white-56 letter-space--05 text-body-3">
                         {profile.introBio}
                     </p>

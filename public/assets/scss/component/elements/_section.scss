@@ -369,6 +369,12 @@
         .greeting {
             padding-bottom: 20px;
             text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8);
+            // Pinned, not inherited. This was an <h5> and took its weight
+            // from Bootstrap Reboot's heading default (500); it is now a <p>
+            // for document-outline reasons, and a <p> defaults to 400 - so
+            // without this the greeting silently rendered a step lighter.
+            // Measured both before and after rather than assumed.
+            font-weight: 500;
         }
 
         .br-line {
@@ -389,6 +395,13 @@
         align-items: center;
         gap: 8px;
         color: var(--white-72);
+        // Lifts the tap target from 20px to 44px high without moving
+        // anything: the padding grows the hit area, the equal negative
+        // margin cancels the layout effect. Measured at 390px wide, this
+        // was the smallest touch target on the page and it is one of the
+        // two primary actions on the profile card.
+        padding: 12px 0;
+        margin: -12px 0;
 
         &:hover {
             color: var(--primary);

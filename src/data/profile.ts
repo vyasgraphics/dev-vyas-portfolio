@@ -1,8 +1,8 @@
 export const profile = {
   fullName: "Dev Vyas",
   shortName: "Dev",
-  duty: "Product, UI/UX & Graphic Designer",
-  introBio: "I come at design from code, from visual craft, and from research into how people really behave. Four years of commercial work and an MSc in human-centred technology, based in York, UK.",
+  duty: "UI/UX, Product & Graphic Designer",
+  introBio: "I come at design from research into how people really behave, from visual craft, and from code. Four years of commercial work and an MSc in human-centred technology, based in York, UK.",
   email: "vyasdev.6303@gmail.com",
   phone: "+447799752283",
   // The profile card is now the only place in the identity block that says

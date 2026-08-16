@@ -26,7 +26,7 @@ export function Work() {
             </div>
             <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
                 What I have built <br className="d-none d-lg-block" />
-                and what it changed
+                and what changed as a result
             </h2>
             <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "1rem", maxWidth: "640px" }}>
                 One project per pillar: a research study that measured a real cost, a product designed and prototyped end to end, and four years of brand and motion work shipped to deadline. Start anywhere.

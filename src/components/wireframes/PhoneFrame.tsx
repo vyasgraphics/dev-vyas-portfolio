@@ -63,7 +63,7 @@ export function WireframeIntro({
             is no hierarchy at all) while staying under the 17px h3. Every h4
             component on the case studies uses this value, so the pages read
             on one scale: 28 / 22 / 17 / 16 / body. */}
-        <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff" }}>{title}</h4>
+        <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#fff" }}>{title}</h3>
       </div>
       <p style={{ fontSize: "14.5px", lineHeight: 1.6, color: "rgba(255,255,255,0.65)", marginBottom: rationale ? "14px" : 0 }}>
         {description}

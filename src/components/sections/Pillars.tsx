@@ -46,7 +46,15 @@ export function Pillars() {
                         </div>
                         <h3 className="vg-pillar-title letter-space--2">{p.title}</h3>
                         <p className="vg-pillar-credential">{p.credential}</p>
-                        <p className="vg-pillar-desc text-body-3">{p.description}</p>
+                        {/* Bullets rather than a paragraph: this band is read
+                            in a few seconds on the way to the case studies, and
+                            a four-line paragraph per card was being skimmed
+                            past. Each point stands alone. */}
+                        <ul className="vg-pillar-points">
+                            {p.points.map((point) => (
+                                <li key={point}>{point}</li>
+                            ))}
+                        </ul>
                     </li>
                 ))}
             </ul>

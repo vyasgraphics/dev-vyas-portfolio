@@ -6,19 +6,22 @@ export function Intro() {
             <div className="intro-author">
                 <div className="author-info letter-space--05">
                     <p className="info_name text-black">Dev Vyas</p>
-                    {/* Specialism + platform sit here rather than in the h1:
-                        a recruiter filtering for "mobile" or "web" needs the
-                        keyword above the fold, and the h1 is already carrying
-                        the value proposition. */}
+                    {/* The three disciplines, led by UI/UX to match the pillar
+                        band and the rest of the research-first ordering.
+                        "Web & Mobile" used to trail this line so a recruiter
+                        filtering on those platform keywords met them above the
+                        fold; dropped at Dev's request. Both terms still appear
+                        in the page description and throughout the case
+                        studies, so they remain indexable - just not here. */}
                     <p className="info_duty text-black-50 text-body-3">
-                        Product, UI/UX &amp; Graphic Designer &nbsp;·&nbsp; Web &amp; Mobile
+                        UI/UX, Product &amp; Graphic Designer
                     </p>
                 </div>
             </div>
 
             <h1 className="intro-title letter-space--2">
                 Turning{" "}
-                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>code, craft and research</span>{" "}
+                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>research, craft and code</span>{" "}
                 into products people actually use
             </h1>
 

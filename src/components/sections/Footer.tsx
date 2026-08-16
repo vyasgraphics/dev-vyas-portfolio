@@ -34,13 +34,19 @@ export function Footer() {
             maxWidth: "880px",
           }}
         >
-          Code tells me what is possible.
-          <br />
+          {/* Same three strands as the pillar band, in the same workflow
+              order: research decides what, craft decides whether anyone wants
+              it, code decides whether it exists. The green sits on the middle
+              line rather than the last: "makes people want to use it" is the
+              line that describes the effect on a reader, so it is the one
+              worth landing on. */}
           Research tells me what to build.
           <br />
           <span style={{ color: "var(--primary, #00C853)" }}>
             Craft makes people want to use it.
           </span>
+          <br />
+          Code turns it into something real.
         </h2>
       </div>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { BlogPostLayout, BlogQuote } from "@/components/BlogPostLayout";
 import { TiltPermissionPrompt } from "@/components/TiltPermissionPrompt";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
@@ -7,15 +8,11 @@ import { WireframeCirclesTest } from "@/components/wireframes/WireframeCirclesTe
 import { DistractionInteractionChart } from "@/components/DistractionInteractionChart";
 import { PipelineDiagram, MergePipelineDiagram } from "@/components/PipelineDiagram";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "What My Dissertation Taught Me About Complex Interfaces",
   description: "A behind-the-scenes look at designing a distraction-resistance study, and what the early data is starting to show.",
-  openGraph: {
-    title: "What My Dissertation Taught Me About Complex Interfaces - Dev Vyas",
-    description: "A behind-the-scenes look at designing a distraction-resistance study, and what the early data is starting to show.",
-    type: "article",
-  },
-};
+  path: "/blog/dissertation-notes",
+});
 
 const COLLECTION_STEPS = [
   { title: "Prolific", subtitle: "Recruitment and payment", tone: "neutral" as const },

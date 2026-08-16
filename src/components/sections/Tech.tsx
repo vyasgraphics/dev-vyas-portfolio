@@ -18,8 +18,16 @@ export function Tech() {
                 What I Build With
             </div>
             <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-                Design, code, research, <br className="d-none d-lg-block" />
-                and the AI layer across all three
+                {/* No manual <br>, and deliberately short. GSAP SplitText
+                    bakes measured lines into real divs, and it treats a <br>
+                    as a boundary even where CSS hides it (d-none below lg) -
+                    so the longer wording orphaned "and the AI" on a 390px
+                    screen with the break, and orphaned "three" on desktop
+                    without it. Because the lines are baked, text-wrap: balance
+                    cannot fix it after the fact; the string itself has to be
+                    short enough to rag well unaided. At 46 characters this
+                    holds one line on desktop and two even ones on a phone. */}
+                Research, design, code, and AI across all three
             </h2>
 
             {/* Every card here is IllumineCard: resting state is deliberately

@@ -8,9 +8,9 @@ export function About() {
         Who I Am
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        An engineer&apos;s grounding, <br className="d-none d-lg-block" />
+        A researcher&apos;s habits, <br className="d-none d-lg-block" />
         a designer&apos;s eye, <br className="d-none d-lg-block" />
-        a researcher&apos;s habits
+        an engineer&apos;s grounding
       </h2>
       {/* Deliberately does NOT re-list the three qualifications - the pillar
           band directly under the hero already states each one with its
@@ -19,10 +19,10 @@ export function About() {
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         Product designer and UX researcher with four years of commercial experience,
         now finishing an MSc in Human-Centred Interactive Technologies at the
-        University of York. The three strands feed each other: computer science means
-        I know what a design costs to build, animation training means I care about the
-        last two pixels, and research means I can show the decision was the right one.
-        AI runs across all of it, taking the repetition so the time goes on the
+        University of York. The three strands feed each other: research means I can
+        show the decision was the right one, animation training means I care about the
+        last two pixels, and computer science means I know what a design costs to build.
+        AI runs across all of it, taking the repetition so my time goes on the
         judgement calls it cannot make.
       </p>
       <ul className="award-list tf-grid-layout md-col-2">

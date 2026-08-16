@@ -68,9 +68,9 @@ export function PersonaCard({ persona }: { persona: Persona }) {
           </div>
           <div>
             {/* 16px to sit under the 17px h3 tier - see PhoneFrame.tsx */}
-            <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "6px" }}>
+            <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "6px" }}>
               {persona.name}
-            </h4>
+            </h3>
             <span
               style={{
                 display: "inline-block",
@@ -113,9 +113,9 @@ export function PersonaCard({ persona }: { persona: Persona }) {
 
         {/* goals */}
         <div style={{ marginBottom: "24px" }}>
-          <h5 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
+          <h4 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
             Goals
-          </h5>
+          </h4>
           <ul style={{ display: "flex", flexDirection: "column", gap: "9px", listStyle: "none", margin: 0, padding: 0 }}>
             {persona.goals.map((g) => (
               <li key={g} style={{ display: "flex", gap: "10px", fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)", marginBottom: 0 }}>
@@ -134,9 +134,9 @@ export function PersonaCard({ persona }: { persona: Persona }) {
         {/* demographics + frustrations */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "24px" }}>
           <div>
-            <h5 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
+            <h4 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
               Demographics
-            </h5>
+            </h4>
             <ul style={{ display: "flex", flexDirection: "column", gap: "10px", listStyle: "none", margin: 0, padding: 0 }}>
               {persona.demographics.map((d) => (
                 <li key={d.label} style={{ display: "flex", gap: "9px", alignItems: "flex-start", fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)", marginBottom: 0 }}>
@@ -147,9 +147,9 @@ export function PersonaCard({ persona }: { persona: Persona }) {
             </ul>
           </div>
           <div>
-            <h5 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
+            <h4 style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>
               Frustrations
-            </h5>
+            </h4>
             <ul style={{ display: "flex", flexDirection: "column", gap: "10px", listStyle: "none", margin: 0, padding: 0 }}>
               {persona.frustrations.map((f) => (
                 <li key={f.label} style={{ fontSize: "14px", lineHeight: 1.5, color: "rgba(255,255,255,0.72)", marginBottom: 0 }}>

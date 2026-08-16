@@ -71,7 +71,7 @@ export function ScenarioCard({ scenario }: { scenario: Scenario }) {
         </div>
         <div>
           {/* 16px to sit under the 17px h3 tier - see PhoneFrame.tsx */}
-          <h4 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{scenario.title}</h4>
+          <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#fff", marginBottom: "4px" }}>{scenario.title}</h3>
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.5)" }}>{scenario.subtitle}</p>
         </div>
       </div>
@@ -83,7 +83,7 @@ export function ScenarioCard({ scenario }: { scenario: Scenario }) {
               {i === 0 ? <ProblemVisual scenario={scenario} /> : <SolutionVisual scenario={scenario} />}
             </div>
             <div style={{ padding: "18px" }}>
-              <h5 style={{ fontSize: "14px", fontWeight: 700, color: i === 0 ? "#f87171" : "#60a5fa", marginBottom: "8px" }}>{half.label}</h5>
+              <h4 style={{ fontSize: "14px", fontWeight: 700, color: i === 0 ? "#f87171" : "#60a5fa", marginBottom: "8px" }}>{half.label}</h4>
               <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.75)", marginBottom: "10px" }}>
                 <strong style={{ color: "#fff" }}>Context:</strong> {half.context}
               </p>

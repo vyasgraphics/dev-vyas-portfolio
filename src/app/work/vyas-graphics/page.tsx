@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { Children } from "react";
 import Image from "next/image";
 import { BackLink } from "@/components/BackLink";
@@ -17,15 +18,11 @@ import { StaggerReveal } from "@/components/StaggerReveal";
 import { BackToTop } from "@/components/BackToTop";
 import AutoRepeatMarquee from "@/components/AutoRepeatMarquee";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Vyas Graphics - Brand Identity & Sports Media",
   description: "Self-directed brand and motion work spanning logo design, animated logo reveals, and a full sports media campaign for the ICC T20 World Cup 2026.",
-  openGraph: {
-    title: "Vyas Graphics - Brand Identity & Sports Media - Dev Vyas",
-    description: "Self-directed brand and motion work spanning logo design, animated logo reveals, and a full sports media campaign for the ICC T20 World Cup 2026.",
-    type: "article",
-  },
-};
+  path: "/work/vyas-graphics",
+});
 
 const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
 const PAGE_URL = `${SITE_URL}/work/vyas-graphics`;

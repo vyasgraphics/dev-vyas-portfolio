@@ -21,13 +21,17 @@ Where a decision was unusual or hard-won, the reasoning is recorded rather than 
 
 Revision 8 changed what the homepage argues, not just how it says it. Up to revision 7 the site was written research-first throughout ("Turning user research into products people actually use", "Research first, pixels second", "Research tells me what to build"). That positioning was accurate but it competed on the same ground as every other UX applicant.
 
-The site now argues from the **route** instead: computer science, then visual craft, then human-centred research, with AI as a layer over all three rather than a fourth skill. The three are backed by real qualifications, and the qualification is what does the persuading:
+The site now argues from the **method** instead: human-centred research, then visual craft, then code, with AI as a layer over all three rather than a fourth skill. The three are backed by real qualifications, and the qualification is what does the persuading:
 
 | Pillar | Credential | What it buys |
 |---|---|---|
-| Code | BE Computer Science & Engineering | Reads the engineering constraint behind an interface instead of designing past it |
-| Creative | Specialisation in Animation & Multimedia | Pixel-perfect as a discipline; the thing that turned software into interfaces |
 | UI / UX | MSc Human-Centred Interactive Technologies (finishing September 2026) | Designing around observed behaviour rather than assumption |
+| Creative | Specialisation in Animation & Multimedia | Pixel-perfect as a discipline; what turns a correct design into one people want |
+| Code | BE Computer Science & Engineering | Reads the engineering constraint behind an interface instead of designing past it |
+
+**The order is the workflow, not the CV** (changed 16 Aug 2026, at Dev's request). Research decides what to build, craft decides whether anyone wants to use it, code decides whether it ships. This runs deliberately *opposite* to the qualifications' real dates - the BE came first and the MSc last - and opposite to the Education timeline further down the page, which stays in true date order because that section is explicitly about the route taken. The two orderings answer different questions: "how do you work?" in the pillar band, "how did you get here?" in the timeline. Do not re-sync them to match; the mismatch is intentional and both are correct for their own section.
+
+The same order carries through the hero h1 ("Turning research, craft and code into..."), the welcome screen, the About heading and paragraph, the Tools heading, the footer slogan, and every metadata description.
 
 ### The job title
 

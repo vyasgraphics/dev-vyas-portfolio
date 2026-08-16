@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import { BackLink } from "@/components/BackLink";
 import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
@@ -13,15 +14,11 @@ import { WireframeNewsTask } from "@/components/wireframes/WireframeNewsTask";
 import { WireframeCirclesTest } from "@/components/wireframes/WireframeCirclesTest";
 import { DistractionInteractionChart } from "@/components/DistractionInteractionChart";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Distraction Resistance & Complex User Interfaces",
   description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces.",
-  openGraph: {
-    title: "Distraction Resistance & Complex User Interfaces - Dev Vyas",
-    description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces.",
-    type: "article",
-  },
-};
+  path: "/work/dissertation",
+});
 
 const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
 const PAGE_URL = `${SITE_URL}/work/dissertation`;

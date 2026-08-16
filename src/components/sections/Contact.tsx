@@ -162,7 +162,7 @@ export function Contact() {
         from September 2026
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ maxWidth: "600px", marginTop: "1rem", marginBottom: "0.5rem" }}>
-        I research it, design it, and understand enough of the build to know the handover will hold. If you need someone who can lead the full HCD cycle rather than just hand off screens, let&apos;s talk.
+        I research the problem, design the solution, and understand enough of the build to know the handover will hold. If you need someone who can lead the full HCD cycle rather than just hand off screens, let&apos;s talk.
       </p>
 
       {submitted ? (
@@ -220,11 +220,17 @@ export function Contact() {
           </button>
         </div>
       ) : (
+        // aria-label on every field, not just placeholders. A placeholder is
+        // not a label: it vanishes the moment someone types, leaving no
+        // persistent name for the field, and screen reader support for
+        // announcing it is inconsistent. The visible placeholder stays as the
+        // sighted affordance; the aria-label is what assistive tech reads.
         <form className="form-contact" onSubmit={handleSubmit} noValidate>
           <div className="form-content effectFade fadeUp no-div">
             <fieldset className={`field-ip${fieldErrors.name ? " has-error" : ""}`}>
               <input
                 type="text" name="name" placeholder="Your Name *" autoComplete="name"
+                aria-label="Your name"
                 value={form.name} onChange={handleChange} required
                 aria-invalid={fieldErrors.name ? "true" : "false"}
                 style={{ textAlign: "left" }}
@@ -233,6 +239,7 @@ export function Contact() {
             <fieldset className={`field-ip${fieldErrors.email ? " has-error" : ""}`}>
               <input
                 type="email" name="email" placeholder="Email Address *" autoComplete="email"
+                aria-label="Email address"
                 value={form.email} onChange={handleChange} required
                 aria-invalid={fieldErrors.email ? "true" : "false"}
                 style={{ textAlign: "left" }}
@@ -241,6 +248,7 @@ export function Contact() {
             <fieldset className="field-ip">
               <input
                 type="text" name="subject" placeholder="Job opportunity / Freelance / Other"
+                aria-label="Subject: job opportunity, freelance or other"
                 value={form.subject} onChange={handleChange}
                 style={{ textAlign: "left" }}
               />
@@ -248,6 +256,7 @@ export function Contact() {
             <fieldset className="field-ip">
               <input
                 type="text" name="message" placeholder="Tell me a bit about your project or role"
+                aria-label="Tell me about your project or role"
                 value={form.message} onChange={handleChange}
                 style={{ textAlign: "left" }}
               />
