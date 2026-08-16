@@ -56,13 +56,11 @@ export function cleanHash(raw: string | null | undefined): string {
 
 // Upgrades "#work" to "#work-item-<slug>" if a specific work card was
 // clicked into, so "Back to Work" and the back button land on that exact
-// card rather than just the top of the section. "#blog" gets the same
-// treatment, but mobile only: blog cards sit in a normal-flow grid that's
-// two columns wide on desktop, so a specific card isn't a well-defined
-// landing point there and risks overshooting into Contact below. Mobile
-// collapses that grid to a single column, where each card is its own
-// full-width row, so landing on exactly the one clicked into is both
-// meaningful and safe - desktop keeps the original section-top landing.
+// card rather than just the top of the section.
+//
+// There was a parallel "#blog" branch here with the same purpose, scoped to
+// mobile. It was removed on 16 Aug 2026 with the blog posts themselves -
+// with no /blog route left it could never fire.
 export function resolveScrollTarget(hash: string): string {
   if (typeof window === "undefined") return hash;
 
@@ -71,13 +69,6 @@ export function resolveScrollTarget(hash: string): string {
     sessionStorage.removeItem("lastWorkItemSlug");
     if (!slug) return hash;
     return `#work-item-${slug}`;
-  }
-
-  if (hash === "#blog") {
-    const slug = sessionStorage.getItem("lastBlogPostSlug");
-    sessionStorage.removeItem("lastBlogPostSlug");
-    if (!slug || window.innerWidth >= 992) return hash;
-    return `#blog-item-${slug}`;
   }
 
   return hash;

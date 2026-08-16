@@ -253,12 +253,25 @@ export function Contact() {
                 style={{ textAlign: "left" }}
               />
             </fieldset>
+            {/* A textarea, not a single-line input. This was an
+                <input type="text"> - the field asking someone to describe a
+                role or project gave them one line that scrolled sideways,
+                which is the opposite of what the question invites and is not
+                how any real contact form behaves. Every .field-ip rule in the
+                stylesheet already covered `textarea` alongside `input`, so
+                the underline styling, placeholder, focus ring and left-align
+                all apply unchanged.
+
+                rows=4 rather than a fixed height so it scales with the user's
+                font size, and vertical-only resize so dragging it cannot
+                break the column width. */}
             <fieldset className="field-ip">
-              <input
-                type="text" name="message" placeholder="Tell me a bit about your project or role"
+              <textarea
+                name="message" rows={4}
+                placeholder="Tell me a bit about your project or role"
                 aria-label="Tell me about your project or role"
                 value={form.message} onChange={handleChange}
-                style={{ textAlign: "left" }}
+                style={{ textAlign: "left", resize: "vertical" }}
               />
             </fieldset>
           </div>

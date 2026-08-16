@@ -17,7 +17,6 @@ import { Work } from "./sections/Work";
 import { WorkCta } from "./sections/WorkCta";
 // import { Skills } from "./sections/Skills"; // "How I Work" - commented out per Dev's request
 import { Tech } from "./sections/Tech";
-// import { Blog } from "./sections/Blog"; // "How I Think" - commented out per Dev's request
 import { Contact } from "./sections/Contact";
 import { Footer } from "./sections/Footer";
 import { useScrollAnimations } from "@/hooks/useScrollAnimations";
@@ -116,7 +115,6 @@ export function HomeShell() {
                                     {/* <Skills /> "How I Work" - commented out per Dev's request */}
                                     <Education />
                                     <Tech />
-                                    {/* <Blog /> "How I Think" - commented out per Dev's request */}
                                     <Contact />
                                     <Footer />
                                 </div>

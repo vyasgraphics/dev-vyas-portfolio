@@ -5,8 +5,13 @@ const baseUrl = "https://dev-vyas-portfolio.vercel.app";
 // Real dates rather than "now" for every route on every build - a sitemap
 // that always reports the current moment as lastModified gives search
 // engines no genuine signal about which pages have actually changed
-// recently. Blog post dates come from blog.ts (kept in sync there);
-// case study dates reflect when each one was last substantially updated.
+// recently. Case study dates reflect when each was last substantially
+// updated.
+//
+// The three /blog/* routes were removed on 16 Aug 2026 along with the posts
+// themselves. Leaving them here would have been worse than never listing
+// them: a sitemap that advertises URLs returning 404 is a crawl-budget waste
+// and a quality signal against the site.
 const LAST_MODIFIED: Record<string, string> = {
   // Homepage rewritten around the three-pillar positioning on 16 Aug 2026
   // (new hero, pillar band, About, Tools, contact and footer copy).
@@ -14,9 +19,6 @@ const LAST_MODIFIED: Record<string, string> = {
   "/work/dissertation": "2026-08-09",
   "/work/move-app": "2026-08-09",
   "/work/vyas-graphics": "2026-08-09",
-  "/blog/ai-in-ux-research": "2026-08-07",
-  "/blog/dissertation-notes": "2026-08-08",
-  "/blog/building-move-app": "2026-08-07",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

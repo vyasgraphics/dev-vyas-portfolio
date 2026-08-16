@@ -12,6 +12,5 @@ export const navItems: NavItem[] = [
   // { href: "#skill",   label: "Skills",       icon: "icon-service" }, // "How I Work" section commented out
   { href: "#education", label: "Background",   icon: "icon-edu" },
   { href: "#tech",      label: "Tools",        icon: "icon-tech-stack",  separator: "after" },
-  // { href: "#blog",    label: "Writing",      icon: "icon-edu",        separator: "after" }, // "How I Think" section commented out
   { href: "#contact",   label: "Contact",      icon: "icon-send" },
 ];
