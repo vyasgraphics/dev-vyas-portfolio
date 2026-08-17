@@ -35,7 +35,7 @@ export const works: Work[] = [
   {
     slug: "move-app",
     title: "Move - University Exercise App",
-    impact: "Reduced anxiety friction enough that stalled users finished their first session",
+    impact: "Caught a trust-breaking flaw in the one feature built to protect anxious users - before it ever shipped",
     description: "Cutting choices and hiding the crowd got stalled test participants to finish a session. A full HCD lifecycle that found the real barrier was anxiety, not motivation.",
     year: "2025",
     role: "UX Researcher & Designer",

@@ -431,7 +431,8 @@ export default function MoveAppWorkPage() {
                     of the same number appearing three times on one page. */}
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Testers who had stalled on other fitness apps completed a full session once anxiety-driven friction was removed.
+                    A specific, fixable failure was found in the one feature meant to protect anxious users - not vague
+                    dissatisfaction, but users misreading it as an audio control, which pointed straight to the fix.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                     Both top barriers got a dedicated screen rather than one averaged compromise.
