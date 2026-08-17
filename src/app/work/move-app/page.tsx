@@ -211,7 +211,7 @@ export default function MoveAppWorkPage() {
             fontWeight: 600, marginBottom: "20px",
             paddingLeft: "16px", borderLeft: "3px solid #00DE51",
           }}>
-            The outcome: cutting choices and hiding the crowd got testers who&apos;d stalled on other apps to actually finish a session.
+            The outcome: usability testing caught the one feature built to protect anxious users being read as a mute button, and it was renamed before it went any further.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
             A concept exercise app for University of York students, run through a full human-centred design
