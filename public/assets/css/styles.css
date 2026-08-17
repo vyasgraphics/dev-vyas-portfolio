@@ -10909,9 +10909,23 @@ html, body {
    there is anything else to see. Hover/focus styling is unchanged either
    way, so it still reads as interactive. */
 .vg-step-details[open] .vg-step-toggle {
-  padding-left: 0;
+  /* Symmetric padding pulled back by its own width, so the label still
+     lines up exactly with the summary and the bullets while the pill that
+     hover restores is balanced. Zeroing only padding-left left 14px of
+     dead space hanging off the right of the chevron. */
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-left: -12px;
   border-color: transparent;
   background: transparent;
+  /* The .vg-glass token's lit rim and blur have to be cleared here too.
+     Transparent background and border alone still left the box-shadow
+     drawing a rounded ghost - inset top highlight and drop shadow - under
+     a control with nothing else visible, which is what made the open state
+     read as a badly padded button rather than a plain text toggle. */
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .vg-step-chevron { transition: transform 0.25s var(--ease-hover); }
