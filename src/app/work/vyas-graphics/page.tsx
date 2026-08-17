@@ -744,9 +744,14 @@ export default function VyasGraphicsWorkPage() {
           </AutoRepeatMarquee>
         </div>
 
+        {/* Both Instagram accounts. The gap is wider than it looks like it
+            needs to be because each button floats its handle in a tooltip
+            centred above itself - at a tighter spacing the longer handle
+            would hang over its neighbour's icon on hover. */}
         <ScrollReveal>
-          <div style={{ display: "flex", justifyContent: "center", padding: "8px 0" }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: "44px", padding: "8px 0", flexWrap: "wrap" }}>
             <InstagramButton handle="@vyas.graphics" href="https://www.instagram.com/vyas.graphics/?hl=en" />
+            <InstagramButton handle="@dev_vyas.graphics" href="https://www.instagram.com/dev_vyas.graphics/" />
           </div>
         </ScrollReveal>
 
