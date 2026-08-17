@@ -933,11 +933,21 @@
     }
 }
 
+/* Mirrors the .s-title block in public/assets/css/styles.css - the two
+   must stay in step. This file compiles in AFTER styles.css in
+   globals.scss's @use order, so whatever is set here wins on any
+   property both define. The 64px that used to sit here silently beat
+   the 36px in styles.css, which is why an earlier tightening of the
+   heading-to-content gap never showed up on the page. */
 .s-title {
-    margin-bottom: 64px;
+    margin-bottom: 36px;
+
+    @include res(lg) {
+        margin-bottom: 28px;
+    }
 
     @include res(md) {
-        margin-bottom: 32px;
+        margin-bottom: 22px;
     }
 }
 
@@ -1071,11 +1081,11 @@
     }
 }
 
+/* No .s-title override here on purpose. About used to pin its heading gap
+   at a flat 32px while every other section scaled 36/28/22, which left
+   About looking loose on a phone. It now follows the shared .s-title
+   scale like the rest. Mirrored in styles.css. */
 .section-about {
-    .s-title {
-        margin-bottom: 32px;
-    }
-
     .s-desc {
         margin-bottom: 88px;
     }

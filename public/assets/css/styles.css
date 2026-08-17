@@ -5377,9 +5377,10 @@ button.animate-btn::after,
   }
 }
 
-.section-about .s-title {
-  margin-bottom: 32px;
-}
+/* No .section-about .s-title rule on purpose. About used to pin its heading
+   gap at a flat 32px while every other section scaled 36/28/22, which left
+   About looking loose on a phone. It now follows the shared .s-title scale
+   like the rest. Mirrored in scss/component/elements/_section.scss. */
 .section-about .s-desc {
   margin-bottom: 88px;
 }
