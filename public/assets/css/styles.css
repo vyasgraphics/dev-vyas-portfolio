@@ -9932,12 +9932,29 @@ html, body {
   inset: 0;
   display: block;
   overflow: hidden;
-  border-radius: 12px;
+  /* Bound-book shape: tighter radius on the spine edge (left), fuller on the
+     page edge (right) - a uniform 12px read as a generic rounded card. */
+  border-radius: 4px 12px 12px 4px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #0a0a0a;
-  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.75);
+  --vg-book-spine: rgba(0, 0, 0, 0.75);
+  --vg-book-edge: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset 5px 0 9px -4px var(--vg-book-spine),
+    inset -2px 0 5px -1px var(--vg-book-edge),
+    0 12px 30px -12px rgba(0, 0, 0, 0.75);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+/* Soft binding shadow banding across the cover photo itself, heaviest at
+   the spine and fading out - the same corner the tighter radius sits on. */
+.vg-flip-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.55), transparent 22%);
+  mix-blend-mode: overlay;
 }
 .vg-flip-face img {
   width: 100%;
@@ -9950,7 +9967,10 @@ html, body {
 @media (hover: hover) {
   .vg-flip-card:hover .vg-flip-face {
     border-color: rgba(0, 222, 81, 0.35);
-    box-shadow: 0 16px 36px -14px rgba(0, 222, 81, 0.35);
+    box-shadow:
+      inset 5px 0 9px -4px var(--vg-book-spine),
+      inset -2px 0 5px -1px var(--vg-book-edge),
+      0 16px 36px -14px rgba(0, 222, 81, 0.35);
   }
 }
 
