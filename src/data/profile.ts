@@ -2,7 +2,7 @@ export const profile = {
   fullName: "Dev Vyas",
   shortName: "Dev",
   duty: "UI/UX, Product & Graphic Designer",
-  introBio: "I come at design from research into how people really behave, from visual craft, and from code. Four years of commercial work and an MSc in human-centred technology, based in the United Kingdom.",
+  introBio: "I come at design from research into how people really behave, from visual craft, and from code. Four years of commercial work and an MSc in human-centred technology, based in Leeds, United Kingdom.",
   email: "vyasdev.6303@gmail.com",
   phone: "+447799752283",
   // Cycles after the static "I'm " on the profile card: the name first, then
@@ -13,7 +13,7 @@ export const profile = {
   // 26px "Hey, I'm " costs about 130px and pushed "a Product Designer" past
   // the card's right edge; "I'm " costs about 58px and leaves it clear.
   rotatingNames: ["Dev Vyas", "a UI/UX Designer", "a Product Designer", "a Graphic Designer"],
-  location: "United Kingdom",
+  location: "Leeds, UK",
   availability: "Available Sep 2026",
   cvUrl: "/assets/Dev_Vyas_CV.pdf",
   socials: [
