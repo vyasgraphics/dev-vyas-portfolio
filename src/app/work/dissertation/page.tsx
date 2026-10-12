@@ -474,12 +474,12 @@ export default function DissertationWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="next" tag="Submission still pending">
+          <SectionBox id="next" tag="Submitted · 75% provisional">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              Still being finalised at York, so the detail here stays deliberately high-level. Once it&apos;s
-              submitted and marked I&apos;ll add the fuller analysis: exactly how the two components interact, and
-              what that means for accuracy as well as time.
+              Submitted and provisionally marked at 75%, with the final award still pending, so the detail here
+              stays deliberately high-level for now. Once the award is confirmed I&apos;ll add the fuller analysis:
+              exactly how the two components interact, and what that means for accuracy as well as time.
             </p>
           </SectionBox>
         </ScrollReveal>

@@ -14,7 +14,7 @@ export const profile = {
   // the card's right edge; "I'm " costs about 58px and leaves it clear.
   rotatingNames: ["Dev Vyas", "a UI/UX Designer", "a Product Designer", "a Graphic Designer"],
   location: "Leeds, UK",
-  availability: "Available Sep 2026",
+  availability: "Available now",
   cvUrl: "/assets/Dev_Vyas_CV.pdf",
   socials: [
     { icon: "icon-linkin", href: "https://www.linkedin.com/in/dev-vyas6/", label: "LinkedIn" },

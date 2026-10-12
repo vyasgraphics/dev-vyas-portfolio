@@ -18,7 +18,7 @@ export function About() {
           at once actually buys, which is the part a list cannot say. */}
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         UI/UX, product and graphic designer with four years of commercial experience,
-        now finishing an MSc in Human-Centred Interactive Technologies at the
+        having just completed an MSc in Human-Centred Interactive Technologies at the
         University of York. The three strands feed each other: research means I can
         show the decision was the right one, animation training means I care about the
         last two pixels, and computer science means I know what a design costs to build.

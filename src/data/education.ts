@@ -9,7 +9,7 @@ export type TimelineItem = {
 
 export const educationItems: TimelineItem[] = [
   {
-    period: "Oct 2025 - Present",
+    period: "Oct 2025 - Aug 2026",
     role: "Student Content Creator",
     org: "University of York, UK",
     type: "work",
@@ -17,11 +17,11 @@ export const educationItems: TimelineItem[] = [
     icon: { light: "/assets/images/item/edu-2.svg", dark: "/assets/images/item/edu-2_dark.svg", width: 29, height: 32 },
   },
   {
-    period: "2025 - Present",
+    period: "Sep 2025 - Sep 2026",
     role: "MSc Human-Centred Interactive Technologies",
     org: "University of York, UK",
     type: "education",
-    description: "Completing September 2026 at York's Department of Computer Science, covering Research Methods, Interaction Design & Evaluation, Human Factors, and Player Experience. My dissertation investigates whether a person's ability to resist distraction predicts their performance on complex, cluttered user interfaces.",
+    description: "Studies completed at York's Department of Computer Science with a provisional credit-weighted average of 74.1%, final award pending. Covered Research Methods, Interaction Design & Evaluation, Human Factors, and Player Experience. My dissertation, provisionally marked at 75%, investigated whether a person's ability to resist distraction predicts their performance on complex, cluttered user interfaces.",
     icon: { light: "/assets/images/item/edu-2.svg", dark: "/assets/images/item/edu-2_dark.svg", width: 29, height: 32 },
   },
   {

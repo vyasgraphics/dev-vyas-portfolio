@@ -51,7 +51,7 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                             {/* Force white: original uses text-black-72 which goes invisible in dark */}
                             <p className="avaiable-dot vertical fw-medium text-body-3"
                                style={{ color: "rgba(255,255,255,0.9)", textShadow: "0 1px 4px rgba(0,0,0,0.6)" }}>
-                                <span className="text-vertical">Available Sep 2026</span>
+                                <span className="text-vertical">Available now</span>
                                 <span className="dot" />
                             </p>
                         </div>
@@ -104,7 +104,7 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                         : "avaiable-dot text-body-3 fw-medium d-sm-none"}
                     >
                         <span className="dot" />
-                        <span>Available Sep 2026</span>
+                        <span>Available now</span>
                     </p>
                     {/* One line: a static "I'm " followed by the rotator, which
                         cycles the name and then the three titles.
