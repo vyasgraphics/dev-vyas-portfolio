@@ -118,18 +118,23 @@
 }
 
 /* Spacing */
+/* Every homepage section carries this, so the value is doubled wherever
+   two sections meet - 56px here means 112px of air between sections, not
+   56px. It was 72 (so 144px), which read as a dead band on a portfolio
+   being skimmed. Mirrored in public/assets/css/styles.css, and THIS file
+   is the one that wins: globals.scss @uses the SCSS after styles.css. */
 .flat-spacing {
-    padding-top: 72px;
-    padding-bottom: 72px;
+    padding-top: 56px;
+    padding-bottom: 56px;
 
     @include res(lg) {
-        padding-top: 60px;
-        padding-bottom: 60px;
+        padding-top: 44px;
+        padding-bottom: 44px;
     }
 
     @include res(md) {
-        padding-top: 40px;
-        padding-bottom: 40px;
+        padding-top: 32px;
+        padding-bottom: 32px;
     }
 }
 
