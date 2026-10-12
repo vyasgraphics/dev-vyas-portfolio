@@ -13,7 +13,7 @@ export const educationItems: TimelineItem[] = [
     role: "Student Content Creator",
     org: "University of York, UK",
     type: "work",
-    description: "Took complex university briefs and turned them into clear, readable blog posts that people actually wanted to read - lifting engagement by 30% across three articles. A good reminder that good design and good writing come from the same place: knowing your audience.",
+    description: "Took complex university briefs and restructured them around what readers actually needed, building clear information hierarchies and refining each piece with stakeholders against accessibility and readability principles. A good reminder that good design and good writing come from the same place: knowing your audience.",
     icon: { light: "/assets/images/item/edu-2.svg", dark: "/assets/images/item/edu-2_dark.svg", width: 29, height: 32 },
   },
   {
@@ -29,7 +29,7 @@ export const educationItems: TimelineItem[] = [
     role: "Graphic & UI Designer",
     org: "Panchal Softwares · Remote",
     type: "work",
-    description: "Designed 30+ social media visuals for product launches and properly sorted the design-to-dev handoff - organising 500+ files in a way that cut developer back-and-forth by 25%. A small structural change that made a real practical difference to the whole team.",
+    description: "Designed 30+ digital and visual assets for product launches across multiple platforms, and wrote reusable typography, colour and layout guidelines so design and development worked from one shared reference. Organising assets and specs for developer handover was a small structural change that made a real practical difference to the whole team.",
     icon: { light: "/assets/images/item/edu-3.svg", dark: "/assets/images/item/edu-3_dark.svg", width: 120, height: 32 },
   },
   {
@@ -37,7 +37,7 @@ export const educationItems: TimelineItem[] = [
     role: "Design Lead & Mentor",
     org: "Google Developer Student Club",
     type: "work",
-    description: "Led the visual identity for 8 events reaching 500+ students, while mentoring five junior designers through real UI/UX projects. Created 15+ promo graphics that boosted event sign-ups by 50 attendees. One of those roles where you learn just as much from teaching as from doing.",
+    description: "Led visual design for 8 technology events reaching a combined audience of 500+ attendees, while mentoring five team members through UI/UX workshops and design reviews. One of those roles where you learn just as much from teaching as from doing.",
     icon: { light: "/assets/images/item/edu-3.svg", dark: "/assets/images/item/edu-3_dark.svg", width: 120, height: 32 },
   },
   {
@@ -53,7 +53,7 @@ export const educationItems: TimelineItem[] = [
     role: "UI/UX & Visual Consultant",
     org: "Non-profit Organisations · Remote",
     type: "work",
-    description: "Built 20+ brand identities from scratch and delivered wireframes and mobile-first designs for five clients across different sectors - completing all 12 projects on schedule. An early lesson in working independently, managing expectations, and caring about the finish.",
+    description: "Created 20+ visual identities and brand assets, managing briefs and feedback through to final delivery, and mapped user journeys, wireframes and mobile-first web interfaces for selected clients. Completed 12 projects, with six clients coming back for more. An early lesson in working independently, managing expectations, and caring about the finish.",
     icon: { light: "/assets/images/item/edu-3.svg", dark: "/assets/images/item/edu-3_dark.svg", width: 120, height: 32 },
   },
 ];
