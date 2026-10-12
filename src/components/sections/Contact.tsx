@@ -157,9 +157,9 @@ export function Contact() {
         Why I&apos;m the Fit
       </div>
       <h2 className="s-title letter-space--2 split-text effect-blur-fade">
-        Open to UK and remote roles{" "}
+        Available now for UK{" "}
         <br className="d-none d-lg-block" />
-        from September 2026
+        and remote roles
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ maxWidth: "600px", marginTop: "1rem", marginBottom: "0.5rem" }}>
         I research the problem, design the solution, and understand enough of the build to know the handover will hold. If you need one person across UI/UX, product and graphic design who can take a project from research through to something that ships, let&apos;s talk.

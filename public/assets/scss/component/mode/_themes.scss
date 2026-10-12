@@ -386,10 +386,6 @@
         .user-image {
             background: var(--dark);
 
-            img {
-                filter: grayscale(100%);
-            }
-
             .bg-item-svg {
                 svg {
                     rect {

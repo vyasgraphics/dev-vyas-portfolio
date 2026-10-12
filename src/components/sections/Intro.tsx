@@ -81,7 +81,7 @@ export function Intro() {
 
             <p className="intro-client letter-space--05 text-body-3">
                 <i className="icon icon-global-elip" />
-                UK &nbsp;·&nbsp; Open to UK &amp; remote roles from Sep 2026
+                UK &nbsp;·&nbsp; Available now for UK &amp; remote roles
             </p>
 
             <div id="intro-discipline-wrap">

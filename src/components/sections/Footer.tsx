@@ -58,7 +58,7 @@ export function Footer() {
         style={{ textAlign: "center", marginTop: "28px", display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}
       >
         <p className="text-black-56 text-body-3" style={{ margin: 0 }}>
-          Open to UK and remote roles from September 2026.
+          Available now for UK and remote roles.
         </p>
         <a
           href="#contact"
