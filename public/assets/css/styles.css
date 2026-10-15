@@ -4798,7 +4798,7 @@ button.animate-btn::after,
 .sidebar-user .vg-cv-links {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 .sidebar-user .vg-cv-links .action-down {
   margin: 0;
@@ -4809,7 +4809,17 @@ button.animate-btn::after,
    and let the CV column drop below when the card is too narrow. */
 .sidebar-user .action-group:has(.vg-cv-links) {
   flex-wrap: wrap;
-  row-gap: 12px;
+  row-gap: 16px;
+}
+/* The info block is pinned to the bottom of the photo, so the extra CV row
+   pushed the heading up over the face. Tightening the divider's 32px
+   margins on desktop wins most of that back. :has() lifts specificity above
+   the SCSS twin of the 32px rule, which loads last. */
+@media (min-width: 992px) {
+  .sidebar-user .user-info:has(.vg-cv-links) .br-line {
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
 }
 .sidebar-user .action-group .tf-btn-action {
   flex-shrink: 0;
