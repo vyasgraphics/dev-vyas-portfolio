@@ -251,15 +251,19 @@ export function WorkCta() {
                                 .sidebar-user .action-group, so the layout is set
                                 in the vg-cta-actions rule rather than widening
                                 that selector for one extra use. */}
-                            <a
-                                href={profile.cvUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="action-down"
-                            >
-                                <i className="icon icon-download" />
-                                <span className="text-body-3">Download CV</span>
-                            </a>
+                            {profile.cvs.map((cv) => (
+                                <a
+                                    key={cv.href}
+                                    href={cv.href}
+                                    title={cv.title}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="action-down"
+                                >
+                                    <i className="icon icon-download" />
+                                    <span className="text-body-3">{cv.label}</span>
+                                </a>
+                            ))}
                         </div>
                     </div>
                 </div>

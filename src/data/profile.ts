@@ -15,7 +15,12 @@ export const profile = {
   rotatingNames: ["Dev Vyas", "a UI/UX Designer", "a Product Designer", "a Graphic Designer"],
   location: "Leeds, UK",
   availability: "Available now",
-  cvUrl: "/assets/Dev_Vyas_CV.pdf",
+  // Two role-specific CVs. The old combined /assets/Dev_Vyas_CV.pdf is no
+  // longer linked but stays on disk so links already sent out keep working.
+  cvs: [
+    { label: "Product Designer CV", title: "Product Designer / UX/UI Designer CV", href: "/assets/Dev_Vyas_CV_Product_Designer.pdf" },
+    { label: "Graphic Designer CV", title: "Visual / Graphic Designer CV", href: "/assets/Dev_Vyas_CV_Graphic_Designer.pdf" },
+  ],
   socials: [
     { icon: "icon-linkin", href: "https://www.linkedin.com/in/dev-vyas6/", label: "LinkedIn" },
     { icon: "icon-instagram", href: "https://www.instagram.com/vyas.graphics/?hl=en", label: "Instagram" },

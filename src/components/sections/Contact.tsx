@@ -372,25 +372,29 @@ export function Contact() {
               <a href={`tel:${profile.phone}`} className="text-body-3 text-black-56" style={{ textDecoration: "none" }}>
                 {profile.phone}
               </a>
-              <div style={{ display: "flex", alignItems: "center", gap: "14px", marginTop: "2px" }}>
+              <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end", rowGap: "4px", columnGap: "14px", marginTop: "2px" }}>
                 <a
                   href="https://www.linkedin.com/in/dev-vyas6/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-body-3 text-black-56"
-                  style={{ textDecoration: "none" }}
+                  style={{ textDecoration: "none", whiteSpace: "nowrap" }}
                 >
                   LinkedIn ↗
                 </a>
-                <a
-                  href={profile.cvUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-body-3 text-black-56"
-                  style={{ textDecoration: "none" }}
-                >
-                  Download CV ↓
-                </a>
+                {profile.cvs.map((cv) => (
+                  <a
+                    key={cv.href}
+                    href={cv.href}
+                    title={cv.title}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body-3 text-black-56"
+                    style={{ textDecoration: "none", whiteSpace: "nowrap" }}
+                  >
+                    {cv.label} ↓
+                  </a>
+                ))}
               </div>
             </div>
           </div>

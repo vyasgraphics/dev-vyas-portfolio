@@ -150,10 +150,16 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                             <span className="text text-body-3 letter-space--05 fw-medium">Let&apos;s talk</span>
                             <span className="ic-wrap"><i className="icon icon-arrow-right-top" /></span>
                         </a>
-                        <a href={profile.cvUrl} target="_blank" rel="noopener noreferrer" className="action-down">
-                            <i className="icon icon-download" />
-                            <span className="text-body-3">Download CV</span>
-                        </a>
+                        {/* Two CVs side by side overflow the fixed-width card,
+                            so they stack in a column beside the button. */}
+                        <div className="vg-cv-links">
+                            {profile.cvs.map((cv) => (
+                                <a key={cv.href} href={cv.href} title={cv.title} target="_blank" rel="noopener noreferrer" className="action-down">
+                                    <i className="icon icon-download" />
+                                    <span className="text-body-3">{cv.label}</span>
+                                </a>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
