@@ -57,7 +57,7 @@ export function Education() {
         The Path Here
       </div>
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        Where I studied <br className="d-none d-lg-block" />
+        Where I studied <br />
         and who I have worked for
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "2.5rem" }}>
@@ -74,7 +74,10 @@ export function Education() {
               <p className="timeline-date text-black-56">
                 {split ? (
                   <>
-                    {split[0]} -<br />
+                    {/* Below 576px the date stacks above the content with
+                        the full width to itself, so the break only wasted
+                        a line there ("Aug -" / "Dec 2024"). */}
+                    {split[0]} - <br className="d-none d-sm-block" />
                     {split[1]}
                   </>
                 ) : (

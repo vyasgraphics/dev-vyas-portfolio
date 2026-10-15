@@ -25,7 +25,7 @@ export function Work() {
                 Selected Work
             </div>
             <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-                What I have built <br className="d-none d-lg-block" />
+                What I have built <br />
                 and what changed as a result
             </h2>
             <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "1rem", maxWidth: "640px" }}>

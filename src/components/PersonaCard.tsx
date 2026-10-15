@@ -45,7 +45,7 @@ export function PersonaCard({ persona }: { persona: Persona }) {
     >
       <div className="tilt-glare" style={{ position: "absolute", inset: 0, pointerEvents: "none" }} />
 
-      <div style={{ position: "relative", padding: "clamp(24px, 4vw, 40px)" }}>
+      <div style={{ position: "relative", padding: "clamp(16px, 4vw, 40px)" }}>
         {/* header */}
         <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "28px" }}>
           <div

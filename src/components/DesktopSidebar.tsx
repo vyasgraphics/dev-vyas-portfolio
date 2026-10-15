@@ -50,7 +50,12 @@ export function DesktopSidebar({ positionClass = "pst-v1" }: DesktopSidebarProps
         setActiveHref(current);
         // Piggy-backs on this existing rAF-throttled listener rather than
         // adding a second scroll subscriber for one boolean.
-        setPastHeroOnMobile(window.scrollY > window.innerHeight * 0.8);
+        // Also steps aside once the footer's own "Back to top" row is on
+        // screen: at the bottom of the page the floating button sat
+        // directly on top of that link, two controls for one job.
+        const footBottom = document.querySelector(".foot-bottom");
+        const footerInView = !!footBottom && footBottom.getBoundingClientRect().top < window.innerHeight;
+        setPastHeroOnMobile(window.scrollY > window.innerHeight * 0.8 && !footerInView);
     };
     let ticking = false;
     const onScroll = () => {

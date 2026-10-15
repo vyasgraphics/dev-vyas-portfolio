@@ -5308,6 +5308,14 @@ button.animate-btn::after,
     margin-bottom: 22px;
   }
 }
+/* Smallest phones (320px class): at 24px "and what changed as a result"
+   missed one line by a couple of pixels and orphaned "result". 360px and
+   up are unchanged. */
+@media (max-width: 359.98px) {
+  .s-title {
+    font-size: 22px;
+  }
+}
 
 .section-testimonial .box-counter {
   display: flex;
@@ -9270,6 +9278,20 @@ html, body {
   .form-contact .form-action .contact-links {
     align-items: center !important;
   }
+  /* The LinkedIn/CV row wraps here and is flex-end inline for desktop,
+     which left the wrapped CV link hanging to the right. */
+  .form-contact .form-action .contact-links > div {
+    justify-content: center !important;
+  }
+}
+
+/* Phone, LinkedIn and CV links are 20px-tall text links. Padding lifts the
+   tap target to 32px; the equal negative margin keeps the layout as-is. */
+@media (max-width: 991px) {
+  .form-contact .contact-links a.text-body-3 {
+    padding: 6px 0;
+    margin: -6px 0;
+  }
 }
 
 /* ── Blog post body typography ──
@@ -10187,9 +10209,11 @@ html, body {
    required here rather than stylistic - see the documented Sass/Turbopack
    media-query source-order bundling quirk in this codebase, where an
    earlier wider max-width block can otherwise win over a later one. */
+/* 11px rather than 10px: at 10px uppercase this, the card's headline
+   result, was the smallest readable text on the homepage. */
 @media (max-width: 991px) {
   .wg-work .w-impact {
-    font-size: 10px !important;
+    font-size: 11px !important;
     margin-bottom: 12px !important;
     padding-left: 10px !important;
   }
@@ -10790,6 +10814,9 @@ html, body {
 
 /* Tablet: the 300px stage plus the copy no longer both fit across. */
 @media (max-width: 991.98px) {
+  /* 20px-tall CV links lifted to a 32px tap target; the negative margin
+     cancels the layout effect. */
+  .vg-cta-actions .action-down { padding: 6px 0; margin: -6px 0; }
   .vg-cta-grid {
     flex-direction: column;
     align-items: stretch;
@@ -10851,6 +10878,16 @@ html, body {
    1440. max-width never forces width, so the floor is inert on mobile. */
 .vg-case-page {
   max-width: clamp(1100px, calc(100% - 380px), 1320px);
+}
+/* Phones: the inline 24px gutter, plus the SectionBox panel's own padding
+   inside it, left body text only 285px of a 375px screen (235px inside a
+   persona card). 16px matches the site's standard phone gutter. !important
+   because the gutter is an inline style on each page. */
+@media (max-width: 575.98px) {
+  .vg-case-page {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
 }
 
 /* Prose deliberately has NO max-width here, so every paragraph runs the

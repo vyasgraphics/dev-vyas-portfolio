@@ -158,7 +158,7 @@ export function Contact() {
       </div>
       <h2 className="s-title letter-space--2 split-text effect-blur-fade">
         Available now for UK{" "}
-        <br className="d-none d-lg-block" />
+        <br />
         and remote roles
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ maxWidth: "600px", marginTop: "1rem", marginBottom: "0.5rem" }}>

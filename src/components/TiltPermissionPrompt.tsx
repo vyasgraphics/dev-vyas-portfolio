@@ -51,7 +51,12 @@ export function TiltPermissionPrompt() {
           cursor: busy ? "default" : "pointer",
           opacity: busy ? 0.7 : 1,
           transition: "background 0.2s ease, border-color 0.2s ease",
-          whiteSpace: "nowrap",
+          // Was nowrap: at 318px wide it overflowed a 320px phone's
+          // content column and made the whole page scroll sideways.
+          // Now the label wraps to a second line when it must.
+          maxWidth: "100%",
+          textAlign: "left",
+          lineHeight: 1.35,
         }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>

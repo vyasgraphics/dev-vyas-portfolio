@@ -37,7 +37,7 @@ export const works: Work[] = [
     title: "Move - University Exercise App",
     impact: "Caught a trust-breaking flaw in the one feature built to protect anxious users - before it ever shipped",
     description: "Usability testing caught the one anti-anxiety feature being read as a mute button, and renamed it before it went any further. A full HCD lifecycle that found the real barrier was anxiety, not motivation.",
-    year: "2025",
+    year: "2026",
     role: "UX Researcher & Designer",
     industry: "EdTech · Health & Fitness",
     platform: "iOS Mobile",

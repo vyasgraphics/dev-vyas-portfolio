@@ -7,9 +7,15 @@ export function About() {
         <i className="icon icon-user-circle" />
         Who I Am
       </div>
+      {/* The <br>s apply at every width on purpose. They used to be
+          desktop-only (d-none d-lg-block), but SplitText still treats a
+          hidden <br> as a line boundary AND breaks at the natural wrap, so
+          phones got orphans like "a designer's" / "eye,". Each clause fits
+          one line down to 320px. Same pattern on Pillars, Work, Education
+          and Contact. */}
       <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-        A researcher&apos;s habits, <br className="d-none d-lg-block" />
-        a designer&apos;s eye, <br className="d-none d-lg-block" />
+        A researcher&apos;s habits, <br />
+        a designer&apos;s eye, <br />
         an engineer&apos;s grounding
       </h2>
       {/* Deliberately does NOT re-list the three qualifications - the pillar

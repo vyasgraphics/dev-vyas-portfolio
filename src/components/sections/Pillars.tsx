@@ -26,7 +26,7 @@ export function Pillars() {
                 What I Bring
             </div>
             <h2 className="s-title letter-space--2 text-black-72 split-text effect-blur-fade">
-                Three disciplines, <br className="d-none d-lg-block" />
+                Three disciplines, <br />
                 one way of working
             </h2>
 

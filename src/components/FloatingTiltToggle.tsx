@@ -20,8 +20,8 @@ function useTouchPrimary() {
 }
 
 // Same on/off control as the inline TiltPermissionPrompt banner up near
-// the first persona card, just always reachable - stacked directly above
-// Back to Top so both live in the same corner, and (unlike Back to Top)
+// the first persona card, just always reachable - sat beside Back to Top
+// so both live in the same corner, and (unlike Back to Top)
 // visible regardless of scroll position, since toggling the effect is
 // useful the moment you land on the page, not just after scrolling away
 // from the top.
@@ -34,7 +34,12 @@ export function FloatingTiltToggle() {
   if (!visible) return null;
 
   return (
-    <div style={{ position: "fixed", bottom: "100px", right: "28px", zIndex: 40, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
+    // Beside Back to Top (44px wide at right: 28px, plus a 10px gap) rather
+    // than stacked 100px up: stacked, the two covered a 116px band of body
+    // text on the right of a phone screen. In one row they share the bottom
+    // band with SectionNav, which ends by x~180 for its longest label, so
+    // this still clears it at 320px.
+    <div style={{ position: "fixed", bottom: "28px", right: "82px", zIndex: 40, display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
       {/* Same "iOS gives no dialog on a repeat denial" situation as
           TiltPermissionPrompt - doing nothing here reads as broken. */}
       {denied && (

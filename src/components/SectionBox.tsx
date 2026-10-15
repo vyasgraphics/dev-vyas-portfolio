@@ -32,7 +32,7 @@ export function SectionBox({
         borderRadius: "28px",
         background: "linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015))",
         border: "1px solid rgba(255,255,255,0.09)",
-        padding: "clamp(28px, 4vw, 48px) clamp(20px, 4.5vw, 52px) clamp(36px, 5vw, 56px)",
+        padding: "clamp(28px, 4vw, 48px) clamp(16px, 4.5vw, 52px) clamp(36px, 5vw, 56px)",
         // Must exceed this box's own inner padding, or the gap BETWEEN
         // sections reads as tighter than the space inside one - Gestalt
         // proximity then works against the chunking the box is there to
