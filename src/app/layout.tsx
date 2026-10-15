@@ -41,7 +41,9 @@ export const metadata: Metadata = {
             { url: "/favicon-16.png?v=29", type: "image/png", sizes: "16x16" },
             { url: "/favicon.ico?v=29" },
         ],
-        apple: "/favicon-48.png?v=29",
+        // iOS uses this for "Add to Home Screen" and expects 180x180; the
+        // 48px favicon it used to point at was upscaled into a blurry tile.
+        apple: { url: "/apple-touch-icon.png?v=30", sizes: "180x180", type: "image/png" },
     },
 };
 
@@ -52,6 +54,9 @@ export const viewport: Viewport = {
     // to) blocks pinch-to-zoom entirely, which fails WCAG 1.4.4 (Resize
     // Text): anyone with low vision who relies on zooming to read content
     // couldn't. Leaving zoom unrestricted costs nothing for everyone else.
+    // Tints the phone browser's address bar and status bar to the page
+    // background (#0F0F0F) instead of a default light or grey bar.
+    themeColor: "#0F0F0F",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
