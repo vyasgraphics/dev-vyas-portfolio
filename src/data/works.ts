@@ -22,7 +22,7 @@ export const works: Work[] = [
   {
     slug: "move-app",
     title: "Move - University Exercise App",
-    impact: "Caught a trust-breaking flaw in the one feature built to protect anxious users - before it ever shipped",
+    impact: "A critical usability issue identified during testing, in the one feature built to protect anxious users, and redesigned before development",
     description: "A team concept project for an iOS exercise app. 17 questionnaire responses showed the real barrier was anxiety, not motivation, and testing with eight users caught a confusing feature, redesigned before development.",
     year: "2026",
     role: "UX Researcher & Designer · Team of 4",

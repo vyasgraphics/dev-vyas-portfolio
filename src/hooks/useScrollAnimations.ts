@@ -646,7 +646,12 @@ export function useScrollAnimations() {
                     });
                 });
             };
+            // The markup carries the final values (20, 70) so link previews,
+            // crawlers and anything reading the page without JS see the real
+            // figures rather than "0+". Reset to 0 here, just before the
+            // count-up is armed, so the animation itself is unchanged.
             counterEls.forEach((el) => {
+                el.querySelectorAll<HTMLElement>(".number").forEach((numEl) => { numEl.textContent = "0"; });
                 const t = ScrollTrigger.create({
                     trigger: el,
                     start: "top 95%",

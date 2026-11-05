@@ -60,7 +60,7 @@ export function Intro() {
             <div className="box-counter">
                 <div className="wg-counter">
                     <p className="counter h1 d-flex font-2 letter-space--2">
-                        <span className="number" data-speed="1000" data-to="20">0</span>+
+                        <span className="number" data-speed="1000" data-to="20">20</span>+
                     </p>
                     {/* Replaced "4+ Years designing commercially": the paid
                         roles total well under that (five months full-time at
@@ -75,7 +75,7 @@ export function Intro() {
                     think-aloud testers. The old figure counted one project. */}
                 <div className="wg-counter">
                     <p className="counter h1 d-flex font-2 letter-space--2">
-                        <span className="number" data-speed="1000" data-to="70">0</span>+
+                        <span className="number" data-speed="1000" data-to="70">70</span>+
                     </p>
                     <p className="text text-black-56 text-body-3">Users researched &amp; tested</p>
                 </div>
