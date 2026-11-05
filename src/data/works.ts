@@ -17,11 +17,28 @@ export type Work = {
 };
 
 export const works: Work[] = [
+  // Recruiter-friendly order: end-to-end product process first, then the
+  // quantitative HCI research, then the visual craft.
+  {
+    slug: "move-app",
+    title: "Move - University Exercise App",
+    impact: "Caught a trust-breaking flaw in the one feature built to protect anxious users - before it ever shipped",
+    description: "A team concept project for an iOS exercise app. 17 questionnaire responses showed the real barrier was anxiety, not motivation, and testing with eight users caught a confusing feature, redesigned before development.",
+    year: "2026",
+    role: "UX Researcher & Designer · Team of 4",
+    industry: "EdTech · Health & Fitness",
+    platform: "iOS Mobile",
+    tags: ["UX Research", "Figma", "Health & Fitness", "iOS"],
+    image: "/assets/images/section/work-2.jpg",
+    imagePortrait: "/assets/images/section/work-2-portrait.jpg",
+    logo: "/assets/images/logo/logo-dv.svg",
+    link: "/work/move-app",
+  },
   {
     slug: "dissertation",
     title: "Distraction Resistance & Complex User Interfaces",
     impact: "Surfaced a completion-time cost that success-rate metrics miss entirely",
-    description: "Visual clutter isn't a flat tax - it costs some users nearly half their time and barely touches others. A quantitative study measuring a hidden cognitive trait against real interface performance.",
+    description: "Visual clutter isn't a flat tax. A 42-participant quantitative study found that a person's distraction resistance tracked how long a cluttered interface took them, while accuracy barely moved.",
     year: "2026",
     role: "UX Researcher · MSc Dissertation",
     industry: "Academic Research · HCI",
@@ -33,25 +50,10 @@ export const works: Work[] = [
     link: "/work/dissertation",
   },
   {
-    slug: "move-app",
-    title: "Move - University Exercise App",
-    impact: "Caught a trust-breaking flaw in the one feature built to protect anxious users - before it ever shipped",
-    description: "Usability testing caught the one anti-anxiety feature being read as a mute button, and renamed it before it went any further. A full HCD lifecycle that found the real barrier was anxiety, not motivation.",
-    year: "2026",
-    role: "UX Researcher & Designer",
-    industry: "EdTech · Health & Fitness",
-    platform: "iOS Mobile",
-    tags: ["UX Research", "Figma", "Health & Fitness", "iOS"],
-    image: "/assets/images/section/work-2.jpg",
-    imagePortrait: "/assets/images/section/work-2-portrait.jpg",
-    logo: "/assets/images/logo/logo-dv.svg",
-    link: "/work/move-app",
-  },
-  {
     slug: "vyas-graphics",
     title: "Vyas Graphics - Brand Identity & Sports Media",
-    impact: "20+ identities and a full ICC tournament campaign, all shipped to deadline",
-    description: "Six years of self-directed brand and motion work - 20+ identities built from scratch, four animated logo reveal variants in After Effects, and a full ICC T20 World Cup 2026 sports media campaign.",
+    impact: "20+ identities, four logo reveals and two self-initiated cricket campaigns",
+    description: "Six years of self-directed brand and motion work: 20+ identities built from scratch, four animated logo reveals in After Effects, and independent, non-commercial sports media for the ICC T20 World Cup 2026.",
     year: "2020-2026",
     role: "Brand & Motion Designer",
     industry: "Brand · Sports Media",

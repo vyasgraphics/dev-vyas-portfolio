@@ -4,9 +4,9 @@ import type { MetadataRoute } from "next";
 // screen rather than a screenshot tile on a white background.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Dev Vyas - UI/UX, Product & Graphic Designer",
+    name: "Dev Vyas - Product & UX/UI Designer",
     short_name: "Dev Vyas",
-    description: "Portfolio of Dev Vyas, UI/UX, Product & Graphic Designer based in the United Kingdom.",
+    description: "Portfolio of Dev Vyas, Product & UX/UI Designer based in the United Kingdom.",
     start_url: "/",
     display: "browser",
     background_color: "#0F0F0F",

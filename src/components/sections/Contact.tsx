@@ -162,7 +162,7 @@ export function Contact() {
         and remote roles
       </h2>
       <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ maxWidth: "600px", marginTop: "1rem", marginBottom: "0.5rem" }}>
-        I research the problem, design the solution, and understand enough of the build to know the handover will hold. If you need one person across UI/UX, product and graphic design who can take a project from research through to something that ships, let&apos;s talk.
+        I research the problem, design the solution, and understand enough of the build to know the handover will hold. If you need a product and UX/UI designer who also brings graphic design and front-end knowledge, and can take a project from research through to something that ships, let&apos;s talk.
       </p>
 
       {submitted ? (

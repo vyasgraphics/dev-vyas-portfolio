@@ -6,22 +6,19 @@ export function Intro() {
             <div className="intro-author">
                 <div className="author-info letter-space--05">
                     <p className="info_name text-black">Dev Vyas</p>
-                    {/* The three disciplines, led by UI/UX to match the pillar
-                        band and the rest of the research-first ordering.
-                        "Web & Mobile" used to trail this line so a recruiter
-                        filtering on those platform keywords met them above the
-                        fold; dropped at Dev's request. Both terms still appear
-                        in the page description and throughout the case
-                        studies, so they remain indexable - just not here. */}
+                    {/* Primary identity only. Graphic design and front-end
+                        development are complementary strengths and are carried
+                        by the pillar band, the disciplines marquee and the
+                        case studies rather than crowding this line. */}
                     <p className="info_duty text-black-50 text-body-3">
-                        UI/UX, Product &amp; Graphic Designer
+                        Product &amp; UX/UI Designer
                     </p>
                 </div>
             </div>
 
             <h1 className="intro-title letter-space--2">
                 Turning{" "}
-                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>research, craft and code</span>{" "}
+                <span className="type-2 is-bg" style={{ color: "var(--primary)" }}>research, creative craft and code</span>{" "}
                 into products people actually use
             </h1>
 
@@ -63,9 +60,14 @@ export function Intro() {
             <div className="box-counter">
                 <div className="wg-counter">
                     <p className="counter h1 d-flex font-2 letter-space--2">
-                        <span className="number" data-speed="1000" data-to="4">0</span>+
+                        <span className="number" data-speed="1000" data-to="20">0</span>+
                     </p>
-                    <p className="text text-black-56 text-body-3">Years designing commercially</p>
+                    {/* Replaced "4+ Years designing commercially": the paid
+                        roles total well under that (five months full-time at
+                        Panchal plus a university contract), so a year count
+                        overstated it. 20+ identities is evidenced by the
+                        consultancy work and the Vyas Graphics case study. */}
+                    <p className="text text-black-56 text-body-3">Visual identities designed</p>
                 </div>
                 {/* 70+, not the 25 this used to claim: the dissertation alone
                     ran 42 in the final sample (plus 2 excluded and 4 pilots),

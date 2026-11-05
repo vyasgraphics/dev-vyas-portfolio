@@ -63,7 +63,7 @@ const STRUCTURED_DATA = {
         "@type": "Person",
         name: "Dev Vyas",
         url: SITE_URL,
-        jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
+        jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
         sameAs: [
           "https://www.linkedin.com/in/dev-vyas6",
           "https://www.behance.net/devvyas_graphics",
@@ -257,10 +257,10 @@ export default function VyasGraphicsWorkPage() {
             fontWeight: 600, marginBottom: "20px",
             paddingLeft: "16px", borderLeft: "3px solid #00DE51",
           }}>
-            The scope: 20+ brand identities, four animated logo reveals, and a full ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
+            The scope: 20+ brand identities, four animated logo reveals, and an independent ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
-            Vyas Graphics is my own design practice, running since 2020, alongside the four years of commercial
+            Vyas Graphics is my own design practice, running since 2020 alongside my degrees and the product and
             UX work covered elsewhere on this site - different discipline, overlapping timeline. Six years of
             self-directed brand and motion work: identities built from scratch, sports campaigns run like real
             client accounts, and every piece shipped to a deadline nobody was enforcing but me.
@@ -305,7 +305,7 @@ export default function VyasGraphicsWorkPage() {
             {[
               ["Identities", "20+", "Brand marks built from scratch, from personal wordmarks to full circular badge systems."],
               ["Motion", "4", "Animated logo reveal variants in After Effects, each cut for a different placement context."],
-              ["Campaigns", "2", "Full cricket media campaigns, ICC T20 World Cup 2026 and IPL 2026, run to tournament dates."],
+              ["Campaigns", "2", "Self-initiated cricket media campaigns, ICC T20 World Cup 2026 and IPL 2026, run to tournament dates."],
             ].map(([label, stat, desc]) => (
               <div key={label}>
                 <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>{label}</p>
@@ -522,7 +522,7 @@ export default function VyasGraphicsWorkPage() {
 
         {/* ── Sports Media ── */}
         <ScrollReveal>
-          <SectionBox id="sports" tag="Client-grade campaigns">
+          <SectionBox id="sports" tag="Self-initiated campaigns">
             <SectionHeading>Sports media graphics</SectionHeading>
             <Body>
               Self-initiated sports media campaigns run like real client accounts - tournament identity, match-day
@@ -533,8 +533,9 @@ export default function VyasGraphicsWorkPage() {
               background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
             }}>
               <p style={{ fontSize: "13px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)" }}>
-                Assets &amp; player images © ICC / BCCI / IPL / official sources. All content created for personal
-                portfolio &amp; non-commercial use only. All official marks belong to their respective owners.
+                Independent, self-initiated work: not commissioned, affiliated with or endorsed by the ICC, BCCI or
+                IPL. Assets &amp; player images © ICC / BCCI / IPL / official sources. All content created for
+                personal portfolio &amp; non-commercial use only. All official marks belong to their respective owners.
               </p>
             </div>
 

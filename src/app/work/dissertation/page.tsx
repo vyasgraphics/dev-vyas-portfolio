@@ -16,7 +16,7 @@ import { DistractionInteractionChart } from "@/components/DistractionInteraction
 
 export const metadata: Metadata = pageMetadata({
   title: "Distraction Resistance & Complex User Interfaces",
-  description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces.",
+  description: "MSc HCI research with 42 participants, testing whether a person's ability to resist distraction predicts their performance on complex, cluttered interfaces.",
   path: "/work/dissertation",
 });
 
@@ -45,14 +45,14 @@ const STRUCTURED_DATA = {
       "@type": "CreativeWork",
       "@id": PAGE_URL,
       name: "Distraction Resistance & Complex User Interfaces",
-      description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces. A quantitative study run via Prolific, analysed in SPSS.",
+      description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces. A quantitative study with 42 participants recruited via Prolific, analysed in Python and cross-checked in SPSS and Jamovi.",
       url: PAGE_URL,
       image: `${SITE_URL}/opengraph-image`,
       creator: {
         "@type": "Person",
         name: "Dev Vyas",
         url: SITE_URL,
-        jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
+        jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
         sameAs: [
           "https://www.linkedin.com/in/dev-vyas6",
           "https://www.behance.net/devvyas_graphics",
@@ -474,12 +474,22 @@ export default function DissertationWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="next" tag="Submitted · 75% provisional">
+          <SectionBox id="next" tag="Limits and next steps">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What&apos;s next</h2>
+            {/* The dissertation's own mark is not stated: only the overall MSc
+                award (Distinction, 74%) is confirmed, and a provisional figure
+                should not read as a final one. The findings stay at the level
+                of the relationships the study measured - correlational, not
+                causal - with no coefficients or p-values on the page. */}
+            <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
+              Completed as the capstone of an MSc awarded with Distinction. The study shows a relationship between
+              distraction resistance and completion time, not a cause, and the near-perfect accuracy scores mean the
+              task could not separate participants on accuracy. A harder task, one that leaves room for accuracy to
+              vary, is the obvious next test.
+            </p>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              Submitted and provisionally marked at 75%, with the final award still pending, so the detail here
-              stays deliberately high-level for now. Once the award is confirmed I&apos;ll add the fuller analysis:
-              exactly how the two components interact, and what that means for accuracy as well as time.
+              The fuller analysis, exactly how the two components interact and what that means for accuracy as well
+              as time, is the part I would most like to take further.
             </p>
           </SectionBox>
         </ScrollReveal>
@@ -501,7 +511,7 @@ export default function DissertationWorkPage() {
                   <strong style={{ color: "#fff" }}>Solo-owned end to end.</strong>{" "}Research question, task design, ethics approval, recruitment, analysis.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Held the reporting honest.</strong>{" "}Stated what the data does and doesn&apos;t yet show, rather than overselling it pre-marking.
+                  <strong style={{ color: "#fff" }}>Held the reporting honest.</strong>{" "}Stated what the data does and doesn&apos;t show, and kept correlation distinct from causation.
                 </li>
               </ul>
             </div>

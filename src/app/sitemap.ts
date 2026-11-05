@@ -13,14 +13,14 @@ const baseUrl = "https://dev-vyas-portfolio.vercel.app";
 // them: a sitemap that advertises URLs returning 404 is a crawl-budget waste
 // and a quality signal against the site.
 const LAST_MODIFIED: Record<string, string> = {
-  // Homepage: completed MSc, availability, experience copy and the two
-  // role-specific CVs, Oct 2026.
-  "": "2026-10-15",
-  // Dissertation: submitted and provisionally marked, 12 Oct 2026.
-  "/work/dissertation": "2026-10-12",
-  // Move and Vyas Graphics: last content edits 17 Aug 2026.
-  "/work/move-app": "2026-08-17",
-  "/work/vyas-graphics": "2026-08-17",
+  // Homepage: MSc Distinction confirmed, Product & UX/UI positioning and
+  // LinkedIn-aligned experience copy, Nov 2026.
+  "": "2026-11-05",
+  // Dissertation: provisional wording removed, limits section added.
+  "/work/dissertation": "2026-11-05",
+  // Move: metadata and summary card. Vyas Graphics: independence labelling.
+  "/work/move-app": "2026-11-05",
+  "/work/vyas-graphics": "2026-11-05",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

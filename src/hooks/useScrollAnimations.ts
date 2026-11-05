@@ -658,7 +658,7 @@ export function useScrollAnimations() {
         }
 
         /* ---------------- Text-rotate circular text ---------------- */
-        // Full text requested: DEV VYAS - PRODUCT - UI/UX - GRAPHIC -
+        // Full text requested: DEV VYAS - PRODUCT - UX/UI - GRAPHIC -
         // DESIGNER & RESEARCHER - UK - (68 chars). Circle is resized to
         // 184px diameter (r=92) so all chars fit without upside-down
         // overflow - 68 chars gives each char slightly MORE room than the
@@ -678,7 +678,7 @@ export function useScrollAnimations() {
         // lands on the angle, spacing every character evenly regardless
         // of its own width.
         document.querySelectorAll<HTMLElement>(".text-rotate .text").forEach((circularText) => {
-            const text = "DEV VYAS - PRODUCT - UI/UX - GRAPHIC - DESIGNER & RESEARCHER - UK - ";
+            const text = "DEV VYAS - PRODUCT - UX/UI - GRAPHIC - DESIGNER & RESEARCHER - UK - ";
             const chars = text.split("");
             const degree = 360 / chars.length;
             circularText.innerHTML = "";

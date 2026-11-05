@@ -29,7 +29,7 @@ export function Work() {
                 and what changed as a result
             </h2>
             <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "1rem", maxWidth: "640px" }}>
-                One project per pillar: a research study that measured a real cost, a product designed and prototyped end to end, and four years of brand and motion work shipped to deadline. Start anywhere.
+                One project per pillar: a product designed, tested and iterated end to end, a quantitative HCI study that measured a hidden cost, and six years of self-directed brand and motion work. Start anywhere.
             </p>
             {/* Desktop-only signpost. On this breakpoint each project's write-up
                 (title, summary, industry/platform/year/role, tags, CTA) renders

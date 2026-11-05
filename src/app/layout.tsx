@@ -7,20 +7,18 @@ import "./globals.scss";
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://dev-vyas-portfolio.vercel.app"),
-    // Three disciplines sharing the noun once, rather than "UI/UX Designer -
-    // Product Designer - Graphic Designer". That spelling runs to 63
-    // characters, past the ~60 Google renders before truncating, and reads
-    // as a list rather than an identity. This is 44 and fits every surface:
-    // browser tab, search result, and the LinkedIn preview card.
+    // Product & UX/UI leads, matching the LinkedIn headline. The tagline
+    // after the hyphen is the site's narrative; it is the part Google may
+    // truncate on narrow results, so the name and title come first.
     title: {
-        default: "Dev Vyas - UI/UX, Product & Graphic Designer",
+        default: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
         template: "%s - Dev Vyas",
     },
-    description: "Dev Vyas - UI/UX, Product & Graphic Designer. Human-centred research, visual craft, and a computer science grounding. Based in Leeds, United Kingdom.",
+    description: "Explore Dev Vyas's portfolio in product design, UX/UI, user research, graphic design and front-end development, including MSc HCI research at the University of York.",
     authors: [{ name: "Dev Vyas" }],
     openGraph: {
-        title: "Dev Vyas - UI/UX, Product & Graphic Designer",
-        description: "Turning research, craft and code into products people actually use. Based in Leeds, United Kingdom.",
+        title: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
+        description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction, University of York.",
         url: "https://dev-vyas-portfolio.vercel.app",
         siteName: "Dev Vyas",
         locale: "en_GB",
@@ -28,8 +26,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Dev Vyas - UI/UX, Product & Graphic Designer",
-        description: "Turning research, craft and code into products people actually use. Based in Leeds, United Kingdom.",
+        title: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
+        description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction, University of York.",
     },
     robots: {
         index: true,

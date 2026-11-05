@@ -13,6 +13,6 @@ export type Organisation = {
 // actually recognise or look up.
 export const organisations: Organisation[] = [
   { name: "University of York", role: "Student Content Creator" },
-  { name: "Google Developer Student Club", role: "Design Lead & Mentor" },
+  { name: "Google Developer Student Clubs", role: "Design Lead & Mentor" },
   { name: "Panchal Softwares", role: "Graphic & UI Designer" },
 ];

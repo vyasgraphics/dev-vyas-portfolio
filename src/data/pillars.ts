@@ -24,19 +24,19 @@ export type Pillar = {
 export const pillars: Pillar[] = [
   {
     number: "01",
-    title: "UI / UX",
+    title: "Research & UX",
     credential: "MSc Human-Centred Interactive Technologies",
     points: [
       "Where every project starts",
       "Research methods, interaction design and evaluation",
       "Designing around how people behave, not how I assume they will",
-      "Completed at York, 74.1% provisional average",
+      "Distinction (74%), University of York",
     ],
     icon: "icon-user-circle",
   },
   {
     number: "02",
-    title: "Creative",
+    title: "Creative Craft",
     credential: "Specialisation in Animation & Multimedia",
     points: [
       "Taken alongside my computer science degree",
@@ -54,7 +54,7 @@ export const pillars: Pillar[] = [
       "The degree that came first",
       "I read the engineering constraints rather than design past them",
       "I can build it myself when that is faster than describing it",
-      "First Class with Distinction, CGPA 8.61",
+      "First Class with Distinction, CGPA 8.61/10",
     ],
     icon: "icon-gear",
   },

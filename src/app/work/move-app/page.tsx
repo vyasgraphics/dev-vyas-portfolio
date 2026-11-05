@@ -20,7 +20,7 @@ import { personas } from "@/data/personas";
 
 export const metadata: Metadata = pageMetadata({
   title: "Move - University Exercise App",
-  description: "A full HCD lifecycle project tackling how to get students moving despite time pressures and fear of judgement.",
+  description: "A team MSc concept project for an iOS exercise app: 17 questionnaire responses, Figma prototyping and usability testing with eight users.",
   path: "/work/move-app",
 });
 
@@ -54,7 +54,7 @@ const STRUCTURED_DATA = {
         "@type": "Person",
         name: "Dev Vyas",
         url: SITE_URL,
-        jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
+        jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
         sameAs: [
           "https://www.linkedin.com/in/dev-vyas6",
           "https://www.behance.net/devvyas_graphics",
@@ -289,7 +289,7 @@ export default function MoveAppWorkPage() {
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Validation ready</p>
               <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="256" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                Users in a scoped, properly powered A/B study, ready to confirm the redesign holds at scale.
+                Users in a proposed, power-calculated A/B study. Scoped, not yet run - the next step if the concept moves to development.
               </p>
             </div>
           </div>

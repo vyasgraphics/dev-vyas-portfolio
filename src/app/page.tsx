@@ -26,7 +26,7 @@ const SITE_URL = "https://dev-vyas-portfolio.vercel.app";
 // array here, all three are true, and they are the actual terms roles get
 // advertised under - so an entity match on any one of them should resolve to
 // this person. A single "Product Designer" was tidier but silently opted out
-// of the other two. Ordered to match the visible identity, UI/UX first.
+// of the other two. Ordered to match the visible identity, Product first.
 // `knowsAbout` below still carries the skills, which is a different question
 // from what job he is applying for.
 const STRUCTURED_DATA = {
@@ -37,24 +37,27 @@ const STRUCTURED_DATA = {
       "@id": `${SITE_URL}/#person`,
       name: "Dev Vyas",
       url: SITE_URL,
-      jobTitle: ["UI/UX Designer", "Product Designer", "Graphic Designer"],
+      jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
       description:
-        "UI/UX, product and graphic designer combining human-centred research, visual craft and a computer science background.",
+        "Product and UX/UI designer combining human-centred research, graphic design and front-end development. MSc Human-Centred Interactive Technologies (Distinction), University of York.",
       image: `${SITE_URL}/opengraph-image`,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Leeds",
         addressCountry: "GB",
       },
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: "University of York",
-      },
+      alumniOf: [
+        { "@type": "CollegeOrUniversity", name: "University of York" },
+        { "@type": "CollegeOrUniversity", name: "Gujarat Technological University" },
+      ],
       knowsAbout: [
-        "UI/UX design",
+        "product design",
+        "UX/UI design",
         "user research",
+        "accessibility",
         "human-centred design",
         "usability testing",
+        "graphic design",
         "brand identity design",
         "motion graphics",
         "front-end development",

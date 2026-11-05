@@ -64,9 +64,10 @@ export function WelcomeScreen() {
                     next sentence. Without it, screen readers and any text
                     extraction read "...Graphic DesignerI start from how...". */}
                 <p className="vg-welcome-sub">
-                    <span className="vg-welcome-roles">UI/UX, Product &amp; Graphic Designer.</span>{" "}
-                    I start from how people actually behave, shape it with visual
-                    craft, and build it with an engineer&apos;s grounding.
+                    <span className="vg-welcome-roles">Product &amp; UX/UI Designer.</span>{" "}
+                    I bring together human-centred research, visual design and a
+                    computer science background to make digital experiences that
+                    are thoughtful, accessible and buildable.
                 </p>
             </div>
 

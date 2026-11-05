@@ -1,6 +1,6 @@
 # Dev Vyas - Portfolio
 
-Personal portfolio for **Dev Vyas**, a UI/UX, Product and Graphic Designer based in the United Kingdom.
+Personal portfolio for **Dev Vyas**, a Product & UX/UI Designer based in the United Kingdom.
 
 **Live: [dev-vyas-portfolio.vercel.app](https://dev-vyas-portfolio.vercel.app)**
 
@@ -24,7 +24,7 @@ and code decides whether it ships.
 ## What is in here
 
 - **Three case studies** - an MSc research study, a full human-centred design
-  lifecycle project, and four years of brand and motion work
+  lifecycle project, and six years of self-directed brand and motion work
 - **Custom components throughout** - the animated terrain landing screen, the
   interactive wireframe prototypes on the case study pages, before/after
   sliders, flipbook cards and the scroll-driven work cards are all built for

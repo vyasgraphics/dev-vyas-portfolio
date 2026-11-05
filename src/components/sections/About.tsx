@@ -23,13 +23,16 @@ export function About() {
           credential. This paragraph's job is the join: what having all three
           at once actually buys, which is the part a list cannot say. */}
       <p className="s-desc text-black-56 scrolling-effect effectTop">
-        UI/UX, product and graphic designer with four years of commercial experience,
-        having just completed an MSc in Human-Centred Interactive Technologies at the
-        University of York. The three strands feed each other: research means I can
-        show the decision was the right one, animation training means I care about the
-        last two pixels, and computer science means I know what a design costs to build.
-        AI runs across all of it, taking the repetition so my time goes on the
-        judgement calls it cannot make.
+        Product and UX/UI designer with an MSc in Human-Centred Interactive Technologies
+        from the University of York, awarded with Distinction, and a BE in Computer
+        Science &amp; Engineering with First Class with Distinction. Research explains the
+        decisions, creative craft makes the experience coherent, and code keeps it
+        buildable. In practice that means user research and accessibility-aware design
+        (WCAG) at the centre, graphic design, visual identity and motion as the craft
+        around it, and enough front-end development to hand developers something
+        realistic. I have worked with university stakeholders and with design and
+        development teams, and I care about the reasoning behind a design as much as how it
+        works once it is built.
       </p>
       <ul className="award-list tf-grid-layout md-col-2">
         {awards.map((a, i) => (
