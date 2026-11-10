@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Dev Vyas - Product & UX/UI Designer",
     short_name: "Dev Vyas",
-    description: "Portfolio of Dev Vyas, Product & UX/UI Designer based in the United Kingdom.",
+    description: "Portfolio of Dev Vyas, Product & UX/UI Designer based in Leeds, UK.",
     start_url: "/",
     display: "browser",
     background_color: "#0F0F0F",

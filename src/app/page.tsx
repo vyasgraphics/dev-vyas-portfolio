@@ -40,7 +40,9 @@ const STRUCTURED_DATA = {
       jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
       description:
         "Product and UX/UI designer combining human-centred research, graphic design and front-end development. MSc Human-Centred Interactive Technologies (Distinction), University of York.",
-      image: `${SITE_URL}/opengraph-image`,
+      // The real portrait from the profile card, not the text-only share
+      // card: a person's image in search results should be the person.
+      image: `${SITE_URL}/assets/images/avatar/avatar.webp`,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Leeds",
@@ -75,6 +77,19 @@ const STRUCTURED_DATA = {
       name: "Dev Vyas",
       inLanguage: "en-GB",
       publisher: { "@id": `${SITE_URL}/#person` },
+    },
+    // ProfilePage is the schema.org type Google documents for a page whose
+    // main subject is one person, so the homepage says what it is rather
+    // than leaving it to be inferred from the Person node alone.
+    {
+      "@type": "ProfilePage",
+      "@id": `${SITE_URL}/#profilepage`,
+      url: SITE_URL,
+      name: "Dev Vyas | Product & UX/UI Designer",
+      inLanguage: "en-GB",
+      dateModified: "2026-11-10",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      mainEntity: { "@id": `${SITE_URL}/#person` },
     },
   ],
 };

@@ -3,6 +3,7 @@ import { pageMetadata } from "@/lib/pageMetadata";
 import { Children } from "react";
 import Image from "next/image";
 import { BackLink } from "@/components/BackLink";
+import { NextProject, ReadingProgress } from "@/components/NextProject";
 import { SectionNav } from "@/components/SectionNav";
 import { CountUpStat } from "@/components/CountUpStat";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -59,8 +60,13 @@ const STRUCTURED_DATA = {
         "Self-directed brand and motion work spanning logo design, animated logo reveals, social media, print, and a full sports media campaign for the ICC T20 World Cup 2026 and IPL 2026.",
       url: PAGE_URL,
       image: `${IMG_URL}/icc-t20-world-cup-2026-india-champions-poster.jpg`,
+      inLanguage: "en-GB",
+      // Ties the case study to the site and to the one Person entity the
+      // homepage defines, so search engines read them as one graph.
+      isPartOf: { "@id": `${SITE_URL}/#website` },
       creator: {
         "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
         name: "Dev Vyas",
         url: SITE_URL,
         jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
@@ -756,12 +762,15 @@ export default function VyasGraphicsWorkPage() {
           </div>
         </ScrollReveal>
 
-        <div style={{ marginTop: "56px", textAlign: "center" }}>
+        <NextProject current="vyas-graphics" />
+
+        <div style={{ marginTop: "40px", textAlign: "center" }}>
           <BackLink href="/#work" label="← Back to Work" />
         </div>
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
+      <ReadingProgress />
 
       <style>{`
         @keyframes vg-hero-in {

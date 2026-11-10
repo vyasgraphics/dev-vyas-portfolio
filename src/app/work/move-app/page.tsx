@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/pageMetadata";
 import { BackLink } from "@/components/BackLink";
+import { NextProject, ReadingProgress } from "@/components/NextProject";
 import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
@@ -49,9 +50,14 @@ const STRUCTURED_DATA = {
       name: "Move - University Exercise App",
       description: "A full human-centred design lifecycle project tackling how to get students moving despite time pressures and fear of judgement, from user research through to a proposed A/B study.",
       url: PAGE_URL,
-      image: `${SITE_URL}/opengraph-image`,
+      image: `${PAGE_URL}/opengraph-image`,
+      inLanguage: "en-GB",
+      // Ties the case study to the site and to the one Person entity the
+      // homepage defines, so search engines read them as one graph.
+      isPartOf: { "@id": `${SITE_URL}/#website` },
       creator: {
         "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
         name: "Dev Vyas",
         url: SITE_URL,
         jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
@@ -523,12 +529,15 @@ export default function MoveAppWorkPage() {
           </div>
         </ScrollReveal>
 
-        <div style={{ marginTop: "56px", textAlign: "center" }}>
+        <NextProject current="move-app" />
+
+        <div style={{ marginTop: "40px", textAlign: "center" }}>
           <BackLink href="/#work" label="← Back to Work" />
         </div>
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
+      <ReadingProgress />
       <FloatingTiltToggle />
     </div>
   );

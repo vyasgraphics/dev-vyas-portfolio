@@ -35,6 +35,11 @@ export function pageMetadata(opts: {
 }): Metadata {
   const { title, description, path, socialTitle, type = "article" } = opts;
   const cardTitle = `${socialTitle ?? title} - ${SITE_NAME}`;
+  // Each case study now has its own opengraph-image.tsx beside its page.tsx
+  // (built from src/lib/caseStudyOgImage.tsx), so the preview card names the
+  // project rather than repeating the homepage's. Twitter has no file of its
+  // own, so it needs the same URL spelled out here.
+  const image = `${path}/opengraph-image`;
 
   return {
     title,
@@ -51,13 +56,13 @@ export function pageMetadata(opts: {
       siteName: SITE_NAME,
       locale: "en_GB",
       type,
-      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: cardTitle }],
+      images: [{ url: image, width: 1200, height: 630, alt: cardTitle }],
     },
     twitter: {
       card: "summary_large_image",
       title: cardTitle,
       description,
-      images: ["/opengraph-image"],
+      images: [image],
     },
   };
 }

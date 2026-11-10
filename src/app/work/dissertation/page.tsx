@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/pageMetadata";
 import { BackLink } from "@/components/BackLink";
+import { NextProject, ReadingProgress } from "@/components/NextProject";
 import { SectionBox } from "@/components/SectionBox";
 import { BackToTop } from "@/components/BackToTop";
 import { FloatingTiltToggle } from "@/components/FloatingTiltToggle";
@@ -47,9 +48,14 @@ const STRUCTURED_DATA = {
       name: "Distraction Resistance & Complex User Interfaces",
       description: "MSc capstone research investigating whether a person's intrinsic ability to resist distraction predicts their performance on complex, cluttered interfaces. A quantitative study with 42 participants recruited via Prolific, analysed in Python and cross-checked in SPSS and Jamovi.",
       url: PAGE_URL,
-      image: `${SITE_URL}/opengraph-image`,
+      image: `${PAGE_URL}/opengraph-image`,
+      inLanguage: "en-GB",
+      // Ties the case study to the site and to the one Person entity the
+      // homepage defines, so search engines read them as one graph.
+      isPartOf: { "@id": `${SITE_URL}/#website` },
       creator: {
         "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
         name: "Dev Vyas",
         url: SITE_URL,
         jobTitle: ["Product Designer", "UX/UI Designer", "Graphic Designer"],
@@ -535,12 +541,15 @@ export default function DissertationWorkPage() {
           </div>
         </ScrollReveal>
 
-        <div style={{ marginTop: "56px", textAlign: "center" }}>
+        <NextProject current="dissertation" />
+
+        <div style={{ marginTop: "40px", textAlign: "center" }}>
           <BackLink href="/#work" label="← Back to Work" />
         </div>
         <div aria-hidden style={{ height: "45vh" }} />
       </div>
       <BackToTop />
+      <ReadingProgress />
       <FloatingTiltToggle />
     </div>
   );

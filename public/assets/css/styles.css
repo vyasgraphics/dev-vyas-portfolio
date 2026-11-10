@@ -11423,3 +11423,331 @@ html, body {
   .vg-pillar { transition: none; }
   .vg-pillar:hover { transform: none; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   FINAL POLISH PASS (10 Nov 2026) - fixes from the all-screens audit plus
+   the last set of micro-interactions. Every selector here is either new
+   (vg- prefixed) or one the SCSS never defines, so there is nothing to
+   mirror in public/assets/scss/.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Text selection in the brand green ──
+   The browser default (system blue) was the one place the accent colour
+   dropped out entirely. Kept translucent so selected white text stays
+   well above contrast on the near-black panels. */
+::selection {
+  background: rgba(0, 222, 81, 0.3);
+  color: #fff;
+}
+
+/* ── Work card: only fade the text when there is more to scroll ──
+   The fade above the pinned CTA row (see "keep the CTA row on screen")
+   was always drawn, so on a tall enough screen, where the card content
+   fits, it simply darkened the last row of tags. Measured at 1440x900:
+   the tags end at 748px, the CTA row starts at 749px, and "Health &
+   Fitness" / "iOS" sat under an 85% black gradient with nothing below
+   them. A scroll-driven animation fixes this with no JS: when .content-top
+   cannot scroll its timeline is inactive, so the animation has no effect
+   and the base opacity of 0 applies. When it can scroll, the fade shows
+   and clears as the reader reaches the end. Browsers without scroll
+   timelines keep the old always-on fade, which is the safe fallback. */
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 992px) {
+    .wg-work .work-content .content {
+      timeline-scope: --vg-card-text;
+    }
+    .wg-work .work-content .content-top {
+      scroll-timeline: --vg-card-text block;
+    }
+    .wg-work .work-content .content-bottom::before {
+      opacity: 0;
+      animation: vg-card-text-fade linear both;
+      animation-timeline: --vg-card-text;
+    }
+  }
+}
+@keyframes vg-card-text-fade {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Case study section rail: a real hit area for the dots ──
+   The desktop dots are 10x10px, under the 24x24px WCAG 2.2 target
+   minimum, and hard to land on with a mouse. An invisible 24px circle
+   centred on each dot fixes that without changing how the rail looks.
+   The dots sit 14px apart, so 24px areas meet but never overlap. */
+@media (min-width: 1180px) {
+  .section-nav-btn::before {
+    content: "";
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+  }
+}
+
+/* ── Case study reading progress ──
+   A 2px line across the top of the viewport tracking how far through the
+   page the reader is. Scroll-driven, so it costs no JS and stays in exact
+   step with Lenis (which scrolls the real document). Hidden entirely where
+   scroll timelines are not supported rather than shown frozen at zero. */
+.vg-read-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .vg-read-progress {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 1000;
+    pointer-events: none;
+    background: linear-gradient(90deg, #00C853, #00DE51);
+    box-shadow: 0 0 8px rgba(0, 222, 81, 0.45);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    animation: vg-read-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes vg-read-progress {
+  to { transform: scaleX(1); }
+}
+
+/* ── Contact form: a short shake on a field that failed validation ──
+   The red underline alone is easy to miss when the error is on a field
+   above the Send button the eye has just left. 4px either way, once,
+   then still. */
+.form-contact .field-ip.has-error {
+  animation: vg-field-shake 0.36s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@keyframes vg-field-shake {
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+/* ── Next project card at the foot of each case study ──
+   Every case study used to end on "Back to Work" alone, a dead end for
+   anyone who wanted to keep reading. The card carries the next project's
+   title, its one-line outcome and its cover image. Hover brightens the rim,
+   eases the image in and nudges the arrow forward; press settles the whole
+   card slightly. */
+.vg-next-project-wrap {
+  margin-top: 72px;
+}
+.vg-next-project {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 44%);
+  align-items: center;
+  gap: 32px;
+  padding: 24px 24px 24px 32px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.028);
+  color: #fff;
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.vg-next-project:focus-visible {
+  border-radius: 24px;
+  outline-offset: 4px !important;
+}
+.vg-next-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #00DE51;
+}
+.vg-next-eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00DE51;
+  box-shadow: 0 0 8px rgba(0, 222, 81, 0.7);
+}
+.vg-next-title {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 1.4vw + 12px, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.vg-next-impact {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.64);
+}
+.vg-next-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.vg-next-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #00DE51;
+  color: #0a0a0a;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.vg-next-media {
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #141414;
+}
+.vg-next-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.6s ease;
+  filter: saturate(0.85);
+}
+@media (hover: hover) {
+  .vg-next-project:hover {
+    border-color: rgba(0, 222, 81, 0.35);
+    background-color: rgba(255, 255, 255, 0.045);
+  }
+  .vg-next-project:hover .vg-next-arrow {
+    transform: translateX(4px);
+  }
+  .vg-next-project:hover .vg-next-media img {
+    transform: scale(1.04);
+    filter: saturate(1);
+  }
+}
+.vg-next-project:active {
+  transform: scale(0.99);
+}
+@media (max-width: 767px) {
+  .vg-next-project-wrap { margin-top: 56px; }
+  .vg-next-project {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 16px 16px 22px;
+    border-radius: 20px;
+  }
+  .vg-next-project:focus-visible { border-radius: 20px; }
+  .vg-next-media { order: -1; border-radius: 12px; }
+  .vg-next-cta { margin-top: 18px; }
+}
+
+/* ── 404 page ── */
+.vg-404 {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  background: #0a0a0a;
+  background-image: radial-gradient(circle at 80% 15%, rgba(0, 222, 81, 0.1), transparent 45%);
+  color: #fff;
+}
+.vg-404-inner {
+  width: 100%;
+  max-width: 640px;
+}
+.vg-404-code {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #00DE51;
+}
+.vg-404-title {
+  margin: 0 0 16px;
+  font-size: clamp(30px, 3vw + 16px, 46px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.vg-404-text {
+  margin: 0 0 32px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.68);
+}
+.vg-404-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  background: #00DE51;
+  color: #0a0a0a;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.vg-404-home:hover { color: #0a0a0a; }
+.vg-404-home:focus-visible { border-radius: 100px; }
+.vg-404-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vg-404-links-label {
+  margin: 40px 0 8px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.56);
+}
+.vg-404-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.vg-404-links a span {
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (hover: hover) {
+  .vg-404-links a:hover { color: #00DE51; }
+  .vg-404-links a:hover span { transform: translateX(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-contact .field-ip.has-error { animation: none; }
+  .vg-next-project,
+  .vg-next-arrow,
+  .vg-next-media img,
+  .vg-404-links a span { transition: none; }
+  .vg-next-project:hover .vg-next-arrow,
+  .vg-next-project:hover .vg-next-media img,
+  .vg-next-project:active,
+  .vg-404-links a:hover span { transform: none; }
+}
