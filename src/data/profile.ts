@@ -2,7 +2,10 @@ export const profile = {
   fullName: "Dev Vyas",
   shortName: "Dev",
   duty: "Product & UX/UI Designer",
-  introBio: "Product and UX/UI designer bringing together human-centred research, visual craft and a computer science background. MSc with Distinction from the University of York, based in Leeds, United Kingdom.",
+  // Kept to four lines at both desktop card widths (292px / 312px text
+  // column): a fifth line pushes the greeting up into the "Available now"
+  // tab on the card's left edge.
+  introBio: "Product and UX/UI designer combining human-centred research, creative craft and code. MSc with Distinction from the University of York, based in Leeds, UK.",
   email: "vyasdev.6303@gmail.com",
   phone: "+447799752283",
   // Cycles after the static "I'm " on the profile card: the name first, then

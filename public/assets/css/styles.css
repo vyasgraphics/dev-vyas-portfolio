@@ -4817,8 +4817,34 @@ button.animate-btn::after,
    the SCSS twin of the 32px rule, which loads last. */
 @media (min-width: 992px) {
   .sidebar-user .user-info:has(.vg-cv-links) .br-line {
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  /* Vertical rhythm for the rest of the block: greeting to bio 16px (was
+     20), "Let's talk" to the CV links 12px (was 16). With the 20px divider
+     gaps above, this keeps the greeting clear of the "Available now" tab. */
+  .sidebar-user .user-info:has(.vg-cv-links) .greeting {
+    padding-bottom: 16px;
+  }
+  .sidebar-user .user-info .action-group:has(.vg-cv-links) {
+    row-gap: 12px;
+  }
+  /* "Available now" tab: placed a fixed 24px below the DV logo instead of
+     at bottom:46% of the photo. The percentage tracked the photo's height
+     while the text block is pinned to the card's bottom edge in pixels, so
+     once the second CV link made the block taller the greeting ran into
+     (992-1439px: underneath) the tab. Offsets are from .user-image, which
+     starts 6px inside .wrap: logo bottom 60px + 24 - 6 below 1440px,
+     78px + 24 - 6 from 1440px. The extra .wrap in the selector outranks the
+     SCSS twin of the bottom:46% rule, which loads last. */
+  .sidebar-user .wrap .user-image .meta-left {
+    top: 78px;
+    bottom: auto;
+  }
+}
+@media (min-width: 1440px) {
+  .sidebar-user .wrap .user-image .meta-left {
+    top: 96px;
   }
 }
 .sidebar-user .action-group .tf-btn-action {
