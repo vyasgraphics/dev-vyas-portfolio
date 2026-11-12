@@ -14,14 +14,15 @@ export const metadata: Metadata = {
         default: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
         template: "%s - Dev Vyas",
     },
-    // 148 characters: under the ~155 Google shows before truncating (the
-    // previous one ran to 165 and lost "University of York"). Leads with the
-    // name and role, the two things someone searching for him types.
-    description: "Dev Vyas is a Leeds-based Product & UX/UI Designer (MSc Distinction, University of York) combining user research, graphic design and front-end code.",
+    // 149 characters: under the ~155 Google shows before truncating. Leads
+    // with the name and role, the two things someone searching for him
+    // types, then the two academic results (Distinction and the 2025/26
+    // Departmental Prize for the top student in the MSc cohort).
+    description: "Dev Vyas, Leeds-based Product & UX/UI Designer. MSc Distinction and Departmental Prize, University of York. User research, design and front-end code.",
     authors: [{ name: "Dev Vyas" }],
     openGraph: {
         title: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
-        description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction, University of York.",
+        description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction and the Departmental Prize, University of York.",
         url: "https://dev-vyas-portfolio.vercel.app",
         siteName: "Dev Vyas",
         locale: "en_GB",
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
-        description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction, University of York.",
+        description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction and the Departmental Prize, University of York.",
     },
     robots: {
         index: true,

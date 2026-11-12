@@ -4,9 +4,23 @@ export type Award = {
   year: number;
   image: string;
   link: string;
+  /** Spans the full row above the certificates, with a green rim. For
+      prizes rather than courses - there should only ever be one or two. */
+  featured?: boolean;
 };
 
 export const awards: Award[] = [
+  {
+    // Letter from the Chair of the Board of Examiners, 11 Nov 2026. Wording
+    // matches both CVs and the LinkedIn post. The prize money is
+    // deliberately not shown.
+    name: "Departmental Prize - Highest Performing Student",
+    publisher: "University of York · 2025/26 MSc Human-Centred Interactive Technologies cohort",
+    year: 2026,
+    image: "",
+    link: "https://www.linkedin.com/posts/dev-vyas6_universityofyork-academicexcellence-humancentreddesign-share-7526595150370959360-L5bl/",
+    featured: true,
+  },
   {
     name: "Google UX Design Professional Certificate",
     publisher: "Coursera",

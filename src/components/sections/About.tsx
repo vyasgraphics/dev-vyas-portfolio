@@ -24,7 +24,8 @@ export function About() {
           at once actually buys, which is the part a list cannot say. */}
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         Product and UX/UI designer with an MSc in Human-Centred Interactive Technologies
-        from the University of York, awarded with Distinction, and a BE in Computer
+        from the University of York, awarded with Distinction and the Departmental Prize
+        for the highest performing student in my cohort, and a BE in Computer
         Science &amp; Engineering with First Class with Distinction. Research explains the
         decisions, creative craft makes the experience coherent, and code keeps it
         buildable. In practice that means user research and accessibility-aware design
@@ -36,7 +37,7 @@ export function About() {
       </p>
       <ul className="award-list tf-grid-layout md-col-2">
         {awards.map((a, i) => (
-          <li key={a.name + a.year} className="scrolling-effect effectBottom" data-delay={i * 0.08}>
+          <li key={a.name + a.year} className={`scrolling-effect effectBottom${a.featured ? " vg-award-featured" : ""}`} data-delay={i * 0.08}>
             <a
               href={a.link}
               target="_blank"
@@ -45,6 +46,7 @@ export function About() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <div className="left">
+                {a.featured && <p className="vg-award-badge">Award</p>}
                 <h3 className="award_name letter-space--2 text-black-72" style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
                   {a.name}
                   <i

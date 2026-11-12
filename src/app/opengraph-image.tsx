@@ -21,6 +21,7 @@ export default function OpengraphImage() {
           fontFamily: "sans-serif",
         }}
       >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div
           style={{
             display: "flex",
@@ -38,6 +39,25 @@ export default function OpengraphImage() {
           }}
         >
           DV
+        </div>
+          {/* The two academic results a recruiter scans for, shown on every
+              homepage share card (LinkedIn, Slack, WhatsApp). */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              padding: "12px 24px",
+              borderRadius: "100px",
+              border: "1px solid rgba(0,222,81,0.35)",
+              background: "rgba(0,222,81,0.08)",
+              color: "#fff",
+              fontSize: "24px",
+            }}
+          >
+            <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#00DE51" }} />
+            MSc Distinction &amp; Departmental Prize, University of York
+          </div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -79,7 +99,7 @@ export default function OpengraphImage() {
               fontSize: "26px",
               color: "rgba(255,255,255,0.45)",
               marginTop: "28px",
-              maxWidth: "900px",
+              maxWidth: "1040px",
               lineHeight: 1.5,
             }}
           >

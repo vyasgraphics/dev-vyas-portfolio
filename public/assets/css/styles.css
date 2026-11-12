@@ -11751,3 +11751,34 @@ html, body {
   .vg-next-project:active,
   .vg-404-links a:hover span { transform: none; }
 }
+
+/* ── Featured award row (12 Nov 2026) ──
+   The Departmental Prize sits above the four certificates on its own
+   full-width row: a prize outranks a course, and as a fifth item in the
+   two-column grid it would have left a lone card on the last row. The
+   SCSS also defines .award-list .award-item (0,2,0), so these rules are
+   (0,3,0) to win regardless of load order. The existing award hover
+   (border brightens, arrow glows) applies unchanged. */
+.award-list .vg-award-featured {
+  grid-column: 1 / -1;
+}
+.award-list .vg-award-featured .award-item {
+  padding: 20px 22px;
+  border-color: rgba(0, 222, 81, 0.28);
+  background: linear-gradient(135deg, rgba(0, 222, 81, 0.08), rgba(0, 222, 81, 0.015) 60%);
+}
+.vg-award-badge {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 10px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(0, 222, 81, 0.25);
+  background: rgba(0, 222, 81, 0.1);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #00DE51;
+}

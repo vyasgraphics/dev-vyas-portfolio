@@ -21,7 +21,7 @@ export const educationItems: TimelineItem[] = [
     role: "MSc Human-Centred Interactive Technologies",
     org: "University of York, UK",
     type: "education",
-    description: "Awarded with Distinction (74%) by York's Department of Computer Science. Covered Research Methods, Interaction Design & Evaluation, Human Factors, and Player Experience. My dissertation investigated whether a person's ability to resist distraction predicts their performance on complex, cluttered user interfaces.",
+    description: "Awarded with Distinction (74%) by York's Department of Computer Science, along with the Departmental Prize for the highest performing student in the 2025/26 cohort. Covered Research Methods, Interaction Design & Evaluation, Human Factors, and Player Experience. My dissertation investigated whether a person's ability to resist distraction predicts their performance on complex, cluttered user interfaces.",
     icon: { light: "/assets/images/item/edu-2.svg", dark: "/assets/images/item/edu-2_dark.svg", width: 29, height: 32 },
   },
   {

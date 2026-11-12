@@ -48,6 +48,22 @@ const STRUCTURED_DATA = {
         addressLocality: "Leeds",
         addressCountry: "GB",
       },
+      // schema.org's Person.award: a plain-text prize, so a search engine can
+      // attach it to the person rather than only finding it in page copy.
+      award: [
+        "Departmental Prize 2025/26 - Highest Performing Student, MSc Human-Centred Interactive Technologies, Department of Computer Science, University of York",
+      ],
+      // The degree itself as a credential, recognised by the university, so
+      // the Distinction is machine-readable rather than only stated in copy.
+      hasCredential: [
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "MSc Human-Centred Interactive Technologies (Distinction)",
+          credentialCategory: "degree",
+          educationalLevel: "Master's degree",
+          recognizedBy: { "@type": "CollegeOrUniversity", name: "University of York" },
+        },
+      ],
       alumniOf: [
         { "@type": "CollegeOrUniversity", name: "University of York" },
         { "@type": "CollegeOrUniversity", name: "Gujarat Technological University" },
@@ -87,7 +103,7 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       name: "Dev Vyas | Product & UX/UI Designer",
       inLanguage: "en-GB",
-      dateModified: "2026-11-10",
+      dateModified: "2026-11-12",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },

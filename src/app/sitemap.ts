@@ -16,7 +16,8 @@ const LAST_MODIFIED: Record<string, string> = {
   // 10 Nov 2026 final polish pass. Homepage: new meta description and
   // ProfilePage structured data. All three case studies: their own share
   // image, a "Next project" card and richer structured data.
-  "": "2026-11-10",
+  // 12 Nov 2026: Departmental Prize added to the homepage and both CVs.
+  "": "2026-11-12",
   "/work/dissertation": "2026-11-10",
   "/work/move-app": "2026-11-10",
   "/work/vyas-graphics": "2026-11-10",

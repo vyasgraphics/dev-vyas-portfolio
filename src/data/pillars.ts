@@ -30,7 +30,7 @@ export const pillars: Pillar[] = [
       "Where every project starts",
       "Research methods, interaction design and evaluation",
       "Designing around how people behave, not how I assume they will",
-      "Distinction (74%), University of York",
+      "Distinction (74%) and the Departmental Prize, University of York",
     ],
     icon: "icon-user-circle",
   },
