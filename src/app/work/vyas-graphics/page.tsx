@@ -263,13 +263,11 @@ export default function VyasGraphicsWorkPage() {
             fontWeight: 600, marginBottom: "20px",
             paddingLeft: "16px", borderLeft: "3px solid #00DE51",
           }}>
-            The scope: 20+ brand identities, four animated logo reveals, and an independent ICC T20 World Cup 2026 campaign - all self-directed, all shipped.
+            The scope: 20+ brand identities, four animated logo reveals, and an independent ICC T20 World Cup 2026 campaign, each taken from brief to finished file.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
             Vyas Graphics is my own design practice, running since 2020 alongside my degrees and the product and
-            UX work covered elsewhere on this site - different discipline, overlapping timeline. Six years of
-            self-directed brand and motion work: identities built from scratch, sports campaigns run like real
-            client accounts, and every piece shipped to a deadline nobody was enforcing but me.
+            UX work covered elsewhere on this site - different discipline, overlapping timeline. Six years of brand and motion work: identities built from scratch, cricket campaigns timed to live tournaments, and every piece shipped to a deadline nobody was enforcing but me.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "Sports Media"].map((t) => (
@@ -310,7 +308,7 @@ export default function VyasGraphicsWorkPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "36px" }}>
             {[
               ["Identities", "20+", "Brand marks built from scratch, from personal wordmarks to full circular badge systems."],
-              ["Motion", "4", "Animated logo reveal variants in After Effects, each cut for a different placement context."],
+              ["Motion", "4", "Animated logo reveals in After Effects, from a retro CRT boot-up to a soft script signature."],
               ["Campaigns", "2", "Self-initiated cricket media campaigns, ICC T20 World Cup 2026 and IPL 2026, run to tournament dates."],
             ].map(([label, stat, desc]) => (
               <div key={label}>
@@ -531,8 +529,7 @@ export default function VyasGraphicsWorkPage() {
           <SectionBox id="sports" tag="Self-initiated campaigns">
             <SectionHeading>Sports media graphics</SectionHeading>
             <Body>
-              Self-initiated sports media campaigns run like real client accounts - tournament identity, match-day
-              coverage, and championship posters for two of cricket&apos;s biggest events.
+              Two of cricket&apos;s biggest events, covered the way a client account would be: tournament identity, match-day coverage and championship posters.
             </Body>
             <div style={{
               padding: "14px 18px", borderRadius: "10px", marginBottom: "36px", maxWidth: "780px",
@@ -646,22 +643,20 @@ export default function VyasGraphicsWorkPage() {
 
         {/* ── Impact ── */}
         <ScrollReveal>
-          <SectionBox id="impact" tag="Three tiers of impact">
+          <SectionBox id="impact" tag="Output, process, feedback">
             <SectionHeading>The impact</SectionHeading>
             <Body>
-              This is a self-directed practice, not an agency with a P&amp;L, so there is no revenue line to claim
-              here. The impact splits into three honest tiers instead: what the work produced, what the process
-              enforced, and what changed because someone told me it was wrong.
+              A one-person practice has no P&amp;L to point to, so the impact here is measured three ways: what the work produced, the discipline behind it, and what changed when someone pointed out a flaw.
             </Body>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               {[
                 ["Output", [
-                  "20+ brand identities built from scratch, including two full circular badge systems drawn rather than templated.",
-                  "Four animated logo reveal variants, each cut for a different placement context rather than one export reused.",
+                  "20+ brand identities built from scratch, including two full circular badge systems.",
+                  "Four logo reveals in four distinct styles, so the mark has a version for each kind of placement.",
                   "Three AI-generated client concepts rebuilt as clean vectors, with zero gradients or paths left unrebuilt.",
                 ]],
                 ["Process", [
-                  "Two cricket campaigns run to real tournament dates, with no client to enforce a schedule I set myself.",
+                  "Two cricket campaigns delivered on live tournament dates, with posts timed to the matches themselves.",
                   "The same portfolio rebuilt across four editions, each one correcting what the previous version got wrong.",
                   "One production pipeline held consistent across identity, motion and print rather than a different approach per piece.",
                 ]],
@@ -711,10 +706,10 @@ export default function VyasGraphicsWorkPage() {
               <SectionHeading>Leadership</SectionHeading>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Self-directed from brief to delivery on every piece here - no client brief to follow, so the standard to hit was one I set myself and held to over six years.
+                  Took every piece here from brief to delivery myself, and held one standard across six years and very different kinds of work.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Acted on unsolicited feedback rather than defending the work - the flipbook navigation fix started from a single LinkedIn comment, not a formal review.
+                  Treated a stranger&apos;s comment as a usability report and fixed what it pointed to, instead of explaining it away.
                 </li>
               </ul>
             </div>
@@ -725,7 +720,7 @@ export default function VyasGraphicsWorkPage() {
                   Full brand production pipeline: identity design in Illustrator, motion in After Effects, layout in InDesign - the same craft applied consistently across five distinct identities.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Ran the ICC and IPL campaigns on real deadlines with no client to enforce them - tournament dates set the schedule, not a brief.
+                  Planned the ICC and IPL campaigns around the fixture list, so every post had a fixed moment to land.
                 </li>
               </ul>
             </div>

@@ -141,8 +141,7 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
         that stops Liam leaving his room.
       </>,
       <>
-        Every screen traces back to a questionnaire figure rather than a hunch, which is what made the later
-        rejection calls defensible.
+        Nothing went in on instinct: each screen had to point to a questionnaire figure to earn its place.
       </>,
     ],
     visual: (
@@ -156,7 +155,7 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
   },
   {
     title: "Usability Testing",
-    summary: "Moderated think-aloud sessions with 8 users caught a trust problem in the one feature built to protect anxious users.",
+    summary: "Moderated think-aloud sessions with 8 users showed the app's most important feature was being misread.",
     bullets: [
       <>
         Participants read <strong style={{ color: "#fff" }}>&ldquo;Quiet Mode&rdquo; as a system audio
@@ -281,14 +280,14 @@ export default function MoveAppWorkPage() {
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Research base</p>
               <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="17" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                Questionnaire responses that reframed the problem and killed two concepts before they were built.
+                Questionnaire responses that moved the problem from motivation to anxiety and logistics.
               </p>
             </div>
             <div>
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Tested with</p>
               <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="8" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                Think-aloud testers, who caught a trust problem in the flagship feature before it ever shipped.
+                Users in moderated think-aloud sessions on the Figma prototype.
               </p>
             </div>
             <div>
@@ -329,8 +328,7 @@ export default function MoveAppWorkPage() {
           <SectionBox id="personas" tag="Two barriers, two users">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>Who it&apos;s for</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "24px" }}>
-              The data split cleanly into two different barriers, so it produced two personas rather than one
-              averaged user. Designing for the average of these two would have served neither.
+              The data split cleanly into two different barriers, so it produced two personas, not one averaged user. Designing for the average of these two would have served neither.
             </p>
             <TiltPermissionPrompt />
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
@@ -352,9 +350,7 @@ export default function MoveAppWorkPage() {
           <SectionBox id="process" tag="Discovery to iteration">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The process</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              Because the questionnaire named the real barrier, two attractive concepts had to die. Because they
-              died early, the prototype only ever carried features the data supported. Because testing came before
-              build, the one feature that failed was caught while a rename could still fix it.
+              The order mattered more than any single screen. Research came first, so weak ideas were dropped while they were still cheap to drop. Testing came before build, so the one real failure surfaced while it was still a design problem, not an engineering one.
             </p>
 
             <ProcessPath stages={PROCESS_STAGES} />
@@ -383,7 +379,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="finding" tag="Caught before it shipped">
+          <SectionBox id="finding" tag="Right need, wrong label">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px" }}>
               The one feature built to protect anxious users was the one nobody trusted enough to touch. In testing,
@@ -420,11 +416,10 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="impact" tag="Three tiers of impact">
+          <SectionBox id="impact" tag="What it changed">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The impact</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              A university concept project, not a shipped product, so no revenue line to claim. Three honest tiers
-              instead.
+              A university concept, not a shipped product, so there are no sales or retention figures to show. This is what it did produce.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
@@ -437,11 +432,10 @@ export default function MoveAppWorkPage() {
                     of the same number appearing three times on one page. */}
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    A specific, fixable failure was found in the one feature meant to protect anxious users - not vague
-                    dissatisfaction, but users misreading it as an audio control, which pointed straight to the fix.
+                    Testing found one specific, fixable failure instead of vague dissatisfaction: people took the crowd filter for an audio setting, which pointed straight to the fix.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Both top barriers got a dedicated screen rather than one averaged compromise.
+                    Both main barriers, time and self-consciousness, got a screen of their own.
                   </li>
                 </ul>
               </div>
@@ -451,10 +445,10 @@ export default function MoveAppWorkPage() {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Two fully explored concepts rejected on evidence rather than opinion, before either reached build.
+                    Two concepts dropped on evidence, not opinion, while dropping them was still cheap.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    A trust failure in the flagship feature caught at prototype stage, while the fix was still a rename.
+                    The one real failure surfaced at prototype stage, when fixing it meant a new label and control, not new code.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                     Every screen traces to a research figure, so the team argued about evidence instead of taste.
@@ -467,10 +461,10 @@ export default function MoveAppWorkPage() {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    A 256-user A/B study, scoped and properly powered, so the redesign can be confirmed rather than asserted.
+                    A 256-user A/B study, sized with a power calculation, so the redesign can be proven instead of assumed.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Timetable consent already evidenced, so the automatic scheduling it depends on is viable rather than hypothetical.
+                    Students have already said they would share their timetables, so the automatic scheduling has real backing.
                   </li>
                 </ul>
               </div>
@@ -479,7 +473,7 @@ export default function MoveAppWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="next" tag="256 users, properly powered">
+          <SectionBox id="next" tag="The test that would settle it">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
               The proposed A/B study runs the moment this moves from prototype to production. It is designed to test
@@ -502,13 +496,13 @@ export default function MoveAppWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Owned the research and design calls.</strong>{" "}The personas, the testing plan, and the fix once testing found the trust problem.
+                  <strong style={{ color: "#fff" }}>Owned the research and design calls.</strong>{" "}The personas, the testing plan and the redesign that followed.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   <strong style={{ color: "#fff" }}>Argued for subtraction over addition.</strong>{" "}A harder case to make than shipping something new, and the one the data supported.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Made two rejection calls</strong>{" "}on concepts the team liked, settled on questionnaire evidence rather than preference.
+                  <strong style={{ color: "#fff" }}>Made the case for dropping two concepts</strong>{" "}the team liked, and let the questionnaire settle it, not preference.
                 </li>
               </ul>
             </div>
@@ -522,7 +516,7 @@ export default function MoveAppWorkPage() {
                   <strong style={{ color: "#fff" }}>One pattern set, not four mockups.</strong>{" "}So a fix to one control applied across the system.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Behaviour-change domain knowledge.</strong>{" "}Removing anxiety beats adding motivation for a sedentary, self-conscious user.
+                  <strong style={{ color: "#fff" }}>Behaviour-change thinking.</strong>{" "}Lowering the cost of starting, instead of trying to raise motivation.
                 </li>
               </ul>
             </div>

@@ -41,8 +41,8 @@ export const pillars: Pillar[] = [
     points: [
       "Taken alongside my computer science degree",
       "Pixel-perfect as a discipline, not a preference",
-      "It turns a correct design into one people want to use",
-      "20+ brand identities built from scratch",
+      "It is what makes a working design feel finished",
+      "Brand, motion and print, not just screens",
     ],
     icon: "icon-high-light",
   },

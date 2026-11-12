@@ -13,7 +13,7 @@ export const educationItems: TimelineItem[] = [
     role: "Student Content Creator",
     org: "University of York · Contract, on-site",
     type: "work",
-    description: "Created and refined university content with a focus on audience needs, accessibility and clear digital communication. I translated stakeholder briefs into structured content with a clearer information hierarchy, organised information around what readers needed, and refined each piece with university stakeholders against the project requirements and their feedback.",
+    description: "Wrote and restructured university content around what readers needed, with accessibility and plain language built in from the start. I turned stakeholder briefs into pages with a clear information hierarchy, then refined each piece with the people who commissioned it until it met the brief.",
     icon: { light: "/assets/images/item/edu-2.svg", dark: "/assets/images/item/edu-2_dark.svg", width: 29, height: 32 },
   },
   {
@@ -29,7 +29,7 @@ export const educationItems: TimelineItem[] = [
     role: "Graphic & UI Designer",
     org: "Panchal Softwares · Full-time, remote",
     type: "work",
-    description: "Designed 30+ digital and UI assets for product launches across multiple platforms, and developed reusable typography, colour and layout guidelines to keep interfaces consistent. I prepared design assets, visual specifications and developer handover documentation, and worked across design and development to clarify UI requirements during implementation.",
+    description: "Designed 30+ digital and UI assets for product launches across several platforms, and set up reusable typography, colour and layout guidelines that kept the interfaces consistent. I also wrote the visual specs and handover documentation, and worked with the developers to settle UI questions as they came up during the build.",
     icon: { light: "/assets/images/item/edu-3.svg", dark: "/assets/images/item/edu-3_dark.svg", width: 120, height: 32 },
   },
   {
@@ -45,7 +45,7 @@ export const educationItems: TimelineItem[] = [
     role: "B.E. Computer Science & Engineering",
     org: "Gujarat Technological University, India",
     type: "education",
-    description: "Graduated with First Class with Distinction, CGPA 8.61/10. Four years of learning how technology actually works, which is why I can read the engineering constraints behind an interface rather than designing past them. Taken alongside a specialisation in Animation & Multimedia, which is what pulled me towards interfaces in the first place.",
+    description: "Graduated with First Class with Distinction, CGPA 8.61/10. Four years of learning how software is put together, which still shapes how I hand designs over to developers. I studied Animation & Multimedia at the same time, and that is what first pulled me towards interfaces.",
     icon: { light: "/assets/images/item/edu-3.svg", dark: "/assets/images/item/edu-3_dark.svg", width: 120, height: 32 },
   },
   {

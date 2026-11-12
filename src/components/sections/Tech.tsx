@@ -25,9 +25,8 @@ export function Tech() {
                     screen with the break, and orphaned "three" on desktop
                     without it. Because the lines are baked, text-wrap: balance
                     cannot fix it after the fact; the string itself has to be
-                    short enough to rag well unaided. At 46 characters this
-                    holds one line on desktop and two even ones on a phone. */}
-                Research, design, code, and AI across all three
+                    short enough to rag well unaided. At 30 characters this holds one line from tablet up and does not orphan a word on a phone. */}
+                Tools from research to release
             </h2>
 
             {/* Every card here is IllumineCard: resting state is deliberately

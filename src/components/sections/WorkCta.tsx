@@ -231,8 +231,8 @@ export function WorkCta() {
                     <div className="vg-cta-content">
                         <p className="vg-cta-title">Want to talk through any of this?</p>
                         <p className="vg-cta-desc text-body-3">
-                            I&apos;m available now for UK and remote roles, and happy
-                            to go deeper on any project here.
+                            Happy to walk you through any of these projects, or the
+                            decisions behind them.
                         </p>
                         <div className="vg-cta-actions">
                             <a

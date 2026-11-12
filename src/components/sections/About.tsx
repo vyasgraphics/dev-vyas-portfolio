@@ -23,17 +23,13 @@ export function About() {
           credential. This paragraph's job is the join: what having all three
           at once actually buys, which is the part a list cannot say. */}
       <p className="s-desc text-black-56 scrolling-effect effectTop">
-        Product and UX/UI designer with an MSc in Human-Centred Interactive Technologies
-        from the University of York, awarded with Distinction and the Departmental Prize
-        for the highest performing student in my cohort, and a BE in Computer
-        Science &amp; Engineering with First Class with Distinction. Research explains the
-        decisions, creative craft makes the experience coherent, and code keeps it
-        buildable. In practice that means user research and accessibility-aware design
-        (WCAG) at the centre, graphic design, visual identity and motion as the craft
-        around it, and enough front-end development to hand developers something
-        realistic. I have worked with university stakeholders and with design and
-        development teams, and I care about the reasoning behind a design as much as how it
-        works once it is built.
+        I came to design through computer science, and to research through design, so I
+        tend to look at a product from all three sides at once. Day to day, that means user
+        research and accessible, WCAG-aware design at the centre, with brand, motion and
+        front-end work around it, and handovers developers can build from without
+        guesswork. I&apos;ve worked with university stakeholders and with design and
+        development teams, and I care as much about the reasoning behind a design as about
+        how it holds up once it&apos;s built.
       </p>
       <ul className="award-list tf-grid-layout md-col-2">
         {awards.map((a, i) => (

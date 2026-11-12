@@ -5,7 +5,7 @@ export const profile = {
   // Kept to four lines at both desktop card widths (292px / 312px text
   // column): a fifth line pushes the greeting up into the "Available now"
   // tab on the card's left edge.
-  introBio: "Product and UX/UI designer combining human-centred research, creative craft and code. MSc with Distinction from the University of York, based in Leeds, UK.",
+  introBio: "I design digital products from first research to a build-ready handover. MSc with Distinction and the Departmental Prize, University of York. Based in Leeds.",
   email: "vyasdev.6303@gmail.com",
   phone: "+447799752283",
   // Cycles after the static "I'm " on the profile card: the name first, then

@@ -119,7 +119,7 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
   },
   {
     title: "Artefact Design",
-    summary: "Built a purpose-made news article search task from scratch, rather than adopting an existing instrument.",
+    summary: "Built a news-search task from scratch that looks and behaves like a real site, sponsored boxes and all.",
     bullets: [
       <>
         Five rounds, each with a real search query, genuine-looking
@@ -200,9 +200,8 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
         for staging turned out too weak to justify it.
       </>,
       <>
-        The dataset fed two regression models; every coefficient was{" "}
-        <strong style={{ color: "#fff" }}>independently cross-checked in SPSS and Jamovi</strong>{" "}before being
-        trusted.
+        The dataset fed two regression models, and every coefficient was{" "}
+        <strong style={{ color: "#fff" }}>run again in SPSS and Jamovi</strong>{" "}to make sure the numbers held.
       </>,
     ],
   },
@@ -271,7 +270,7 @@ export default function DissertationWorkPage() {
           <div>
             <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Timeline &amp; Team</p>
             <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.72)" }}>
-              MSc dissertation, solo<br />
+              Individual MSc project<br />
               Supervised by Prof. Joe Cutting, University of York
             </p>
           </div>
@@ -294,7 +293,7 @@ export default function DissertationWorkPage() {
               <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Outcomes</p>
               <p style={{ fontSize: "34px", fontWeight: 800, color: "#00DE51", lineHeight: 1, marginBottom: "8px" }}><CountUpStat value="2" /></p>
               <p style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                <strong style={{ color: "#fff" }}>Opposite-story outcomes.</strong>{" "}Completion time tracked distraction resistance closely; search accuracy barely moved - a ceiling effect in the task itself.
+                <strong style={{ color: "#fff" }}>Time and accuracy.</strong>{" "}Only one of them separated people: time tracked distraction resistance, while accuracy stayed close to perfect.
               </p>
             </div>
             <div>
@@ -320,8 +319,7 @@ export default function DissertationWorkPage() {
           <SectionBox id="challenge" tag="Two users, one page">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The challenge</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
-              Interface design already accounts for eyesight, motor control and reaction speed. Every day, millions
-              of people bring a very different kind of difference to the same screen: their ability to hold what
+              Interface design already accounts for eyesight, motor control and reaction speed. There is a quieter difference people bring to the same screen: their ability to hold what
               they&apos;re looking for in mind while ignoring everything else competing for attention. Psychologists
               call it <strong style={{ color: "#fff" }}>distraction resistance</strong>, and it&apos;s never once
               been designed for.
@@ -329,9 +327,7 @@ export default function DissertationWorkPage() {
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
               Two people sit down at the same busy news website, same task, same time. One finds every article they
               need. The other misses half, pulled off course by a sponsored box. The page hasn&apos;t changed and the
-              distractions are identical, so something about the person accounts for the difference. The trait is
-              well studied in the lab. Interface clutter is well studied on its own. Nobody had tested one against
-              the other directly.
+              distractions are identical, so something about the person accounts for the difference. Psychology has studied that trait for years and HCI has studied clutter, but the two had never been put in the same room.
             </p>
             <p style={{
               fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
@@ -347,10 +343,7 @@ export default function DissertationWorkPage() {
           <SectionBox id="process" tag="Literature to analysis">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The process</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              Because the gap existed, I built a purpose-made task rather than reusing an off-the-shelf one. Because
-              a task like that can break in ways a literature review never predicts, I pressure-tested it on real
-              people before it went anywhere near Prolific. Five stages, solo, start to finish: literature review,
-              artefact design, pilot testing, data collection, analysis.
+              No existing task fitted the question, so I built one. A new task can break in ways no literature review predicts, so it was tested in person, on real people, before it went anywhere near Prolific. Five stages, all run by me: literature review, artefact design, pilot testing, data collection and analysis.
             </p>
 
             <ProcessPath stages={PROCESS_STAGES} />
@@ -408,9 +401,7 @@ export default function DissertationWorkPage() {
             <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "34px 0 12px" }}>What it means for design</h3>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
               Two users can leave the same interface with identical, accurate results, and one of them pays far more
-              time for it. An ordinary success-rate metric never catches that. Visual clutter isn&apos;t a flat tax:
-              it costs some users very little and others a great deal, depending on a trait the user can&apos;t
-              control and the designer usually can&apos;t see.
+              time for it. A success-rate dashboard would report both as equally well served. Clutter is charged unevenly, and the bill depends on a trait the user can&apos;t control and the designer usually can&apos;t see.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
               The sharper implication is that the two filtering stages trade off rather than add up. Cut what a user
@@ -421,10 +412,10 @@ export default function DissertationWorkPage() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <SectionBox id="impact" tag="Three tiers of impact">
+          <SectionBox id="impact" tag="Found, checked, usable">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The impact</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              Not a shipped product, so no revenue or conversion wins to claim. Three honest tiers instead.
+              Research, not a product, so its value is in three things: what it found, how reliably it was found, and what designers can do with it.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               <div style={{
@@ -435,10 +426,10 @@ export default function DissertationWorkPage() {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Completion time tracked distraction resistance closely, explaining close to half the difference between participants.
+                    Time on task was the outcome that moved, and it moved with each person&apos;s distraction resistance.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Search accuracy stayed high for almost everyone - a ceiling effect the study surfaced rather than a difference it could resolve.
+                    Accuracy stayed near perfect across the board, which said more about how hard the task was than about the people doing it.
                   </li>
                 </ul>
               </div>
@@ -488,7 +479,7 @@ export default function DissertationWorkPage() {
                 of the relationships the study measured - correlational, not
                 causal - with no coefficients or p-values on the page. */}
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "16px" }}>
-              Completed as the capstone of an MSc awarded with Distinction. The study shows a relationship between
+              Completed as the capstone of an MSc awarded with Distinction and the Departmental Prize. The study shows a relationship between
               distraction resistance and completion time, not a cause, and the near-perfect accuracy scores mean the
               task could not separate participants on accuracy. A harder task, one that leaves room for accuracy to
               vary, is the obvious next test.
@@ -514,7 +505,7 @@ export default function DissertationWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Leadership</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Solo-owned end to end.</strong>{" "}Research question, task design, ethics approval, recruitment, analysis.
+                  <strong style={{ color: "#fff" }}>Ran it end to end.</strong>{" "}Research question, task design, ethics approval, recruitment and analysis.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   <strong style={{ color: "#fff" }}>Held the reporting honest.</strong>{" "}Stated what the data does and doesn&apos;t show, and kept correlation distinct from causation.
@@ -525,7 +516,7 @@ export default function DissertationWorkPage() {
               <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "14px" }}>Craft &amp; Expertise</h2>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  <strong style={{ color: "#fff" }}>Built the instrument.</strong>{" "}A purpose-made task synthesising banner-blindness, retrieval-scoring and online-timing literatures, not an off-the-shelf one.
+                  <strong style={{ color: "#fff" }}>Built the instrument.</strong>{" "}One task drawing on banner-blindness, retrieval-scoring and online-timing research at once.
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   <strong style={{ color: "#fff" }}>Chose the measure deliberately.</strong>{" "}Rejected a standard usability questionnaire for a direct behavioural one - task success and self-reported ease correlate weakly in the literature, so only one could actually answer the question.
