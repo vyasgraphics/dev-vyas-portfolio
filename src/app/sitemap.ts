@@ -18,9 +18,10 @@ const LAST_MODIFIED: Record<string, string> = {
   // image, a "Next project" card and richer structured data.
   // 12 Nov 2026: Departmental Prize added to the homepage and both CVs.
   "": "2026-11-12",
-  "/work/dissertation": "2026-11-10",
-  "/work/move-app": "2026-11-10",
-  "/work/vyas-graphics": "2026-11-10",
+    // 12 Nov 2026: copy pass across all three case studies.
+  "/work/dissertation": "2026-11-12",
+  "/work/move-app": "2026-11-12",
+  "/work/vyas-graphics": "2026-11-12",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

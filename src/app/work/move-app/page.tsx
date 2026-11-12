@@ -405,8 +405,7 @@ export default function MoveAppWorkPage() {
                 title={"Home - “Quiet Mode” (Original)"}
                 description={
                   <>
-                    <strong style={{ color: "#fff" }}>The problem:</strong> in testing, this toggle got read as a
-                    system audio control, not a crowd filter.
+                    <strong style={{ color: "#fff" }}>The problem:</strong> testers took this toggle for a sound setting, so the people it was built for left it alone.
                   </>
                 }
               />
