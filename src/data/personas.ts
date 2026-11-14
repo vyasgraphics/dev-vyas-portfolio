@@ -19,7 +19,7 @@ export const personas: Persona[] = [
     role: "The Anxious Beginner",
     avatar: `${IMG}/avatar-liam.png`,
     quote: "I don't know how to use the equipment and I'm too scared to ask. I prefer doing things on my own where no one is watching.",
-    bio: "Liam is a sedentary student who knows exercise is important for his mental health but suffers from \u201cgymtimidation.\u201d He avoids the campus Sport Centre because he fears looking incompetent in front of the more experienced gym users. He often walks to the gym entrance, sees a crowd, and turns back home immediately.",
+    bio: "Liam is a sedentary student who knows exercise is important for his mental health but suffers from \u201cgymtimidation\u201d. He avoids the campus Sport Centre because he fears looking incompetent in front of the more experienced gym users. He often walks to the gym entrance, sees a crowd, and turns back home immediately.",
     goals: [
       "Find secluded spaces to exercise without an audience.",
       "Build confidence in low-pressure, non-competitive environments.",
@@ -64,6 +64,6 @@ export const personas: Persona[] = [
       { label: "Waste", text: "Frustrated by time lost due to queues or unexpected delays." },
     ],
     coreNeeds: "Cognitive Offloading: needs support to reduce the mental effort of planning exercise. Automation: needs exercise recommendations to fit automatically within existing commitments.",
-    dataEvidence: "47% of users are blocked by \u201clack of free time.\u201d 71% consented to share their university timetable for automation.",
+    dataEvidence: "47% of users are blocked by \u201clack of free time\u201d. 71% consented to share their university timetable for automation.",
   },
 ];

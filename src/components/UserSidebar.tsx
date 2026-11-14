@@ -154,7 +154,7 @@ export function UserSidebar({ variant = "v1" }: UserSidebarProps) {
                             so they stack in a column beside the button. */}
                         <div className="vg-cv-links">
                             {profile.cvs.map((cv) => (
-                                <a key={cv.href} href={cv.href} title={cv.title} target="_blank" rel="noopener noreferrer" className="action-down">
+                                <a key={cv.href} href={cv.href} title={cv.title} type="application/pdf" target="_blank" rel="noopener noreferrer" className="action-down">
                                     <i className="icon icon-download" />
                                     <span className="text-body-3">{cv.label}</span>
                                 </a>

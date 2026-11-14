@@ -63,6 +63,34 @@ const STRUCTURED_DATA = {
           educationalLevel: "Master's degree",
           recognizedBy: { "@type": "CollegeOrUniversity", name: "University of York" },
         },
+        {
+          "@type": "EducationalOccupationalCredential",
+          name: "BE Computer Science & Engineering (First Class with Distinction)",
+          credentialCategory: "degree",
+          educationalLevel: "Bachelor's degree",
+          recognizedBy: { "@type": "CollegeOrUniversity", name: "Gujarat Technological University" },
+        },
+      ],
+      // The two CVs as documents about this person, so a search engine that
+      // indexes the PDFs can tie them back to the same entity. Names match
+      // the Title field written into each PDF's own metadata.
+      subjectOf: [
+        {
+          "@type": "DigitalDocument",
+          name: "Dev Vyas CV - Product and UX/UI Designer",
+          url: `${SITE_URL}/assets/Dev_Vyas_CV_Product_Designer.pdf`,
+          encodingFormat: "application/pdf",
+          inLanguage: "en-GB",
+          dateModified: "2026-11-14",
+        },
+        {
+          "@type": "DigitalDocument",
+          name: "Dev Vyas CV - Visual and Graphic Designer",
+          url: `${SITE_URL}/assets/Dev_Vyas_CV_Graphic_Designer.pdf`,
+          encodingFormat: "application/pdf",
+          inLanguage: "en-GB",
+          dateModified: "2026-11-14",
+        },
       ],
       alumniOf: [
         { "@type": "CollegeOrUniversity", name: "University of York" },
@@ -71,7 +99,10 @@ const STRUCTURED_DATA = {
       knowsAbout: [
         "product design",
         "UX/UI design",
+        "UI design",
         "user research",
+        "prototyping",
+        "design systems",
         "accessibility",
         "human-centred design",
         "usability testing",
@@ -103,7 +134,7 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       name: "Dev Vyas | Product & UX/UI Designer",
       inLanguage: "en-GB",
-      dateModified: "2026-11-12",
+      dateModified: "2026-11-14",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },

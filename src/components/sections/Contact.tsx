@@ -387,6 +387,7 @@ export function Contact() {
                     key={cv.href}
                     href={cv.href}
                     title={cv.title}
+                    type="application/pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-body-3 text-black-56"

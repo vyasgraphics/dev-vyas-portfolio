@@ -256,6 +256,7 @@ export function WorkCta() {
                                     key={cv.href}
                                     href={cv.href}
                                     title={cv.title}
+                                    type="application/pdf"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="action-down"

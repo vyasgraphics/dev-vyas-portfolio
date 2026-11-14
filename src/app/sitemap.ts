@@ -17,11 +17,13 @@ const LAST_MODIFIED: Record<string, string> = {
   // ProfilePage structured data. All three case studies: their own share
   // image, a "Next project" card and richer structured data.
   // 12 Nov 2026: Departmental Prize added to the homepage and both CVs.
-  "": "2026-11-12",
+  // 14 Nov 2026: both CVs replaced again, CV documents added to the
+  // structured data. Move and Vyas Graphics: British quote punctuation.
+  "": "2026-11-14",
     // 12 Nov 2026: copy pass across all three case studies.
   "/work/dissertation": "2026-11-12",
-  "/work/move-app": "2026-11-12",
-  "/work/vyas-graphics": "2026-11-12",
+  "/work/move-app": "2026-11-14",
+  "/work/vyas-graphics": "2026-11-14",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

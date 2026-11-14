@@ -347,7 +347,7 @@ export default function VyasGraphicsWorkPage() {
             <Body>
               Five marks, five different problems. A personal wordmark that needed to work as a spinning badge and a
               static lockup. A visa consultancy that needed to feel established. An abstract monogram with no brief
-              beyond &ldquo;make it interesting.&rdquo; And two full circular badge identities - a charitable trust
+              beyond &ldquo;make it interesting&rdquo;. And two full circular badge identities - a charitable trust
               and a dairy brand - each one drawn, not templated.
             </Body>
             <AutoGrid min="190px">
