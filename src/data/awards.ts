@@ -22,6 +22,15 @@ export const awards: Award[] = [
     featured: true,
   },
   {
+    // Completed 27 Jul 2026, listed on both CVs. Newest certificate, so it
+    // leads the list. image is unused by the award rows, left empty.
+    name: "The AI-Driven Product Designer",
+    publisher: "LinkedIn Learning",
+    year: 2026,
+    image: "",
+    link: "https://www.linkedin.com/learning/certificates/645e7f60230db23dc39d1f7a5483de031a18949996a9cae471c8beea89586b17",
+  },
+  {
     name: "Google UX Design Professional Certificate",
     publisher: "Coursera",
     year: 2025,
