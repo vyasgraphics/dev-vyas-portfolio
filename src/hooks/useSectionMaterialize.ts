@@ -47,8 +47,9 @@ const MATERIALIZE_SELECTOR = "#organisations, #about, #education, #tech, #contac
 // .wrap's containing block upward). Same precedent already used for the
 // hover-glow effect just above this section's CSS (box-shadow on
 // .wg-work, scale on .work-image, never a transform/filter on .wg-work
-// or .wrap). The section header (.sect-tag, .s-title, .s-desc) also
-// gets it, since none of the three sits above .wrap either.
+// or .wrap). The section header (.sect-tag, .s-title, .s-desc and the
+// .vg-hint-pill signpost) also gets it, since none of them sits above
+// .wrap either.
 
 export function useSectionMaterialize() {
     useEffect(() => {
@@ -70,10 +71,12 @@ export function useSectionMaterialize() {
         // not both directions" next to every other section's scrub. Both
         // one-way mechanisms are gone and this scrubbed one replaces them.
         const workHeader = Array.from(
-            // .s-title too: it was missing, so the Work h2 stayed sharp while
-            // the tag above and the line below it blurred. It is a sibling of
-            // .sect-tag, not an ancestor of .wrap, so the card pin is safe.
-            document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-title, #work .s-desc")
+            // .s-title and .vg-hint-pill too: both were missing, so they stayed
+            // sharp while the tag and intro line blurred. Both are siblings of
+            // .sect-tag, not ancestors of .wrap, so the card pin is safe. The
+            // pill is desktop-only (d-none below lg); setting a filter on it
+            // while hidden is harmless.
+            document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-title, #work .s-desc, #work .vg-hint-pill")
         );
         const workCards = Array.from(
             document.querySelectorAll<HTMLElement>("#work .sticky-item")
