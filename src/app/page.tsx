@@ -72,8 +72,9 @@ const STRUCTURED_DATA = {
         },
       ],
       // The two CVs as documents about this person, so a search engine that
-      // indexes the PDFs can tie them back to the same entity. Names match
-      // the Title field written into each PDF's own metadata.
+      // indexes the PDFs can tie them back to the same entity. The PDFs are
+      // Dev's own exports, served byte for byte, so these names are the
+      // only place the CV titles are stated.
       subjectOf: [
         {
           "@type": "DigitalDocument",
