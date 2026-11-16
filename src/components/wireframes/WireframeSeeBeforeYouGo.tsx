@@ -29,7 +29,10 @@ export function WireframeSeeBeforeYouGo({ showIntro = true }: { showIntro?: bool
           <span style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase" }}>Back</span>
         </div>
         <div style={{ padding: "18px 16px", flex: 1, display: "flex", flexDirection: "column" }}>
-          <h3 style={{ fontSize: "15px", fontWeight: 700, marginBottom: "12px", color: "#334155" }}>Hidden Library Walk</h3>
+          {/* A <p>, not an h3: mock app UI, kept out of the page's heading
+              outline. Font, rendering and line height copy the site-wide h3
+              rule (styles.css) so it looks the same. */}
+          <p style={{ fontFamily: "\"Apfel Grotezk\"", textRendering: "optimizeLegibility", letterSpacing: 0, lineHeight: "clamp(30px, 3vw + 6px, 39px)", fontSize: "15px", fontWeight: 700, marginBottom: "12px", color: "#334155" }}>Hidden Library Walk</p>
 
           <button
             type="button"

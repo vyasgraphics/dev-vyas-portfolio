@@ -40,7 +40,10 @@ export function WireframeCrowdFilter({ showIntro = true }: { showIntro?: boolean
             <div style={{ width: "40px", height: "40px", background: "#e2e8f0", border: "2px solid #cbd5e1", borderRadius: "8px", marginBottom: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="1.8" strokeLinecap="round"><path d="M4 6h16M4 12h10M4 18h16" /><circle cx="18" cy="12" r="2" /></svg>
             </div>
-            <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "20px", color: "#334155" }}>Setup Profile</h3>
+            {/* A <p>, not an h3: mock app UI, kept out of the page's heading
+                outline. Font, rendering and line height copy the site-wide h3
+                rule (styles.css) so it looks the same. */}
+            <p style={{ fontFamily: "\"Apfel Grotezk\"", textRendering: "optimizeLegibility", letterSpacing: 0, lineHeight: "clamp(30px, 3vw + 6px, 39px)", fontSize: "17px", fontWeight: 700, marginBottom: "20px", color: "#334155" }}>Setup Profile</p>
 
             <div style={{ position: "relative", marginBottom: "16px", padding: "14px", borderRadius: "10px", background: "#fff", border: "2px solid #10b981", boxShadow: "0 2px 8px rgba(16,185,129,0.15)" }}>
               <span style={{ position: "absolute", top: "-10px", right: "-8px", background: "#10b981", color: "#fff", fontSize: "8px", fontWeight: 700, padding: "3px 8px", borderRadius: "999px", boxShadow: "0 2px 4px rgba(0,0,0,0.15)" }}>

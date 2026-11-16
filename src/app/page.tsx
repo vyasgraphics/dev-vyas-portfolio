@@ -72,9 +72,9 @@ const STRUCTURED_DATA = {
         },
       ],
       // The two CVs as documents about this person, so a search engine that
-      // indexes the PDFs can tie them back to the same entity. The PDFs are
-      // Dev's own exports, served byte for byte, so these names are the
-      // only place the CV titles are stated.
+      // indexes the PDFs can tie them back to the same entity. Names match
+      // the Title field written into each PDF's own metadata (content is
+      // Dev's export, unchanged; only title, author and language added).
       subjectOf: [
         {
           "@type": "DigitalDocument",
@@ -82,7 +82,7 @@ const STRUCTURED_DATA = {
           url: `${SITE_URL}/assets/Dev_Vyas_CV_Product_Designer.pdf`,
           encodingFormat: "application/pdf",
           inLanguage: "en-GB",
-          dateModified: "2026-11-14",
+          dateModified: "2026-11-16",
         },
         {
           "@type": "DigitalDocument",
@@ -90,7 +90,7 @@ const STRUCTURED_DATA = {
           url: `${SITE_URL}/assets/Dev_Vyas_CV_Graphic_Designer.pdf`,
           encodingFormat: "application/pdf",
           inLanguage: "en-GB",
-          dateModified: "2026-11-14",
+          dateModified: "2026-11-16",
         },
       ],
       alumniOf: [
@@ -135,7 +135,7 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       name: "Dev Vyas | Product & UX/UI Designer",
       inLanguage: "en-GB",
-      dateModified: "2026-11-14",
+      dateModified: "2026-11-16",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },
