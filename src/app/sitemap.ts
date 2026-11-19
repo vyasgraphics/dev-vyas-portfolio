@@ -21,7 +21,9 @@ const LAST_MODIFIED: Record<string, string> = {
   // structured data. Move and Vyas Graphics: British quote punctuation.
   // 16 Nov 2026: CVs re-exported with search metadata. Move: mock-up labels
   // in the phone wireframes moved out of the heading outline.
-  "": "2026-11-16",
+  // 19 Nov 2026: both CVs replaced with the Google Docs exports; homepage
+  // title shortened to "Dev Vyas | Product & UX/UI Designer in Leeds, UK".
+  "": "2026-11-19",
     // 12 Nov 2026: copy pass across all three case studies.
   "/work/dissertation": "2026-11-12",
   "/work/move-app": "2026-11-16",

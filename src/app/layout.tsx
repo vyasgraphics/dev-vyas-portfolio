@@ -7,11 +7,13 @@ import "./globals.scss";
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://dev-vyas-portfolio.vercel.app"),
-    // Product & UX/UI leads, matching the LinkedIn headline. The tagline
-    // after the hyphen is the site's narrative; it is the part Google may
-    // truncate on narrow results, so the name and title come first.
+    // Product & UX/UI leads, matching the LinkedIn headline. 48 characters,
+    // so Google shows it in full. 19 Nov 2026, Dev's choice: the old 69-char
+    // "... - Research, Creative Craft & Code" was cut off in results, so the
+    // tagline gave way to the location, which "UX designer Leeds" searches
+    // match. The three-pillar line still lives in the h1 and share text.
     title: {
-        default: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
+        default: "Dev Vyas | Product & UX/UI Designer in Leeds, UK",
         template: "%s - Dev Vyas",
     },
     // 149 characters: under the ~155 Google shows before truncating. Leads
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
     description: "Dev Vyas, Leeds-based Product & UX/UI Designer. MSc Distinction and Departmental Prize, University of York. User research, design and front-end code.",
     authors: [{ name: "Dev Vyas" }],
     openGraph: {
-        title: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
+        title: "Dev Vyas | Product & UX/UI Designer in Leeds, UK",
         description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction and the Departmental Prize, University of York.",
         url: "https://dev-vyas-portfolio.vercel.app",
         siteName: "Dev Vyas",
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Dev Vyas | Product & UX/UI Designer - Research, Creative Craft & Code",
+        title: "Dev Vyas | Product & UX/UI Designer in Leeds, UK",
         description: "Product and UX/UI designer bringing together human-centred research, graphic design and front-end development. MSc with Distinction and the Departmental Prize, University of York.",
     },
     robots: {
