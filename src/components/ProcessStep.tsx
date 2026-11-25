@@ -26,15 +26,14 @@ import type { ReactNode } from "react";
 // announcement are all built in and correct without being reimplemented,
 // it needs no "use client" boundary, and it still works if JS fails. The
 // case study pages have no ScrollTrigger with cached positions to
-// invalidate when the height changes (ScrollReveal is an
-// IntersectionObserver that disconnects after firing, SectionNav measures
-// live), so nothing needs refreshing on toggle.
+// invalidate when the height changes (ScrollReveal and SectionNav both
+// measure live), so nothing needs refreshing on toggle.
 //
 // `open` is safe to set statically here even though the user can change
 // it: React diffs virtual props against the PREVIOUS virtual props, not
 // against the live DOM, so a value that stays `true` across renders is
-// never re-written and a reader's collapse is never undone. (The only
-// re-render these get is ScrollReveal flipping visible once on entry.)
+// never re-written and a reader's collapse is never undone. (ScrollReveal
+// writes its styles straight to the DOM, so it never re-renders these.)
 export function ProcessStep({
   index,
   title,

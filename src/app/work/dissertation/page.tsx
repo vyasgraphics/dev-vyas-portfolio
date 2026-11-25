@@ -213,7 +213,7 @@ export default function DissertationWorkPage() {
             fontWeight: 600, marginBottom: "20px",
             paddingLeft: "16px", borderLeft: "3px solid #00DE51",
           }}>
-            The outcome: visual clutter isn&apos;t a flat tax. It costs some users nearly half their time and barely touches others - a hit an ordinary success-rate metric never catches.
+            The outcome: visual clutter isn&apos;t a flat tax. Some people pay far more time than others for the same accurate result - a cost an ordinary success-rate metric never catches.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
             A solo MSc dissertation testing whether the ability to filter out distraction predicts how people cope
@@ -257,7 +257,7 @@ export default function DissertationWorkPage() {
             <p style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: "8px" }}>Timeline &amp; Team</p>
             <p style={{ fontSize: "14px", lineHeight: 1.8, color: "rgba(255,255,255,0.72)" }}>
               Individual MSc project<br />
-              Supervised by Prof. Joe Cutting, University of York
+              Supervised by Dr Joe Cutting, University of York
             </p>
           </div>
           <div>
@@ -371,9 +371,10 @@ export default function DissertationWorkPage() {
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The key finding</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "24px" }}>
               Accuracy barely moved: nearly everyone scored close to perfect, a ceiling effect of the task. Time did
-              move. How long someone took tracked their distraction resistance closely, and its two components
-              didn&apos;t act alone -{" "}
-              <strong style={{ color: "#fff" }}>they interacted</strong>.
+              move. With reading speed, distraction resistance explained about half the spread in how long people
+              took, and its two components didn&apos;t act alone -{" "}
+              <strong style={{ color: "#fff" }}>they interacted</strong>. Age, against expectations, predicted
+              neither outcome.
             </p>
             <DistractionInteractionChart />
 

@@ -33,12 +33,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // risks visually competing with the more purpose-built entrance.
 const MATERIALIZE_SELECTOR = "#organisations, #about, #education, #tech, #contact";
 
-// Work gets the same materialize feel on its header only (.sect-tag,
-// .s-title, .s-desc), never on #work as a whole. The project cards below
-// it are the tilt stack in WorkStack.tsx, which already brings each card
-// in with its own scroll-linked tilt; blurring the cards on top of that
-// would be two entrances competing, and #work is several screens tall, so
-// a single section-wide trigger would only fire once for all three.
+// Work gets the same materialize feel piece by piece rather than on #work as
+// a whole: #work is several screens tall (the tilt stack in WorkStack.tsx),
+// so a single section-wide trigger would only fire once for all of it. The
+// header (.sect-tag, .s-title, .s-desc), the 01/03 counter (.vg-stack-head)
+// and the card deck (.vg-stack-deck) each settle as they arrive. The counter
+// was missed at first and stayed sharp while the heading above it was still
+// blurred. Safe to filter: nothing inside the stack is position:fixed, and
+// the filter is cleared once each piece has settled.
 
 export function useSectionMaterialize() {
     useEffect(() => {
@@ -47,10 +49,12 @@ export function useSectionMaterialize() {
 
         const sections = document.querySelectorAll<HTMLElement>(MATERIALIZE_SELECTOR);
 
-        // Work header, on desktop and mobile alike (see the note above
-        // MATERIALIZE_SELECTOR for why the cards themselves are left out).
+        // Work header, counter and card deck, on desktop and mobile alike
+        // (see the note above MATERIALIZE_SELECTOR).
         const workHeader = Array.from(
-            document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-title, #work .s-desc")
+            document.querySelectorAll<HTMLElement>(
+                "#work .sect-tag, #work .s-title, #work .s-desc, #work .vg-stack-head, #work .vg-stack-deck"
+            )
         );
         if (!sections.length && !workHeader.length) return;
 
@@ -117,8 +121,8 @@ export function useSectionMaterialize() {
 
         sections.forEach((section) => materialize(section, section, "top 88%", "top 48%"));
 
-        // Work heading/description ("Selected Work" + intro line) sit once,
-        // above the tilt stack - treated like any other section's header.
+        // Work heading, intro line, counter and deck, each triggered by its
+        // own arrival, like any other section's header.
         workHeader.forEach((el) => materialize(el, el, "top 88%", "top 48%"));
 
         return () => {
