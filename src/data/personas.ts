@@ -19,7 +19,7 @@ export const personas: Persona[] = [
     role: "The Anxious Beginner",
     avatar: `${IMG}/avatar-liam.png`,
     quote: "I don't know how to use the equipment and I'm too scared to ask. I prefer doing things on my own where no one is watching.",
-    bio: "Liam is a sedentary student who knows exercise is important for his mental health but suffers from \u201cgymtimidation\u201d. He avoids the campus Sport Centre because he fears looking incompetent in front of the more experienced gym users. He often walks to the gym entrance, sees a crowd, and turns back home immediately.",
+    bio: "A sedentary student with \u201cgymtimidation\u201d. He often walks to the gym entrance, sees a crowd, and turns back home.",
     goals: [
       "Find secluded spaces to exercise without an audience.",
       "Build confidence in low-pressure, non-competitive environments.",
@@ -45,7 +45,7 @@ export const personas: Persona[] = [
     role: "The Time-Constrained Planner",
     avatar: `${IMG}/avatar-maya.png`,
     quote: "I need things that are quick. I have a one-hour gap on Tuesdays and Thursdays\u2026 I need to find exercises that fit without needing to travel far.",
-    bio: "Maya is a high-achieving student with a packed timetable. She suffers from \u201cLogistics Paralysis\u201d - the mental effort of calculating travel time, changeover time, and workout time prevents her from acting. She views fitness as a logistical problem to be solved, not a leisure activity.",
+    bio: "A high-achieving student with a packed timetable. Working out travel, changeover and workout time is enough effort to stop her starting.",
     goals: [
       "Utilise short 20-40 minute gaps between lectures.",
       "Remove the \u201cmental maths\u201d of planning.",

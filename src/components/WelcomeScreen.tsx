@@ -65,9 +65,8 @@ export function WelcomeScreen() {
                     extraction read "...Graphic DesignerI start from how...". */}
                 <p className="vg-welcome-sub">
                     <span className="vg-welcome-roles">Product &amp; UX/UI Designer.</span>{" "}
-                    I bring together human-centred research, visual design and a
-                    computer science background to make digital experiences that
-                    are thoughtful, accessible and buildable.
+                    I combine research, visual design and code to make products
+                    that are accessible and buildable.
                 </p>
             </div>
 

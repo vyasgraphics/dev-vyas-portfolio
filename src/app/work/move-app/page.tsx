@@ -122,10 +122,6 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
         <strong style={{ color: "#fff" }}>Manual planner, rejected.</strong> Manual entry was exactly the friction
         the design existed to remove, so it gave way to automatic timetable syncing.
       </>,
-      <>
-        Killing both early cost two concepts and saved the build, which is the cheaper trade to make at this stage
-        of a lifecycle.
-      </>,
     ],
   },
   {
@@ -164,10 +160,6 @@ const PROCESS_STEPS: { title: string; summary: string; bullets: React.ReactNode[
       <>
         The failure was in the label and the control type, not the concept. The underlying need it served was the
         best-evidenced need in the study.
-      </>,
-      <>
-        Caught at prototype stage, this cost a rename. Caught after launch, it would have cost the trust of the
-        exact users the feature existed for.
       </>,
     ],
   },
@@ -219,9 +211,8 @@ export default function MoveAppWorkPage() {
             The outcome: usability testing caught the one feature built to protect anxious users being read as a mute button, and it was renamed before it went any further.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
-            A concept exercise app for University of York students, run through a full human-centred design
-            lifecycle. The research found the barrier was never a lack of options. It was the anxiety and mental
-            effort standing between students and the options already there.
+            A concept exercise app for University of York students. The barrier was never a lack of options. It
+            was the anxiety and effort of getting started.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {/* Shared .vg-chip - see the matching note on the dissertation page. */}
@@ -310,9 +301,8 @@ export default function MoveAppWorkPage() {
               students walk past all of them. The problem was never a lack of choice.
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              The questionnaire pointed somewhere else entirely. Time pressure, self-consciousness and unfamiliarity
-              stood between students and facilities that were already free, nearby and open. Adding options to that
-              makes it worse. The design problem was subtraction, not addition.
+              The questionnaire pointed to time pressure, self-consciousness and unfamiliarity instead. More options
+              would only add to that, so the design problem was subtraction, not addition.
             </p>
             <p style={{
               fontSize: "16px", lineHeight: 1.6, color: "rgba(255,255,255,0.55)",
@@ -328,7 +318,7 @@ export default function MoveAppWorkPage() {
           <SectionBox id="personas" tag="Two barriers, two users">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>Who it&apos;s for</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "24px" }}>
-              The data split cleanly into two different barriers, so it produced two personas, not one averaged user. Designing for the average of these two would have served neither.
+              The data showed two different barriers, so it produced two personas, not one averaged user.
             </p>
             <TiltPermissionPrompt />
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "20px" }}>
@@ -350,7 +340,7 @@ export default function MoveAppWorkPage() {
           <SectionBox id="process" tag="Discovery to iteration">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The process</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              The order mattered more than any single screen. Research came first, so weak ideas were dropped while they were still cheap to drop. Testing came before build, so the one real failure surfaced while it was still a design problem, not an engineering one.
+              Research came first, so weak ideas were dropped while that was cheap. Testing came before build, so the one real failure surfaced as a design problem, not an engineering one.
             </p>
 
             <ProcessPath stages={PROCESS_STAGES} />
@@ -394,10 +384,9 @@ export default function MoveAppWorkPage() {
               &ldquo;Will this turn off my Spotify? I don&apos;t want silence, I just want to avoid people.&rdquo;
             </p>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "20px" }}>
-              A feature can test as a total failure while the need behind it is the best-evidenced thing in the
-              study. Renaming it to <strong style={{ color: "#fff" }}>Crowd Filter</strong>, replacing the toggle
-              with an explicit Social / Solo control, and adding confirmation feedback fixed it without touching the
-              underlying idea.
+              The need was right; the label was wrong. Renaming it <strong style={{ color: "#fff" }}>Crowd
+              Filter</strong>, swapping the toggle for an explicit Social / Solo control and adding confirmation
+              feedback fixed it without changing the idea.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
               <WireframeQuietMode
@@ -418,7 +407,7 @@ export default function MoveAppWorkPage() {
           <SectionBox id="impact" tag="What it changed">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>The impact</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)", marginBottom: "28px" }}>
-              A university concept, not a shipped product, so there are no sales or retention figures to show. This is what it did produce.
+              A university concept, not a shipped product, so there are no sales figures. This is what it produced.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
@@ -431,26 +420,10 @@ export default function MoveAppWorkPage() {
                     of the same number appearing three times on one page. */}
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Testing found one specific, fixable failure instead of vague dissatisfaction: people took the crowd filter for an audio setting, which pointed straight to the fix.
+                    Testing found one specific, fixable failure, not vague dissatisfaction.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                     Both main barriers, time and self-consciousness, got a screen of their own.
-                  </li>
-                </ul>
-              </div>
-              <div style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
-                <h3 style={{ fontSize: "17px", fontWeight: 700, color: "#fff", marginBottom: "12px" }}>
-                  Process Metrics
-                </h3>
-                <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Two concepts dropped on evidence, not opinion, while dropping them was still cheap.
-                  </li>
-                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    The one real failure surfaced at prototype stage, when fixing it meant a new label and control, not new code.
-                  </li>
-                  <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Every screen traces to a research figure, so the team argued about evidence instead of taste.
                   </li>
                 </ul>
               </div>
@@ -460,10 +433,10 @@ export default function MoveAppWorkPage() {
                 </h3>
                 <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    A 256-user A/B study, sized with a power calculation, so the redesign can be proven instead of assumed.
+                    A 256-user A/B study, sized with a power calculation, to prove the redesign rather than assume it.
                   </li>
                   <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                    Students have already said they would share their timetables, so the automatic scheduling has real backing.
+                    71% of respondents agreed to share their timetable, so automatic scheduling is realistic.
                   </li>
                 </ul>
               </div>
@@ -475,10 +448,8 @@ export default function MoveAppWorkPage() {
           <SectionBox id="next" tag="The test that would settle it">
             <h2 style={{ fontSize: "22px", fontWeight: 700, marginBottom: "12px" }}>What&apos;s next</h2>
             <p style={{ fontSize: "16px", lineHeight: 1.7, color: "rgba(255,255,255,0.72)" }}>
-              The proposed A/B study runs the moment this moves from prototype to production. It is designed to test
-              the claim this whole project rests on: that removing friction beats adding motivation for a sedentary,
-              self-conscious user. If that holds at 256 users, it stops being a design opinion and becomes a
-              repeatable principle.
+              The A/B study is the next step if this moves to production. It tests the claim the project rests on:
+              for a sedentary, self-conscious user, removing friction beats adding motivation.
             </p>
           </SectionBox>
         </ScrollReveal>

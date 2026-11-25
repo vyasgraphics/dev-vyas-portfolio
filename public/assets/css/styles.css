@@ -11960,7 +11960,7 @@ html, body {
   margin: 0 0 12px;
 }
 .vg-stack-impact {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   padding-left: 12px;
   border-left: 1px solid rgba(0, 222, 81, 0.45);
   color: var(--primary);
@@ -11969,8 +11969,8 @@ html, body {
   line-height: 1.45;
 }
 .vg-stack-desc {
-  margin: 0 0 16px;
-  color: rgba(255, 255, 255, 0.76);
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.82);
   font-size: 15px;
   line-height: 1.55;
   display: -webkit-box;
@@ -12093,14 +12093,6 @@ html, body {
     background:
       linear-gradient(0deg, #121212 0%, rgba(18, 18, 18, 0.6) 30%, rgba(18, 18, 18, 0) 60%),
       linear-gradient(180deg, rgba(18, 18, 18, 0.55) 0%, rgba(18, 18, 18, 0) 30%);
-  }
-}
-/* Short cards (small phones, short laptop windows): the description goes
-   first, so the title, outcome line, tags and the button keep their room
-   and the copy stays clear of the image band. */
-@container (max-height: 620px) {
-  .vg-stack-desc {
-    display: none;
   }
 }
 @media (max-width: 767px) {

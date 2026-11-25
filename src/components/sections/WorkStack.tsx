@@ -176,7 +176,7 @@ export function WorkStack() {
                 and what changed as a result
             </h2>
             <p className="s-desc text-black-56 scrolling-effect effectTop" style={{ marginBottom: "1rem", maxWidth: "640px" }}>
-                One project per pillar: a product designed, tested and iterated end to end, a quantitative HCI study that measured a hidden cost, and six years of self-directed brand and motion work. Start anywhere.
+                One project per pillar: a product tested with real users, a research study, and six years of brand and motion work.
             </p>
 
             <div
@@ -253,8 +253,12 @@ export function WorkStack() {
                                     <div className="vg-stack-bottom">
                                         <div className="vg-stack-copy">
                                             <h3 className="vg-stack-title letter-space--2">{w.title}</h3>
-                                            {w.impact && <p className="vg-stack-impact">{w.impact}</p>}
+                                            {/* What the project is first, then the
+                                                result, so a reader knows what they are
+                                                looking at before being told why it
+                                                mattered. Both are one short line. */}
                                             <p className="vg-stack-desc">{w.description}</p>
+                                            {w.impact && <p className="vg-stack-impact">{w.impact}</p>}
                                             <ul className="vg-stack-tags">
                                                 {w.tags.map((t) => (
                                                     <li key={t}>{t}</li>

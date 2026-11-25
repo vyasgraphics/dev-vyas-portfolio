@@ -266,8 +266,8 @@ export default function VyasGraphicsWorkPage() {
             The scope: 20+ brand identities, four animated logo reveals, and an independent ICC T20 World Cup 2026 campaign, each taken from brief to finished file.
           </p>
           <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.72)", lineHeight: 1.6, marginBottom: "24px" }}>
-            Vyas Graphics is my own design practice, running since 2020 alongside my degrees and the product and
-            UX work covered elsewhere on this site - different discipline, overlapping timeline. Six years of brand and motion work: identities built from scratch, cricket campaigns timed to live tournaments, and every piece shipped to a deadline nobody was enforcing but me.
+            Vyas Graphics is my own design practice, running since 2020 alongside my degrees: six years of identities
+            built from scratch and cricket campaigns timed to live tournaments.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "13px" }}>
             {["Brand & Motion Designer", "2020-2026", "Illustrator", "Sports Media"].map((t) => (
@@ -345,10 +345,9 @@ export default function VyasGraphicsWorkPage() {
           <SectionBox id="identity" tag="5 marks, 1 voice">
             <SectionHeading>Brand identity, from scratch</SectionHeading>
             <Body>
-              Five marks, five different problems. A personal wordmark that needed to work as a spinning badge and a
-              static lockup. A visa consultancy that needed to feel established. An abstract monogram with no brief
-              beyond &ldquo;make it interesting&rdquo;. And two full circular badge identities - a charitable trust
-              and a dairy brand - each one drawn, not templated.
+              Five marks, five different problems: a wordmark that works as a spinning badge, a visa consultancy that
+              needed to feel established, an abstract monogram, and two circular badge identities, each drawn, not
+              templated.
             </Body>
             <AutoGrid min="190px">
               <LogoMarkTile src={`${IMG}/vyas-graphics-vg-wordmark-logo.png`} alt="Vyas Graphics VG wordmark" width={1239} height={264} label="Vyas Graphics" />
@@ -361,9 +360,8 @@ export default function VyasGraphicsWorkPage() {
             <div style={{ marginTop: "56px" }}>
               <h3 style={{ fontSize: "17px", fontWeight: 700, marginBottom: "10px" }}>AI-generated logo vectorisation</h3>
               <Body>
-                Clients arrived with AI-generated logo concepts - on-brief, on-brand, and unusable past a business
-                card. I rebuilt each one as a clean, scalable vector in Illustrator, print-ready at any size. Drag
-                each slider to compare.
+                Clients brought AI-generated logos that fell apart past a business card. I rebuilt each as a clean,
+                print-ready vector in Illustrator. Drag each slider to compare.
               </Body>
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "36px" }}>
@@ -426,9 +424,8 @@ export default function VyasGraphicsWorkPage() {
           <SectionBox id="motion" tag="Play to reveal">
             <SectionHeading>Logo reveal animation</SectionHeading>
             <Body>
-              Four export variants of the Vyas Graphics logo reveal, built in After Effects for different placement
-              contexts - a retro CRT boot-up, a warm gold title card, a high-contrast mono cut, and a soft script
-              signature. Click any of them to play.
+              Four versions of the Vyas Graphics logo reveal, built in After Effects for different placements. Click
+              any of them to play.
             </Body>
             <GlassDeck className="vg-deck-plain-media" angles={[-15, -5, 5, 15]}>
               <PlayableStill deck poster={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-poster.jpg`} videoSrc={`${IMG}/vyas-graphics-logo-reveal-crt-boot-up-animation.mp4`} alt="CRT monitor logo reveal" width={1280} height={720} caption="CRT Boot-up" duration="0:18" />
@@ -444,9 +441,8 @@ export default function VyasGraphicsWorkPage() {
           <SectionBox id="social" tag="Feed-ready craft">
             <SectionHeading>Social media posts</SectionHeading>
             <Body>
-              The Vyas Graphics self-promotion series on Instagram - promotional posts, service announcements, and
-              festival greetings, moving between dark, minimal, and editorial aesthetics without losing a consistent
-              hand.
+              Instagram promotions, service announcements and festival greetings, across dark, minimal and editorial
+              styles.
             </Body>
 
             <div style={{ marginBottom: "36px" }}>
@@ -552,8 +548,7 @@ export default function VyasGraphicsWorkPage() {
 
             <h3 style={{ fontSize: "17px", fontWeight: 700, margin: "48px 0 10px" }}>IPL 2026</h3>
             <Body>
-              A six-slide visual identity carousel breaking down the tournament&apos;s burst motif and colour
-              language through an HCI lens, followed by season coverage through to the final.
+              A six-slide carousel on the tournament&apos;s motif and colours, then season coverage to the final.
             </Body>
 
             <div style={{ marginBottom: "32px" }}>
@@ -646,24 +641,20 @@ export default function VyasGraphicsWorkPage() {
           <SectionBox id="impact" tag="Output, process, feedback">
             <SectionHeading>The impact</SectionHeading>
             <Body>
-              A one-person practice has no P&amp;L to point to, so the impact here is measured three ways: what the work produced, the discipline behind it, and what changed when someone pointed out a flaw.
+              A one-person practice has no P&amp;L, so this is what the work produced and what changed from feedback.
             </Body>
             <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
               {[
                 ["Output", [
-                  "20+ brand identities built from scratch, including two full circular badge systems.",
-                  "Four logo reveals in four distinct styles, so the mark has a version for each kind of placement.",
-                  "Three AI-generated client concepts rebuilt as clean vectors, with zero gradients or paths left unrebuilt.",
+                  "20+ brand identities built from scratch, including two circular badge systems.",
+                  "Three AI-generated client logos rebuilt as clean, print-ready vectors.",
                 ]],
                 ["Process", [
-                  "Two cricket campaigns delivered on live tournament dates, with posts timed to the matches themselves.",
-                  "The same portfolio rebuilt across four editions, each one correcting what the previous version got wrong.",
-                  "One production pipeline held consistent across identity, motion and print rather than a different approach per piece.",
+                  "Two cricket campaigns delivered on live tournament dates.",
+                  "One portfolio rebuilt across four editions, each fixing the last.",
                 ]],
                 ["Feedback Loop", [
-                  "A single unsolicited LinkedIn comment exposed a real navigation failure in Version 02 of the flipbook.",
-                  "Version 03 shipped with a fully bookmarked, navigable table of contents, researched and rebuilt in response.",
-                  "Acting on that comment rather than defending the work is the reason the flipbook is usable at all today.",
+                  "One LinkedIn comment exposed a navigation flaw; Version 03 shipped with a fully navigable contents page.",
                 ]],
               ].map(([title, items]) => (
                 <div key={title as string} style={{ paddingLeft: "22px", borderLeft: "2px solid rgba(0,222,81,0.45)" }}>
@@ -717,7 +708,7 @@ export default function VyasGraphicsWorkPage() {
               <SectionHeading>Craft &amp; Expertise</SectionHeading>
               <ul style={{ margin: 0, paddingLeft: "18px", display: "flex", flexDirection: "column", gap: "10px" }}>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
-                  Full brand production pipeline: identity design in Illustrator, motion in After Effects, layout in InDesign - the same craft applied consistently across five distinct identities.
+                  One pipeline across identity (Illustrator), motion (After Effects) and layout (InDesign).
                 </li>
                 <li style={{ fontSize: "14px", lineHeight: 1.6, color: "rgba(255,255,255,0.72)" }}>
                   Planned the ICC and IPL campaigns around the fixture list, so every post had a fixed moment to land.

@@ -24,12 +24,9 @@ export function About() {
           at once actually buys, which is the part a list cannot say. */}
       <p className="s-desc text-black-56 scrolling-effect effectTop">
         I came to design through computer science, and to research through design, so I
-        tend to look at a product from all three sides at once. Day to day, that means user
-        research and accessible, WCAG-aware design at the centre, with brand, motion and
-        front-end work around it, and handovers developers can build from without
-        guesswork. I&apos;ve worked with university stakeholders and with design and
-        development teams, and I care as much about the reasoning behind a design as about
-        how it holds up once it&apos;s built.
+        look at a product from all three sides at once. User research and accessible,
+        WCAG-aware design sit at the centre, with brand, motion and front-end work around
+        them, and handovers developers can build from without guesswork.
       </p>
       <ul className="award-list tf-grid-layout md-col-2">
         {awards.map((a, i) => (
