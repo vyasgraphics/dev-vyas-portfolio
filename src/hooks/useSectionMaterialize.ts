@@ -19,11 +19,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 //    meant to work for any recruiter, on any browser, first try.
 // 2. The reference's layout technique sets each section's content to
 //    `position: fixed`, stacking every section's content on top of each
-//    other in the same screen space. This site's Work section already
-//    depends on `position: fixed` for its own card-swap (`.wg-work
-//    .wrap`, pinned via the sticky mechanic in useScrollAnimations.ts) -
-//    and CSS `filter` on any ancestor of a `position: fixed` element
-//    changes what that element is positioned relative to.
+//    other in the same screen space - a full layout rewrite of every
+//    section for a transition effect.
 //
 // Uses this site's existing GSAP + ScrollTrigger (already registered by
 // useScrollAnimations.ts - this hook must run after that one in
@@ -36,20 +33,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // risks visually competing with the more purpose-built entrance.
 const MATERIALIZE_SELECTOR = "#organisations, #about, #education, #tech, #contact";
 
-// Work gets the same materialize feel, but never on #work itself (or
-// .wg-work, or .sticky-item) - all three are ANCESTORS of .wg-work .wrap,
-// which is position:fixed on desktop, and `filter` on any ancestor of a
-// fixed element gives it a new containing block, breaking the card pin.
-// Instead this targets .work-image and .work-content directly (queried
-// per .sticky-item below): both are visible card content, neither is an
-// ancestor of .wrap (.work-image is .wrap's sibling inside .wg-work;
-// .work-content is .wrap's own child, so filter on it can't affect
-// .wrap's containing block upward). Same precedent already used for the
-// hover-glow effect just above this section's CSS (box-shadow on
-// .wg-work, scale on .work-image, never a transform/filter on .wg-work
-// or .wrap). The section header (.sect-tag, .s-title, .s-desc and the
-// .vg-hint-pill signpost) also gets it, since none of them sits above
-// .wrap either.
+// Work gets the same materialize feel on its header only (.sect-tag,
+// .s-title, .s-desc), never on #work as a whole. The project cards below
+// it are the tilt stack in WorkStack.tsx, which already brings each card
+// in with its own scroll-linked tilt; blurring the cards on top of that
+// would be two entrances competing, and #work is several screens tall, so
+// a single section-wide trigger would only fire once for all three.
 
 export function useSectionMaterialize() {
     useEffect(() => {
@@ -58,30 +47,12 @@ export function useSectionMaterialize() {
 
         const sections = document.querySelectorAll<HTMLElement>(MATERIALIZE_SELECTOR);
 
-        // Work materialize now runs on mobile too. It was originally
-        // desktop-only because `filter` on an ancestor of a position:fixed
-        // element gives it a new containing block, and .wg-work .wrap is
-        // fixed - but that rule is itself scoped to min-width:992px, so
-        // below that there is no fixed element to break. Mobile previously
-        // had a separate one-way fade-up instead (an IntersectionObserver
-        // in Work.tsx plus a `once:true` ScrollTrigger in
-        // useScrollAnimations, both adding the same .in-view class); that
-        // played once, never reversed, and was the only section on mobile
-        // not scroll-linked, which is exactly what read as "not smooth,
-        // not both directions" next to every other section's scrub. Both
-        // one-way mechanisms are gone and this scrubbed one replaces them.
+        // Work header, on desktop and mobile alike (see the note above
+        // MATERIALIZE_SELECTOR for why the cards themselves are left out).
         const workHeader = Array.from(
-            // .s-title and .vg-hint-pill too: both were missing, so they stayed
-            // sharp while the tag and intro line blurred. Both are siblings of
-            // .sect-tag, not ancestors of .wrap, so the card pin is safe. The
-            // pill is desktop-only (d-none below lg); setting a filter on it
-            // while hidden is harmless.
-            document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-title, #work .s-desc, #work .vg-hint-pill")
+            document.querySelectorAll<HTMLElement>("#work .sect-tag, #work .s-title, #work .s-desc")
         );
-        const workCards = Array.from(
-            document.querySelectorAll<HTMLElement>("#work .sticky-item")
-        );
-        if (!sections.length && !workHeader.length && !workCards.length) return;
+        if (!sections.length && !workHeader.length) return;
 
         const triggers: ScrollTrigger[] = [];
 
@@ -147,22 +118,8 @@ export function useSectionMaterialize() {
         sections.forEach((section) => materialize(section, section, "top 88%", "top 48%"));
 
         // Work heading/description ("Selected Work" + intro line) sit once,
-        // above .work-list, outside every .sticky-item - safe to treat like
-        // any other section's header, triggered off #work itself entering.
+        // above the tilt stack - treated like any other section's header.
         workHeader.forEach((el) => materialize(el, el, "top 88%", "top 48%"));
-
-        // Work cards: same visual settle, but the trigger is each
-        // .sticky-item (one per project) rather than #work as a whole.
-        // #work is tall - one sticky-item per project, each roughly a
-        // viewport - so a single #work-wide trigger would only materialize
-        // once for the entire section; per-card triggers make every
-        // project card re-play the same settle as it becomes the active
-        // sticky card, matching the "each thing settles as it arrives"
-        // feel of the other sections rather than a one-shot version.
-        workCards.forEach((card) => {
-            const targets = card.querySelectorAll<HTMLElement>(".work-image, .work-content");
-            targets.forEach((el) => materialize(el, card, "top 88%", "top 48%"));
-        });
 
         return () => {
             triggers.forEach((t) => t.kill());
@@ -171,11 +128,6 @@ export function useSectionMaterialize() {
             });
             workHeader.forEach((el) => {
                 gsap.set(el, { filter: "none", opacity: 1 });
-            });
-            workCards.forEach((card) => {
-                card.querySelectorAll<HTMLElement>(".work-image, .work-content").forEach((el) => {
-                    gsap.set(el, { filter: "none", opacity: 1 });
-                });
             });
         };
     }, []);

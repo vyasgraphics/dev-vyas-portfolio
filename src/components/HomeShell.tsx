@@ -13,7 +13,7 @@ import { Pillars } from "./sections/Pillars";
 import { Organisations } from "./sections/Organisations";
 import { About } from "./sections/About";
 import { Education } from "./sections/Education";
-import { Work } from "./sections/Work";
+import { WorkStack } from "./sections/WorkStack";
 import { WorkCta } from "./sections/WorkCta";
 // import { Skills } from "./sections/Skills"; // "How I Work" - commented out per Dev's request
 import { Tech } from "./sections/Tech";
@@ -107,7 +107,7 @@ export function HomeShell() {
                                         commented out. */}
                                     <Pillars />
                                     <Organisations />
-                                    <Work />
+                                    <WorkStack />
                                     {/* Conversion point right after the strongest evidence,
                                         rather than only at 83% page depth. */}
                                     <WorkCta />

@@ -11,7 +11,6 @@ export type Work = {
   platform: string;
   tags: string[];
   image: string;
-  imagePortrait: string;
   logo: string;
   link?: string;
 };
@@ -30,7 +29,6 @@ export const works: Work[] = [
     platform: "iOS Mobile",
     tags: ["UX Research", "Figma", "Health & Fitness", "iOS"],
     image: "/assets/images/section/work-2.jpg",
-    imagePortrait: "/assets/images/section/work-2-portrait.jpg",
     logo: "/assets/images/logo/logo-dv.svg",
     link: "/work/move-app",
   },
@@ -45,7 +43,6 @@ export const works: Work[] = [
     platform: "Desktop Web",
     tags: ["Academic Research", "Quantitative UX", "Prolific", "Python"],
     image: "/assets/images/section/work-1.jpg",
-    imagePortrait: "/assets/images/section/work-1-portrait.jpg",
     logo: "/assets/images/logo/logo-dv.svg",
     link: "/work/dissertation",
   },
@@ -60,7 +57,6 @@ export const works: Work[] = [
     platform: "Print · Social · Motion",
     tags: ["Illustrator", "After Effects", "Brand Identity", "Sports Media"],
     image: "/assets/images/section/work-3.jpg",
-    imagePortrait: "/assets/images/section/work-3-portrait.jpg",
     logo: "/assets/images/logo/vg-logo-white.png",
     link: "/work/vyas-graphics",
   },

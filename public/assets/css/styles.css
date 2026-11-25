@@ -11794,3 +11794,317 @@ html, body {
 .rfm-marquee-container {
   overflow-y: hidden !important;
 }
+
+/* ── Selected Work: tilt stack (WorkStack.tsx) ──
+   CSS-only, new component, so there is no SCSS twin to keep in step.
+   The stage is sticky and the three cards are stacked absolutely inside its
+   deck; WorkStack.tsx writes each card's transform from the live scroll
+   position. On desktop the stage takes the same 32px top inset and the same
+   height as the fixed profile card on the left, so the two line up edge to
+   edge. The track is one stage-height per card, which is also the scroll
+   distance between cards (the #work-item-* markers rely on that). */
+.vg-stack-section {
+  --vg-stack-top: 12px;
+  --vg-stack-h: calc(100svh - 24px);
+}
+@media (min-width: 992px) {
+  .vg-stack-section {
+    --vg-stack-top: 32px;
+    --vg-stack-h: calc(100svh - 64px);
+  }
+}
+.vg-stack-track {
+  position: relative;
+  height: calc(var(--vg-stack-h) * var(--vg-stack-count, 3));
+  margin-top: 24px;
+}
+.vg-stack-anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+.vg-stack-stage {
+  position: sticky;
+  top: var(--vg-stack-top);
+  height: var(--vg-stack-h);
+  display: flex;
+  flex-direction: column;
+  /* clip, not hidden: an overflow:hidden box can still be scrolled by the
+     browser, and focusing the link on a card that has not landed yet (it
+     sits below the deck) scrolled the stage's inside by ~1000px, shifting
+     every card. clip cannot be scrolled at all. hidden stays first as the
+     fallback for browsers without clip. */
+  overflow: hidden;
+  overflow: clip;
+}
+/* Cards that have been landed on tip back and rise a little (up to ~5% of
+   the card height for the card two below the top), so the deck starts 48px
+   under the counter to leave them room to show as a stack. The counter is
+   layered above the deck regardless, so a peeking card can never cover it. */
+.vg-stack-head.vg-work-progress {
+  position: relative;
+  z-index: 5;
+  flex: none;
+  width: min(220px, 60%);
+  margin: 0 0 48px;
+}
+.vg-stack-deck {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  /* size, not inline-size: the card switches layout on its own aspect
+     ratio as well as its width (see the container queries below). The deck's
+     height comes from the stage, never from its content, so this is safe. */
+  container-type: size;
+}
+.vg-stack-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  transform-origin: 50% 0;
+  will-change: transform;
+  backface-visibility: hidden;
+  background: #121212;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.7), 0 16px 36px -20px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.vg-stack-card.is-current {
+  pointer-events: auto;
+}
+.vg-stack-media {
+  position: absolute;
+  inset: 0;
+}
+.vg-stack-media .vg-stack-img {
+  object-fit: cover;
+  transform: scale(1.04);
+}
+/* Read-through for the copy: heaviest at the bottom where the text sits,
+   lifting towards the top so the project image still reads as the image. */
+.vg-stack-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(10, 10, 10, 0.96) 0%, rgba(10, 10, 10, 0.88) 38%, rgba(10, 10, 10, 0.45) 66%, rgba(10, 10, 10, 0.12) 100%);
+}
+.vg-stack-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: #050505;
+  opacity: 0;
+  pointer-events: none;
+}
+.vg-stack-body {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px;
+}
+.vg-stack-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.vg-stack-num {
+  font-family: "Apfel Grotezk", "Inter", sans-serif;
+  font-size: 64px;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.92);
+  font-variant-numeric: lining-nums;
+}
+.vg-stack-kick {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: right;
+}
+.vg-stack-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+}
+.vg-stack-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 520px;
+}
+.vg-stack-title {
+  font-family: "Apfel Grotezk", "Inter", sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.05;
+  color: #ffffff;
+  margin: 0 0 12px;
+}
+.vg-stack-impact {
+  margin: 0 0 12px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(0, 222, 81, 0.45);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.vg-stack-desc {
+  margin: 0 0 16px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 15px;
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.vg-stack-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.vg-stack-tags li {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.56);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.vg-stack-side {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+  max-width: 240px;
+}
+.vg-stack-meta {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  text-align: right;
+}
+.vg-stack-meta dt {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 2px;
+}
+.vg-stack-meta dd {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  line-height: 1.35;
+}
+.vg-stack-cta .text {
+  color: #0a0a0a;
+}
+
+/* Narrow cards: the desktop column at 992-1199px is only ~520px wide, and
+   phones are narrower still. Copy and meta stack into one column, the meta
+   becomes a single row, and the description drops a line. Keyed to the
+   deck's own width rather than the viewport, because the column the deck
+   sits in changes width at several breakpoints. */
+@container (max-width: 680px) {
+  .vg-stack-body {
+    padding: 22px;
+  }
+  .vg-stack-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .vg-stack-side {
+    max-width: none;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .vg-stack-meta {
+    grid-template-columns: auto auto 1fr;
+    column-gap: 20px;
+    text-align: left;
+  }
+  .vg-stack-title {
+    font-size: 28px;
+  }
+  .vg-stack-num {
+    font-size: 48px;
+  }
+  .vg-stack-desc {
+    -webkit-line-clamp: 2;
+  }
+}
+@container (max-width: 440px) {
+  .vg-stack-body {
+    padding: 18px;
+  }
+  .vg-stack-title {
+    font-size: 24px;
+  }
+  .vg-stack-meta {
+    grid-template-columns: auto 1fr;
+  }
+  .vg-stack-meta > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+/* Tall cards (phones, and the narrower desktop columns): a landscape
+   project image cropped to fill a portrait card loses most of the mockup.
+   Show it whole as a band across the top instead, fading into the card,
+   with the copy on the plain dark surface below it. */
+@container (max-aspect-ratio: 1 / 1) {
+  .vg-stack-media {
+    bottom: auto;
+    aspect-ratio: 1400 / 854;
+    max-height: 55%;
+  }
+  .vg-stack-media .vg-stack-img {
+    transform: none;
+  }
+  .vg-stack-media::after {
+    background:
+      linear-gradient(0deg, #121212 0%, rgba(18, 18, 18, 0.6) 30%, rgba(18, 18, 18, 0) 60%),
+      linear-gradient(180deg, rgba(18, 18, 18, 0.55) 0%, rgba(18, 18, 18, 0) 30%);
+  }
+}
+/* Short cards (small phones, short laptop windows): the description goes
+   first, so the title, outcome line, tags and the button keep their room
+   and the copy stays clear of the image band. */
+@container (max-height: 620px) {
+  .vg-stack-desc {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .vg-stack-card {
+    border-radius: 20px;
+  }
+}

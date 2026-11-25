@@ -95,8 +95,10 @@ export function useUrlHashSync() {
                 smoothScrollTo(target as HTMLElement, { immediate: true });
 
                 // Confirmed via direct scrollY sampling: for a
-                // position:sticky target (the Work section's
-                // .sticky-item cards), each settle-correction below was
+                // position:sticky target (the old Work section's
+                // .sticky-item cards; today's #work-item-* markers in
+                // WorkStack.tsx are not sticky, but the guard stays for
+                // any sticky target), each settle-correction below was
                 // producing an extra, real +132px jump - not a rounding
                 // artefact. Once such an element is scrolled far enough
                 // to engage its own CSS sticky pinning, its measured
