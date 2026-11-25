@@ -32,7 +32,9 @@ export function WireframeQuietMode({
           <span style={{ fontWeight: 700, fontSize: "13px" }}>Home</span>
           <div style={{ width: "26px", height: "26px", borderRadius: "50%", background: "#e2e8f0", border: "1px solid #cbd5e1" }} />
         </div>
-        <div style={{ padding: "14px 16px", flex: 1, overflowY: "auto", background: "rgba(255,255,255,0.5)" }}>
+        {/* hidden, not auto: on a phone an inner scroll box here caught
+            page swipes that started on the mockup, so the page felt stuck. */}
+        <div style={{ padding: "14px 16px", flex: 1, overflowY: "hidden", background: "rgba(255,255,255,0.5)" }}>
           <p style={{ fontSize: "13px", fontWeight: 700, marginBottom: "14px" }}>Good Morning, Liam.</p>
           <button
             type="button"

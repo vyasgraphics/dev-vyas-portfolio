@@ -23,7 +23,9 @@ export function WireframeGapFinder({ showIntro = true }: { showIntro?: boolean }
           <span style={{ fontWeight: 700, fontSize: "13px" }}>Schedule</span>
           <span style={{ fontSize: "10px", fontFamily: "monospace" }}>TUE 24 OCT</span>
         </div>
-        <div style={{ padding: "14px 16px", flex: 1, overflowY: "auto", position: "relative", background: "#f8fafc" }}>
+        {/* hidden, not auto: on a phone an inner scroll box here caught
+            page swipes that started on the mockup, so the page felt stuck. */}
+        <div style={{ padding: "14px 16px", flex: 1, overflowY: "hidden", position: "relative", background: "#f8fafc" }}>
           <div style={{ position: "absolute", left: "20px", top: 0, bottom: 0, width: "1px", background: "#cbd5e1" }} />
           <div style={{ marginLeft: "22px", marginBottom: "18px" }}>
             <div style={{ fontSize: "9px", fontWeight: 700, color: "#94a3b8", marginBottom: "4px" }}>09:00 - 11:00</div>

@@ -11782,3 +11782,15 @@ html, body {
   text-transform: uppercase;
   color: #00DE51;
 }
+
+/* ── Marquee strips: never an inner vertical scroll box ──
+   react-fast-marquee sets only overflow-x:hidden on its container, which
+   makes overflow-y compute to auto. The tilted Vyas Graphics cards poke
+   about 7px above and below the strip, so on a phone the strip became a
+   vertical scroller and caught page swipes that started on it. hidden
+   clips exactly as auto already did, so nothing changes visually.
+   !important because the library's own rule is injected at runtime and
+   its order against this sheet is not guaranteed. */
+.rfm-marquee-container {
+  overflow-y: hidden !important;
+}

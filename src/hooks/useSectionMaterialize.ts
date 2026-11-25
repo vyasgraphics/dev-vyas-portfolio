@@ -85,13 +85,23 @@ export function useSectionMaterialize() {
 
         const triggers: ScrollTrigger[] = [];
 
+        // Phones and tablets get the opacity half of the effect only. These
+        // targets are tall (#about alone is ~1750px on a phone), and
+        // re-blurring an element that size on every scroll frame is what made
+        // touch scrolling stutter on iPhone. The fade still reads as each
+        // section arriving; the blur stays on desktop, where it is affordable.
+        const lightweight = window.matchMedia("(max-width: 991px), (pointer: coarse)").matches;
+        const startState: gsap.TweenVars = lightweight
+            ? { opacity: 0.45 }
+            : { filter: "blur(6px) contrast(2.1)", opacity: 0.45 };
+
         const materialize = (
             el: HTMLElement,
             trigger: HTMLElement,
             start: string,
             end: string
         ) => {
-            gsap.set(el, { filter: "blur(6px) contrast(2.1)", opacity: 0.45 });
+            gsap.set(el, startState);
             triggers.push(
                 ScrollTrigger.create({
                     trigger,
@@ -100,17 +110,35 @@ export function useSectionMaterialize() {
                     scrub: 0.5,
                     onUpdate: (self) => {
                         const p = self.progress;
-                        gsap.set(el, {
-                            filter: `blur(${6 * (1 - p)}px) contrast(${1 + 1.1 * (1 - p)})`,
-                            opacity: 0.45 + 0.55 * p,
-                        });
+                        if (p >= 1) {
+                            // Cleared rather than left at blur(0px) contrast(1).
+                            // Any filter value, even a no-op one, keeps the
+                            // element on its own filtered layer for the rest
+                            // of the visit - about 8000px of page on a phone -
+                            // which the browser keeps re-rendering while you
+                            // scroll. Same precedent as WorkCta.tsx. Opacity
+                            // is set to 1, not cleared: .effectFade (the Work
+                            // tag) defaults to opacity:0 in CSS, so clearing
+                            // it would hide the tag. opacity:1 costs nothing.
+                            gsap.set(el, { clearProps: "filter", opacity: 1 });
+                            return;
+                        }
+                        gsap.set(
+                            el,
+                            lightweight
+                                ? { opacity: 0.45 + 0.55 * p }
+                                : {
+                                      filter: `blur(${6 * (1 - p)}px) contrast(${1 + 1.1 * (1 - p)})`,
+                                      opacity: 0.45 + 0.55 * p,
+                                  }
+                        );
                     },
                     onLeaveBack: () => {
                         // Scrolling back up above the trigger resets to the
                         // blurred starting state, so scrolling back down
                         // re-plays the materialize rather than snapping
                         // straight to fully sharp.
-                        gsap.set(el, { filter: "blur(6px) contrast(2.1)", opacity: 0.45 });
+                        gsap.set(el, startState);
                     },
                 })
             );
