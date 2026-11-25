@@ -23,7 +23,8 @@ const LAST_MODIFIED: Record<string, string> = {
   // in the phone wireframes moved out of the heading outline.
   // 19 Nov 2026: both CVs replaced with the Google Docs exports; homepage
   // title shortened to "Dev Vyas | Product & UX/UI Designer in Leeds, UK".
-  "": "2026-11-19",
+  // 25 Nov 2026: both CVs replaced with rewritten versions (Leeds, UK).
+  "": "2026-11-25",
     // 12 Nov 2026: copy pass across all three case studies.
   "/work/dissertation": "2026-11-12",
   "/work/move-app": "2026-11-16",

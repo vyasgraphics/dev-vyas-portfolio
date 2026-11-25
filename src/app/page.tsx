@@ -82,7 +82,7 @@ const STRUCTURED_DATA = {
           url: `${SITE_URL}/assets/Dev_Vyas_CV_Product_Designer.pdf`,
           encodingFormat: "application/pdf",
           inLanguage: "en-GB",
-          dateModified: "2026-11-19",
+          dateModified: "2026-11-25",
         },
         {
           "@type": "DigitalDocument",
@@ -90,7 +90,7 @@ const STRUCTURED_DATA = {
           url: `${SITE_URL}/assets/Dev_Vyas_CV_Graphic_Designer.pdf`,
           encodingFormat: "application/pdf",
           inLanguage: "en-GB",
-          dateModified: "2026-11-19",
+          dateModified: "2026-11-25",
         },
       ],
       alumniOf: [
@@ -135,7 +135,7 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       name: "Dev Vyas | Product & UX/UI Designer",
       inLanguage: "en-GB",
-      dateModified: "2026-11-19",
+      dateModified: "2026-11-25",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },
