@@ -25,7 +25,7 @@ const LAST_MODIFIED: Record<string, string> = {
   // title shortened to "Dev Vyas | Product & UX/UI Designer in Leeds, UK".
   // 25 Nov 2026: both CVs replaced with rewritten versions (Leeds, UK).
   // 26 Nov 2026: Selected Work rebuilt as a tilt stack, Tools rebuilt as
-  // glass folders.
+  // glass folders. Both CVs replaced with new exports.
   "": "2026-11-26",
   // 25 Nov 2026: text cut across all three case studies; dissertation
   // matched to the final results.

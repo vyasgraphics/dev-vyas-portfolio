@@ -82,7 +82,7 @@ const STRUCTURED_DATA = {
           url: `${SITE_URL}/assets/Dev_Vyas_CV_Product_Designer.pdf`,
           encodingFormat: "application/pdf",
           inLanguage: "en-GB",
-          dateModified: "2026-11-25",
+          dateModified: "2026-11-26",
         },
         {
           "@type": "DigitalDocument",
@@ -90,7 +90,7 @@ const STRUCTURED_DATA = {
           url: `${SITE_URL}/assets/Dev_Vyas_CV_Graphic_Designer.pdf`,
           encodingFormat: "application/pdf",
           inLanguage: "en-GB",
-          dateModified: "2026-11-25",
+          dateModified: "2026-11-26",
         },
       ],
       alumniOf: [
