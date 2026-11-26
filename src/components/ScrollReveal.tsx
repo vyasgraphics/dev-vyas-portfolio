@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { materializeProgress, type MaterializeState } from "@/lib/materialize";
 
 // The homepage's "materialize" effect, for the case study pages: each section
 // settles from blurred and faded to sharp as its top travels from 88% to 48%
-// of the viewport, and goes back the other way if you scroll up. The values
+// of the viewport, and goes back the other way if you scroll up. Arriving
+// from ABOVE (scrolling up) it settles on its bottom edge instead, the mirror
+// image, using the same shared maths as the homepage (src/lib/materialize.ts). The values
 // are the exact ones useSectionMaterialize uses on the homepage
 // (blur(6px) contrast(2.1) at 0.45 opacity), so a section arrives the same way
 // on every page. Phones and touch devices get the opacity half only, as on the
@@ -35,14 +38,11 @@ export function ScrollReveal({ children }: { children: ReactNode; delay?: number
     const lightweight = window.matchMedia("(max-width: 991px), (pointer: coarse)").matches;
     let frame = 0;
     let settled = false;
+    const state: MaterializeState = { fromTop: false };
 
     const paint = () => {
       frame = 0;
-      const vh = window.innerHeight;
-      const top = el.getBoundingClientRect().top;
-      const start = vh * 0.88;
-      const end = vh * 0.48;
-      const p = Math.min(1, Math.max(0, (start - top) / (start - end)));
+      const p = materializeProgress(el.getBoundingClientRect(), window.innerHeight, state);
 
       if (p >= 1) {
         if (!settled) {

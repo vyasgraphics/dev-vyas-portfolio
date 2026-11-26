@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { smoothScrollTo } from "@/lib/smoothScroll";
+import { materializeProgress, type MaterializeState } from "@/lib/materialize";
 import { profile } from "@/data/profile";
 import { HighlightCard } from "@/components/HighlightCard";
 
@@ -43,8 +44,10 @@ export function WorkCta() {
 
     // The same materialize every other section settles in with - blur(6px)
     // contrast(2.1) at 0.45 opacity, resolving to sharp and solid - using
-    // useSectionMaterialize's own numbers and its own 88%/48% viewport
-    // thresholds, so this card arrives looking like part of the same page.
+    // useSectionMaterialize's own numbers and the same shared progress maths
+    // (src/lib/materialize.ts: 88%/48% on the top edge arriving from below,
+    // the mirror on the bottom edge arriving from above), so this card
+    // arrives looking like part of the same page in both scroll directions.
     //
     // Deliberately NOT done by adding this card to that hook's selector list,
     // and not with ScrollTrigger at all. Read the note in the JSX below: a
@@ -71,14 +74,11 @@ export function WorkCta() {
         if (reduceMotion) return;
 
         let frame = 0;
+        const state: MaterializeState = { fromTop: false };
 
         const update = () => {
             frame = 0;
-            const rect = card.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const start = viewportHeight * 0.88;
-            const end = viewportHeight * 0.48;
-            const progress = Math.max(0, Math.min(1, (start - rect.top) / (start - end)));
+            const progress = materializeProgress(card.getBoundingClientRect(), window.innerHeight, state);
 
             if (progress >= 1) {
                 // Cleared rather than set to blur(0px)/opacity(1). A filter of

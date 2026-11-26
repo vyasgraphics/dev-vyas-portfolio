@@ -104,10 +104,19 @@ export function useScrollAnimations() {
                         duration: 1,
                         stagger: 0.1,
                         ease: "power3.out",
+                        // Both directions. Scrolling down it plays as the
+                        // heading arrives from below, exactly as before. It
+                        // now also resets once the heading is fully off the
+                        // TOP of the screen (out of sight, so nothing is
+                        // seen to vanish) and plays again when it comes back
+                        // in from above. Until 26 Nov 2026 it only ever
+                        // played arriving from below, so scrolling up brought
+                        // every heading in already sharp.
                         scrollTrigger: {
                             trigger: target,
                             start: "top 86%",
-                            toggleActions: "play none none reverse",
+                            end: "bottom top",
+                            toggleActions: "play reset play reverse",
                         },
                     },
                 );
