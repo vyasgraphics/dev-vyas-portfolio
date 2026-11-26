@@ -22,11 +22,14 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
   // animation (including ones it's just passing through), fighting the
   // just-clicked target. This suppresses that recomputation until the
   // animation has had time to settle, same pattern as suppressPassiveHashSync.
-  const suppressUntil = useRef(0);
+  // A flag cleared by a timer rather than a Date.now() deadline: reading the
+  // clock in a component-level function fails the react-hooks purity rule.
+  const suppressing = useRef(false);
+  const suppressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
-      if (Date.now() < suppressUntil.current) return;
+      if (suppressing.current) return;
       // Last section whose top has crossed the activation line wins.
       // Neither nav variant occupies top space any more (dot rail is on
       // the right, mobile trigger is at the bottom) so a small line close
@@ -59,7 +62,11 @@ export function SectionNav({ sections }: { sections: { id: string; label: string
   const goTo = (id: string) => {
     setActive(id);
     setExpanded(false);
-    suppressUntil.current = Date.now() + 1500;
+    suppressing.current = true;
+    if (suppressTimer.current) clearTimeout(suppressTimer.current);
+    suppressTimer.current = setTimeout(() => {
+      suppressing.current = false;
+    }, 1500);
     smoothScrollTo(`#${id}`, { offset: -24 });
   };
 

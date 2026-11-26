@@ -1,7 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { isDeviceTiltEnabled, subscribeDeviceTiltState, toggleDeviceTilt } from "@/hooks/useDeviceTilt";
+
+// Both values come from outside React (a media query and the shared tilt
+// store), so they are read through useSyncExternalStore rather than copied
+// into state from an effect, which the repo's react-hooks lint rule rejects.
+// The server snapshot is false for both, so the button still only appears
+// after hydration, exactly as before.
+const TOUCH_PRIMARY = "(hover: none) and (pointer: coarse)";
+const subscribeTouchPrimary = (onChange: () => void) => {
+  const mq = window.matchMedia(TOUCH_PRIMARY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+};
+const isTouchPrimary = () => window.matchMedia(TOUCH_PRIMARY).matches;
+const subscribeTilt = (onChange: () => void) => subscribeDeviceTiltState(() => onChange());
+const serverFalse = () => false;
 
 // Shows on any touch-primary device (Android and iOS alike) - not just
 // where iOS's permission prompt is required. A tap always does something
@@ -10,18 +25,10 @@ import { isDeviceTiltEnabled, subscribeDeviceTiltState, toggleDeviceTilt } from 
 // indicator and control from then on, rather than a one-shot prompt that
 // disappears once granted.
 export function TiltPermissionPrompt() {
-  const [visible, setVisible] = useState(false);
-  const [enabled, setEnabled] = useState(false);
+  const visible = useSyncExternalStore(subscribeTouchPrimary, isTouchPrimary, serverFalse);
+  const enabled = useSyncExternalStore(subscribeTilt, isDeviceTiltEnabled, serverFalse);
   const [busy, setBusy] = useState(false);
   const [denied, setDenied] = useState(false);
-
-  useEffect(() => {
-    const isTouchPrimary = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-    if (!isTouchPrimary) return;
-    setVisible(true);
-    setEnabled(isDeviceTiltEnabled());
-    return subscribeDeviceTiltState(setEnabled);
-  }, []);
 
   if (!visible) return null;
 
