@@ -24,11 +24,14 @@ const LAST_MODIFIED: Record<string, string> = {
   // 19 Nov 2026: both CVs replaced with the Google Docs exports; homepage
   // title shortened to "Dev Vyas | Product & UX/UI Designer in Leeds, UK".
   // 25 Nov 2026: both CVs replaced with rewritten versions (Leeds, UK).
-  "": "2026-11-25",
-    // 12 Nov 2026: copy pass across all three case studies.
-  "/work/dissertation": "2026-11-12",
-  "/work/move-app": "2026-11-16",
-  "/work/vyas-graphics": "2026-11-14",
+  // 26 Nov 2026: Selected Work rebuilt as a tilt stack, Tools rebuilt as
+  // glass folders.
+  "": "2026-11-26",
+  // 25 Nov 2026: text cut across all three case studies; dissertation
+  // matched to the final results.
+  "/work/dissertation": "2026-11-25",
+  "/work/move-app": "2026-11-25",
+  "/work/vyas-graphics": "2026-11-25",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -238,6 +238,11 @@ export function HighlightCard({ children, quantity = 90, className = "", cardRef
             else if (onScreen) start();
         };
         const onResize = () => {
+            // Phones fire resize whenever the address bar slides in or out
+            // (every change of scroll direction) without the card changing
+            // size. Rebuilding then re-seeded every particle from invisible,
+            // so the field blinked out and faded back mid-scroll.
+            if (card.offsetWidth === width && card.offsetHeight === height) return;
             resize();
             // Assigning canvas.width empties the buffer, so a resize landing
             // while the loop is stopped would leave the card blank.

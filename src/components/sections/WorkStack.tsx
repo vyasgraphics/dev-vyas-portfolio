@@ -193,7 +193,7 @@ export function WorkStack() {
             if (!frame) frame = requestAnimationFrame(tick);
         };
 
-        // An instant jump (keyboard focus, Back to Work, a resize) should
+        // An instant jump (keyboard focus, Back to Work, a real resize) should
         // land at once rather than glide through the cards in between.
         const snap = () => {
             measure();
@@ -209,8 +209,19 @@ export function WorkStack() {
             snap();
         };
 
+        // Phones fire a window resize every time the browser's address bar
+        // slides back in, which happens as soon as you scroll UP. The stage
+        // is sized in svh, so nothing here actually changes size, but
+        // snapping on that resize threw away the touch glide mid-gesture:
+        // the cards leapt to the finger in one frame, then sat still. Only
+        // snap when the stage really has changed size; otherwise keep
+        // gliding as if it were any other scroll frame.
         const onResize = () => {
-            snap();
+            const prevTop = stickyTop;
+            const prevH = stageH;
+            measure();
+            if (stickyTop !== prevTop || stageH !== prevH) snap();
+            else schedule();
         };
 
         snap();

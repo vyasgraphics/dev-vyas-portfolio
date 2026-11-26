@@ -40,6 +40,7 @@ export function WireframeSmartInput({ showIntro = true }: { showIntro?: boolean 
             </label>
             <input
               type="range"
+              aria-label="Social Meter, from solo to social"
               min={0}
               max={100}
               value={social}

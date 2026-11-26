@@ -135,7 +135,7 @@ const STRUCTURED_DATA = {
       url: SITE_URL,
       name: "Dev Vyas | Product & UX/UI Designer",
       inLanguage: "en-GB",
-      dateModified: "2026-11-25",
+      dateModified: "2026-11-26",
       isPartOf: { "@id": `${SITE_URL}/#website` },
       mainEntity: { "@id": `${SITE_URL}/#person` },
     },
