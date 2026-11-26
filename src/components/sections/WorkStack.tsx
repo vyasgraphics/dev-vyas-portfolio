@@ -36,8 +36,24 @@ import { smoothScrollTo } from "@/lib/smoothScroll";
 //   position where its card has landed (see the marker maths below).
 
 const clamp = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
+// Ease in AND out. The first version eased out only, so a card sped in at
+// three times the scroll speed, stopped dead as it landed, and the card
+// beneath then started tipping back at full speed from a standstill: two
+// kinks per card, which read as a jerk in both scroll directions. With
+// in-out easing every card starts and stops at zero speed, and the peak is
+// about 1.6x the scroll speed rather than 3x.
+const easeInOut = (t: number) => 0.5 - 0.5 * Math.cos(Math.PI * t);
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 const pad2 = (n: number) => (n < 10 ? "0" : "") + n;
+
+// Depth is how many cards have landed on top of this one. Easing its
+// fractional part with the same curve as the incoming card keeps the deck
+// beneath moving in lockstep with the card landing on it, instead of the
+// deck sliding linearly while the new card eases.
+const easeDepth = (d: number) => {
+    const whole = Math.floor(d);
+    return whole + easeInOut(d - whole);
+};
 
 type Pose = { y: number; scale: number; rx: number; rz: number; shade: number; opacity: number };
 
@@ -45,7 +61,8 @@ type Pose = { y: number; scale: number; rx: number; rz: number; shade: number; o
 // card landed). p runs from -1, where the stage is just entering the bottom of
 // the viewport. y is a percentage of the card's own height.
 function pose(p: number, i: number, reduced: boolean): Pose {
-    const depth = clamp(p - i, 0, 3);
+    const rawDepth = clamp(p - i, 0, 3);
+    const depth = reduced ? rawDepth : easeDepth(rawDepth);
     if (i === 0) {
         // Card 1 has no card beneath it to land on, so it settles in place
         // as the stage arrives rather than sliding up from below the deck.
@@ -64,7 +81,7 @@ function pose(p: number, i: number, reduced: boolean): Pose {
     if (reduced) {
         return { y: 0, scale: 1, rx: 0, rz: 0, shade: Math.min(depth, 1) * 0.5, opacity: enter };
     }
-    const e = easeOut(enter);
+    const e = easeInOut(enter);
     return {
         y: (1 - e) * 130 - depth * 2.4,
         scale: (1 - depth * 0.07) * (0.9 + 0.1 * e),
@@ -88,6 +105,7 @@ export function WorkStack() {
     const nowRef = useRef<HTMLSpanElement | null>(null);
     const segRefs = useRef<(HTMLSpanElement | null)[]>([]);
     const progressRef = useRef(0);
+    const snapRef = useRef<(() => void) | null>(null);
 
     useEffect(() => {
         const track = trackRef.current;
@@ -98,16 +116,36 @@ export function WorkStack() {
         let reduced = mq.matches;
         let lastIdx = -1;
         let frame = 0;
+        let lastTime = 0;
+        // What the cards are drawn at, which follows the real scroll
+        // position with a short exponential glide rather than jumping to it.
+        // Native touch scrolling (and a mouse wheel without Lenis) arrives
+        // in uneven steps, and Lenis's own frame does not always run before
+        // this one, so painting the raw position straight onto the cards
+        // passed every one of those steps through as a judder. The glide is
+        // short enough to feel attached to the finger and frame-rate
+        // independent, so 60Hz and 120Hz screens move the same way.
+        let shown = Number.NaN;
+        // Sticky offset and stage height only change on resize, so they are
+        // measured then rather than on every frame (getComputedStyle per
+        // frame forced a style recalculation during the scroll).
+        let stickyTop = 0;
+        let stageH = 0;
 
-        const paint = () => {
-            frame = 0;
+        const measure = () => {
+            stickyTop = parseFloat(getComputedStyle(stage).top) || 0;
+            stageH = stage.offsetHeight;
+        };
+
+        const target = () => {
             const tr = track.getBoundingClientRect();
-            const stickyTop = parseFloat(getComputedStyle(stage).top) || 0;
-            const step = (tr.height - stage.offsetHeight) / Math.max(n - 1, 1);
-            if (step <= 0) return;
-            const p = clamp((stickyTop - tr.top) / step, -1, n - 1);
-            progressRef.current = p;
+            const step = (tr.height - stageH) / Math.max(n - 1, 1);
+            if (step <= 0) return Number.NaN;
+            return clamp((stickyTop - tr.top) / step, -1, n - 1);
+        };
 
+        const draw = (p: number) => {
+            progressRef.current = p;
             for (let i = 0; i < n; i++) {
                 const el = cardRefs.current[i];
                 if (!el) continue;
@@ -115,7 +153,7 @@ export function WorkStack() {
                 el.style.transform = toTransform(q);
                 el.style.opacity = String(q.opacity);
                 const sh = shadeRefs.current[i];
-                if (sh) sh.style.opacity = String(q.shade);
+                if (sh) sh.style.opacity = q.shade.toFixed(3);
             }
 
             const idx = clamp(Math.round(p), 0, n - 1);
@@ -130,24 +168,64 @@ export function WorkStack() {
             }
         };
 
-        const schedule = () => {
-            if (!frame) frame = requestAnimationFrame(paint);
+        const tick = (now: number) => {
+            frame = 0;
+            const goal = target();
+            if (Number.isNaN(goal)) return;
+            const dt = lastTime ? Math.min(now - lastTime, 64) : 16;
+            lastTime = now;
+            // A jump of more than a whole card in one frame is never a
+            // scroll gesture (it is Back to Work, an anchor or a restore),
+            // so it lands at once rather than flicking through the cards.
+            if (reduced || Number.isNaN(shown) || Math.abs(goal - shown) > 1) {
+                shown = goal;
+            } else {
+                // ~70ms time constant: settles in about a fifth of a second.
+                shown += (goal - shown) * (1 - Math.exp(-dt / 70));
+                if (Math.abs(goal - shown) < 0.0005) shown = goal;
+            }
+            draw(shown);
+            if (shown !== goal) frame = requestAnimationFrame(tick);
+            else lastTime = 0;
         };
+
+        const schedule = () => {
+            if (!frame) frame = requestAnimationFrame(tick);
+        };
+
+        // An instant jump (keyboard focus, Back to Work, a resize) should
+        // land at once rather than glide through the cards in between.
+        const snap = () => {
+            measure();
+            const goal = target();
+            if (Number.isNaN(goal)) return;
+            shown = goal;
+            draw(shown);
+        };
+        snapRef.current = snap;
 
         const onMotionChange = () => {
             reduced = mq.matches;
-            schedule();
+            snap();
         };
 
-        paint();
+        const onResize = () => {
+            snap();
+        };
+
+        snap();
+        const ro = new ResizeObserver(onResize);
+        ro.observe(stage);
         window.addEventListener("scroll", schedule, { passive: true });
-        window.addEventListener("resize", schedule);
+        window.addEventListener("resize", onResize);
         mq.addEventListener("change", onMotionChange);
         return () => {
+            ro.disconnect();
             window.removeEventListener("scroll", schedule);
-            window.removeEventListener("resize", schedule);
+            window.removeEventListener("resize", onResize);
             mq.removeEventListener("change", onMotionChange);
             if (frame) cancelAnimationFrame(frame);
+            snapRef.current = null;
         };
     }, [n]);
 
@@ -162,7 +240,11 @@ export function WorkStack() {
         if (Math.round(progressRef.current) === i) return;
         const marker = document.getElementById(`work-item-${works[i].slug}`);
         if (!marker) return;
-        requestAnimationFrame(() => smoothScrollTo(marker, { immediate: true }));
+        requestAnimationFrame(() => {
+            smoothScrollTo(marker, { immediate: true });
+            // Skip the glide: focus should find its card already in place.
+            requestAnimationFrame(() => snapRef.current?.());
+        });
     };
 
     return (

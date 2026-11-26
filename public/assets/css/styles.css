@@ -11900,6 +11900,10 @@ html, body {
   background: #050505;
   opacity: 0;
   pointer-events: none;
+  /* Its own compositor layer. Without this, changing the shade's opacity on
+     every scroll frame repainted the whole card underneath it, image and
+     all, which is what made the stack stutter on phones. */
+  will-change: opacity;
 }
 .vg-stack-body {
   position: absolute;
@@ -12098,5 +12102,291 @@ html, body {
 @media (max-width: 767px) {
   .vg-stack-card {
     border-radius: 20px;
+  }
+}
+
+/* ── Tools: glass folders (ToolFolder.tsx) ──
+   Each tool category is a glass folder with its tools fanned out of the
+   top. CSS-only, nothing to mirror in the SCSS. The geometry that depends
+   on the folder's width (tile size, where the icons start, where the glass
+   pocket starts) arrives as custom properties set by ToolFolder.tsx; the
+   fan positions themselves are inline transforms. Replaced the illumine
+   cards (.vg-illumine, .tech-categories), whose rules are left in place
+   above, inert. */
+.vg-folders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  /* Row gap leaves room for a raised tile and its name label, which rise
+     above the top of their own folder. */
+  gap: 44px 22px;
+  padding-top: 24px;
+}
+.vg-folder {
+  --vg-folder-tile: 96px;
+  --vg-folder-icons-top: 40px;
+  --vg-folder-front-top: 102px;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--vg-folder-front-top);
+  color: #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform, opacity;
+}
+.vg-folder.is-open {
+  z-index: 2;
+}
+.vg-folder.is-touch {
+  cursor: pointer;
+}
+.vg-folder-glow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 28px;
+  height: 70%;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgba(0, 222, 81, 0.11), transparent);
+  filter: blur(18px);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.vg-folder.is-open .vg-folder-glow {
+  opacity: 1;
+}
+.vg-folder-back {
+  position: absolute;
+  inset: 14px 0 0 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008) 60%),
+    radial-gradient(120% 90% at 50% 0%, #171b19 0%, #111412 70%);
+}
+.vg-folder-edge {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.vg-folder-fan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.vg-folder-slot {
+  position: absolute;
+  left: 50%;
+  top: var(--vg-folder-icons-top);
+  width: var(--vg-folder-tile);
+  height: var(--vg-folder-tile);
+  margin-left: calc(var(--vg-folder-tile) / -2);
+  border-radius: calc(var(--vg-folder-tile) * 0.26);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.vg-folder-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: auto;
+}
+.vg-folder-tile-face {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 30% 0%, rgba(255, 255, 255, 0.09), transparent 55%),
+    linear-gradient(145deg, #1e2320 0%, #121513 55%, #0c0e0d 100%);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.vg-folder-tile-face img {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.vg-folder-label {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 10px;
+  padding: 4px 10px;
+  border: 1px solid rgba(0, 222, 81, 0.35);
+  border-radius: 999px;
+  background: rgba(8, 10, 9, 0.78);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.vg-folder-front {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 176px;
+  padding: 32px 18px 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015) 55%),
+    rgba(13, 16, 14, 0.78);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  transition: transform 0.6s cubic-bezier(.2, .8, .2, 1);
+}
+.vg-folder.is-open .vg-folder-front {
+  transform: translate3d(0, 6px, 0);
+}
+.vg-folder-stop-a {
+  stop-color: rgba(255, 255, 255, 0.38);
+  transition: stop-color 0.5s ease;
+}
+.vg-folder-stop-b {
+  stop-color: rgba(255, 255, 255, 0.1);
+  transition: stop-color 0.5s ease;
+}
+.vg-folder.is-open .vg-folder-stop-a {
+  stop-color: rgba(0, 222, 81, 0.7);
+}
+.vg-folder.is-open .vg-folder-stop-b {
+  stop-color: rgba(0, 222, 81, 0.16);
+}
+/* Class-keyed, not tag-keyed, so a future heading-level change cannot
+   silently drop the size. */
+.vg-folder-title {
+  position: relative;
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: -0.02em;
+}
+.vg-folder-chips {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vg-folder-chips li {
+  height: 26px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+}
+/* The template SCSS gives every non-last li in .section-tech-stack 31px of
+   padding, a 32px margin and a divider (component/elements/_section.scss),
+   and the SCSS loads last, so it wins any tie. This reset outranks it on
+   specificity instead. */
+.section-tech-stack .vg-folder-chips li:not(:last-child) {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+.section-tech-stack .vg-folder-chips li.is-hi {
+  border-color: rgba(0, 222, 81, 0.6);
+  background: rgba(0, 222, 81, 0.08);
+  color: #ffffff;
+}
+.vg-folder-foot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+.vg-folder-index {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.vg-folder-index span {
+  color: rgba(255, 255, 255, 0.5);
+}
+.vg-folder-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 5px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.vg-folder-pill-tile {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: linear-gradient(145deg, #1e2320, #0f1110);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.vg-folder-pill-tile img {
+  width: 62%;
+  height: 62%;
+  object-fit: contain;
+}
+/* Phones: a lighter blur on the glass. Seven backdrop blurs at 18px was
+   more than a mid-range phone could keep up with while scrolling. */
+@media (max-width: 767px), (pointer: coarse) {
+  .vg-folder-front {
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    backdrop-filter: blur(12px) saturate(1.4);
+  }
+  .vg-folders {
+    gap: 40px 16px;
+  }
+}
+/* One column on phones: the pocket hugs its content rather than holding a
+   minimum height, so seven folders stay as short a scroll as possible. */
+@media (max-width: 575px) {
+  .vg-folder-front {
+    min-height: 0;
+    padding-top: 30px;
+  }
+  .vg-folder-foot {
+    padding-top: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vg-folder-front,
+  .vg-folder-glow,
+  .vg-folder-stop-a,
+  .vg-folder-stop-b {
+    transition: none;
   }
 }

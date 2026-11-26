@@ -36,11 +36,17 @@ const MATERIALIZE_SELECTOR = "#organisations, #about, #education, #tech, #contac
 // Work gets the same materialize feel piece by piece rather than on #work as
 // a whole: #work is several screens tall (the tilt stack in WorkStack.tsx),
 // so a single section-wide trigger would only fire once for all of it. The
-// header (.sect-tag, .s-title, .s-desc), the 01/03 counter (.vg-stack-head)
-// and the card deck (.vg-stack-deck) each settle as they arrive. The counter
+// header (.sect-tag, .s-title, .s-desc) and the 01/03 counter
+// (.vg-stack-head) each settle as they arrive. The counter
 // was missed at first and stayed sharp while the heading above it was still
 // blurred. Safe to filter: nothing inside the stack is position:fixed, and
 // the filter is cleared once each piece has settled.
+//
+// The card deck itself is NOT in the list any more. Its first card already
+// has its own scroll-linked entrance (tilt, rise and fade in WorkStack.tsx),
+// and scrubbing a blur over three 3D-transformed image cards during that same
+// entrance meant re-rendering the whole deck every frame: a visible stutter
+// coming into and backing out of the section.
 
 export function useSectionMaterialize() {
     useEffect(() => {
@@ -49,11 +55,11 @@ export function useSectionMaterialize() {
 
         const sections = document.querySelectorAll<HTMLElement>(MATERIALIZE_SELECTOR);
 
-        // Work header, counter and card deck, on desktop and mobile alike
+        // Work header and counter, on desktop and mobile alike
         // (see the note above MATERIALIZE_SELECTOR).
         const workHeader = Array.from(
             document.querySelectorAll<HTMLElement>(
-                "#work .sect-tag, #work .s-title, #work .s-desc, #work .vg-stack-head, #work .vg-stack-deck"
+                "#work .sect-tag, #work .s-title, #work .s-desc, #work .vg-stack-head"
             )
         );
         if (!sections.length && !workHeader.length) return;
